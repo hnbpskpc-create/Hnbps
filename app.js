@@ -2539,6 +2539,14 @@ function setupEventListeners() {
 
         mobileMenuBtn.addEventListener("click", toggleMobileMenu);
         sidebarOverlay.addEventListener("click", closeMobileMenu);
+        
+        // Tablet Sidebar Expand Toggle
+        const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
+        if (sidebarToggleBtn) {
+            sidebarToggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("expanded");
+            });
+        }
 
         // Auto-close drawer on navigating on mobile
         const navLinks = document.querySelectorAll(".sidebar-nav a, .sidebar-footer div, .logout-btn-action");

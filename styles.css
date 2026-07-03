@@ -1952,3 +1952,53 @@ body {
     font-weight: 700;
     color: var(--text-main);
 }
+
+/* Sidebar Expand Toggle Override */
+.sidebar.expanded {
+    width: 280px !important;
+    padding: 1.5rem !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    z-index: 1000 !important;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1) !important;
+    height: 100vh !important;
+}
+.sidebar.expanded .sidebar-header {
+    justify-content: flex-start !important;
+    width: 100% !important;
+    flex-direction: row !important;
+}
+.sidebar.expanded .brand-details {
+    display: block !important;
+}
+.sidebar.expanded .sidebar-nav {
+    align-items: stretch !important;
+}
+.sidebar.expanded .nav-item {
+    width: 100% !important;
+    height: auto !important;
+    justify-content: flex-start !important;
+    padding: 0.85rem 1rem !important;
+}
+.sidebar.expanded .nav-item i {
+    margin: 0 1rem 0 0 !important;
+    width: 20px !important;
+}
+.sidebar.expanded .nav-text {
+    display: inline-block !important;
+}
+.sidebar.expanded .sidebar-footer {
+    align-items: stretch !important;
+}
+.sidebar.expanded .theme-toggle, .sidebar.expanded .lang-toggle {
+    width: 100% !important;
+    height: auto !important;
+    justify-content: flex-start !important;
+    padding: 0.75rem 1rem !important;
+}
+.sidebar.expanded .theme-toggle i, .sidebar.expanded .lang-toggle i {
+    margin: 0 1rem 0 0 !important;
+}
+.sidebar.expanded .toggle-text, .sidebar.expanded .lang-text {
+    display: inline-block !important;
+}
