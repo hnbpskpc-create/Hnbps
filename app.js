@@ -1343,10 +1343,11 @@ function saveScores() {
 function getGradeLetter(avg) {
     if (avg >= 9.0) return 'A';
     if (avg >= 8.0) return 'B';
-    if (avg >= 6.5) return 'C';
-    if (avg >= 5.0) return 'D';
-    if (avg >= 3.5) return 'E';
-    return 'F';
+    if (avg >= 7.0) return 'C';
+    if (avg >= 6.0) return 'D';
+    if (avg >= 5.0) return 'E';
+    if (avg >= 4.0) return 'F';
+    return 'G';
 }
 
 function getGradeLabel(grade, lang = 'km') {
@@ -1354,9 +1355,10 @@ function getGradeLabel(grade, lang = 'km') {
         'A': { km: 'ល្អប្រសើរ (Excellent)', en: 'Excellent (A)' },
         'B': { km: 'ល្អណាស់ (Very Good)', en: 'Very Good (B)' },
         'C': { km: 'ល្អ (Good)', en: 'Good (C)' },
-        'D': { km: 'មធ្យម (Fair)', en: 'Fair (D)' },
-        'E': { km: 'ខ្សោយ (Poor)', en: 'Poor (E)' },
-        'F': { km: 'ខ្សោយណាស់ (Very Poor)', en: 'Very Poor (F)' }
+        'D': { km: 'បង្គួរ (Fair)', en: 'Fair (D)' },
+        'E': { km: 'មធ្យម (Average)', en: 'Average (E)' },
+        'F': { km: 'ខ្សោយ (Weak)', en: 'Weak (F)' },
+        'G': { km: 'ធ្លាក់ (Fail)', en: 'Fail (G)' }
     };
     return labels[grade]?.[lang] || grade;
 }
@@ -1368,7 +1370,8 @@ function getGradeColorClass(grade) {
         'C': 'bg-green',
         'D': 'bg-yellow',
         'E': 'bg-orange',
-        'F': 'bg-red'
+        'F': 'bg-red',
+        'G': 'bg-red'
     };
     return classes[grade] || '';
 }
@@ -1434,96 +1437,11 @@ function renderVisualSummary(rankedData, period, classId) {
     const isWeekly = period === 'weekly';
     const isKm = appState.language === 'km';
     
-    if (isDaily || isWeekly) {
-        // Attendance & Behavior Summary
-        const total = rankedData.length;
-        if (total === 0) return;
-        
-        let present = 0;
-        let late = 0;
-        let absentPerm = 0;
-        let absentUnperm = 0;
-        
-        rankedData.forEach((row, index) => {
-            if (index % 8 === 0) absentPerm++;
-            else if (index % 13 === 0) absentUnperm++;
-            else if (index % 7 === 1) late++;
-            else present++;
-        });
-        
-        const pctPresent = ((present / total) * 100).toFixed(0);
-        const pctLate = ((late / total) * 100).toFixed(0);
-        const pctAbsentPerm = ((absentPerm / total) * 100).toFixed(0);
-        const pctAbsentUnperm = ((absentUnperm / total) * 100).toFixed(0);
-        
-        container.innerHTML = `
-            <div class="visual-summary-grid">
-                <!-- Attendance Distribution -->
-                <div class="visual-card">
-                    <div class="visual-card-title">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <span>${isKm ? 'សង្ខេបវត្តមានសិស្ស' : 'Attendance Summary'}</span>
-                    </div>
-                    
-                    <div class="distribution-row">
-                        <div class="distribution-label">${isKm ? 'វត្តមាន (Present)' : 'Present'}</div>
-                        <div class="distribution-bar-wrapper">
-                            <div class="distribution-bar bg-green" style="width: ${pctPresent}%"></div>
-                        </div>
-                        <div class="distribution-value">${present} (${pctPresent}%)</div>
-                    </div>
-                    <div class="distribution-row">
-                        <div class="distribution-label">${isKm ? 'យឺត (Late)' : 'Late'}</div>
-                        <div class="distribution-bar-wrapper">
-                            <div class="distribution-bar bg-yellow" style="width: ${pctLate}%"></div>
-                        </div>
-                        <div class="distribution-value">${late} (${pctLate}%)</div>
-                    </div>
-                    <div class="distribution-row">
-                        <div class="distribution-label">${isKm ? 'ច្បាប់ (Excused)' : 'Excused'}</div>
-                        <div class="distribution-bar-wrapper">
-                            <div class="distribution-bar bg-blue" style="width: ${pctAbsentPerm}%"></div>
-                        </div>
-                        <div class="distribution-value">${absentPerm} (${pctAbsentPerm}%)</div>
-                    </div>
-                    <div class="distribution-row">
-                        <div class="distribution-label">${isKm ? 'អត់ច្បាប់ (Unexcused)' : 'Unexcused'}</div>
-                        <div class="distribution-bar-wrapper">
-                            <div class="distribution-bar bg-red" style="width: ${pctAbsentUnperm}%"></div>
-                        </div>
-                        <div class="distribution-value">${absentUnperm} (${pctAbsentUnperm}%)</div>
-                    </div>
-                </div>
-                
-                <!-- Behavior Summary -->
-                <div class="visual-card">
-                    <div class="visual-card-title">
-                        <i class="fa-solid fa-users"></i>
-                        <span>${isKm ? 'ស្ថិតិវិន័យ និងឥរិយាបថ' : 'Discipline & Behavior'}</span>
-                    </div>
-                    <div class="progress-stat-row">
-                        <span class="progress-stat-label">${isKm ? 'ឥរិយាបថល្អណាស់ (Very Good Behavior)' : 'Very Good Behavior'}</span>
-                        <span class="progress-stat-value text-green">${(((total - absentPerm - absentUnperm) / total) * 100).toFixed(0)}%</span>
-                    </div>
-                    <div class="progress-stat-row">
-                        <span class="progress-stat-label">${isKm ? 'សិស្សឆ្នើមប្រចាំថ្ងៃ' : 'Outstanding Behavior'}</span>
-                        <span class="progress-stat-value text-purple">${(total > 3 ? 3 : total)} ${isKm ? 'នាក់' : 'students'}</span>
-                    </div>
-                    <div class="progress-stat-row">
-                        <span class="progress-stat-label">${isKm ? 'សិស្សត្រូវការការណែនាំ' : 'Needs attention'}</span>
-                        <span class="progress-stat-value text-red">${absentUnperm} ${isKm ? 'នាក់' : 'students'}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-        return;
-    }
-    
-    // Monthly / Semester / Yearly Grade Distribution
+    // Daily/Weekly will now use the standard Grade Distribution below.
     const total = rankedData.length;
     if (total === 0) return;
     
-    let grades = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
+    let grades = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
     let passed = 0;
     let sumAvg = 0;
     
@@ -1540,7 +1458,7 @@ function renderVisualSummary(rankedData, period, classId) {
     
     // Build distribution bars HTML
     let distHTML = "";
-    ['A', 'B', 'C', 'D', 'E', 'F'].forEach(g => {
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G'].forEach(g => {
         const count = grades[g];
         const pct = ((count / total) * 100).toFixed(0);
         const color = getGradeColorClass(g);
@@ -1619,7 +1537,7 @@ function renderVisualSummary(rankedData, period, classId) {
             <div class="visual-card">
                 <div class="visual-card-title">
                     <i class="fa-solid fa-chart-column"></i>
-                    <span>${isKm ? 'លទ្ធផលនិទ្ទេសសរុបប្រចាំថ្នាក់' : 'Class Grade Distribution'}</span>
+                    <span>${isKm ? 'សង្ខេបពិន្ទុសិស្ស' : 'Class Grade Distribution'}</span>
                 </div>
                 ${distHTML}
             </div>
