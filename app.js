@@ -102,6 +102,7 @@ const translations = {
         subjects: "កំណត់មុខវិជ្ជា",
         scores: "បញ្ចូលពិន្ទុ",
         reports: "របាយការណ៍ពិន្ទុ",
+        "academic-reports": "របាយការណ៍សិក្សា",
         settings: "ទិន្នន័យ & ការកំណត់",
         messages: "សារស្នើសុំ",
         users: "គ្រប់គ្រងគណនី",
@@ -148,6 +149,7 @@ const translations = {
         subjects: "Subjects Config",
         scores: "Enter Scores",
         reports: "Score Reports",
+        "academic-reports": "Academic Reports",
         settings: "Data & Settings",
         messages: "Messages Requests",
         users: "User Accounts",
@@ -741,6 +743,11 @@ function setupNavigation() {
                 initSelectors();
                 if (window.goBackToReportDashboard) window.goBackToReportDashboard();
             }
+            if (tabId === "academic-reports") {
+                initAcadSelectors();
+                document.getElementById("acadReportContainer").style.display = "none";
+                document.getElementById("acadPlaceholder").style.display = "block";
+            }
             if (tabId === "messages") renderMessagesPanel();
             if (tabId === "users") initUserPanel();
         });
@@ -1114,39 +1121,62 @@ function initSelectors() {
     // Score Selectors
     const scoreClassSel = document.getElementById("scoreFilterClass");
     const scoreSubSel = document.getElementById("scoreFilterSubject");
+    const scorePeriodSel = document.getElementById("scoreFilterPeriod");
     
     // Report Selectors
     const reportClassSel = document.getElementById("reportFilterClass");
     
+    // Preserve current selections
+    const currentScoreClass = scoreClassSel ? scoreClassSel.value : null;
+    const currentScoreSub = scoreSubSel ? scoreSubSel.value : null;
+    const currentScorePeriod = scorePeriodSel ? scorePeriodSel.value : null;
+    const currentReportClass = reportClassSel ? reportClassSel.value : null;
+    
     // Seed Classes
-    scoreClassSel.innerHTML = "";
-    reportClassSel.innerHTML = "";
+    if (scoreClassSel) scoreClassSel.innerHTML = "";
+    if (reportClassSel) reportClassSel.innerHTML = "";
     
     if (appState.classes.length === 0) {
         const opt = `<option value="" data-km="-- គ្មានថ្នាក់រៀន --" data-en="-- No Classes Available --">-- គ្មានថ្នាក់រៀន --</option>`;
-        scoreClassSel.innerHTML = opt;
-        reportClassSel.innerHTML = opt;
+        if (scoreClassSel) scoreClassSel.innerHTML = opt;
+        if (reportClassSel) reportClassSel.innerHTML = opt;
     } else {
         appState.classes.forEach(c => {
             const opt = `<option value="${c.id}">${c.name}</option>`;
-            scoreClassSel.innerHTML += opt;
-            reportClassSel.innerHTML += opt;
+            if (scoreClassSel) scoreClassSel.innerHTML += opt;
+            if (reportClassSel) reportClassSel.innerHTML += opt;
         });
+        
+        // Restore selections if valid
+        if (scoreClassSel && currentScoreClass && appState.classes.find(c => c.id === currentScoreClass)) {
+            scoreClassSel.value = currentScoreClass;
+        }
+        if (reportClassSel && currentReportClass && appState.classes.find(c => c.id === currentReportClass)) {
+            reportClassSel.value = currentReportClass;
+        }
     }
     
-    // Seed Subjects
-    scoreSubSel.innerHTML = "";
-    if (appState.subjects.length === 0) {
-        scoreSubSel.innerHTML = `<option value="" data-km="-- គ្មានមុខវិជ្ជា --" data-en="-- No Subjects Configured --">-- គ្មានមុខវិជ្ជា --</option>`;
-    } else {
-        appState.subjects.forEach(sub => {
-            const name = appState.language === 'km' ? sub.name : `${sub.name} (${sub.nameEn})`;
-            scoreSubSel.innerHTML += `<option value="${sub.id}">${name}</option>`;
-        });
-    }
-    
+    // Seed Subjects by calling the updater helper
     updateScoreSubjectSelector();
+    
+    // Try to restore subject selection
+    if (scoreSubSel && currentScoreSub) {
+        const optionExists = Array.from(scoreSubSel.options).some(opt => opt.value === currentScoreSub);
+        if (optionExists) {
+            scoreSubSel.value = currentScoreSub;
+        }
+    }
+
+    if (scorePeriodSel && currentScorePeriod) {
+        scorePeriodSel.value = currentScorePeriod;
+    }
+    
     applyLanguage();
+    
+    // Auto-fetch data without clicking button if in Score tab
+    if (document.getElementById("scoreViewContainer") && document.getElementById("scoreViewContainer").style.display !== "none") {
+        if (typeof loadScoreSheet === 'function') loadScoreSheet();
+    }
 }
 
 // Helper: Filter score entry subjects selector based on selected class
@@ -1909,6 +1939,202 @@ function exportReportCSV() {
 }
 
 // ----------------------------------------------------
+// ACADEMIC REPORTS & GOOGLE SHEETS INTEGRATION
+// ----------------------------------------------------
+function initAcadSelectors() {
+    const acadClassSel = document.getElementById("acadFilterClass");
+    if (!acadClassSel) return;
+    
+    const currentAcadClass = acadClassSel.value;
+    const acadPeriodSel = document.getElementById("acadFilterPeriod");
+    const currentAcadPeriod = acadPeriodSel ? acadPeriodSel.value : null;
+    
+    acadClassSel.innerHTML = "";
+    if (appState.classes.length === 0) {
+        const opt = `<option value="" data-km="-- គ្មានថ្នាក់រៀន --" data-en="-- No Classes Available --">-- គ្មានថ្នាក់រៀន --</option>`;
+        acadClassSel.innerHTML = opt;
+    } else {
+        appState.classes.forEach(c => {
+            const opt = `<option value="${c.id}">${c.name}</option>`;
+            acadClassSel.innerHTML += opt;
+        });
+        
+        if (currentAcadClass && appState.classes.find(c => c.id === currentAcadClass)) {
+            acadClassSel.value = currentAcadClass;
+        }
+    }
+    
+    if (acadPeriodSel && currentAcadPeriod) {
+        acadPeriodSel.value = currentAcadPeriod;
+    }
+    
+    if (document.getElementById("acadReportContainer") && document.getElementById("acadReportContainer").style.display !== "none") {
+        if (typeof generateAcademicReport === 'function') generateAcademicReport();
+    }
+    
+    // Also load Google Sheets URL
+    const urlInput = document.getElementById("googleSheetsUrlInput");
+    if (urlInput) {
+        urlInput.value = appState.googleSheetsUrl || "";
+    }
+    
+    // Seed Google Apps Script code template
+    const templateTextarea = document.getElementById("appsScriptTemplateCode");
+    if (templateTextarea) {
+        templateTextarea.value = `/* 
+Google Apps Script to integrate primary school grading app with Google Sheets.
+Paste this script in Extensions > Apps Script of your spreadsheet and click Deploy > New Deployment (Web App).
+*/
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // Clear and build headers
+    sheet.clear();
+    sheet.appendRow(["ល.រ (No.)", "លេខសម្គាល់ (Student ID)", "ឈ្មោះសិស្ស (Name)", "ភេទ (Gender)", "ថ្នាក់ (Class)", "មធ្យមភាគ (Average)", "និទ្ទេស (Grade)", "លទ្ធផល (Result)"]);
+    
+    var rowIndex = 1;
+    data.classes.forEach(function(c) {
+      c.students.forEach(function(stu) {
+        // Calculate average
+        var scores = data.scores[stu.id] || {};
+        var sum = 0;
+        var count = 0;
+        
+        // Loop over months and subjects to write a simple average
+        Object.keys(scores).forEach(function(p) {
+          Object.keys(scores[p]).forEach(function(subId) {
+            sum += parseFloat(scores[p][subId]);
+            count++;
+          });
+        });
+        
+        var avg = count > 0 ? (sum / count) : 0;
+        var grade = "F";
+        if (avg >= 9.0) grade = "A";
+        else if (avg >= 8.0) grade = "B";
+        else if (avg >= 6.5) grade = "C";
+        else if (avg >= 5.0) grade = "D";
+        else if (avg >= 3.5) grade = "E";
+        
+        var result = avg >= 5.0 ? "ជាប់ (Pass)" : "ធ្លាក់ (Fail)";
+        
+        sheet.appendRow([rowIndex++, stu.id, stu.name, stu.gender, c.name, avg.toFixed(2), grade, result]);
+      });
+    });
+    
+    return ContentService.createTextOutput(JSON.stringify({status: "success", message: "Data synced successfully!"}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({status: "error", message: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+    }
+}
+
+function generateAcademicReport() {
+    const classId = document.getElementById("acadFilterClass").value;
+    const period = document.getElementById("acadFilterPeriod").value;
+    
+    if (!classId || !period) return;
+    
+    const targetClass = appState.classes.find(c => c.id === classId);
+    if (!targetClass) return;
+    
+    document.getElementById("acadPlaceholder").style.display = "none";
+    document.getElementById("acadReportContainer").style.display = "block";
+    
+    // Meta values
+    const classText = targetClass.name;
+    const periodLabel = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || period;
+    
+    document.getElementById("acadMetaClass").textContent = classText;
+    document.getElementById("acadMetaPeriod").textContent = periodLabel;
+    
+    const teacherNameText = targetClass.teacherName || (appState.language === 'km' ? 'មិនទាន់ចាត់តាំង' : 'Not Assigned');
+    document.getElementById("acadMetaTeacher").textContent = teacherNameText;
+    document.getElementById("acadPrintTeacherName").textContent = targetClass.teacherName ? (appState.language === 'km' ? `អ្នកគ្រូ/លោកគ្រូ៖ ${targetClass.teacherName}` : `Teacher: ${targetClass.teacherName}`) : "";
+    
+    const today = new Date();
+    document.getElementById("acadMetaDate").textContent = today.toLocaleDateString(appState.language === 'km' ? 'km-KH' : 'en-US');
+    
+    // Get Ranks
+    const rankedData = rankStudentsInClass(classId, period);
+    
+    // Render rows
+    const tbody = document.getElementById("acadTableBody");
+    tbody.innerHTML = "";
+    
+    if (rankedData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center" data-km="គ្មានទិន្នន័យដើម្បីបង្ហាញ" data-en="No records available to display.">គ្មានទិន្នន័យដើម្បីបង្ហាញ</td></tr>`;
+    } else {
+        rankedData.forEach(row => {
+            const stu = row.student;
+            let genderText = stu.gender || "";
+            if (appState.language === 'en') {
+                if (stu.gender === 'ស្រី') genderText = 'Female';
+                else if (stu.gender === 'ប្រុស') genderText = 'Male';
+            }
+            
+            const displayAvg = row.average.toFixed(2);
+            const statusClass = row.average >= 5.0 ? "badge-pass" : "badge-fail";
+            const gradeLetter = getGradeLetter(row.average);
+            const gradeLabelText = getGradeLabel(gradeLetter, appState.language);
+            
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${row.rank}</td>
+                <td>${stu.id}</td>
+                <td class="text-left"><strong>${stu.name}</strong></td>
+                <td>${genderText}</td>
+                <td><span style="color: var(--primary-blue); font-weight:700;">${displayAvg}</span></td>
+                <td><span class="badge ${getGradeColorClass(gradeLetter)}">${gradeLabelText}</span></td>
+                <td><span class="badge ${statusClass}">${row.status}</span></td>
+                <td><strong>${row.rank}</strong></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    
+    applyLanguage();
+}
+
+function saveSheetsUrl() {
+    const url = document.getElementById("googleSheetsUrlInput").value.trim();
+    appState.googleSheetsUrl = url;
+    saveState();
+    showToast(appState.language === 'km' ? 'រក្សាទុក URL ជោគជ័យ!' : 'URL saved successfully!', 'success');
+}
+
+async function syncToGoogleSheets() {
+    const url = document.getElementById("googleSheetsUrlInput").value.trim();
+    if (!url) {
+        showToast(appState.language === 'km' ? 'សូមបញ្ចូល Web App URL ជាមុនសិន' : 'Please input Web App URL first', 'error');
+        return;
+    }
+    
+    showToast(appState.language === 'km' ? 'កំពុង Sync ទៅកាន់ Google Sheets...' : 'Syncing to Google Sheets...', 'info');
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(appState)
+        });
+        
+        showToast(appState.language === 'km' ? 'Sync ទៅកាន់ Google Sheets បានជោគជ័យ!' : 'Sync to Google Sheets successful!', 'success');
+    } catch (e) {
+        console.error("Sheets Sync Error: ", e);
+        showToast(appState.language === 'km' ? 'ការ Sync បានបរាជ័យ៖ ' + e.message : 'Sync failed: ' + e.message, 'error');
+    }
+}
+
+// ----------------------------------------------------
 // DATABASE & FILE UTILITIES
 // ----------------------------------------------------
 function exportDatabase() {
@@ -2293,6 +2519,21 @@ function setupEventListeners() {
 
     // Export Report CSV
     document.getElementById("btnExportReportCSV").addEventListener("click", exportReportCSV);
+
+    // Academic Reports Events
+    document.getElementById("acadFilterClass").addEventListener("change", generateAcademicReport);
+    document.getElementById("acadFilterPeriod").addEventListener("change", generateAcademicReport);
+    document.getElementById("btnSaveSheetsUrl").addEventListener("click", saveSheetsUrl);
+    document.getElementById("btnSyncToSheets").addEventListener("click", syncToGoogleSheets);
+    document.getElementById("btnGenerateAcadReport").addEventListener("click", generateAcademicReport);
+    
+    document.getElementById("btnPrintAcadReport").addEventListener("click", () => {
+        window.print();
+    });
+    
+    document.getElementById("btnExportAcadPDF").addEventListener("click", () => {
+        window.print();
+    });
 
     // Export / Import Settings
     document.getElementById("btnExportData").addEventListener("click", exportDatabase);
