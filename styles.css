@@ -2002,3 +2002,56 @@ body {
 .sidebar.expanded .toggle-text, .sidebar.expanded .lang-text {
     display: inline-block !important;
 }
+
+/* Sidebar Collapse Toggle (Desktop) */
+@media (min-width: 1025px) {
+    .sidebar.collapsed {
+        width: 80px !important;
+        padding: 1.5rem 0.5rem !important;
+        align-items: center !important;
+    }
+    .sidebar.collapsed .brand-details,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .toggle-text,
+    .sidebar.collapsed .lang-text {
+        display: none !important;
+    }
+    .sidebar.collapsed .sidebar-header {
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    .sidebar.collapsed .sidebar-nav {
+        align-items: center !important;
+    }
+    .sidebar.collapsed .nav-item {
+        width: 46px !important;
+        height: 46px !important;
+        padding: 0 !important;
+        justify-content: center !important;
+    }
+    .sidebar.collapsed .nav-item i {
+        margin: 0 !important;
+    }
+    .sidebar.collapsed .sidebar-footer {
+        align-items: center !important;
+    }
+    .sidebar.collapsed .theme-toggle, .sidebar.collapsed .lang-toggle {
+        width: 46px !important;
+        height: 46px !important;
+        padding: 0 !important;
+        justify-content: center !important;
+    }
+    .sidebar.collapsed .theme-toggle i, .sidebar.collapsed .lang-toggle i {
+        margin: 0 !important;
+    }
+    .sidebar.collapsed .logo-container {
+        display: none !important;
+    }
+    .sidebar.collapsed .sidebar-toggle {
+        margin-left: 0 !important;
+    }
+    .main-content.sidebar-collapsed {
+        margin-left: 80px !important;
+        width: calc(100% - 80px) !important;
+    }
+}

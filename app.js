@@ -2540,11 +2540,19 @@ function setupEventListeners() {
         mobileMenuBtn.addEventListener("click", toggleMobileMenu);
         sidebarOverlay.addEventListener("click", closeMobileMenu);
         
-        // Tablet Sidebar Expand Toggle
+        // Desktop/Tablet Sidebar Toggle
         const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
-        if (sidebarToggleBtn) {
+        const mainContent = document.querySelector(".main-content");
+        if (sidebarToggleBtn && mainContent) {
             sidebarToggleBtn.addEventListener("click", () => {
-                sidebar.classList.toggle("expanded");
+                if (window.innerWidth > 1024) {
+                    // Desktop: Toggle collapse
+                    sidebar.classList.toggle("collapsed");
+                    mainContent.classList.toggle("sidebar-collapsed");
+                } else {
+                    // Tablet: Toggle expand
+                    sidebar.classList.toggle("expanded");
+                }
             });
         }
 
