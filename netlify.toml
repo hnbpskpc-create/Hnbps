@@ -1,0 +1,23 @@
+[build]
+  # No build command is required for vanilla HTML/JS/CSS
+  command = ""
+  
+  # The directory containing the index.html file
+  publish = "."
+
+# Ensure that caching headers are set correctly for static assets
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Cache static assets like JS and CSS longer
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

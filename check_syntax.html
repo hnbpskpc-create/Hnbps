@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><title>JS Syntax Check</title></head>
+<body>
+<h2>app.js Syntax Check</h2>
+<pre id="result" style="background:#f5f5f5;padding:20px;border-radius:8px;font-size:14px;">Loading app.js...</pre>
+<script>
+window.onerror = function(msg, src, line, col, err) {
+    var r = document.getElementById('result');
+    r.style.background = '#fee';
+    r.textContent = 'ERROR at line ' + line + ', col ' + col + ':\n' + msg + '\n\nSource: ' + src;
+    if (err && err.stack) r.textContent += '\n\nStack:\n' + err.stack;
+    return true;
+};
+</script>
+<script src="app.js"></script>
+<script>
+var r = document.getElementById('result');
+if (typeof selectLoginRole === 'function') {
+    r.style.background = '#efe';
+    r.textContent = 'SUCCESS: app.js loaded correctly!\nselectLoginRole is defined.\nAll functions should work.';
+} else if (typeof DEFAULT_STATE !== 'undefined') {
+    r.style.background = '#ffe';
+    r.textContent = 'PARTIAL: app.js partially loaded.\nDEFAULT_STATE exists but selectLoginRole is missing.\nThere may be a runtime error.';
+} else {
+    r.style.background = '#fee';
+    r.textContent += '\n\nFAILED: Nothing from app.js is defined.\nThe file has a syntax error preventing it from loading entirely.';
+}
+</script>
+</body>
+</html>
