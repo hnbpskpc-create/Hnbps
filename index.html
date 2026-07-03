@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="km" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ប្រព័ន្ធគ្រប់គ្រងពិន្ទុសិស្សបឋមសិក្សា - Grading System</title>
+    <!-- Google Fonts: Kantumruy Pro (Khmer) and Outfit (English/Numbers) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Early error catcher: catches JS errors before app.js loads -->
+    <script>
+        window.onerror = function(msg, src, line, col, err) {
+            // Ignore cross-origin "Script error." from external scripts (Google Translate etc.)
+            if (msg === 'Script error.' && line === 0) return true;
+            if (msg && msg.toLowerCase().includes('script error')) return true;
+            var banner = document.getElementById('jsErrorBanner');
+            if (banner) {
+                banner.style.display = 'block';
+                banner.textContent = 'Error (L' + line + '): ' + msg;
+            }
+            var resetSection = document.getElementById('emergencyResetSection');
+            if (resetSection) resetSection.style.display = 'block';
+            return false;
+        };
+    </script>
+</head>
+<body>
+    <!-- Login Screen Overlay -->
+    <div id="loginScreen" class="login-screen-overlay active">
+        <div class="login-container card-style">
+            <div class="login-header">
+                <i class="fa-solid fa-graduation-cap login-logo"></i>
+                <h2 data-km="ប្រព័ន្ធគ្រប់គ្រងពិន្ទុសិស្សបឋមសិក្សា" data-en="Primary School Grading System">ប្រព័ន្ធគ្រប់គ្រងពិន្ទុសិស្សបឋមសិក្សា</h2>
+                <p data-km="សូមជ្រើសរើសតួនាទីដើម្បីចូលប្រើប្រាស់" data-en="Please select a role to login">សូមជ្រើសរើសតួនាទីដើម្បីចូលប្រើប្រាស់</p>
+                <!-- JS Error Banner -->
+                <div id="jsErrorBanner" style="display:none; background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.4); color:#dc2626; border-radius:8px; padding:0.5rem 1rem; margin-top:0.75rem; font-size:0.8rem; text-align:left; word-break:break-all;"></div>
+            </div>
+            
+            <!-- Step 1: Role Selection -->
+            <div id="loginStepEmail" class="login-step">
+                <form id="emailLoginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" data-km="អ៊ីមែល (Email)៖" data-en="Email:">អ៊ីមែល (Email)៖</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="user@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" data-km="ពាក្យសម្ងាត់ (Password)៖" data-en="Password:">ពាក្យសម្ងាត់ (Password)៖</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required style="padding-right: 2.75rem;">
+                            <button type="button" id="btnTogglePassword" class="btn-toggle-password" title="Show/Hide Password">
+                                <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary" data-km="ចូលប្រើប្រាស់" data-en="Login">ចូលប្រើប្រាស់</button>
+                    </div>
+                </form>
+                
+                <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <div class="lang-toggle-login" id="langToggleBtnLogin" style="margin-top: 0;">
+                        <i class="fa-solid fa-globe"></i> <span id="loginLangText">English</span>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-sm" id="btnRegisterUserOpen" style="border-radius: 20px; font-weight: 600; font-size: 0.8rem; padding: 0.4rem 1.1rem; border-color: var(--border-color); color: var(--text-main);">
+                        <i class="fa-solid fa-user-plus"></i> <span data-km="ចុះឈ្មោះគណនីថ្មី" data-en="Register Account">ចុះឈ្មោះគណនីថ្មី</span>
+                    </button>
+                </div>
+                
+                <!-- Emergency Reset: only shown when JS fails to load correctly -->
+                <div id="emergencyResetSection" style="display:none; margin-top:1rem; text-align:center;">
+                    <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem;">⚠️ ប្រព័ន្ធមានបញ្ហា / System error detected</p>
+                    <button type="button" onclick="emergencyResetAndReload()" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.4); color:#dc2626; border-radius:8px; padding:0.4rem 1rem; font-size:0.8rem; cursor:pointer;">
+                        <i class="fa-solid fa-rotate-right"></i> កំណត់ទិន្នន័យឡើងវិញ / Reset &amp; Reload
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin / Teacher Interface Layout -->
+    <div id="adminTeacherLayout" class="app-container" style="display: none;">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <i class="fa-solid fa-graduation-cap logo-icon"></i>
+                </div>
+                <div class="brand-details">
+                    <h2 class="brand-title">ពិន្ទុបឋមសិក្សា</h2>
+                    <p class="brand-subtitle">Grading System</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span class="nav-text" data-km="ផ្ទាំងគ្រប់គ្រង" data-en="Dashboard">ផ្ទាំងគ្រប់គ្រង</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="classes">
+                    <i class="fa-solid fa-school"></i>
+                    <span class="nav-text" data-km="គ្រប់គ្រងថ្នាក់រៀន" data-en="Manage Classes">គ្រប់គ្រងថ្នាក់រៀន</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="subjects">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span class="nav-text" data-km="កំណត់មុខវិជ្ជា" data-en="Subjects Config">កំណត់មុខវិជ្ជា</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="scores">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span class="nav-text" data-km="បញ្ចូលពិន្ទុ" data-en="Enter Scores">បញ្ចូលពិន្ទុ</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="reports">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span class="nav-text" data-km="របាយការណ៍ពិន្ទុ" data-en="Score Reports">របាយការណ៍ពិន្ទុ</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="messages" id="navItemMessages">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span class="nav-text" data-km="សារស្នើសុំ" data-en="Messages">សារស្នើសុំ</span>
+                    <span class="badge" id="msgCountBadge" style="display: none; background: var(--crimson-red); color: white; border-radius: 50%; padding: 0.15rem 0.45rem; font-size: 0.75rem; font-weight: bold; margin-left: auto;">0</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="users" id="navItemUsers" style="display: none;">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span class="nav-text" data-km="គ្រប់គ្រងគណនី" data-en="User Accounts">គ្រប់គ្រងគណនី</span>
+                    <span class="badge" id="userBadge" style="display: none; background: var(--amber-orange); color: white; border-radius: 50%; padding: 0.15rem 0.45rem; font-size: 0.75rem; font-weight: bold; margin-left: auto;">0</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="settings">
+                    <i class="fa-solid fa-database"></i>
+                    <span class="nav-text" data-km="ទិន្នន័យ & ការកំណត់" data-en="Data & Settings">ទិន្នន័យ & ការកំណត់</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="theme-toggle" id="themeToggleBtn" title="Toggle Light/Dark Mode">
+                    <i class="fa-solid fa-moon dark-icon"></i>
+                    <i class="fa-solid fa-sun light-icon"></i>
+                    <span class="toggle-text" data-km="របៀបងងឹត" data-en="Dark Mode">របៀបងងឹត</span>
+                </div>
+                <div class="lang-toggle" id="langToggleBtn" title="ប្តូរភាសា / Switch Language">
+                    <i class="fa-solid fa-globe"></i>
+                    <span class="lang-text">English</span>
+                </div>
+                <div class="logout-btn-action" id="btnAdminTeacherLogout" title="ចាកចេញ / Logout" style="display:flex; align-items:center; gap:0.5rem; padding:0.65rem 0.85rem; cursor:pointer; font-size:0.85rem; font-weight:600; color:var(--crimson-red); border-top:1px solid var(--border-color); margin-top:0.5rem;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span data-km="ចាកចេញ" data-en="Logout">ចាកចេញ</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Mobile Sidebar Overlay Backdrop -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header bar -->
+            <header class="content-header">
+                <button class="btn btn-icon no-print" id="btnToggleMobileMenu" style="display: none; padding: 0.5rem; margin-right: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <i class="fa-solid fa-bars" style="font-size: 1.2rem;"></i>
+                </button>
+                <h1 id="pageTitle" class="page-title" data-km="ផ្ទាំងគ្រប់គ្រង" data-en="Dashboard" style="flex-grow: 1;">ផ្ទាំងគ្រប់គ្រង</h1>
+                <div class="current-date-time">
+                    <i class="fa-regular fa-clock"></i>
+                    <span id="dateTimeString">01-07-2026</span>
+                </div>
+            </header>
+
+            <!-- Dashboard Panel -->
+            <section id="dashboardPanel" class="tab-panel active" style="padding-top: 0;">
+                <div style="display:flex; flex-direction:column; gap:1.5rem;">
+                <!-- 1. Top Purple Banner -->
+                <div class="dash-purple-banner">
+                    <div class="banner-left">
+                        <div class="banner-breadcrumb"><i class="fa-solid fa-house"></i> DASHBOARD.OVERVIEW - <span id="dashRoleBanner">ADMIN</span></div>
+                        <h2 class="banner-date" id="dashDateBanner">Wednesday, July 1, 2026</h2>
+                        <div class="banner-time-row">
+                            <span id="dashTimeBanner">00:00:00</span> &bull; Cambodia - ICT
+                            <span class="live-badge"><i class="fa-solid fa-circle" style="font-size:8px;margin-right:4px;"></i> Live</span>
+                        </div>
+                        <div class="banner-actions">
+                            <button class="banner-btn"><i class="fa-regular fa-calendar"></i> <span data-km="ថ្ងៃនេះ" data-en="Today">ថ្ងៃនេះ</span></button>
+                            <button class="banner-btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> <span data-km="ផ្ទុកឡើងវិញ" data-en="Refresh">ផ្ទុកឡើងវិញ</span></button>
+                        </div>
+                    </div>
+                    
+                    <div class="banner-right">
+                        <div class="circular-chart-container">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path class="circle-bg"
+                                    d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                                <path class="circle" id="dashPassingCircle"
+                                    stroke-dasharray="0, 100"
+                                    d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                                <text x="18" y="16.5" class="percentage" id="dashPassingText">0%</text>
+                                <text x="18" y="22" class="chart-label" data-km="អត្រាប្រឡងជាប់" data-en="PASSING RATE">អត្រាប្រឡងជាប់</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="banner-stats">
+                            <div class="banner-stat-item">
+                                <span class="bs-label" data-km="សិស្សសរុប" data-en="TOTAL">សិស្សសរុប</span>
+                                <span class="bs-value" id="dashTotalStus">0</span>
+                            </div>
+                            <div class="banner-stat-item">
+                                <span class="bs-label" data-km="ជាប់" data-en="PASSED">ជាប់</span>
+                                <span class="bs-value" id="dashTotalPassed">0</span>
+                            </div>
+                            <div class="banner-stat-item" style="margin-top:0.75rem;">
+                                <span class="bs-label" data-km="ធ្លាក់" data-en="FAILED">ធ្លាក់</span>
+                                <span class="bs-value" id="dashTotalFailed">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Quick Action Buttons Grid -->
+                <div class="quick-actions-grid">
+                    <div class="qa-card" onclick="document.querySelector('[data-tab=\'scores\']').click()">
+                        <i class="fa-solid fa-pen-to-square" style="color:var(--primary-blue)"></i>
+                        <span data-km="បញ្ចូលពិន្ទុ" data-en="Enter Scores">បញ្ចូលពិន្ទុ</span>
+                    </div>
+                    <div class="qa-card" onclick="document.querySelector('[data-tab=\'classes\']').click()">
+                        <i class="fa-solid fa-school" style="color:var(--emerald-green)"></i>
+                        <span data-km="ថ្នាក់រៀន" data-en="Classes">ថ្នាក់រៀន</span>
+                    </div>
+                    <div class="qa-card" onclick="document.querySelector('[data-tab=\'subjects\']').click()">
+                        <i class="fa-solid fa-book-open" style="color:var(--amber-orange)"></i>
+                        <span data-km="មុខវិជ្ជា" data-en="Subjects">មុខវិជ្ជា</span>
+                    </div>
+                    <div class="qa-card" onclick="document.querySelector('[data-tab=\'reports\']').click()">
+                        <i class="fa-solid fa-file-invoice" style="color:var(--purple-indigo)"></i>
+                        <span data-km="របាយការណ៍" data-en="Reports">របាយការណ៍</span>
+                    </div>
+                    <div class="qa-card" id="qaBtnUsers" onclick="document.querySelector('[data-tab=\'users\']').click()">
+                        <i class="fa-solid fa-users-gear" style="color:var(--crimson-red)"></i>
+                        <span data-km="គណនីប្រើប្រាស់" data-en="Users">គណនីប្រើប្រាស់</span>
+                    </div>
+                    <div class="qa-card" onclick="document.querySelector('[data-tab=\'messages\']').click()">
+                        <i class="fa-solid fa-envelope" style="color:#0ea5e9"></i>
+                        <span data-km="សារស្នើសុំ" data-en="Messages">សារស្នើសុំ</span>
+                    </div>
+                    <div class="qa-card" onclick="document.querySelector('[data-tab=\'settings\']').click()">
+                        <i class="fa-solid fa-gear" style="color:#64748b"></i>
+                        <span data-km="ការកំណត់" data-en="Settings">ការកំណត់</span>
+                    </div>
+                    <div class="qa-card" id="btnDashAddUser">
+                        <i class="fa-solid fa-user-plus" style="color:#10b981"></i>
+                        <span data-km="បន្ថែមគណនី" data-en="Add User Account">បន្ថែមគណនី</span>
+                    </div>
+                </div>
+
+                <!-- 3. Summary Cards -->
+                <div class="summary-cards-grid">
+                    <div class="sum-card" style="background-color: #e0f2fe; border: 1px solid #bae6fd;">
+                        <div class="sum-card-header"><i class="fa-solid fa-trophy" style="color:#0ea5e9"></i> <span data-km="សិស្សឆ្នើម" data-en="TOP STUDENTS">សិស្សឆ្នើម</span></div>
+                        <div class="sum-card-val" style="color:#0ea5e9" id="sumTopStudentsCount">0</div>
+                        <div class="sum-card-sub" style="color:#0284c7" data-km="សិស្សពិន្ទុមធ្យម ≥ ៩.០" data-en="Students with avg >= 9.0">សិស្សពិន្ទុមធ្យម ≥ ៩.០</div>
+                    </div>
+                    <div class="sum-card" style="background-color: #ecfdf5; border: 1px solid #a7f3d0;">
+                        <div class="sum-card-header"><i class="fa-solid fa-star" style="color:#10b981"></i> <span data-km="ថ្នាក់រៀនល្អបំផុត" data-en="BEST CLASS">ថ្នាក់រៀនល្អបំផុត</span></div>
+                        <div class="sum-card-val" style="color:#10b981" id="sumBestClass">N/A</div>
+                        <div class="sum-card-sub" style="color:#047857" data-km="អត្រាប្រឡងជាប់ខ្ពស់ជាងគេ" data-en="Highest overall passing rate">អត្រាប្រឡងជាប់ខ្ពស់ជាងគេ</div>
+                    </div>
+                    <div class="sum-card" style="background-color: #fef9c3; border: 1px solid #fde047;">
+                        <div class="sum-card-header"><i class="fa-solid fa-bell" style="color:#eab308"></i> <span data-km="សារថ្មី" data-en="NEW MESSAGES">សារថ្មី</span></div>
+                        <div class="sum-card-val" style="color:#eab308" id="sumNewMessages">0</div>
+                        <div class="sum-card-sub" style="color:#a16207" data-km="សំណើត្រូវពិនិត្យ" data-en="Pending requests to review">សំណើត្រូវពិនិត្យ</div>
+                    </div>
+                    <div class="sum-card" style="background-color: #fef2f2; border: 1px solid #fecaca;">
+                        <div class="sum-card-header"><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444"></i> <span data-km="ត្រូវយកចិត្តទុកដាក់" data-en="NEEDS ATTENTION">ត្រូវយកចិត្តទុកដាក់</span></div>
+                        <div class="sum-card-val" style="color:#ef4444" id="sumNeedsAttention">0</div>
+                        <div class="sum-card-sub" style="color:#b91c1c" data-km="សិស្សដែលប្រឡងធ្លាក់" data-en="Students who failed">សិស្សដែលប្រឡងធ្លាក់</div>
+                    </div>
+                </div>
+
+                <!-- 4. Performance Summary Bar -->
+                <div class="perf-summary-container">
+                    <div class="perf-header">
+                        <div class="perf-title"><span style="color:var(--primary-blue);font-weight:900;margin-right:8px;">|</span> <span data-km="របាយការណ៍លទ្ធផលសិក្សាសរុប" data-en="STUDENTS PERFORMANCE SUMMARY">របាយការណ៍លទ្ធផលសិក្សាសរុប</span></div>
+                        <div class="perf-badge" id="perfTotalStudents">0</div>
+                    </div>
+                    
+                    <div class="perf-bars-grid">
+                        <!-- Excellent -->
+                        <div class="perf-stat-box" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+                            <div class="ps-top">
+                                <div class="ps-label" style="color:#16a34a"><i class="fa-regular fa-circle-check"></i> <span data-km="និទ្ទេសល្អណាស់" data-en="EXCELLENT">និទ្ទេសល្អណាស់</span></div>
+                                <div class="ps-circle" style="color:#16a34a" id="perfCircleExc">0%</div>
+                            </div>
+                            <div class="ps-val" style="color:#16a34a" id="perfValExc">0</div>
+                            <div class="ps-sub" style="color:#15803d"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalExc">0</span></div>
+                        </div>
+                        
+                        <!-- Good -->
+                        <div class="perf-stat-box" style="background:#eff6ff; border:1px solid #bfdbfe;">
+                            <div class="ps-top">
+                                <div class="ps-label" style="color:#2563eb"><i class="fa-solid fa-arrow-up"></i> <span data-km="និទ្ទេសល្អ" data-en="GOOD">និទ្ទេសល្អ</span></div>
+                                <div class="ps-circle" style="color:#2563eb" id="perfCircleGood">0%</div>
+                            </div>
+                            <div class="ps-val" style="color:#2563eb" id="perfValGood">0</div>
+                            <div class="ps-sub" style="color:#1d4ed8"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalGood">0</span></div>
+                        </div>
+                        
+                        <!-- Average -->
+                        <div class="perf-stat-box" style="background:#fefce8; border:1px solid #fef08a;">
+                            <div class="ps-top">
+                                <div class="ps-label" style="color:#ca8a04"><i class="fa-solid fa-minus"></i> <span data-km="និទ្ទេសមធ្យម" data-en="AVERAGE">និទ្ទេសមធ្យម</span></div>
+                                <div class="ps-circle" style="color:#ca8a04" id="perfCircleAvg">0%</div>
+                            </div>
+                            <div class="ps-val" style="color:#ca8a04" id="perfValAvg">0</div>
+                            <div class="ps-sub" style="color:#a16207"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalAvg">0</span></div>
+                        </div>
+                        
+                        <!-- Failed -->
+                        <div class="perf-stat-box" style="background:#fef2f2; border:1px solid #fecaca;">
+                            <div class="ps-top">
+                                <div class="ps-label" style="color:#dc2626"><i class="fa-regular fa-circle-xmark"></i> <span data-km="និទ្ទេសខ្សោយ/ធ្លាក់" data-en="FAILED">និទ្ទេសខ្សោយ/ធ្លាក់</span></div>
+                                <div class="ps-circle" style="color:#dc2626" id="perfCircleFail">0%</div>
+                            </div>
+                            <div class="ps-val" style="color:#dc2626" id="perfValFail">0</div>
+                            <div class="ps-sub" style="color:#b91c1c"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalFail">0</span></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- Class Management Panel -->
+            <section id="classesPanel" class="tab-panel">
+                <div class="panel-actions">
+                    <button class="btn btn-primary" id="btnOpenAddClassModal">
+                        <i class="fa-solid fa-plus"></i> <span data-km="បង្កើតថ្នាក់ថ្មី" data-en="Create Class">បង្កើតថ្នាក់ថ្មី</span>
+                    </button>
+                </div>
+                
+                <div class="grid-layout" id="classesContainer">
+                    <!-- Class Cards will be loaded here -->
+                </div>
+
+                <!-- Class Details view (Hidden by default, shown when a class is selected) -->
+                <div id="classDetailView" class="detail-view card-style" style="display: none;">
+                    <div class="detail-header">
+                        <button class="btn btn-icon" id="btnBackToClasses">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <div class="detail-title-group" style="flex-grow: 1;">
+                            <h2 id="currentClassName">ថ្នាក់ទី...</h2>
+                            <p id="currentClassTeacher" class="detail-subtitle" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">គ្រូបន្ទុកថ្នាក់៖ ...</p>
+                        </div>
+                        <div class="detail-header-actions">
+                            <button class="btn btn-outline btn-sm" id="btnEditClass">
+                                <i class="fa-solid fa-pen"></i> <span data-km="កែសម្រួលថ្នាក់" data-en="Edit Class">កែសម្រួលថ្នាក់</span>
+                            </button>
+                            <button class="btn btn-success btn-sm" id="btnOpenAddStudentModal">
+                                <i class="fa-solid fa-user-plus"></i> <span data-km="បន្ថែមសិស្ស" data-en="Add Student">បន្ថែមសិស្ស</span>
+                            </button>
+                            <button class="btn btn-danger btn-sm" id="btnDeleteClass">
+                                <i class="fa-solid fa-trash"></i> <span data-km="លុបថ្នាក់នេះ" data-en="Delete Class">លុបថ្នាក់នេះ</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="studentsTable">
+                            <thead>
+                                <tr>
+                                    <th data-km="លេខរៀង" data-en="No.">លេខរៀង</th>
+                                    <th data-km="លេខសម្គាល់ខ្លួន (ID)" data-en="Student ID">លេខសម្គាល់ខ្លួន (ID)</th>
+                                    <th data-km="ឈ្មោះសិស្ស" data-en="Student Name">ឈ្មោះសិស្ស</th>
+                                    <th data-km="ភេទ" data-en="Gender">ភេទ</th>
+                                    <th data-km="លេខទូរស័ព្ទអាណាព្យាបាល" data-en="Guardian Contact">លេខទូរស័ព្ទអាណាព្យាបាល</th>
+                                    <th data-km="ជំនាន់" data-en="Generation">ជំនាន់</th>
+                                    <th data-km="សកម្មភាព" data-en="Actions">សកម្មភាព</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <!-- Student rows loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Subject Config Panel -->
+            <section id="subjectsPanel" class="tab-panel">
+                <div class="subjects-split-layout">
+                    <div class="card-style form-card">
+                        <h3 id="subjectFormTitle" data-km="បន្ថែមមុខវិជ្ជាថ្មី" data-en="Add New Subject">បន្ថែមមុខវិជ្ជាថ្មី</h3>
+                        <form id="subjectForm">
+                            <input type="hidden" id="editSubjectId" value="">
+                            <div class="form-group">
+                                <label for="subjectName" data-km="ឈ្មោះមុខវិជ្ជា" data-en="Subject Name">ឈ្មោះមុខវិជ្ជា</label>
+                                <input type="text" id="subjectName" required placeholder="ឧ. គណិតវិទ្យា, ភាសាខ្មែរ...">
+                            </div>
+                            <div class="form-group">
+                                <label for="subjectNameEn" data-km="ឈ្មោះមុខវិជ្ជាជាភាសាអង់គ្លេស" data-en="Subject Name (EN)">ឈ្មោះមុខវិជ្ជាជាភាសាអង់គ្លេស</label>
+                                <input type="text" id="subjectNameEn" required placeholder="e.g. Mathematics, Khmer...">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary w-full" id="btnSaveSubject">
+                                    <i class="fa-solid fa-save"></i> <span data-km="រក្សាទុក" data-en="Save Subject">រក្សាទុក</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary w-full hidden" id="btnCancelSubjectEdit">
+                                    <span data-km="បោះបង់" data-en="Cancel">បោះបង់</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-style table-card">
+                        <h3 data-km="បញ្ជីមុខវិជ្ជាទាំងអស់" data-en="All Subjects List">បញ្ជីមុខវិជ្ជាទាំងអស់</h3>
+                        <div class="table-container">
+                            <table class="data-table" id="subjectsTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80px;" data-km="លេខរៀង" data-en="No.">លេខរៀង</th>
+                                        <th data-km="ឈ្មោះមុខវិជ្ជា" data-en="Subject Name (KH)">ឈ្មោះមុខវិជ្ជា</th>
+                                        <th data-km="ឈ្មោះជាភាសាអង់គ្លេស" data-en="Subject Name (EN)">ឈ្មោះជាភាសាអង់គ្លេស</th>
+                                        <th style="width: 120px;" data-km="សកម្មភាព" data-en="Actions">សកម្មភាព</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="subjectsTableBody">
+                                    <!-- Subjects rows loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Score Entry Panel -->
+            <section id="scoresPanel" class="tab-panel">
+                <div class="card-style filter-bar">
+                    <div class="filter-group">
+                        <label for="scoreFilterClass" data-km="ជ្រើសរើសថ្នាក់រៀន" data-en="Select Class">ជ្រើសរើសថ្នាក់រៀន</label>
+                        <select id="scoreFilterClass" class="form-control">
+                            <!-- Loaded dynamically -->
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="scoreFilterPeriod" data-km="ជ្រើសរើសវគ្គ/ខែ" data-en="Select Month/Period">ជ្រើសរើសវគ្គ/ខែ</label>
+                        <select id="scoreFilterPeriod" class="form-control">
+                            <optgroup label="ប្រចាំខែ / Monthly" id="monthlyOptGroup">
+                                <option value="oct" data-km="ខែតុលា" data-en="ខែតុលា (October)">ខែតុលា</option>
+                                <option value="nov" data-km="ខែវិច្ឆិកា" data-en="ខែវិច្ឆិកា (November)">ខែវិច្ឆិកា</option>
+                                <option value="dec" data-km="ខែធ្នូ" data-en="ខែធ្នូ (December)">ខែធ្នូ</option>
+                                <option value="jan" data-km="ខែមករា" data-en="ខែមករា (January)">ខែមករា</option>
+                                <option value="feb" data-km="ខែកុម្ភៈ" data-en="ខែកុម្ភៈ (February)">ខែកុម្ភៈ</option>
+                                <option value="mar" data-km="ខែមីនា" data-en="ខែមីនា (March)">ខែមីនា</option>
+                                <option value="apr" data-km="ខែមេសា" data-en="ខែមេសា (April)">ខែមេសា</option>
+                                <option value="may" data-km="ខែឧសភា" data-en="ខែឧសភា (May)">ខែឧសភា</option>
+                                <option value="jun" data-km="ខែមិថុនា" data-en="ខែមិថុនា (June)">ខែមិថុនា</option>
+                                <option value="jul" data-km="ខែកក្កដា" data-en="ខែកកក្កដា (July)">ខែកក្កដា</option>
+                            </optgroup>
+                            <optgroup label="ប្រឡងឆមាស / Semesters">
+                                <option value="sem1_exam" data-km="ប្រឡងឆមាសទី១" data-en="ប្រឡងឆមាសទី១ (Semester 1 Exam)">ប្រឡងឆមាសទី១</option>
+                                <option value="sem2_exam" data-km="ប្រឡងឆមាសទី២" data-en="ប្រឡងឆមាសទី២ (Semester 2 Exam)">ប្រឡងឆមាសទី២</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="scoreFilterSubject" data-km="ជ្រើសរើសមុខវិជ្ជា" data-en="Select Subject">ជ្រើសរើសមុខវិជ្ជា</label>
+                        <select id="scoreFilterSubject" class="form-control">
+                            <!-- Loaded dynamically -->
+                        </select>
+                    </div>
+                    <div class="filter-group align-end">
+                        <button class="btn btn-primary" id="btnLoadScoreSheet">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span data-km="ទាញយកបញ្ជី" data-en="Load Sheet">ទាញយកបញ្ជី</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-style score-entry-card" id="scoreEntryContainer" style="display: none;">
+                    <div class="score-sheet-header">
+                        <h3 id="scoreSheetTitle">បញ្ចូលពិន្ទុថ្នាក់...</h3>
+                        <p class="score-instructions" data-km="បញ្ចូលពិន្ទុចាប់ពី ០ ដល់ ១០ រួចចុច រក្សាទុកពិន្ទុ។" data-en="Enter scores between 0 and 10, then click Save.">បញ្ចូលពិន្ទុចាប់ពី ០ ដល់ ១០ រួចចុច រក្សាទុកពិន្ទុ។</p>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table" id="scoreSheetTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;" data-km="លេខរៀង" data-en="No.">លេខរៀង</th>
+                                    <th data-km="លេខសម្គាល់ខ្លួន (ID)" data-en="Student ID">លេខសម្គាល់ខ្លួន (ID)</th>
+                                    <th data-km="ឈ្មោះសិស្ស" data-en="Student Name">ឈ្មោះសិស្ស</th>
+                                    <th data-km="ភេទ" data-en="Gender">ភេទ</th>
+                                    <th style="width: 250px;" data-km="ពិន្ទុ (០-១០)" data-en="Score (0-10)">ពិន្ទុ (០-១០)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scoreSheetTableBody">
+                                <!-- Score input fields loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="score-sheet-actions">
+                        <button class="btn btn-success" id="btnSaveScores">
+                            <i class="fa-solid fa-floppy-disk"></i> <span data-km="រក្សាទុកពិន្ទុ" data-en="Save Scores">រក្សាទុកពិន្ទុ</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-style placeholder-card" id="scoreSheetPlaceholder">
+                    <i class="fa-solid fa-table-list placeholder-icon"></i>
+                    <p data-km="សូមជ្រើសរើសថ្នាក់ វគ្គ/ខែ និងមុខវិជ្ជា រួចចុចលើ 'ទាញយកបញ្ជី' ដើម្បីបញ្ចូលពិន្ទុ។" data-en="Please select class, period, and subject, then click 'Load Sheet' to manage scores.">សូមជ្រើសរើសថ្នាក់ វគ្គ/ខែ និងមុខវិជ្ជា រួចចុចលើ 'ទាញយកបញ្ជី' ដើម្បីបញ្ចូលពិន្ទុ។</p>
+                </div>
+            </section>
+
+            <!-- Score Reports Panel -->
+            <section id="reportsPanel" class="tab-panel">
+                <div class="card-style filter-bar">
+                    <div class="filter-group">
+                        <label for="reportFilterClass" data-km="ជ្រើសរើសថ្នាក់រៀន" data-en="Select Class">ជ្រើសរើសថ្នាក់រៀន</label>
+                        <select id="reportFilterClass" class="form-control">
+                            <!-- Loaded dynamically -->
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="reportFilterPeriod" data-km="ជ្រើសរើសប្រភេទរបាយការណ៍" data-en="Report Period">ប្រភេទរបាយការណ៍</label>
+                        <select id="reportFilterPeriod" class="form-control">
+                            <optgroup label="របាយការណ៍ប្រចាំខែ / Monthly">
+                                <option value="oct" data-km="របាយការណ៍ ខែតុលា" data-en="របាយការណ៍ ខែតុលា (October Report)">របាយការណ៍ ខែតុលា</option>
+                                <option value="nov" data-km="របាយការណ៍ ខែវិច្ឆិកា" data-en="របាយការណ៍ ខែវិច្ឆិកា (November Report)">របាយការណ៍ ខែវិច្ឆិកា</option>
+                                <option value="dec" data-km="របាយការណ៍ ខែធ្នូ" data-en="របាយការណ៍ ខែធ្នូ (December Report)">របាយការណ៍ ខែធ្នូ</option>
+                                <option value="jan" data-km="របាយការណ៍ ខែមករា" data-en="របាយការណ៍ ខែមករា (January Report)">របាយការណ៍ ខែមករា</option>
+                                <option value="feb" data-km="របាយការណ៍ ខែកុម្ភៈ" data-en="របាយការណ៍ ខែកុម្ភៈ (February Report)">របាយការណ៍ ខែកុម្ភៈ</option>
+                                <option value="mar" data-km="របាយការណ៍ ខែមីនា" data-en="របាយការណ៍ ខែមីនា (March Report)">របាយការណ៍ ខែមីនា</option>
+                                <option value="apr" data-km="របាយការណ៍ ខែមេសា" data-en="របាយការណ៍ ខែមេសា (April Report)">របាយការណ៍ ខែមេសា</option>
+                                <option value="may" data-km="របាយការណ៍ ខែឧសភា" data-en="របាយការណ៍ ខែឧសភា (May Report)">របាយការណ៍ ខែឧសភា</option>
+                                <option value="jun" data-km="របាយការណ៍ ខែមិថុនា" data-en="របាយការណ៍ ខែមិថុនា (June Report)">របាយការណ៍ ខែមិថុនា</option>
+                                <option value="jul" data-km="របាយការណ៍ ខែកក្កដា" data-en="របាយការណ៍ ខែកក្កដា (July Report)">របាយការណ៍ ខែកក្កដា</option>
+                            </optgroup>
+                            <optgroup label="របាយការណ៍ឆមាស / Semesters">
+                                <option value="sem1" data-km="របាយការណ៍ ឆមាសទី១" data-en="របាយការណ៍ ឆមាសទី១ (Semester 1 Report)">របាយការណ៍ ឆមាសទី១</option>
+                                <option value="sem2" data-km="របាយការណ៍ ឆមាសទី២" data-en="របាយការណ៍ ឆមាសទី២ (Semester 2 Report)">របាយការណ៍ ឆមាសទី២</option>
+                            </optgroup>
+                            <optgroup label="របាយការណ៍ប្រចាំឆ្នាំ / Yearly">
+                                <option value="yearly" data-km="របាយការណ៍ ប្រចាំឆ្នាំ" data-en="របាយការណ៍ ប្រចាំឆ្នាំ (Yearly Report)">របាយការណ៍ ប្រចាំឆ្នាំ</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="filter-group align-end">
+                        <button class="btn btn-primary" id="btnGenerateReport">
+                            <i class="fa-solid fa-magnifying-glass"></i> <span data-km="ទាញយករបាយការណ៍" data-en="Generate Report">ទាញយករបាយការណ៍</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Report Result Sheet -->
+                <div class="card-style report-sheet-card" id="reportViewContainer" style="display: none;">
+                    <div class="report-actions-bar">
+                        <button class="btn btn-outline" id="btnPrintReport">
+                            <i class="fa-solid fa-print"></i> <span data-km="បោះពុម្ព (Print)" data-en="Print Report">បោះពុម្ព (Print)</span>
+                        </button>
+                        <button class="btn btn-outline" id="btnExportReportCSV">
+                            <i class="fa-solid fa-file-csv"></i> <span data-km="ទាញយកជា CSV" data-en="Export CSV">ទាញយកជា CSV</span>
+                        </button>
+                    </div>
+
+                    <!-- Print Layout wrapper -->
+                    <div class="print-layout" id="reportPrintArea">
+                        <div class="print-header">
+                            <div class="kingdom-heading">
+                                <h3 data-km="ព្រះរាជាណាចក្រកម្ពុជា" data-en="Kingdom of Cambodia">ព្រះរាជាណាចក្រកម្ពុជា</h3>
+                                <h4 data-km="ជាតិ សាសនា ព្រះមហាក្សត្រ" data-en="Nation Religion King">ជាតិ សាសនា ព្រះមហាក្សត្រ</h4>
+                                <div class="heading-decor">🌟🌟🌟</div>
+                            </div>
+                            <div class="school-info">
+                                <h3 data-km="សាលាបឋមសិក្សា" data-en="Primary School">សាលាបឋមសិក្សា</h3>
+                                <h2 id="reportPrintTitle">កម្រងរបាយការណ៍លទ្ធផលសិក្សាសិស្ស</h2>
+                            </div>
+                        </div>
+
+                        <div class="report-meta-info">
+                            <div><strong data-km="ថ្នាក់រៀន៖" data-en="Class:">ថ្នាក់រៀន៖</strong> <span id="reportMetaClass">...</span></div>
+                            <div><strong data-km="គ្រូបន្ទុកថ្នាក់៖" data-en="Teacher:">គ្រូបន្ទុកថ្នាក់៖</strong> <span id="reportMetaTeacher">...</span></div>
+                            <div><strong data-km="វគ្គសិក្សា៖" data-en="Period:">វគ្គសិក្សា៖</strong> <span id="reportMetaPeriod">...</span></div>
+                            <div><strong data-km="កាលបរិច្ឆេទ៖" data-en="Date:">កាលបរិច្ឆេទ៖</strong> <span id="reportMetaDate">...</span></div>
+                        </div>
+
+                        <div class="table-container print-table-container">
+                            <table class="data-table print-table" id="reportResultTable">
+                                <thead>
+                                    <tr id="reportTableHeaderRow">
+                                        <!-- Will change dynamically depending on report structure and subjects -->
+                                    </tr>
+                                </thead>
+                                <tbody id="reportTableBody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="print-footer">
+                            <div class="footer-sign">
+                                <p data-km="បានឃើញ និងឯកភាព" data-en="Seen and Approved">បានឃើញ និងឯកភាព</p>
+                                <h4 data-km="នាយកសាលា" data-en="School Principal" style="margin-top: 0.5rem; margin-bottom: 5.5rem;">នាយកសាលា</h4>
+                            </div>
+                            <div class="footer-sign">
+                                <p data-km="កាលបរិច្ឆេទ៖ ...................................." data-en="Date: ....................................">កាលបរិច្ឆេទ៖ ....................................</p>
+                                <h4 data-km="គ្រូបន្ទុកថ្នាក់" data-en="Class Teacher" style="margin-bottom: 3.5rem;">គ្រូបន្ទុកថ្នាក់</h4>
+                                <h4 id="reportPrintTeacherName" style="font-weight: 700;">(ឈ្មោះគ្រូ)</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-style placeholder-card" id="reportPlaceholder">
+                    <i class="fa-solid fa-file-lines placeholder-icon"></i>
+                    <p data-km="សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍'។" data-en="Please select class and report period, then click 'Generate Report' to view stats.">សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍'។</p>
+                </div>
+            </section>
+
+            <!-- Messages Panel -->
+            <section id="messagesPanel" class="tab-panel">
+                <div class="dashboard-card" style="margin-bottom: 2rem;">
+                    <h3 data-km="ប្រអប់សារស្នើសុំកែប្រែពិន្ទុ" data-en="Score Correction Requests">ប្រអប់សារស្នើសុំកែប្រែពិន្ទុ</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 130px;" data-km="កាលបរិច្ឆេទ" data-en="Date/Time">កាលបរិច្ឆេទ</th>
+                                    <th style="width: 150px;" data-km="ឈ្មោះសិស្ស" data-en="Student Name">ឈ្មោះសិស្ស</th>
+                                    <th style="width: 100px;" data-km="ថ្នាក់រៀន" data-en="Class">ថ្នាក់រៀន</th>
+                                    <th data-km="សារស្នើសុំ" data-en="Request Details">សារស្នើសុំ</th>
+                                    <th style="width: 130px;" data-km="ស្ថានភាព" data-en="Status">ស្ថានភាព</th>
+                                    <th style="width: 130px;" data-km="សកម្មភាព" data-en="Actions">សកម្មភាព</th>
+                                </tr>
+                            </thead>
+                            <tbody id="messagesTableBody">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Accounts Control Panel (Visible to Admin only) -->
+            <section id="usersPanel" class="tab-panel">
+                <div class="grid-layout" style="margin-bottom: 2rem;">
+                    <!-- Pending User Approvals Card -->
+                    <div class="card-style">
+                        <h3 data-km="គណនីរង់ចាំការអនុម័ត" data-en="Pending Approvals">គណនីរង់ចាំការអនុម័ត</h3>
+                        <p class="settings-desc" data-km="គណនីគ្រូ និងសិស្សដែលបានចុះឈ្មោះថ្មីៗ ហើយរង់ចាំលោកនាយកសាលាពិនិត្យ និងអនុម័តសិទ្ធិ។" data-en="New teacher/student accounts awaiting verification. Verify, assign and approve their credentials.">គណនីគ្រូ និងសិស្សដែលបានចុះឈ្មោះថ្មីៗ ហើយរង់ចាំលោកនាយកសាលាពិនិត្យ និងអនុម័តសិទ្ធិ។</p>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th data-km="ឈ្មោះ" data-en="Name">ឈ្មោះ</th>
+                                        <th style="width: 100px;" data-km="តួនាទី" data-en="Role">តួនាទី</th>
+                                        <th data-km="ថ្នាក់/លេខសម្គាល់" data-en="Class/Requested ID">ថ្នាក់/លេខសម្គាល់</th>
+                                        <th style="width: 130px;" data-km="សកម្មភាព" data-en="Actions">សកម្មភាព</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pendingUsersTableBody">
+                                    <!-- Loaded dynamically in app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- QR Code Login Card -->
+                    <div class="card-style" style="display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center;">
+                        <h3 data-km="QR Code សម្រាប់ចុះឈ្មោះសមាជិកថ្មី" data-en="QR Code for New Registration">QR Code សម្រាប់ចុះឈ្មោះសមាជិកថ្មី</h3>
+                        <p class="settings-desc" data-km="ស្កេន QR Code នេះដើម្បីបើកទំព័រចុះឈ្មោះនៅលើ Tablet ឬទូរស័ព្ទដៃសិស្ស/គ្រូផ្សេងទៀត។" data-en="Scan this QR Code to open the registration and login page on tablets/mobile devices.">ស្កេន QR Code នេះដើម្បីបើកទំព័រចុះឈ្មោះនៅលើ Tablet ឬទូរស័ព្ទដៃសិស្ស/គ្រូផ្សេងទៀត។</p>
+                        
+                        <div id="loginQrCodeWrapper" style="margin: 1.25rem 0; padding: 1rem; background: #ffffff; border-radius: 12px; border: 1px solid var(--border-color); display: inline-block;">
+                            <img id="imgLoginQrCode" src="" alt="QR Code Portal" style="display:block; width:160px; height:160px;">
+                        </div>
+                        
+                        <div style="width: 100%;">
+                            <p style="font-size: 0.8rem; font-weight: 600; word-break: break-all; color: var(--primary-blue);" id="lblPortalUrlText">...</p>
+                            <button type="button" class="btn btn-outline btn-sm" id="btnCopyPortalUrl" style="margin-top:0.5rem; border-radius:8px;">
+                                <i class="fa-solid fa-copy"></i> <span data-km="ចម្លងតំណភ្ជាប់" data-en="Copy Link">ចម្លងតំណភ្ជាប់</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Active user accounts list -->
+                <div class="card-style">
+                    <h3 data-km="គណនីសកម្មទាំងអស់ក្នុងប្រព័ន្ធ" data-en="All Active Accounts">គណនីសកម្មទាំងអស់ក្នុងប្រព័ន្ធ</h3>
+                    <p class="settings-desc" data-km="បញ្ជីគ្រប់គ្រងគណនីគ្រូ និងសិស្សានុសិស្សទាំងអស់ដែលមានសិទ្ធិចូលប្រើប្រាស់កម្មវិធី។" data-en="Manage logins, details, and permissions for all registered teachers and students.">បញ្ជីគ្រប់គ្រងគណនីគ្រូ និងសិស្សានុសិស្សទាំងអស់ដែលមានសិទ្ធិចូលប្រើប្រាស់កម្មវិធី។</p>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th data-km="ឈ្មោះ" data-en="Name">ឈ្មោះ</th>
+                                    <th style="width: 100px;" data-km="តួនាទី" data-en="Role">តួនាទី</th>
+                                    <th data-km="លេខសម្គាល់ / កូដសម្ងាត់" data-en="ID / Passcode">លេខសម្គាល់ / កូដសម្ងាត់</th>
+                                    <th data-km="លេខទូរស័ព្ទ" data-en="Phone">លេខទូរស័ព្ទ</th>
+                                    <th style="width: 100px;" data-km="សកម្មភាព" data-en="Actions">សកម្មភាព</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activeUsersTableBody">
+                                <!-- Loaded dynamically in app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings / Backup Panel -->
+            <section id="settingsPanel" class="tab-panel">
+                <div class="grid-layout">
+                    <div class="card-style settings-card">
+                        <h3 data-km="រក្សាទុក និងស្ដារទិន្នន័យ" data-en="Backup & Restore Data">រក្សាទុក និងស្ដារទិន្នន័យ</h3>
+                        <p class="settings-desc" data-km="រក្សាទុកទិន្នន័យរបស់អ្នកដោយទាញយកជាឯកសារ JSON ឬបញ្ចូលទិន្នន័យត្រឡប់មកវិញពីឯកសារ JSON ណាមួយ។" data-en="Save your current scoring database as a JSON file, or restore existing data from a previously exported JSON backup.">រក្សាទុកទិន្នន័យរបស់អ្នកដោយទាញយកជាឯកសារ JSON ឬបញ្ចូលទិន្នន័យត្រឡប់មកវិញពីឯកសារ JSON ណាមួយ។</p>
+                        
+                        <div class="settings-actions">
+                            <button class="btn btn-primary" id="btnExportData">
+                                <i class="fa-solid fa-download"></i> <span data-km="ទាញយកទិន្នន័យ (Backup)" data-en="Backup Database (JSON)">ទាញយកទិន្នន័យ (Backup)</span>
+                            </button>
+                            
+                            <div class="import-wrapper">
+                                <label for="importFile" class="btn btn-outline" id="lblImportFile">
+                                    <i class="fa-solid fa-upload"></i> <span data-km="បញ្ចូលទិន្នន័យឡើងវិញ (Restore)" data-en="Restore Database (JSON)">បញ្ចូលទិន្នន័យឡើងវិញ (Restore)</span>
+                                </label>
+                                <input type="file" id="importFile" accept=".json" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-style settings-card">
+                        <h3 data-km="ការកំណត់ហ្វុនអក្សរ" data-en="Font & Typography Settings">ការកំណត់ហ្វុនអក្សរ</h3>
+                        <p class="settings-desc" data-km="ប្ដូរហ្វុនអក្សររបស់កម្មវិធីដោយជ្រើសរើសហ្វុនស្អាតៗ ឬទាញយកពី Google Fonts ឬបញ្ចូលឯកសារហ្វុន (.ttf, .woff) ផ្ទាល់ខ្លួន។" data-en="Customize the app typography. Select from preset Khmer fonts, fetch any Google Font, or upload custom font files (.ttf, .otf, .woff).">ប្ដូរហ្វុនអក្សររបស់កម្មវិធីដោយជ្រើសរើសហ្វុនស្អាតៗ ឬទាញយកពី Google Fonts ឬបញ្ចូលឯកសារហ្វុន (.ttf, .woff) ផ្ទាល់ខ្លួន។</p>
+                        
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="fontSelectPreset" data-km="ជ្រើសរើសហ្វុនដែលមានស្រាប់៖" data-en="Select Preset Font:">ជ្រើសរើសហ្វុនដែលមានស្រាប់៖</label>
+                            <select id="fontSelectPreset" class="form-control">
+                                <option value="system" data-km="ហ្វុនដើមរបស់ប្រព័ន្ធ (Kantumruy Pro)" data-en="Default System (Kantumruy Pro)">ហ្វុនដើមរបស់ប្រព័ន្ធ (Kantumruy Pro)</option>
+                                <option value="Battambang" data-km="ហ្វុនបាត់ដំបង (Google)" data-en="Battambang (Google Font)">ហ្វុនបាត់ដំបង (Google)</option>
+                                <option value="Kantumruy Pro" data-km="ហ្វុនកន្ទុមរុយ ប្រូ (Google)" data-en="Kantumruy Pro (Google Font)">ហ្វុនកន្ទុមរុយ ប្រូ (Google)</option>
+                                <option value="Nokora" data-km="ហ្វុននគរា (Google)" data-en="Nokora (Google Font)">ហ្វុននគរា (Google)</option>
+                                <option value="Moul" data-km="ហ្វុនមូល (Google)" data-en="Moul (Google Font)">ហ្វុនមូល (Google)</option>
+                                <option value="Odor Mean Chey" data-km="ហ្វុនឧត្តរមានជ័យ (Google)" data-en="Odor Mean Chey (Google)">ហ្វុនឧត្តរមានជ័យ (Google)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="googleFontInput" data-km="ទាញយកពី Google Fonts (វាយឈ្មោះហ្វុន)៖" data-en="Load Google Font (Type Name):">ទាញយកពី Google Fonts (វាយឈ្មោះហ្វុន)៖</label>
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="text" id="googleFontInput" class="form-control" placeholder="e.g. Kantumruy Pro, Siemreap..." style="margin-bottom: 0;">
+                                <button type="button" class="btn btn-primary" id="btnLoadGoogleFont" style="padding:0 1rem;" data-km="ទាញយក" data-en="Load">ទាញយក</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label data-km="បញ្ចូលឯកសារហ្វុនផ្ទាល់ខ្លួន (.ttf, .otf, .woff)៖" data-en="Upload Custom Font File (.ttf, .otf, .woff):">បញ្ចូលឯកសារហ្វុនផ្ទាល់ខ្លួន (.ttf, .otf, .woff)៖</label>
+                            <div style="display:flex; gap:0.5rem; align-items:center;">
+                                <label for="uploadFontFile" class="btn btn-outline" style="margin:0; flex-grow:1; text-align:center;">
+                                    <i class="fa-solid fa-font"></i> <span data-km="ជ្រើសរើសឯកសារហ្វុន" data-en="Select Font File">ជ្រើសរើសឯកសារហ្វុន</span>
+                                </label>
+                                <input type="file" id="uploadFontFile" accept=".ttf,.otf,.woff,.woff2" style="display:none;">
+                                <button type="button" class="btn btn-danger" id="btnResetFont" title="Reset to Default" style="padding:0.65rem 1rem;">
+                                    <i class="fa-solid fa-arrow-rotate-left"></i>
+                                </button>
+                            </div>
+                            <p id="fontUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; font-style:italic; display:none;"></p>
+                        </div>
+                    </div>
+
+                    <div class="card-style settings-card danger-zone">
+                        <h3 class="text-danger" data-km="លុបទិន្នន័យចោលទាំងអស់" data-en="Reset Application">លុបទិន្នន័យចោលទាំងអស់</h3>
+                        <p class="settings-desc" data-km="ការធ្វើបែបនេះនឹងលុបថ្នាក់រៀន សិស្ស មុខវិជ្ជា និងពិន្ទុទាំងអស់ចេញពីកម្មវិធីនេះជាអចិន្ត្រៃយ៍។ សូមប្រាកដថាអ្នកបានរក្សាទុកវាទុកជាមុន។" data-en="Permanently erase all classes, students, subjects, and score entries from this browser instance. Please download a backup beforehand.">ការធ្វើបែបនេះនឹងលុបថ្នាក់រៀន សិស្ស មុខវិជ្ជា និងពិន្ទុទាំងអស់ចេញពីកម្មវិធីនេះជាអចិន្ត្រៃយ៍។ សូមប្រាកដថាអ្នកបានរក្សាទុកវាទុកជាមុន។</p>
+                        
+                        <div class="settings-actions">
+                            <button class="btn btn-danger" id="btnResetDatabase">
+                                <i class="fa-solid fa-triangle-exclamation"></i> <span data-km="លុបទិន្នន័យទាំងអស់" data-en="Erase All Data">លុបទិន្នន័យទាំងអស់</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Class Modal -->
+    <div class="modal" id="addClassModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-km="បង្កើតថ្នាក់ថ្មី" data-en="Create New Class" id="addClassModalTitle">បង្កើតថ្នាក់ថ្មី</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="addClassForm">
+                <input type="hidden" id="editClassId" value="">
+                <div class="form-group">
+                    <label for="newClassName" data-km="ឈ្មោះថ្នាក់រៀន" data-en="Class Name">ឈ្មោះថ្នាក់រៀន</label>
+                    <input type="text" id="newClassName" required placeholder="ឧ. ថ្នាក់ទី១ក, ថ្នាក់ទី៤ខ...">
+                </div>
+                <div class="form-group">
+                    <label for="newClassTeacherName" data-km="ឈ្មោះគ្រូបន្ទុកថ្នាក់" data-en="Class Teacher Name">ឈ្មោះគ្រូបន្ទុកថ្នាក់</label>
+                    <input type="text" id="newClassTeacherName" placeholder="ឧ. អ្នកគ្រូ គង់ សុម៉ាលី">
+                </div>
+                <div class="form-group">
+                    <label data-km="មុខវិជ្ជាសិក្សាសម្រាប់ថ្នាក់នេះ" data-en="Subjects for this Class">មុខវិជ្ជាសិក្សាសម្រាប់ថ្នាក់នេះ</label>
+                    <div id="classSubjectsChecklist" class="subjects-checklist">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-btn-action" data-km="បោះបង់" data-en="Cancel">បោះបង់</button>
+                    <button type="submit" class="btn btn-primary" id="btnSubmitClassForm" data-km="បង្កើតថ្នាក់" data-en="Create Class">បង្កើតថ្នាក់</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal" id="editUserModal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 data-km="កែប្រែគណនីអ្នកប្រើប្រាស់" data-en="Edit User Account">កែប្រែគណនីអ្នកប្រើប្រាស់</h3>
+                <button type="button" class="close-btn" onclick="document.getElementById('editUserModal').classList.remove('active')">&times;</button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserRole">
+                <input type="hidden" id="editUserOldId">
+                <div class="form-group">
+                    <label for="editUserName" data-km="ឈ្មោះ" data-en="Name">ឈ្មោះ</label>
+                    <input type="text" id="editUserName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label id="lblEditUserIdPasscode" for="editUserIdPasscode" data-km="លេខសម្គាល់ / លេខកូដ" data-en="ID / Passcode">លេខសម្គាល់ / លេខកូដ</label>
+                    <input type="text" id="editUserIdPasscode" class="form-control" required>
+                </div>
+                <div class="form-group" id="editUserContactGroup">
+                    <label for="editUserContact" data-km="លេខទូរស័ព្ទ" data-en="Phone">លេខទូរស័ព្ទ</label>
+                    <input type="text" id="editUserContact" class="form-control">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-btn-action" onclick="document.getElementById('editUserModal').classList.remove('active')" data-km="បោះបង់" data-en="Cancel">បោះបង់</button>
+                    <button type="submit" class="btn btn-primary" data-km="រក្សាទុក" data-en="Save Changes">រក្សាទុក</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div class="modal" id="addStudentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-km="បន្ថែមសិស្សថ្មី" data-en="Add New Student">បន្ថែមសិស្សថ្មី</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="addStudentForm">
+                <input type="hidden" id="studentEditId" value="">
+                <div class="form-group">
+                    <label for="studentIdInput" data-km="លេខសម្គាល់ខ្លួន ID (រំលង បើចង់បង្កើតស្វ័យប្រវត្តិ)" data-en="Student ID (Leave blank for auto-generate)">លេខសម្គាល់ខ្លួន ID (រំលង បើចង់បង្កើតស្វ័យប្រវត្តិ)</label>
+                    <input type="text" id="studentIdInput" placeholder="ឧ. STU001">
+                </div>
+                <div class="form-group">
+                    <label for="studentNameInput" data-km="ឈ្មោះសិស្ស" data-en="Student Name">ឈ្មោះសិស្ស</label>
+                    <input type="text" id="studentNameInput" required placeholder="ឈ្មោះពិតសិស្ស">
+                </div>
+                <div class="form-group">
+                    <label for="studentGenderInput" data-km="ភេទ" data-en="Gender">ភេទ</label>
+                    <select id="studentGenderInput" class="form-control">
+                        <option value="ស្រី" data-km="ស្រី (F)" data-en="Female">ស្រី</option>
+                        <option value="ប្រុស" data-km="ប្រុស (M)" data-en="Male">ប្រុស</option>
+                        <option value="ព្រះសង្ឃ" data-km="ព្រះសង្ឃ (Monk)" data-en="Monk">ព្រះសង្ឃ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="studentContactInput" data-km="លេខទូរស័ព្ទអាណាព្យាបាល" data-en="Guardian Contact Phone">លេខទូរស័ព្ទអាណាព្យាបាល</label>
+                    <input type="text" id="studentContactInput" placeholder="ឧ. 012345678">
+                </div>
+                <div class="form-group">
+                    <label for="studentGenerationInput" data-km="ជំនាន់ទី" data-en="Generation (Gen)">ជំនាន់ទី</label>
+                    <input type="text" id="studentGenerationInput" placeholder="ឧ. ជំនាន់ទី២៥">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-btn-action" data-km="បោះបង់" data-en="Cancel">បោះបង់</button>
+                    <button type="submit" class="btn btn-success" id="btnSubmitStudentForm" data-km="បន្ថែម" data-en="Add Student">បន្ថែម</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div> <!-- Close adminTeacherLayout -->
+
+    <!-- Student Portal Interface Layout -->
+    <div id="studentPortalLayout" class="student-portal-container" style="display: none;">
+        <!-- Student Header -->
+        <header class="student-header">
+            <div class="student-logo">
+                <i class="fa-solid fa-graduation-cap student-logo-icon"></i>
+                <h3 data-km="ផ្ទាំងសិស្សានុសិស្ស" data-en="Student Portal">ផ្ទាំងសិស្សានុសិស្ស</h3>
+            </div>
+            <div class="student-profile-info" id="studentHeaderProfile">
+                <!-- Loaded dynamically -->
+            </div>
+            <div class="student-actions">
+                <div class="theme-toggle" id="themeToggleBtnStudent" title="Toggle Light/Dark Mode" style="border: 1px solid var(--border-color); padding: 0.4rem 0.8rem; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight:600;">
+                    <i class="fa-solid fa-moon"></i>
+                    <span class="toggle-text" data-km="របៀបងងឹត" data-en="Dark Mode">របៀបងងឹត</span>
+                </div>
+                <div class="lang-toggle" id="langToggleBtnStudent" title="Switch Language" style="border: 1px solid var(--border-color); padding: 0.4rem 0.8rem; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight:600;">
+                    <i class="fa-solid fa-globe"></i>
+                    <span class="lang-text">English</span>
+                </div>
+                <button class="btn btn-danger-action btn-sm" id="btnStudentLogout" style="display:flex; align-items:center; gap:0.4rem; padding: 0.45rem 0.95rem; border-radius:20px; font-weight:600;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span data-km="ចាកចេញ" data-en="Logout">ចាកចេញ</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="student-main-content">
+            <!-- Student Stats Grid -->
+            <div class="stats-grid" style="margin-bottom: 2rem;">
+                <div class="stat-card bg-red">
+                    <div class="stat-icon-wrapper blue">
+                        <i class="fa-solid fa-school"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="studentStatClass">-</h3>
+                        <p data-km="ថ្នាក់រៀន" data-en="Class">ថ្នាក់រៀន</p>
+                    </div>
+                </div>
+                <div class="stat-card bg-blue">
+                    <div class="stat-icon-wrapper green">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="studentStatTeacher">-</h3>
+                        <p data-km="គ្រូបន្ទុកថ្នាក់" data-en="Class Teacher">គ្រូបន្ទុកថ្នាក់</p>
+                    </div>
+                </div>
+                <div class="stat-card bg-yellow">
+                    <div class="stat-icon-wrapper orange">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="studentStatYearlyAvg">0.00</h3>
+                        <p data-km="មធ្យមភាគប្រចាំឆ្នាំ" data-en="Yearly Average">មធ្យមភាគប្រចាំឆ្នាំ</p>
+                    </div>
+                </div>
+                <div class="stat-card bg-pink">
+                    <div class="stat-icon-wrapper purple">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="studentStatYearlyRank">-</h3>
+                        <p data-km="ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ" data-en="Yearly Rank">ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Split Panel -->
+            <div class="dashboard-grid">
+                <!-- Left: Grade Card Table -->
+                <div class="dashboard-card">
+                    <h3 data-km="សន្លឹកពិន្ទុ និងលទ្ធផលសិក្សារបស់ខ្ញុំ" data-en="My Score Sheet & Grades">សន្លឹកពិន្ទុ និងលទ្ធផលសិក្សារបស់ខ្ញុំ</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr id="studentReportHeaderRow">
+                                    <!-- Populated dynamically -->
+                                </tr>
+                            </thead>
+                            <tbody id="studentReportTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right: Messages Box -->
+                <div class="dashboard-card" style="display:flex; flex-direction:column; gap:1rem;">
+                    <h3 data-km="រាយការណ៍អំពីពិន្ទុខុសឆ្គង" data-en="Report Score Errors">រាយការណ៍អំពីពិន្ទុខុសឆ្គង</h3>
+                    <form id="studentMessageForm">
+                        <div class="form-group" style="margin-bottom:0.75rem;">
+                            <label for="studentMessageText" data-km="ពិពណ៌នាពីចំណុចខុសឆ្គង (ឧ. ពិន្ទុគណិតវិទ្យាខែធ្នូខុស)៖" data-en="Describe the error (e.g. December Mathematics score is incorrect):">ពិពណ៌នាពីចំណុចខុសឆ្គង (ឧ. ពិន្ទុគណិតវិទ្យាខែធ្នូខុស)៖</label>
+                            <textarea id="studentMessageText" class="form-control" rows="3" required placeholder="សរសេររៀបរាប់នៅទីនេះ..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" data-km="ផ្ញើសារស្នើសុំ" data-en="Submit Request">ផ្ញើសារស្នើសុំ</button>
+                    </form>
+                    
+                    <hr style="border:0; border-top:1px solid var(--border-color); margin: 0.5rem 0;">
+                    
+                    <h4 data-km="ប្រវត្តិកែតម្រូវ និងចម្លើយតប" data-en="Correction History & Replies" style="font-weight:700; font-size:0.9rem;">ប្រវត្តិកែតម្រូវ និងចម្លើយតប</h4>
+                    <div id="studentMessageHistory" style="max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; padding-right: 5px;">
+                        <!-- Messages & replies loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Reply Message Modal -->
+    <div class="modal" id="replyMessageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-km="ឆ្លើយតបសារសិស្ស" data-en="Reply to Student Message">ឆ្លើយតបសារសិស្ស</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="replyMessageForm">
+                <input type="hidden" id="replyMessageId" value="">
+                <div class="form-group">
+                    <label data-km="សាររបស់សិស្ស៖" data-en="Student Message:">សាររបស់សិស្ស៖</label>
+                    <blockquote id="studentMessageQuote" style="font-style: italic; background: rgba(0,0,0,0.03); padding: 0.75rem; border-left: 4px solid var(--primary-blue); margin-bottom: 1rem; border-radius: 4px; color: var(--text-muted);"></blockquote>
+                </div>
+                <div class="form-group">
+                    <label for="replyMessageInput" data-km="សារឆ្លើយតប៖" data-en="Your Reply:">សារឆ្លើយតប៖</label>
+                    <textarea id="replyMessageInput" class="form-control" rows="4" required placeholder="សរសេរសារឆ្លើយតបទៅសិស្ស..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-btn-action" data-km="បោះបង់" data-en="Cancel">បោះបង់</button>
+                    <button type="submit" class="btn btn-primary" data-km="ផ្ញើចម្លើយតប" data-en="Send Reply">ផ្ញើចម្លើយតប</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Language Selection Modal -->
+    <div class="modal" id="languageSelectModal">
+        <div class="modal-content" style="max-width: 650px;">
+            <div class="modal-header">
+                <h3 data-km="ជ្រើសរើសភាសា / Select Language" data-en="Select Language / ជ្រើសរើសភាសា">ជ្រើសរើសភាសា / Select Language</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="form-group" style="margin-bottom: 1rem; position: sticky; top: 0; background: var(--bg-card); z-index: 10; padding: 0.5rem 0;">
+                <div class="search-input-wrapper" style="position: relative;">
+                    <i class="fa-solid fa-magnifying-glass search-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;"></i>
+                    <input type="text" id="languageSearchInput" class="form-control" placeholder="ស្វែងរកភាសា... / Search language..." style="padding-left: 2.75rem; margin-bottom: 0;">
+                </div>
+            </div>
+            <div id="languageGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; max-height: 350px; overflow-y: auto; padding: 0.5rem 0;">
+                <!-- Loaded dynamically in app.js -->
+            </div>
+            <div class="modal-actions" style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <button type="button" class="btn btn-secondary close-btn-action" data-km="បិទ" data-en="Close">បិទ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="display:none; visibility:hidden; position:absolute; height:0; width:0;"></div>
+    <script type="text/javascript">
+        // Only load Google Translate on http/https - it always fails on file:// with "Script error."
+        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+            (function() {
+                var gtScript = document.createElement('script');
+                gtScript.type = 'text/javascript';
+                gtScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                gtScript.onerror = function() {
+                    console.warn('Google Translate failed to load.');
+                };
+                document.body.appendChild(gtScript);
+            })();
+        } else {
+            // On file:// - stub the callback so app.js doesn't crash
+            window.googleTranslateElementInit = function() {
+                console.info('Google Translate skipped on file:// URL.');
+            };
+        }
+    </script>
+
+    <!-- Register User Account Modal -->
+    <div class="modal" id="registerUserModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 data-km="ចុះឈ្មោះគណនីថ្មី" data-en="Register New Account">ចុះឈ្មោះគណនីថ្មី</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="registerUserForm">
+                <div class="form-group">
+                    <label for="regRole" data-km="តួនាទី៖" data-en="Role:">តួនាទី៖</label>
+                    <select id="regRole" class="form-control">
+                        <option value="student" data-km="សិស្សានុសិស្ស" data-en="Student">សិស្សានុសិស្ស</option>
+                        <option value="teacher" data-km="គ្រូបន្ទុកថ្នាក់" data-en="Class Teacher">គ្រូបន្ទុកថ្នាក់</option>
+                        <option value="admin" data-km="នាយកសាលា" data-en="Admin">នាយកសាលា</option>
+                    </select>
+                </div>
+                <!-- Reg student specific field -->
+                <div class="form-group" id="regClassGroup">
+                    <label for="regClass" data-km="ជ្រើសរើសថ្នាក់រៀន៖" data-en="Select Class:">ជ្រើសរើសថ្នាក់រៀន៖</label>
+                    <select id="regClass" class="form-control">
+                        <!-- Populated dynamically in app.js -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail" data-km="អ៊ីមែល (Email)៖" data-en="Email Address:">អ៊ីមែល (Email)៖</label>
+                    <input type="email" id="regEmail" class="form-control" required placeholder="user@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword" data-km="ពាក្យសម្ងាត់ (Password)៖" data-en="Password:">ពាក្យសម្ងាត់ (Password)៖</label>
+                    <input type="password" id="regPassword" class="form-control" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-btn-action" data-km="បោះបង់" data-en="Cancel">បោះបង់</button>
+                    <button type="submit" class="btn btn-primary" data-km="ចុះឈ្មោះ" data-en="Register">ចុះឈ្មោះ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Alert / Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    
+    <!-- Firebase Initialization -->
+    <script src="firebase-config.js?v=20260702_3"></script>
+
+    <!-- Main JavaScript Core Logic -->
+    <script src="app.js?v=20260702_3"></script>
+</body>
+</html>
