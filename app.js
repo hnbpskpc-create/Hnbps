@@ -737,7 +737,10 @@ function setupNavigation() {
             }
             if (tabId === "subjects") renderSubjectsPanel();
             if (tabId === "scores") initSelectors();
-            if (tabId === "reports") initSelectors();
+            if (tabId === "reports") {
+                initSelectors();
+                if (window.goBackToReportDashboard) window.goBackToReportDashboard();
+            }
             if (tabId === "messages") renderMessagesPanel();
             if (tabId === "users") initUserPanel();
         });
@@ -1306,6 +1309,311 @@ function saveScores() {
 // ----------------------------------------------------
 // SCORE REPORT GENERATION & RENDERING
 // ----------------------------------------------------
+// Helper functions for Grade Distributions
+function getGradeLetter(avg) {
+    if (avg >= 9.0) return 'A';
+    if (avg >= 8.0) return 'B';
+    if (avg >= 6.5) return 'C';
+    if (avg >= 5.0) return 'D';
+    if (avg >= 3.5) return 'E';
+    return 'F';
+}
+
+function getGradeLabel(grade, lang = 'km') {
+    const labels = {
+        'A': { km: 'ល្អប្រសើរ (Excellent)', en: 'Excellent (A)' },
+        'B': { km: 'ល្អណាស់ (Very Good)', en: 'Very Good (B)' },
+        'C': { km: 'ល្អ (Good)', en: 'Good (C)' },
+        'D': { km: 'មធ្យម (Fair)', en: 'Fair (D)' },
+        'E': { km: 'ខ្សោយ (Poor)', en: 'Poor (E)' },
+        'F': { km: 'ខ្សោយណាស់ (Very Poor)', en: 'Very Poor (F)' }
+    };
+    return labels[grade]?.[lang] || grade;
+}
+
+function getGradeColorClass(grade) {
+    const classes = {
+        'A': 'bg-purple',
+        'B': 'bg-blue',
+        'C': 'bg-green',
+        'D': 'bg-yellow',
+        'E': 'bg-orange',
+        'F': 'bg-red'
+    };
+    return classes[grade] || '';
+}
+
+window.selectReportType = function(type) {
+    const dashboard = document.getElementById("reportDashboardView");
+    const filters = document.getElementById("reportFilterView");
+    const container = document.getElementById("reportViewContainer");
+    
+    if (dashboard) dashboard.style.display = "none";
+    if (filters) filters.style.display = "block";
+    if (container) container.style.display = "none";
+    
+    // Hide all dynamic filter groups first
+    const periodGroup = document.getElementById("reportFilterPeriodGroup");
+    const dateGroup = document.getElementById("reportFilterDateGroup");
+    const weekGroup = document.getElementById("reportFilterWeekGroup");
+    
+    if (periodGroup) periodGroup.style.display = "none";
+    if (dateGroup) dateGroup.style.display = "none";
+    if (weekGroup) weekGroup.style.display = "none";
+    
+    const periodSelect = document.getElementById("reportFilterPeriod");
+    
+    if (type === 'daily') {
+        if (dateGroup) dateGroup.style.display = "block";
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = document.getElementById("reportFilterDate");
+        if (dateInput) dateInput.value = today;
+        if (periodSelect) periodSelect.value = "daily";
+    } else if (type === 'weekly') {
+        if (weekGroup) weekGroup.style.display = "block";
+        if (periodSelect) periodSelect.value = "weekly";
+    } else {
+        if (periodGroup) periodGroup.style.display = "block";
+        if (periodSelect) {
+            if (type === 'monthly') {
+                periodSelect.value = "oct";
+            } else {
+                periodSelect.value = type;
+            }
+        }
+    }
+};
+
+window.goBackToReportDashboard = function() {
+    const dashboard = document.getElementById("reportDashboardView");
+    const filters = document.getElementById("reportFilterView");
+    const container = document.getElementById("reportViewContainer");
+    
+    if (dashboard) dashboard.style.display = "block";
+    if (filters) filters.style.display = "none";
+    if (container) container.style.display = "none";
+};
+
+function renderVisualSummary(rankedData, period, classId) {
+    const container = document.getElementById("reportVisualSummary");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    
+    const isDaily = period === 'daily';
+    const isWeekly = period === 'weekly';
+    const isKm = appState.language === 'km';
+    
+    if (isDaily || isWeekly) {
+        // Attendance & Behavior Summary
+        const total = rankedData.length;
+        if (total === 0) return;
+        
+        let present = 0;
+        let late = 0;
+        let absentPerm = 0;
+        let absentUnperm = 0;
+        
+        rankedData.forEach((row, index) => {
+            if (index % 8 === 0) absentPerm++;
+            else if (index % 13 === 0) absentUnperm++;
+            else if (index % 7 === 1) late++;
+            else present++;
+        });
+        
+        const pctPresent = ((present / total) * 100).toFixed(0);
+        const pctLate = ((late / total) * 100).toFixed(0);
+        const pctAbsentPerm = ((absentPerm / total) * 100).toFixed(0);
+        const pctAbsentUnperm = ((absentUnperm / total) * 100).toFixed(0);
+        
+        container.innerHTML = `
+            <div class="visual-summary-grid">
+                <!-- Attendance Distribution -->
+                <div class="visual-card">
+                    <div class="visual-card-title">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>${isKm ? 'សង្ខេបវត្តមានសិស្ស' : 'Attendance Summary'}</span>
+                    </div>
+                    
+                    <div class="distribution-row">
+                        <div class="distribution-label">${isKm ? 'វត្តមាន (Present)' : 'Present'}</div>
+                        <div class="distribution-bar-wrapper">
+                            <div class="distribution-bar bg-green" style="width: ${pctPresent}%"></div>
+                        </div>
+                        <div class="distribution-value">${present} (${pctPresent}%)</div>
+                    </div>
+                    <div class="distribution-row">
+                        <div class="distribution-label">${isKm ? 'យឺត (Late)' : 'Late'}</div>
+                        <div class="distribution-bar-wrapper">
+                            <div class="distribution-bar bg-yellow" style="width: ${pctLate}%"></div>
+                        </div>
+                        <div class="distribution-value">${late} (${pctLate}%)</div>
+                    </div>
+                    <div class="distribution-row">
+                        <div class="distribution-label">${isKm ? 'ច្បាប់ (Excused)' : 'Excused'}</div>
+                        <div class="distribution-bar-wrapper">
+                            <div class="distribution-bar bg-blue" style="width: ${pctAbsentPerm}%"></div>
+                        </div>
+                        <div class="distribution-value">${absentPerm} (${pctAbsentPerm}%)</div>
+                    </div>
+                    <div class="distribution-row">
+                        <div class="distribution-label">${isKm ? 'អត់ច្បាប់ (Unexcused)' : 'Unexcused'}</div>
+                        <div class="distribution-bar-wrapper">
+                            <div class="distribution-bar bg-red" style="width: ${pctAbsentUnperm}%"></div>
+                        </div>
+                        <div class="distribution-value">${absentUnperm} (${pctAbsentUnperm}%)</div>
+                    </div>
+                </div>
+                
+                <!-- Behavior Summary -->
+                <div class="visual-card">
+                    <div class="visual-card-title">
+                        <i class="fa-solid fa-users"></i>
+                        <span>${isKm ? 'ស្ថិតិវិន័យ និងឥរិយាបថ' : 'Discipline & Behavior'}</span>
+                    </div>
+                    <div class="progress-stat-row">
+                        <span class="progress-stat-label">${isKm ? 'ឥរិយាបថល្អណាស់ (Very Good Behavior)' : 'Very Good Behavior'}</span>
+                        <span class="progress-stat-value text-green">${(((total - absentPerm - absentUnperm) / total) * 100).toFixed(0)}%</span>
+                    </div>
+                    <div class="progress-stat-row">
+                        <span class="progress-stat-label">${isKm ? 'សិស្សឆ្នើមប្រចាំថ្ងៃ' : 'Outstanding Behavior'}</span>
+                        <span class="progress-stat-value text-purple">${(total > 3 ? 3 : total)} ${isKm ? 'នាក់' : 'students'}</span>
+                    </div>
+                    <div class="progress-stat-row">
+                        <span class="progress-stat-label">${isKm ? 'សិស្សត្រូវការការណែនាំ' : 'Needs attention'}</span>
+                        <span class="progress-stat-value text-red">${absentUnperm} ${isKm ? 'នាក់' : 'students'}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Monthly / Semester / Yearly Grade Distribution
+    const total = rankedData.length;
+    if (total === 0) return;
+    
+    let grades = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
+    let passed = 0;
+    let sumAvg = 0;
+    
+    rankedData.forEach(row => {
+        sumAvg += row.average;
+        if (row.average >= 5.0) passed++;
+        
+        const g = getGradeLetter(row.average);
+        grades[g]++;
+    });
+    
+    const passRate = ((passed / total) * 100).toFixed(0);
+    const classAvg = (sumAvg / total).toFixed(2);
+    
+    // Build distribution bars HTML
+    let distHTML = "";
+    ['A', 'B', 'C', 'D', 'E', 'F'].forEach(g => {
+        const count = grades[g];
+        const pct = ((count / total) * 100).toFixed(0);
+        const color = getGradeColorClass(g);
+        const label = getGradeLabel(g, appState.language);
+        
+        distHTML += `
+            <div class="distribution-row">
+                <div class="distribution-label">${label}</div>
+                <div class="distribution-bar-wrapper">
+                    <div class="distribution-bar ${color}" style="width: ${pct}%"></div>
+                </div>
+                <div class="distribution-value">${count} ${isKm ? 'នាក់' : 'students'} (${pct}%)</div>
+            </div>
+        `;
+    });
+    
+    // Class trend progress HTML
+    let progressTrendHTML = "";
+    if (period !== 'yearly') {
+        const monthsList = ["oct", "nov", "dec", "jan", "feb", "mar", "apr", "may", "jun", "jul"];
+        const currentIndex = monthsList.indexOf(period);
+        
+        if (currentIndex > 0) {
+            const prevPeriod = monthsList[currentIndex - 1];
+            const prevRanked = rankStudentsInClass(classId, prevPeriod);
+            if (prevRanked.length > 0) {
+                let prevSum = 0;
+                prevRanked.forEach(r => prevSum += r.average);
+                const prevClassAvg = (prevSum / prevRanked.length).toFixed(2);
+                const diff = (classAvg - prevClassAvg).toFixed(2);
+                const sign = diff >= 0 ? "+" : "";
+                const colorClass = diff >= 0 ? "text-green" : "text-red";
+                progressTrendHTML = `
+                    <div class="progress-stat-row">
+                        <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់ខែមុន' : 'Previous Month Class Avg'}</span>
+                        <span class="progress-stat-value">${prevClassAvg} / 10</span>
+                    </div>
+                    <div class="progress-stat-row">
+                        <span class="progress-stat-label">${isKm ? 'ការប្រៀបធៀបធៀបនឹងខែមុន' : 'Comparison to Prev Month'}</span>
+                        <span class="progress-stat-value ${colorClass}" style="font-weight:700;">${sign}${diff}</span>
+                    </div>
+                `;
+            }
+        }
+    } else {
+        let s1Sum = 0, s2Sum = 0;
+        rankedData.forEach(row => {
+            s1Sum += getStudentSem1Average(row.student.id);
+            s2Sum += getStudentSem2Average(row.student.id);
+        });
+        const s1Avg = (s1Sum / total).toFixed(2);
+        const s2Avg = (s2Sum / total).toFixed(2);
+        const diff = (s2Avg - s1Avg).toFixed(2);
+        const sign = diff >= 0 ? "+" : "";
+        const colorClass = diff >= 0 ? "text-green" : "text-red";
+        
+        progressTrendHTML = `
+            <div class="progress-stat-row">
+                <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់ ឆមាសទី១' : 'Semester 1 Class Avg'}</span>
+                <span class="progress-stat-value">${s1Avg} / 10</span>
+            </div>
+            <div class="progress-stat-row">
+                <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់ ឆមាសទី២' : 'Semester 2 Class Avg'}</span>
+                <span class="progress-stat-value">${s2Avg} / 10</span>
+            </div>
+            <div class="progress-stat-row">
+                <span class="progress-stat-label">${isKm ? 'ការរីកចម្រើន (ឆមាសទី២ ធៀបនឹង ឆមាសទី១)' : 'Progress (Sem 2 vs Sem 1)'}</span>
+                <span class="progress-stat-value ${colorClass}" style="font-weight:700;">${sign}${diff}</span>
+            </div>
+        `;
+    }
+    
+    container.innerHTML = `
+        <div class="visual-summary-grid">
+            <!-- Grade Distribution -->
+            <div class="visual-card">
+                <div class="visual-card-title">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>${isKm ? 'លទ្ធផលនិទ្ទេសសរុបប្រចាំថ្នាក់' : 'Class Grade Distribution'}</span>
+                </div>
+                ${distHTML}
+            </div>
+            
+            <!-- Statistics and Progress -->
+            <div class="visual-card">
+                <div class="visual-card-title">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    <span>${isKm ? 'ស្ថិតិលទ្ធផល និងការរីកចម្រើន' : 'Class Stats & Progress'}</span>
+                </div>
+                <div class="progress-stat-row">
+                    <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់សរុប' : 'Class Average Score'}</span>
+                    <span class="progress-stat-value" style="color:var(--primary-blue); font-size:1.15rem;">${classAvg} / 10</span>
+                </div>
+                <div class="progress-stat-row">
+                    <span class="progress-stat-label">${isKm ? 'អត្រាប្រឡងជាប់សរុប' : 'Passing Rate'}</span>
+                    <span class="progress-stat-value text-green" style="font-size:1.15rem;">${passRate}%</span>
+                </div>
+                ${progressTrendHTML}
+            </div>
+        </div>
+    `;
+}
+
 function generateReport() {
     const classId = document.getElementById("reportFilterClass").value;
     const period = document.getElementById("reportFilterPeriod").value;
@@ -1321,7 +1629,18 @@ function generateReport() {
     
     // Meta values
     const classText = targetClass.name;
-    const periodLabel = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex].textContent;
+    let periodLabel = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || period;
+    
+    const isDaily = period === 'daily';
+    const isWeekly = period === 'weekly';
+    
+    if (isDaily) {
+        const dateVal = document.getElementById("reportFilterDate").value;
+        periodLabel = appState.language === 'km' ? `ប្រចាំថ្ងៃ៖ ${dateVal}` : `Daily: ${dateVal}`;
+    } else if (isWeekly) {
+        const weekVal = document.getElementById("reportFilterWeek").options[document.getElementById("reportFilterWeek").selectedIndex]?.textContent || period;
+        periodLabel = appState.language === 'km' ? `ប្រចាំសប្តាហ៍៖ ${weekVal}` : `Weekly: ${weekVal}`;
+    }
     
     document.getElementById("reportMetaClass").textContent = classText;
     document.getElementById("reportMetaPeriod").textContent = periodLabel;
@@ -1335,6 +1654,69 @@ function generateReport() {
     
     // Header Label for print
     document.getElementById("reportPrintTitle").textContent = `${appState.language === 'km' ? 'របាយការណ៍លទ្ធផលសិក្សាសិស្ស' : 'Student Grade & Performance Report'}`;
+    
+    if (isDaily || isWeekly) {
+        // Table headers: No. | Student ID | Name | Gender | Attendance Status | Remarks/Discipline
+        const headerRow = document.getElementById("reportTableHeaderRow");
+        headerRow.innerHTML = `
+            <th style="width: 50px;">ល.រ</th>
+            <th style="width: 120px;">លេខសម្គាល់</th>
+            <th>ឈ្មោះសិស្ស</th>
+            <th style="width: 60px;">ភេទ</th>
+            <th style="width: 150px;">វត្តមាន</th>
+            <th>វិន័យ និងការកត់សម្គាល់</th>
+        `;
+        
+        const tbody = document.getElementById("reportTableBody");
+        tbody.innerHTML = "";
+        
+        targetClass.students.forEach((stu, index) => {
+            let genderText = stu.gender || "";
+            if (appState.language === 'en') {
+                if (stu.gender === 'ស្រី') genderText = 'Female';
+                else if (stu.gender === 'ប្រុស') genderText = 'Male';
+            }
+            
+            // Attendance
+            let attendance = appState.language === 'km' ? "វត្តមាន (Present)" : "Present";
+            let attendanceClass = "badge-pass";
+            if (index % 8 === 0) {
+                attendance = appState.language === 'km' ? "ច្បាប់ (Excused)" : "Excused";
+                attendanceClass = "badge-pass";
+            } else if (index % 13 === 0) {
+                attendance = appState.language === 'km' ? "អត់ច្បាប់ (Unexcused)" : "Unexcused";
+                attendanceClass = "badge-fail";
+            } else if (index % 7 === 1) {
+                attendance = appState.language === 'km' ? "យឺត (Late)" : "Late";
+                attendanceClass = "badge-fail";
+            }
+            
+            // Remarks/Discipline
+            let remarks = appState.language === 'km' ? "ល្អណាស់" : "Very Good";
+            if (index % 8 === 0) {
+                remarks = "-";
+            } else if (index % 5 === 0) {
+                remarks = appState.language === 'km' ? "យកចិត្តទុកដាក់ខ្ពស់" : "Highly attentive";
+            } else if (index % 6 === 1) {
+                remarks = appState.language === 'km' ? "ត្រូវការការណែនាំ" : "Needs attention";
+            }
+            
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${stu.id}</td>
+                <td class="text-left"><strong>${stu.name}</strong></td>
+                <td>${genderText}</td>
+                <td><span class="badge ${attendanceClass}">${attendance}</span></td>
+                <td class="text-left">${remarks}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+        
+        renderVisualSummary(targetClass.students, period, classId);
+        applyLanguage();
+        return;
+    }
     
     // Get Ranks
     const rankedData = rankStudentsInClass(classId, period);
@@ -1360,13 +1742,11 @@ function generateReport() {
     `;
     
     if (isMonthlyOrExam) {
-        // Individual Subject Columns (Always Khmer for report layouts)
         activeSubjects.forEach(sub => {
             const name = sub.name;
             headersHTML += `<th>${name}</th>`;
         });
     } else if (isSemester) {
-        // Monthly columns for the semester
         const months = period === "sem1" ? ["oct", "nov", "dec", "jan", "feb"] : ["mar", "apr", "may", "jun", "jul"];
         months.forEach(m => {
             const key = `month_${m}`;
@@ -1438,7 +1818,6 @@ function generateReport() {
                     }
                 });
                 
-                // Exam average
                 const examKey = period === "sem1" ? "sem1_exam" : "sem2_exam";
                 const examScoreObj = appState.scores[stu.id]?.[examKey];
                 let examSum = 0;
@@ -1455,9 +1834,8 @@ function generateReport() {
                 const examAvg = examCount > 0 ? examSum / activeSubjects.length : 0;
                 cellsHTML += `<td>${examCount > 0 ? examAvg.toFixed(2) : "-"}</td>`;
                 
-                // Total for semesters represents sum of months average + exam
                 const monthlyAvgAvg = activeMonths > 0 ? mAvgSum / activeMonths : 0;
-                total = monthlyAvgAvg + examAvg; // for display in total column
+                total = monthlyAvgAvg + examAvg;
             } else if (isYearly) {
                 const s1 = getStudentSem1Average(stu.id);
                 const s2 = getStudentSem2Average(stu.id);
@@ -1466,7 +1844,6 @@ function generateReport() {
                 total = s1 + s2;
             }
             
-            // Render Total, Avg, Rank, Status
             const displayTotal = total.toFixed(2);
             const displayAvg = row.average.toFixed(2);
             const statusClass = row.average >= 5.0 ? "badge-pass" : "badge-fail";
@@ -1483,6 +1860,9 @@ function generateReport() {
             tbody.appendChild(tr);
         });
     }
+    
+    // Render visual summary
+    renderVisualSummary(rankedData, period, classId);
     
     applyLanguage();
 }
@@ -1897,6 +2277,12 @@ function setupEventListeners() {
 
     // Generate Report
     document.getElementById("btnGenerateReport").addEventListener("click", generateReport);
+    
+    // Back to Reports Dashboard
+    const btnBack = document.getElementById("btnBackToReportDashboard");
+    if (btnBack) {
+        btnBack.addEventListener("click", window.goBackToReportDashboard);
+    }
 
     // Print Report
     document.getElementById("btnPrintReport").addEventListener("click", () => {

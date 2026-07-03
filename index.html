@@ -516,41 +516,149 @@
 
             <!-- Score Reports Panel -->
             <section id="reportsPanel" class="tab-panel">
-                <div class="card-style filter-bar">
-                    <div class="filter-group">
-                        <label for="reportFilterClass" data-km="ជ្រើសរើសថ្នាក់រៀន" data-en="Select Class">ជ្រើសរើសថ្នាក់រៀន</label>
-                        <select id="reportFilterClass" class="form-control">
-                            <!-- Loaded dynamically -->
-                        </select>
+                <!-- 1. Reports Dashboard Selection View -->
+                <div id="reportDashboardView">
+                    <div class="report-cards-grid">
+                        <!-- Daily Report Card -->
+                        <div class="report-card-item" onclick="selectReportType('daily')">
+                            <div class="report-card-header">
+                                <div class="report-card-icon daily">
+                                    <i class="fa-solid fa-calendar-day"></i>
+                                </div>
+                                <div class="report-card-body">
+                                    <h3 data-km="របាយការណ៍ប្រចាំថ្ងៃ" data-en="Daily Report">របាយការណ៍ប្រចាំថ្ងៃ</h3>
+                                    <p data-km="វត្តមាន វិន័យ និងការងារប្រចាំថ្ងៃ" data-en="Daily attendance, discipline & tasks">វត្តមាន វិន័យ និងការងារប្រចាំថ្ងៃ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Weekly Report Card -->
+                        <div class="report-card-item" onclick="selectReportType('weekly')">
+                            <div class="report-card-header">
+                                <div class="report-card-icon weekly">
+                                    <i class="fa-solid fa-calendar-week"></i>
+                                </div>
+                                <div class="report-card-body">
+                                    <h3 data-km="របាយការណ៍ប្រចាំសប្ដាហ៍" data-en="Weekly Report">របាយការណ៍ប្រចាំសប្ដាហ៍</h3>
+                                    <p data-km="តាមដានវិន័យ និងលទ្ធផលប្រចាំសប្តាហ៍" data-en="Track weekly discipline & learning">តាមដានវិន័យ និងលទ្ធផលប្រចាំសប្តាហ៍</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Monthly Report Card -->
+                        <div class="report-card-item" onclick="selectReportType('monthly')">
+                            <div class="report-card-header">
+                                <div class="report-card-icon monthly">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </div>
+                                <div class="report-card-body">
+                                    <h3 data-km="របាយការណ៍ប្រចាំខែ" data-en="Monthly Report">របាយការណ៍ប្រចាំខែ</h3>
+                                    <p data-km="លទ្ធផលពិន្ទុសិស្សប្រចាំខែនីមួយៗ" data-en="Student monthly scoring overview">លទ្ធផលពិន្ទុសិស្សប្រចាំខែនីមួយៗ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Semester 1 Report Card -->
+                        <div class="report-card-item" onclick="selectReportType('sem1')">
+                            <div class="report-card-header">
+                                <div class="report-card-icon sem1">
+                                    <i class="fa-solid fa-square-poll-vertical"></i>
+                                </div>
+                                <div class="report-card-body">
+                                    <h3 data-km="របាយការណ៍ឆមាសទី១" data-en="Semester 1 Report">របាយការណ៍ឆមាសទី១</h3>
+                                    <p data-km="លទ្ធផល និងមធ្យមភាគប្រចាំឆមាសទី១" data-en="Calculated Semester 1 averages">លទ្ធផល និងមធ្យមភាគប្រចាំឆមាសទី១</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Semester 2 Report Card -->
+                        <div class="report-card-item" onclick="selectReportType('sem2')">
+                            <div class="report-card-header">
+                                <div class="report-card-icon sem2">
+                                    <i class="fa-solid fa-square-poll-horizontal"></i>
+                                </div>
+                                <div class="report-card-body">
+                                    <h3 data-km="របាយការណ៍ឆមាសទី២" data-en="Semester 2 Report">របាយការណ៍ឆមាសទី២</h3>
+                                    <p data-km="លទ្ធផល និងមធ្យមភាគប្រចាំឆមាសទី២" data-en="Calculated Semester 2 averages">លទ្ធផល និងមធ្យមភាគប្រចាំឆមាសទី២</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Yearly Report Card -->
+                        <div class="report-card-item" onclick="selectReportType('yearly')">
+                            <div class="report-card-header">
+                                <div class="report-card-icon yearly">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div class="report-card-body">
+                                    <h3 data-km="របាយការណ៍ប្រចាំឆ្នាំ" data-en="Yearly Report">របាយការណ៍ប្រចាំឆ្នាំ</h3>
+                                    <p data-km="ចំណាត់ថ្នាក់ និងលទ្ធផលប្រចាំឆ្នាំសរុប" data-en="Yearly averages, ranks & statistics">ចំណាត់ថ្នាក់ និងលទ្ធផលប្រចាំឆ្នាំសរុប</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <label for="reportFilterPeriod" data-km="ជ្រើសរើសប្រភេទរបាយការណ៍" data-en="Report Period">ប្រភេទរបាយការណ៍</label>
-                        <select id="reportFilterPeriod" class="form-control">
-                            <optgroup label="របាយការណ៍ប្រចាំខែ / Monthly">
-                                <option value="oct" data-km="របាយការណ៍ ខែតុលា" data-en="របាយការណ៍ ខែតុលា (October Report)">របាយការណ៍ ខែតុលា</option>
-                                <option value="nov" data-km="របាយការណ៍ ខែវិច្ឆិកា" data-en="របាយការណ៍ ខែវិច្ឆិកា (November Report)">របាយការណ៍ ខែវិច្ឆិកា</option>
-                                <option value="dec" data-km="របាយការណ៍ ខែធ្នូ" data-en="របាយការណ៍ ខែធ្នូ (December Report)">របាយការណ៍ ខែធ្នូ</option>
-                                <option value="jan" data-km="របាយការណ៍ ខែមករា" data-en="របាយការណ៍ ខែមករា (January Report)">របាយការណ៍ ខែមករា</option>
-                                <option value="feb" data-km="របាយការណ៍ ខែកុម្ភៈ" data-en="របាយការណ៍ ខែកុម្ភៈ (February Report)">របាយការណ៍ ខែកុម្ភៈ</option>
-                                <option value="mar" data-km="របាយការណ៍ ខែមីនា" data-en="របាយការណ៍ ខែមីនា (March Report)">របាយការណ៍ ខែមីនា</option>
-                                <option value="apr" data-km="របាយការណ៍ ខែមេសា" data-en="របាយការណ៍ ខែមេសា (April Report)">របាយការណ៍ ខែមេសា</option>
-                                <option value="may" data-km="របាយការណ៍ ខែឧសភា" data-en="របាយការណ៍ ខែឧសភា (May Report)">របាយការណ៍ ខែឧសភា</option>
-                                <option value="jun" data-km="របាយការណ៍ ខែមិថុនា" data-en="របាយការណ៍ ខែមិថុនា (June Report)">របាយការណ៍ ខែមិថុនា</option>
-                                <option value="jul" data-km="របាយការណ៍ ខែកក្កដា" data-en="របាយការណ៍ ខែកក្កដា (July Report)">របាយការណ៍ ខែកក្កដា</option>
-                            </optgroup>
-                            <optgroup label="របាយការណ៍ឆមាស / Semesters">
-                                <option value="sem1" data-km="របាយការណ៍ ឆមាសទី១" data-en="របាយការណ៍ ឆមាសទី១ (Semester 1 Report)">របាយការណ៍ ឆមាសទី១</option>
-                                <option value="sem2" data-km="របាយការណ៍ ឆមាសទី២" data-en="របាយការណ៍ ឆមាសទី២ (Semester 2 Report)">របាយការណ៍ ឆមាសទី២</option>
-                            </optgroup>
-                            <optgroup label="របាយការណ៍ប្រចាំឆ្នាំ / Yearly">
-                                <option value="yearly" data-km="របាយការណ៍ ប្រចាំឆ្នាំ" data-en="របាយការណ៍ ប្រចាំឆ្នាំ (Yearly Report)">របាយការណ៍ ប្រចាំឆ្នាំ</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="filter-group align-end">
-                        <button class="btn btn-primary" id="btnGenerateReport">
-                            <i class="fa-solid fa-magnifying-glass"></i> <span data-km="ទាញយករបាយការណ៍" data-en="Generate Report">ទាញយករបាយការណ៍</span>
+                </div>
+
+                <!-- 2. Filters & Report Generation View (Hidden by default) -->
+                <div id="reportFilterView" style="display: none; margin-bottom: 1.5rem;">
+                    <div style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+                        <button class="btn btn-outline" id="btnBackToReportDashboard" style="width: auto;">
+                            <i class="fa-solid fa-arrow-left"></i> <span data-km="ត្រឡប់ទៅផ្ទាំងដើម" data-en="Back to Dashboard">ត្រឡប់ទៅផ្ទាំងដើម</span>
                         </button>
+                    </div>
+                    
+                    <div class="card-style filter-bar">
+                        <div class="filter-group">
+                            <label for="reportFilterClass" data-km="ជ្រើសរើសថ្នាក់រៀន" data-en="Select Class">ជ្រើសរើសថ្នាក់រៀន</label>
+                            <select id="reportFilterClass" class="form-control">
+                                <!-- Loaded dynamically -->
+                            </select>
+                        </div>
+                        
+                        <!-- Dynamic Month/Period selection (Hidden for daily/weekly, shown for others) -->
+                        <div class="filter-group" id="reportFilterPeriodGroup">
+                            <label for="reportFilterPeriod" data-km="ជ្រើសរើសវគ្គ/ខែ" data-en="Report Period">ជ្រើសរើសវគ្គ/ខែ</label>
+                            <select id="reportFilterPeriod" class="form-control">
+                                <optgroup label="របាយការណ៍ប្រចាំខែ / Monthly" id="reportPeriodMonthlyOpt">
+                                    <option value="oct" data-km="របាយការណ៍ ខែតុលា" data-en="October Report">របាយការណ៍ ខែតុលា</option>
+                                    <option value="nov" data-km="របាយការណ៍ ខែវិច្ឆិកា" data-en="November Report">របាយការណ៍ ខែវិច្ឆិកា</option>
+                                    <option value="dec" data-km="របាយការណ៍ ខែធ្នូ" data-en="December Report">របាយការណ៍ ខែធ្នូ</option>
+                                    <option value="jan" data-km="របាយការណ៍ ខែមករា" data-en="January Report">របាយការណ៍ ខែមករា</option>
+                                    <option value="feb" data-km="របាយការណ៍ ខែកុម្ភៈ" data-en="February Report">របាយការណ៍ ខែកុម្ភៈ</option>
+                                    <option value="mar" data-km="របាយការណ៍ ខែមីនា" data-en="March Report">របាយការណ៍ ខែមីនា</option>
+                                    <option value="apr" data-km="របាយការណ៍ ខែមេសា" data-en="April Report">របាយការណ៍ ខែមេសា</option>
+                                    <option value="may" data-km="របាយការណ៍ ខែឧសភា" data-en="May Report">របាយការណ៍ ខែឧសភា</option>
+                                    <option value="jun" data-km="របាយការណ៍ ខែមិថុនា" data-en="June Report">របាយការណ៍ ខែមិថុនា</option>
+                                    <option value="jul" data-km="របាយការណ៍ ខែកក្កដា" data-en="July Report">របាយការណ៍ ខែកក្កដា</option>
+                                </optgroup>
+                                <optgroup label="របាយការណ៍ឆមាស / Semesters" id="reportPeriodSemesterOpt">
+                                    <option value="sem1" data-km="របាយការណ៍ ឆមាសទី១" data-en="Semester 1 Report">របាយការណ៍ ឆមាសទី១</option>
+                                    <option value="sem2" data-km="របាយការណ៍ ឆមាសទី២" data-en="Semester 2 Report">របាយការណ៍ ឆមាសទី២</option>
+                                </optgroup>
+                                <optgroup label="របាយការណ៍ប្រចាំឆ្នាំ / Yearly" id="reportPeriodYearlyOpt">
+                                    <option value="yearly" data-km="របាយការណ៍ ប្រចាំឆ្នាំ" data-en="Yearly Report">របាយការណ៍ ប្រចាំឆ្នាំ</option>
+                                <option value="daily" style="display:none;">Daily</option>
+                                <option value="weekly" style="display:none;">Weekly</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Daily Date Group -->
+                        <div class="filter-group" id="reportFilterDateGroup" style="display: none;">
+                            <label for="reportFilterDate" data-km="ជ្រើសរើសកាលបរិច្ឆេទ" data-en="Select Date">ជ្រើសរើសកាលបរិច្ឆេទ</label>
+                            <input type="date" id="reportFilterDate" class="form-control">
+                        </div>
+
+                        <!-- Weekly Week Group -->
+                        <div class="filter-group" id="reportFilterWeekGroup" style="display: none;">
+                            <label for="reportFilterWeek" data-km="ជ្រើសរើសសប្តាហ៍" data-en="Select Week">ជ្រើសរើសសប្តាហ៍</label>
+                            <select id="reportFilterWeek" class="form-control">
+                                <option value="w1" data-km="សប្តាហ៍ទី ១" data-en="Week 1">សប្តាហ៍ទី ១</option>
+                                <option value="w2" data-km="សប្តាហ៍ទី ២" data-en="Week 2">សប្តាហ៍ទី ២</option>
+                                <option value="w3" data-km="សប្តាហ៍ទី ៣" data-en="Week 3">សប្តាហ៍ទី ៣</option>
+                                <option value="w4" data-km="សប្តាហ៍ទី ៤" data-en="Week 4">សប្តាហ៍ទី ៤</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group align-end">
+                            <button class="btn btn-primary" id="btnGenerateReport">
+                                <i class="fa-solid fa-magnifying-glass"></i> <span data-km="ទាញយករបាយការណ៍" data-en="Generate Report">ទាញយករបាយការណ៍</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -563,6 +671,11 @@
                         <button class="btn btn-outline" id="btnExportReportCSV">
                             <i class="fa-solid fa-file-csv"></i> <span data-km="ទាញយកជា CSV" data-en="Export CSV">ទាញយកជា CSV</span>
                         </button>
+                    </div>
+
+                    <!-- Visual Grade Distribution and Performance Analysis (no-print) -->
+                    <div id="reportVisualSummary" class="no-print" style="margin-bottom: 2rem;">
+                        <!-- Dynamically populated in app.js -->
                     </div>
 
                     <!-- Print Layout wrapper -->
@@ -613,7 +726,7 @@
                     </div>
                 </div>
 
-                <div class="card-style placeholder-card" id="reportPlaceholder">
+                <div class="card-style placeholder-card" id="reportPlaceholder" style="display: none;">
                     <i class="fa-solid fa-file-lines placeholder-icon"></i>
                     <p data-km="សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍'។" data-en="Please select class and report period, then click 'Generate Report' to view stats.">សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍'។</p>
                 </div>
@@ -1112,9 +1225,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     
     <!-- Firebase Initialization -->
-    <script src="firebase-config.js?v=20260702_3"></script>
+    <script src="firebase-config.js?v=20260703_1"></script>
 
     <!-- Main JavaScript Core Logic -->
-    <script src="app.js?v=20260702_3"></script>
+    <script src="app.js?v=20260703_1"></script>
 </body>
 </html>
