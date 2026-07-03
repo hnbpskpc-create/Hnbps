@@ -2344,6 +2344,12 @@ function deleteSubject(subjectId) {
 // UI EVENT LISTENERS
 // ----------------------------------------------------
 function setupEventListeners() {
+    const safeBind = (id, event, callback) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(event, callback);
+        else console.warn("safeBind: Element not found ->", id);
+    };
+    
     // Theme Toggle
     document.getElementById("themeToggleBtn").addEventListener("click", () => {
         appState.theme = appState.theme === "light" ? "dark" : "light";
@@ -2513,25 +2519,25 @@ function setupEventListeners() {
     }
 
     // Print Report
-    document.getElementById("btnPrintReport").addEventListener("click", () => {
+    safeBind("btnPrintReport", "click", () => {
         window.print();
     });
 
     // Export Report CSV
-    document.getElementById("btnExportReportCSV").addEventListener("click", exportReportCSV);
+    safeBind("btnExportReportCSV", "click", exportReportCSV);
 
     // Academic Reports Events
-    document.getElementById("acadFilterClass").addEventListener("change", generateAcademicReport);
-    document.getElementById("acadFilterPeriod").addEventListener("change", generateAcademicReport);
-    document.getElementById("btnSaveSheetsUrl").addEventListener("click", saveSheetsUrl);
-    document.getElementById("btnSyncToSheets").addEventListener("click", syncToGoogleSheets);
-    document.getElementById("btnGenerateAcadReport").addEventListener("click", generateAcademicReport);
+    safeBind("acadFilterClass", "change", generateAcademicReport);
+    safeBind("acadFilterPeriod", "change", generateAcademicReport);
+    safeBind("btnSaveSheetsUrl", "click", saveSheetsUrl);
+    safeBind("btnSyncToSheets", "click", syncToGoogleSheets);
+    safeBind("btnGenerateAcadReport", "click", generateAcademicReport);
     
-    document.getElementById("btnPrintAcadReport").addEventListener("click", () => {
+    safeBind("btnPrintAcadReport", "click", () => {
         window.print();
     });
     
-    document.getElementById("btnExportAcadPDF").addEventListener("click", () => {
+    safeBind("btnExportAcadPDF", "click", () => {
         window.print();
     });
 

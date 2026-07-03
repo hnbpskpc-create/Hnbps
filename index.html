@@ -11,7 +11,7 @@
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260703_1">
+    <link rel="stylesheet" href="styles.css?v=20260703_4">
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -92,7 +92,7 @@
                 </div>
                 <div class="brand-details">
                     <h2 class="brand-title">ពិន្ទុបឋមសិក្សា</h2>
-                    <p class="brand-subtitle">Grading System <span style="font-size: 0.65rem; opacity: 0.6; font-weight: normal; margin-left: 2px;">v2026.07.03</span></p>
+                    <p class="brand-subtitle">Grading System <span style="font-size: 0.65rem; opacity: 0.6; font-weight: normal; margin-left: 2px;">v2026.07.03.4</span></p>
                 </div>
             </div>
             
@@ -116,6 +116,10 @@
                 <a href="#" class="nav-item" data-tab="reports">
                     <i class="fa-solid fa-file-invoice"></i>
                     <span class="nav-text" data-km="របាយការណ៍ពិន្ទុ" data-en="Score Reports">របាយការណ៍ពិន្ទុ</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="academic-reports">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span class="nav-text" data-km="របាយការណ៍សិក្សា" data-en="Academic Reports">របាយការណ៍សិក្សា</span>
                 </a>
                 <a href="#" class="nav-item" data-tab="messages" id="navItemMessages">
                     <i class="fa-solid fa-envelope"></i>
@@ -596,7 +600,7 @@
 
                 <!-- 2. Filters & Report Generation View (Hidden by default) -->
                 <div id="reportFilterView" style="display: none; margin-bottom: 1.5rem;">
-                    <div style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+                    <div style="margin-bottom: 1rem; display: flex; gap: 1rem;" class="no-print">
                         <button class="btn btn-outline" id="btnBackToReportDashboard" style="width: auto;">
                             <i class="fa-solid fa-arrow-left"></i> <span data-km="ត្រឡប់ទៅផ្ទាំងដើម" data-en="Back to Dashboard">ត្រឡប់ទៅផ្ទាំងដើម</span>
                         </button>
@@ -687,7 +691,6 @@
                                 <div class="heading-decor">🌟🌟🌟</div>
                             </div>
                             <div class="school-info">
-                                <h3 data-km="សាលាបឋមសិក្សា" data-en="Primary School">សាលាបឋមសិក្សា</h3>
                                 <h2 id="reportPrintTitle">កម្រងរបាយការណ៍លទ្ធផលសិក្សាសិស្ស</h2>
                             </div>
                         </div>
@@ -729,6 +732,158 @@
                 <div class="card-style placeholder-card" id="reportPlaceholder" style="display: none;">
                     <i class="fa-solid fa-file-lines placeholder-icon"></i>
                     <p data-km="សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍'។" data-en="Please select class and report period, then click 'Generate Report' to view stats.">សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍'។</p>
+                </div>
+            </section>
+
+            <!-- Academic Reports Panel -->
+            <section id="academic-reportsPanel" class="tab-panel">
+                <div class="card-style" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem;" data-km="របាយការណ៍សិក្សា និងភ្ជាប់ជាមួយ Google Sheets" data-en="Academic Reports & Google Sheets Connection">របាយការណ៍សិក្សា និងភ្ជាប់ជាមួយ Google Sheets</h2>
+                            <p style="font-size: 0.85rem; color: var(--text-muted);" data-km="គ្រប់គ្រងការSyncទិន្នន័យ និងពិនិត្យមើលលទ្ធផលសិក្សារួម" data-en="Manage data synchronization and check general academic summaries">គ្រប់គ្រងការSyncទិន្នន័យ និងពិនិត្យមើលលទ្ធផលសិក្សារួម</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Sheets Connection Settings -->
+                <div class="card-style" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                        <i class="fa-solid fa-table" style="font-size: 1.5rem; color: #107c41;"></i>
+                        <h3 style="font-size: 1.1rem; font-weight: 700;" data-km="ការកំណត់ការតភ្ជាប់ Google Sheets" data-en="Google Sheets Integration Setup">ការកំណត់ការតភ្ជាប់ Google Sheets</h3>
+                    </div>
+                    
+                    <div class="grid-layout" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                        <div class="filter-group">
+                            <label for="googleSheetsUrlInput" data-km="តំណភ្ជាប់ Google Apps Script Web App URL" data-en="Google Apps Script Web App URL">តំណភ្ជាប់ Google Apps Script Web App URL</label>
+                            <input type="url" id="googleSheetsUrlInput" class="form-control" placeholder="https://script.google.com/macros/s/.../exec">
+                        </div>
+                        <div class="filter-group" style="display: flex; align-items: flex-end; gap: 0.5rem;">
+                            <button class="btn btn-primary" id="btnSaveSheetsUrl" style="width: auto;">
+                                <i class="fa-solid fa-floppy-disk"></i> <span data-km="រក្សាទុក URL" data-en="Save URL">រក្សាទុក URL</span>
+                            </button>
+                            <button class="btn btn-success" id="btnSyncToSheets" style="width: auto;">
+                                <i class="fa-solid fa-arrows-rotate"></i> <span data-km="Sync ទៅ Sheets ឥឡូវនេះ" data-en="Sync to Sheets Now">Sync to Sheets Now</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <details style="background: var(--input-bg, #f8fafc); padding: 1rem; border-radius: 12px; font-size: 0.85rem; border: 1px dashed var(--border-color);">
+                        <summary style="font-weight: 600; cursor: pointer;" data-km="សេចក្តីណែនាំអំពីរបៀបរៀបចំតភ្ជាប់ Google Sheets (Instructions)" data-en="Instructions for Google Sheets Integration">សេចក្តីណែនាំអំពីរបៀបរៀបចំតភ្ជាប់ Google Sheets (Instructions)</summary>
+                        <ol style="margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.5;">
+                            <li data-km="បង្កើត Spreadsheet ថ្មីមួយនៅក្នុង Google Drive របស់អ្នក។" data-en="Create a new Google Spreadsheet in your Google Drive.">បង្កើត Spreadsheet ថ្មីមួយនៅក្នុង Google Drive របស់អ្នក។</li>
+                            <li data-km="ចុចលើ Extensions > Apps Script រួចលុបកូដចាស់ចោល និងជំនួសដោយកូដ Apps Script របស់កម្មវិធីនេះ។" data-en="Click Extensions > Apps Script, replace everything with our custom Script code.">ចុចលើ Extensions > Apps Script រួចលុបកូដចាស់ចោល និងជំនួសដោយកូដ Apps Script របស់កម្មវិធីនេះ។</li>
+                            <li data-km="ចុច Deploy > New Deployment រួចយកប្រភេទ Web App (កំណត់ Who has access ទៅជា Anyone)។" data-en="Click Deploy > New Deployment, choose Web App (Set 'Who has access' to 'Anyone').">ចុច Deploy > New Deployment រួចយកប្រភេទ Web App (កំណត់ Who has access to 'Anyone').</li>
+                            <li data-km="ចម្លងតំណភ្ជាប់ Web App URL នោះមកដាក់ក្នុងប្រអប់ខាងលើ រួចចុច 'រក្សាទុក' និង 'Sync'។" data-en="Copy the Web App URL, paste it above, click 'Save URL' and 'Sync'.">ចម្លងតំណភ្ជាប់ Web App URL នោះមកដាក់ក្នុងប្រអប់ខាងលើ រួចចុច 'រក្សាទុក' និង 'Sync'។</li>
+                        </ol>
+                        <textarea id="appsScriptTemplateCode" readonly style="width: 100%; height: 120px; font-family: monospace; font-size: 0.75rem; margin-top: 0.5rem; padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border-color); background: #1e293b; color: #f8fafc;" onclick="this.select()"></textarea>
+                    </details>
+                </div>
+
+                <!-- Academic Report Filtering -->
+                <div class="card-style filter-bar" style="margin-bottom: 1.5rem;">
+                    <div class="filter-group">
+                        <label for="acadFilterClass" data-km="ជ្រើសរើសថ្នាក់រៀន" data-en="Select Class">ជ្រើសរើសថ្នាក់រៀន</label>
+                        <select id="acadFilterClass" class="form-control">
+                            <!-- Loaded dynamically -->
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="acadFilterPeriod" data-km="ជ្រើសរើសវគ្គ/ខែ" data-en="Report Period">ជ្រើសរើសវគ្គ/ខែ</label>
+                        <select id="acadFilterPeriod" class="form-control">
+                            <optgroup label="របាយការណ៍ប្រចាំខែ / Monthly" id="acadPeriodMonthlyOpt">
+                                <option value="oct" data-km="ខែតុលា" data-en="October">ខែតុលា</option>
+                                <option value="nov" data-km="ខែវិច្ឆិកា" data-en="November">ខែវិច្ឆិកា</option>
+                                <option value="dec" data-km="ខែធ្នូ" data-en="December">ខែធ្នូ</option>
+                                <option value="jan" data-km="ខែមករា" data-en="January">ខែមករា</option>
+                                <option value="feb" data-km="ខែកុម្ភៈ" data-en="February">ខែកុម្ភៈ</option>
+                                <option value="mar" data-km="ខែមីនា" data-en="March">ខែមីនា</option>
+                                <option value="apr" data-km="ខែមេសា" data-en="April">ខែមេសា</option>
+                                <option value="may" data-km="ខែឧសភា" data-en="May">ខែឧសភា</option>
+                                <option value="jun" data-km="ខែមិថុនា" data-en="June">ខែមិថុនា</option>
+                                <option value="jul" data-km="ខែកក្កដា" data-en="July">ខែកក្កដា</option>
+                            </optgroup>
+                            <optgroup label="របាយការណ៍ឆមាស / Semesters">
+                                <option value="sem1" data-km="ឆមាសទី១" data-en="Semester 1">ឆមាសទី១</option>
+                                <option value="sem2" data-km="ឆមាសទី២" data-en="Semester 2">ឆមាសទី២</option>
+                            </optgroup>
+                            <optgroup label="របាយការណ៍ប្រចាំឆ្នាំ / Yearly">
+                                <option value="yearly" data-km="ប្រចាំឆ្នាំ" data-en="Yearly">ប្រចាំឆ្នាំ</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="display: flex; align-items: flex-end;">
+                        <button class="btn btn-primary" id="btnGenerateAcadReport" style="width: 100%;">
+                            <i class="fa-solid fa-magnifying-glass"></i> <span data-km="ទាញយករបាយការណ៍សិក្សា" data-en="Load Academic Report">ទាញយករបាយការណ៍សិក្សា</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Academic Results Display -->
+                <div id="acadReportContainer" style="display: none;">
+                    <div class="card-style" style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn btn-outline" id="btnPrintAcadReport" style="width: auto;">
+                            <i class="fa-solid fa-print"></i> <span data-km="បោះពុម្ព (Print)" data-en="Print Summary">បោះពុម្ព (Print)</span>
+                        </button>
+                        <button class="btn btn-outline" id="btnExportAcadPDF" style="width: auto;">
+                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> <span data-km="រក្សាទុកជា PDF" data-en="Save as PDF">រក្សាទុកជា PDF</span>
+                        </button>
+                    </div>
+
+                    <!-- Printable Container -->
+                    <div class="card-style print-container" id="acadPrintArea">
+                        <div class="print-header">
+                            <h3 data-km="ព្រះរាជាណាចក្រកម្ពុជា" data-en="Kingdom of Cambodia">ព្រះរាជាណាចក្រកម្ពុជា</h3>
+                            <h4 data-km="ជាតិ សាសនា ព្រះមហាក្សត្រ" data-en="Nation Religion King" style="font-weight: 500;">ជាតិ សាសនា ព្រះមហាក្សត្រ</h4>
+                            <div class="accent-line" style="margin: 0.5rem auto; width: 80px; height: 1.5px; background: var(--text-main);"></div>
+                            <h2 id="acadReportTitle" style="font-size: 1.4rem; font-weight: 700; margin-top: 1.5rem; text-transform: uppercase;">សន្លឹកបញ្ជីលទ្ធផលសិក្សាសិស្សរួម (Academic Transcript)</h2>
+                        </div>
+                        
+                        <div class="report-meta-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                            <div><strong>ថ្នាក់រៀន៖</strong> <span id="acadMetaClass">...</span></div>
+                            <div><strong>គ្រូបន្ទុក៖</strong> <span id="acadMetaTeacher">...</span></div>
+                            <div><strong>វគ្គសិក្សា៖</strong> <span id="acadMetaPeriod">...</span></div>
+                            <div><strong>កាលបរិច្ឆេទ៖</strong> <span id="acadMetaDate">...</span></div>
+                        </div>
+
+                        <div class="table-container print-table-container">
+                            <table class="data-table print-table" id="acadResultTable">
+                                <thead>
+                                    <tr>
+                                        <th>ល.រ</th>
+                                        <th>លេខសម្គាល់</th>
+                                        <th>ឈ្មោះសិស្ស</th>
+                                        <th>ភេទ</th>
+                                        <th>មធ្យមភាគរួម</th>
+                                        <th>និទ្ទេសរួម</th>
+                                        <th>លទ្ធផលសិក្សា</th>
+                                        <th>ចំណាត់ថ្នាក់</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="acadTableBody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Signatures -->
+                        <div class="print-footer" style="display: flex; justify-content: space-between; margin-top: 3rem;">
+                            <div style="text-align: center; width: 45%;">
+                                <p>បានឃើញ និងឯកភាព</p>
+                                <h4 style="margin-top: 0.5rem; margin-bottom: 5.5rem;">នាយកសាលា</h4>
+                            </div>
+                            <div style="text-align: center; width: 45%;">
+                                <p>កាលបរិច្ឆេទ៖ ....................................</p>
+                                <h4 style="margin-bottom: 5.5rem;">គ្រូបន្ទុកថ្នាក់</h4>
+                                <h4 id="acadPrintTeacherName" style="font-weight: 700;">(ឈ្មោះគ្រូ)</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-style placeholder-card" id="acadPlaceholder">
+                    <i class="fa-solid fa-graduation-cap placeholder-icon"></i>
+                    <p data-km="សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍សិក្សា'។" data-en="Please select class and report period, then click 'Load Academic Report'.">សូមជ្រើសរើសថ្នាក់ និងប្រភេទរបាយការណ៍ រួចចុចលើ 'ទាញយករបាយការណ៍សិក្សា'។</p>
                 </div>
             </section>
 
@@ -1225,9 +1380,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     
     <!-- Firebase Initialization -->
-    <script src="firebase-config.js?v=20260703_1"></script>
+    <script src="firebase-config.js?v=20260703_4"></script>
 
     <!-- Main JavaScript Core Logic -->
-    <script src="app.js?v=20260703_1"></script>
+    <script src="app.js?v=20260703_4"></script>
 </body>
 </html>
