@@ -1685,68 +1685,7 @@ function generateReport() {
     // Header Label for print
     document.getElementById("reportPrintTitle").textContent = `${appState.language === 'km' ? 'របាយការណ៍លទ្ធផលសិក្សាសិស្ស' : 'Student Grade & Performance Report'}`;
     
-    if (isDaily || isWeekly) {
-        // Table headers: No. | Student ID | Name | Gender | Attendance Status | Remarks/Discipline
-        const headerRow = document.getElementById("reportTableHeaderRow");
-        headerRow.innerHTML = `
-            <th style="width: 50px;">ល.រ</th>
-            <th style="width: 120px;">លេខសម្គាល់</th>
-            <th>ឈ្មោះសិស្ស</th>
-            <th style="width: 60px;">ភេទ</th>
-            <th style="width: 150px;">វត្តមាន</th>
-            <th>វិន័យ និងការកត់សម្គាល់</th>
-        `;
-        
-        const tbody = document.getElementById("reportTableBody");
-        tbody.innerHTML = "";
-        
-        targetClass.students.forEach((stu, index) => {
-            let genderText = stu.gender || "";
-            if (appState.language === 'en') {
-                if (stu.gender === 'ស្រី') genderText = 'Female';
-                else if (stu.gender === 'ប្រុស') genderText = 'Male';
-            }
-            
-            // Attendance
-            let attendance = appState.language === 'km' ? "វត្តមាន (Present)" : "Present";
-            let attendanceClass = "badge-pass";
-            if (index % 8 === 0) {
-                attendance = appState.language === 'km' ? "ច្បាប់ (Excused)" : "Excused";
-                attendanceClass = "badge-pass";
-            } else if (index % 13 === 0) {
-                attendance = appState.language === 'km' ? "អត់ច្បាប់ (Unexcused)" : "Unexcused";
-                attendanceClass = "badge-fail";
-            } else if (index % 7 === 1) {
-                attendance = appState.language === 'km' ? "យឺត (Late)" : "Late";
-                attendanceClass = "badge-fail";
-            }
-            
-            // Remarks/Discipline
-            let remarks = appState.language === 'km' ? "ល្អណាស់" : "Very Good";
-            if (index % 8 === 0) {
-                remarks = "-";
-            } else if (index % 5 === 0) {
-                remarks = appState.language === 'km' ? "យកចិត្តទុកដាក់ខ្ពស់" : "Highly attentive";
-            } else if (index % 6 === 1) {
-                remarks = appState.language === 'km' ? "ត្រូវការការណែនាំ" : "Needs attention";
-            }
-            
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${stu.id}</td>
-                <td class="text-left"><strong>${stu.name}</strong></td>
-                <td>${genderText}</td>
-                <td><span class="badge ${attendanceClass}">${attendance}</span></td>
-                <td class="text-left">${remarks}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-        
-        renderVisualSummary(targetClass.students, period, classId);
-        applyLanguage();
-        return;
-    }
+    // Removed attendance logic for Daily/Weekly. Reports will now default to score sheets.
     
     // Get Ranks
     const rankedData = rankStudentsInClass(classId, period);
@@ -1759,7 +1698,7 @@ function generateReport() {
     const headerRow = document.getElementById("reportTableHeaderRow");
     headerRow.innerHTML = "";
     
-    const isMonthlyOrExam = ["oct","nov","dec","jan","feb","mar","apr","may","jun","jul", "sem1_exam", "sem2_exam"].includes(period);
+    const isMonthlyOrExam = ["oct","nov","dec","jan","feb","mar","apr","may","jun","jul", "sem1_exam", "sem2_exam", "daily", "weekly"].includes(period);
     const isSemester = ["sem1", "sem2"].includes(period);
     const isYearly = period === "yearly";
     
@@ -1768,7 +1707,7 @@ function generateReport() {
         <th style="width: 50px;" data-km="ល.រ" data-en="No.">ល.រ</th>
         <th style="width: 110px;" data-km="លេខសម្គាល់ ឬ ID" data-en="Student ID">លេខសម្គាល់ ឬ ID</th>
         <th data-km="ឈ្មោះសិស្ស" data-en="Name">ឈ្មោះសិស្ស</th>
-        <th style="width: 60px;" data-km="ភេទ" data-en="Gender">ភេទ</th>
+        <th style="width: 60px; white-space: nowrap;" data-km="ភេទ" data-en="Gender">ភេទ</th>
     `;
     
     if (isMonthlyOrExam) {
@@ -1821,7 +1760,7 @@ function generateReport() {
                 <td>${row.rank}</td>
                 <td>${stu.id}</td>
                 <td class="text-left"><strong>${stu.name}</strong></td>
-                <td>${genderText}</td>
+                <td style="white-space: nowrap;">${genderText}</td>
             `;
             
             let total = 0;
@@ -2088,7 +2027,7 @@ function generateAcademicReport() {
                 <td>${row.rank}</td>
                 <td>${stu.id}</td>
                 <td class="text-left"><strong>${stu.name}</strong></td>
-                <td>${genderText}</td>
+                <td style="white-space: nowrap;">${genderText}</td>
                 <td><span style="color: var(--primary-blue); font-weight:700;">${displayAvg}</span></td>
                 <td><span class="badge ${getGradeColorClass(gradeLetter)}">${gradeLabelText}</span></td>
                 <td><span class="badge ${statusClass}">${row.status}</span></td>

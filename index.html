@@ -11,7 +11,8 @@
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260703_4">
+    <link rel="stylesheet" href="styles.css?v=20260703_5">
+    <script src="app.js?v=20260703_5" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -715,15 +716,18 @@
                             </table>
                         </div>
 
-                        <div class="print-footer">
-                            <div class="footer-sign">
-                                <p data-km="បានឃើញ និងឯកភាព" data-en="Seen and Approved">បានឃើញ និងឯកភាព</p>
-                                <h4 data-km="នាយកសាលា" data-en="School Principal" style="margin-top: 0.5rem; margin-bottom: 5.5rem;">នាយកសាលា</h4>
+                        <div class="print-footer" style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                            <div class="footer-sign" style="text-align: center; width: 45%;">
+                                <p data-km="បានឃើញ និងឯកភាព" data-en="Seen and Approved" style="font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt; margin-bottom: 0.5rem;">បានឃើញ និងឯកភាព</p>
+                                <h4 data-km="នាយកសាលា" data-en="School Principal" style="font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt; margin-bottom: 5.5rem;">នាយកសាលា</h4>
                             </div>
-                            <div class="footer-sign">
-                                <p data-km="កាលបរិច្ឆេទ៖ ...................................." data-en="Date: ....................................">កាលបរិច្ឆេទ៖ ....................................</p>
-                                <h4 data-km="គ្រូបន្ទុកថ្នាក់" data-en="Class Teacher" style="margin-bottom: 3.5rem;">គ្រូបន្ទុកថ្នាក់</h4>
-                                <h4 id="reportPrintTeacherName" style="font-weight: 700;">(ឈ្មោះគ្រូ)</h4>
+                            <div class="footer-sign" style="text-align: center; width: 55%;">
+                                <div style="text-align: right; margin-bottom: 1rem; font-size: 10pt; line-height: 1.8;">
+                                    <p>ថ្ងៃ.......................ខែ.....................ឆ្នាំ................... ព.ស. ២៥៦....</p>
+                                    <p>ធ្វើនៅ........................ថ្ងៃទី...........ខែ..............ឆ្នាំ២០២.....</p>
+                                </div>
+                                <h4 data-km="គ្រូបន្ទុកថ្នាក់" data-en="Class Teacher" style="font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt; margin-bottom: 5.5rem;">គ្រូបន្ទុកថ្នាក់</h4>
+                                <h4 id="reportPrintTeacherName" style="font-weight: 700; font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt;">(ឈ្មោះគ្រូ)</h4>
                             </div>
                         </div>
                     </div>
@@ -853,7 +857,7 @@
                                         <th>ល.រ</th>
                                         <th>លេខសម្គាល់</th>
                                         <th>ឈ្មោះសិស្ស</th>
-                                        <th>ភេទ</th>
+                                        <th style="white-space: nowrap;">ភេទ</th>
                                         <th>មធ្យមភាគរួម</th>
                                         <th>និទ្ទេសរួម</th>
                                         <th>លទ្ធផលសិក្សា</th>
@@ -867,15 +871,18 @@
                         </div>
 
                         <!-- Signatures -->
-                        <div class="print-footer" style="display: flex; justify-content: space-between; margin-top: 3rem;">
-                            <div style="text-align: center; width: 45%;">
-                                <p>បានឃើញ និងឯកភាព</p>
-                                <h4 style="margin-top: 0.5rem; margin-bottom: 5.5rem;">នាយកសាលា</h4>
+                        <div class="print-footer" style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                            <div class="footer-sign" style="text-align: center; width: 45%;">
+                                <p data-km="បានឃើញ និងឯកភាព" data-en="Seen and Approved" style="font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt; margin-bottom: 0.5rem;">បានឃើញ និងឯកភាព</p>
+                                <h4 data-km="នាយកសាលា" data-en="School Principal" style="font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt; margin-bottom: 5.5rem;">នាយកសាលា</h4>
                             </div>
-                            <div style="text-align: center; width: 45%;">
-                                <p>កាលបរិច្ឆេទ៖ ....................................</p>
-                                <h4 style="margin-bottom: 5.5rem;">គ្រូបន្ទុកថ្នាក់</h4>
-                                <h4 id="acadPrintTeacherName" style="font-weight: 700;">(ឈ្មោះគ្រូ)</h4>
+                            <div class="footer-sign" style="text-align: center; width: 55%;">
+                                <div style="text-align: right; margin-bottom: 1rem; font-size: 10pt; line-height: 1.8;">
+                                    <p>ថ្ងៃ.......................ខែ.....................ឆ្នាំ................... ព.ស. ២៥៦....</p>
+                                    <p>ធ្វើនៅ........................ថ្ងៃទី...........ខែ..............ឆ្នាំ២០២.....</p>
+                                </div>
+                                <h4 data-km="គ្រូបន្ទុកថ្នាក់" data-en="Class Teacher" style="font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt; margin-bottom: 5.5rem;">គ្រូបន្ទុកថ្នាក់</h4>
+                                <h4 id="acadPrintTeacherName" style="font-weight: 700; font-family: 'Khmer OS Muol Light', 'Moul', cursive; font-size: 11pt;">(ឈ្មោះគ្រូ)</h4>
                             </div>
                         </div>
                     </div>
@@ -1382,7 +1389,5 @@
     <!-- Firebase Initialization -->
     <script src="firebase-config.js?v=20260703_4"></script>
 
-    <!-- Main JavaScript Core Logic -->
-    <script src="app.js?v=20260703_4"></script>
 </body>
 </html>
