@@ -1885,25 +1885,27 @@ function exportReportCSV() {
         const row = [];
         const tds = tr.querySelectorAll("td");
         tds.forEach(td => {
-            // handle badges or formatted content
-            row.push(`"${td.textContent.trim()}"`);
+            let val = td.textContent.trim().replace(/"/g, '""');
+            row.push(`"${val}"`);
         });
         csv.push(row.join(","));
     });
     
-    // Download File
-    const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + csv.join("\n");
-    const encodedUri = encodeURI(csvContent);
+    // Download File using Blob
+    const csvContent = "\uFEFF" + csv.join("\r\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
+    link.setAttribute("href", url);
     
-    const className = document.getElementById("reportFilterClass").options[document.getElementById("reportFilterClass").selectedIndex].textContent;
-    const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex].textContent;
+    const className = document.getElementById("reportFilterClass").options[document.getElementById("reportFilterClass").selectedIndex]?.textContent || "Class";
+    const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || "Period";
     
-    link.setAttribute("download", `Grade_Report_${className}_${periodName}.csv`);
+    link.setAttribute("download", `Grade_Report_${className.replace(/\s+/g, '_')}_${periodName.replace(/\s+/g, '_')}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 }
 
 // ----------------------------------------------------
