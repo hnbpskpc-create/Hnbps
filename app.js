@@ -1754,45 +1754,52 @@ function generateReport() {
     applyLanguage();
 }
 
-// Export CSV Function
-function exportReportCSV() {
+// Export Excel Function for Score Report
+function exportReportExcel() {
+    if (typeof XLSX === 'undefined') {
+        showToast(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងដំណើរការ..." : "Please wait, library is loading...", "warning");
+        return;
+    }
     const table = document.getElementById("reportResultTable");
     if (!table) return;
     
-    let csv = [];
-    // Get headers
-    const headers = [];
-    const ths = table.querySelectorAll("thead th");
-    ths.forEach(th => headers.push(th.textContent.trim()));
-    csv.push(headers.join(","));
-    
-    // Get rows
-    const trs = table.querySelectorAll("tbody tr");
-    trs.forEach(tr => {
-        const row = [];
-        const tds = tr.querySelectorAll("td");
-        tds.forEach(td => {
-            let val = td.textContent.trim().replace(/"/g, '""');
-            row.push(`"${val}"`);
-        });
-        csv.push(row.join(","));
-    });
-    
-    // Download File using Blob
-    const csvContent = "\uFEFF" + csv.join("\r\n");
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    
     const className = document.getElementById("reportFilterClass").options[document.getElementById("reportFilterClass").selectedIndex]?.textContent || "Class";
     const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || "Period";
+    const fileName = `Grade_Report_${className.replace(/\s+/g, '_')}_${periodName.replace(/\s+/g, '_')}.xlsx`;
     
-    link.setAttribute("download", `Grade_Report_${className.replace(/\s+/g, '_')}_${periodName.replace(/\s+/g, '_')}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    // Create workbook and worksheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(table);
+    
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Score Report");
+    
+    // Download File
+    XLSX.writeFile(wb, fileName);
+}
+
+// Export Excel Function for Academic Report
+function exportAcadExcel() {
+    if (typeof XLSX === 'undefined') {
+        showToast(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងដំណើរការ..." : "Please wait, library is loading...", "warning");
+        return;
+    }
+    const table = document.getElementById("acadResultTable");
+    if (!table) return;
+    
+    const className = document.getElementById("acadFilterClass").options[document.getElementById("acadFilterClass").selectedIndex]?.textContent || "Class";
+    const periodName = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || "Period";
+    const fileName = `Academic_Transcript_${className.replace(/\s+/g, '_')}_${periodName.replace(/\s+/g, '_')}.xlsx`;
+    
+    // Create workbook and worksheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(table);
+    
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Academic Transcript");
+    
+    // Download File
+    XLSX.writeFile(wb, fileName);
 }
 
 // ----------------------------------------------------
@@ -2393,6 +2400,8 @@ function setupEventListeners() {
     safeBind("btnPrintAcadReport", "click", () => {
         window.print();
     });
+    
+    safeBind("btnExportAcadExcel", "click", exportAcadExcel);
     
     safeBind("btnExportAcadPDF", "click", () => {
         window.print();

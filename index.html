@@ -10,9 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,300..700;1,300..700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260703_7">
-    <script src="app.js?v=20260703_7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260704_1">
+    <script src="app.js?v=20260704_1" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -676,8 +678,8 @@
                         <button class="btn btn-outline" id="btnPrintReport">
                             <i class="fa-solid fa-print"></i> <span data-km="បោះពុម្ព (Print)" data-en="Print Report">បោះពុម្ព (Print)</span>
                         </button>
-                        <button class="btn btn-outline" id="btnExportReportCSV">
-                            <i class="fa-solid fa-file-csv"></i> <span data-km="ទាញយកជា CSV" data-en="Export CSV">ទាញយកជា CSV</span>
+                        <button class="btn btn-outline" id="btnExportReportExcel" style="width: auto; color: #107c41; border-color: #107c41;">
+                            <i class="fa-solid fa-file-excel"></i> <span data-km="ទាញយកជា Excel" data-en="Export Excel">ទាញយកជា Excel</span>
                         </button>
                     </div>
 
@@ -832,8 +834,11 @@
                         <button class="btn btn-outline" id="btnPrintAcadReport" style="width: auto;">
                             <i class="fa-solid fa-print"></i> <span data-km="បោះពុម្ព (Print)" data-en="Print Summary">បោះពុម្ព (Print)</span>
                         </button>
+                        <button class="btn btn-outline" id="btnExportAcadExcel" style="width: auto; color: #107c41; border-color: #107c41; margin-right: 0.5rem;">
+                            <i class="fa-solid fa-file-excel"></i> <span data-km="ទាញយក Excel" data-en="Export Excel">ទាញយក Excel</span>
+                        </button>
                         <button class="btn btn-outline" id="btnExportAcadPDF" style="width: auto;">
-                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> <span data-km="រក្សាទុកជា PDF" data-en="Save as PDF">រក្សាទុកជា PDF</span>
+                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> <span data-km="ទាញយក PDF" data-en="Save as PDF">ទាញយក PDF</span>
                         </button>
                     </div>
 
