@@ -1756,50 +1756,66 @@ function generateReport() {
 
 // Export Excel Function for Score Report
 function exportReportExcel() {
-    if (typeof XLSX === 'undefined') {
-        showToast(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងដំណើរការ..." : "Please wait, library is loading...", "warning");
-        return;
+    try {
+        if (typeof XLSX === 'undefined') {
+            alert(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងទាញយកទិន្នន័យ (កំពុងផ្ទុក Library)... សូមសាកល្បងម្ដងទៀត។" : "Please wait, library is loading... Please try again.");
+            return;
+        }
+        const table = document.getElementById("reportResultTable");
+        if (!table) {
+            alert("រកមិនឃើញតារាងទិន្នន័យ (Table not found)");
+            return;
+        }
+        
+        const className = document.getElementById("reportFilterClass").options[document.getElementById("reportFilterClass").selectedIndex]?.textContent || "Class";
+        const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || "Period";
+        const fileName = `Grade_Report_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
+        
+        // Create workbook and worksheet
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(table);
+        
+        // Add worksheet to workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Score Report");
+        
+        // Download File
+        XLSX.writeFile(wb, fileName);
+    } catch (error) {
+        console.error("Excel Export Error: ", error);
+        alert("មានបញ្ហាក្នុងការទាញយក Excel (Error): " + error.message);
     }
-    const table = document.getElementById("reportResultTable");
-    if (!table) return;
-    
-    const className = document.getElementById("reportFilterClass").options[document.getElementById("reportFilterClass").selectedIndex]?.textContent || "Class";
-    const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || "Period";
-    const fileName = `Grade_Report_${className.replace(/\s+/g, '_')}_${periodName.replace(/\s+/g, '_')}.xlsx`;
-    
-    // Create workbook and worksheet
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.table_to_sheet(table);
-    
-    // Add worksheet to workbook
-    XLSX.utils.book_append_sheet(wb, ws, "Score Report");
-    
-    // Download File
-    XLSX.writeFile(wb, fileName);
 }
 
 // Export Excel Function for Academic Report
 function exportAcadExcel() {
-    if (typeof XLSX === 'undefined') {
-        showToast(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងដំណើរការ..." : "Please wait, library is loading...", "warning");
-        return;
+    try {
+        if (typeof XLSX === 'undefined') {
+            alert(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងទាញយកទិន្នន័យ (កំពុងផ្ទុក Library)... សូមសាកល្បងម្ដងទៀត។" : "Please wait, library is loading... Please try again.");
+            return;
+        }
+        const table = document.getElementById("acadResultTable");
+        if (!table) {
+            alert("រកមិនឃើញតារាងទិន្នន័យ (Table not found)");
+            return;
+        }
+        
+        const className = document.getElementById("acadFilterClass").options[document.getElementById("acadFilterClass").selectedIndex]?.textContent || "Class";
+        const periodName = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || "Period";
+        const fileName = `Academic_Transcript_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
+        
+        // Create workbook and worksheet
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(table);
+        
+        // Add worksheet to workbook
+        XLSX.utils.book_append_sheet(wb, ws, "Academic Transcript");
+        
+        // Download File
+        XLSX.writeFile(wb, fileName);
+    } catch (error) {
+        console.error("Excel Export Error: ", error);
+        alert("មានបញ្ហាក្នុងការទាញយក Excel (Error): " + error.message);
     }
-    const table = document.getElementById("acadResultTable");
-    if (!table) return;
-    
-    const className = document.getElementById("acadFilterClass").options[document.getElementById("acadFilterClass").selectedIndex]?.textContent || "Class";
-    const periodName = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || "Period";
-    const fileName = `Academic_Transcript_${className.replace(/\s+/g, '_')}_${periodName.replace(/\s+/g, '_')}.xlsx`;
-    
-    // Create workbook and worksheet
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.table_to_sheet(table);
-    
-    // Add worksheet to workbook
-    XLSX.utils.book_append_sheet(wb, ws, "Academic Transcript");
-    
-    // Download File
-    XLSX.writeFile(wb, fileName);
 }
 
 // ----------------------------------------------------
