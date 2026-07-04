@@ -4321,4 +4321,42 @@ function updateReportsSchoolProfile() {
             aLogo.style.display = "none";
         }
     }
+
+    // 3. Update Sidebar Branding
+    const sidebarLogoContainer = document.getElementById("sidebarLogoContainer");
+    const sidebarDefaultLogo = document.getElementById("sidebarDefaultLogo");
+    const sidebarSchoolLogo = document.getElementById("sidebarSchoolLogo");
+    const sidebarSchoolName = document.getElementById("sidebarSchoolName");
+
+    if (sidebarSchoolName) {
+        const displayName = name || (appState.language === 'km' ? 'ពិន្ទុបឋមសិក្សា' : 'Grading System');
+        sidebarSchoolName.textContent = displayName;
+        
+        // Dynamically shrink font size if text is too long to prevent clipping
+        if (displayName.length > 25) {
+            sidebarSchoolName.style.fontSize = "0.75rem";
+        } else if (displayName.length > 18) {
+            sidebarSchoolName.style.fontSize = "0.85rem";
+        } else if (displayName.length > 12) {
+            sidebarSchoolName.style.fontSize = "0.95rem";
+        } else {
+            sidebarSchoolName.style.fontSize = "1.15rem";
+        }
+    }
+
+    if (sidebarLogoContainer && sidebarDefaultLogo && sidebarSchoolLogo) {
+        if (logo) {
+            sidebarSchoolLogo.src = logo;
+            sidebarSchoolLogo.style.display = "block";
+            sidebarDefaultLogo.style.display = "none";
+            sidebarLogoContainer.style.background = "white"; // clear background gradient for clean logo look
+            sidebarLogoContainer.style.padding = "4px"; // small padding
+        } else {
+            sidebarSchoolLogo.src = "";
+            sidebarSchoolLogo.style.display = "none";
+            sidebarDefaultLogo.style.display = "block";
+            sidebarLogoContainer.style.background = ""; // restore gradient
+            sidebarLogoContainer.style.padding = ""; // restore padding
+        }
+    }
 }
