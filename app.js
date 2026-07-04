@@ -2387,8 +2387,8 @@ function setupEventListeners() {
         window.print();
     });
 
-    // Export Report CSV
-    safeBind("btnExportReportCSV", "click", exportReportCSV);
+    // Export Report Excel
+    safeBind("btnExportReportExcel", "click", exportReportExcel);
 
     // Academic Reports Events
     safeBind("acadFilterClass", "change", generateAcademicReport);
