@@ -88,7 +88,9 @@ const DEFAULT_STATE = {
     pendingUsers: [],
     teachers: [
         { name: "គ្រូបន្ទុកថ្នាក់", passcode: "teacher123" }
-    ]
+    ],
+    schoolName: "",
+    schoolLogo: ""
 };
 
 // Global App State
@@ -253,7 +255,9 @@ function saveState() {
             scores: appState.scores,
             messages: appState.messages,
             pendingUsers: appState.pendingUsers,
-            teachers: appState.teachers
+            teachers: appState.teachers,
+            schoolName: appState.schoolName || "",
+            schoolLogo: appState.schoolLogo || ""
         };
         db.collection('school').doc('appData').set(dataToSave).catch(e => console.error("Firestore sync error:", e));
     }
@@ -291,6 +295,8 @@ auth.onAuthStateChanged(async (user) => {
                         appState.messages = data.messages || [];
                         appState.pendingUsers = data.pendingUsers || [];
                         appState.teachers = data.teachers || [];
+                        appState.schoolName = data.schoolName || "";
+                        appState.schoolLogo = data.schoolLogo || "";
                         localStorage.setItem("primary_school_grading_state", JSON.stringify(appState));
                         isSyncing = false;
                         
@@ -298,6 +304,7 @@ auth.onAuthStateChanged(async (user) => {
                         if (document.getElementById('portalAdmin')?.style.display === 'block') initAdminPortal();
                         if (document.getElementById('portalTeacher')?.style.display === 'block') initTeacherPortal();
                         if (document.getElementById('portalStudent')?.style.display === 'block') initStudentPortal();
+                        updateReportsSchoolProfile();
                     } else {
                         // If it doesn't exist (first time), save the initial DEFAULT_STATE to Firestore
                         saveState();
@@ -576,6 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Show correct portal on startup
     try { showPortal(); } catch(e) { showEmergencyReset('showPortal', e); }
+    try { updateReportsSchoolProfile(); } catch(e) { console.error("updateReportsSchoolProfile failed:", e); }
 });
 
 function initDateTime() {
@@ -1790,21 +1798,11 @@ async function exportTableToExcelJS(tableId, titleText, metaObj, fileName, sheet
         right: { style: 'thin', color: { argb: 'FF000000' } }
     };
 
-    // 1. Write Royal Headers
+    // 1. Add spacer rows for headers (will populate later when maxCols is known)
     worksheet.addRow([]);
     worksheet.addRow([]);
-    worksheet.getCell('A1').value = "ព្រះរាជាណាចក្រកម្ពុជា";
-    worksheet.getCell('A2').value = "ជាតិ សាសនា ព្រះមហាក្សត្រ";
-    worksheet.getCell('A1').font = khmerMuolFont;
-    worksheet.getCell('A2').font = khmerMuolFont;
-    worksheet.getCell('A1').alignment = centerAlign;
-    worksheet.getCell('A2').alignment = centerAlign;
-
-    // 2. Write Report Title
     worksheet.addRow([]);
-    worksheet.getCell('A4').value = titleText;
-    worksheet.getCell('A4').font = khmerMuolFontTitle;
-    worksheet.getCell('A4').alignment = centerAlign;
+    worksheet.addRow([]);
 
     // 3. Write Meta Info
     worksheet.addRow([]);
@@ -1862,8 +1860,32 @@ async function exportTableToExcelJS(tableId, titleText, metaObj, fileName, sheet
 
     const maxCols = Math.max(...matrix.map(row => row.length));
     
-    worksheet.mergeCells(1, 1, 1, maxCols);
-    worksheet.mergeCells(2, 1, 2, maxCols);
+    // Set up School Name (Left) and Royal Header (Right)
+    const rightCol = Math.max(3, maxCols - 4);
+    
+    // School Name
+    if (appState.schoolName) {
+        worksheet.getCell('A1').value = appState.schoolName;
+        worksheet.getCell('A1').font = khmerMuolFont;
+        worksheet.getCell('A1').alignment = leftAlign;
+        worksheet.mergeCells(1, 1, 1, rightCol - 1);
+    }
+    
+    // Royal Header
+    worksheet.getCell(1, rightCol).value = "ព្រះរាជាណាចក្រកម្ពុជា";
+    worksheet.getCell(1, rightCol).font = khmerMuolFont;
+    worksheet.getCell(1, rightCol).alignment = centerAlign;
+    worksheet.mergeCells(1, rightCol, 1, maxCols);
+
+    worksheet.getCell(2, rightCol).value = "ជាតិ សាសនា ព្រះមហាក្សត្រ";
+    worksheet.getCell(2, rightCol).font = khmerMuolFont;
+    worksheet.getCell(2, rightCol).alignment = centerAlign;
+    worksheet.mergeCells(2, rightCol, 2, maxCols);
+
+    // Title (Row 4)
+    worksheet.getCell('A4').value = titleText;
+    worksheet.getCell('A4').font = khmerMuolFontTitle;
+    worksheet.getCell('A4').alignment = centerAlign;
     worksheet.mergeCells(4, 1, 4, maxCols);
 
     matrix.forEach((row, r) => {
@@ -2835,6 +2857,74 @@ function setupEventListeners() {
     document.getElementById("importFile").addEventListener("change", importDatabase);
     
     document.getElementById("btnResetDatabase").addEventListener("click", resetDatabase);
+
+    // School Profile Settings
+    const schoolNameInput = document.getElementById("schoolNameInput");
+    if (schoolNameInput) {
+        schoolNameInput.value = appState.schoolName || "";
+    }
+    
+    const logoPreview = document.getElementById("schoolLogoPreview");
+    const logoPlaceholder = document.getElementById("schoolLogoPlaceholder");
+    const removeLogoBtn = document.getElementById("btnRemoveSchoolLogo");
+    
+    if (appState.schoolLogo) {
+        if (logoPreview) {
+            logoPreview.src = appState.schoolLogo;
+            logoPreview.style.display = "block";
+        }
+        if (logoPlaceholder) logoPlaceholder.style.display = "none";
+        if (removeLogoBtn) removeLogoBtn.style.display = "inline-block";
+    }
+    
+    const uploadLogo = document.getElementById("uploadSchoolLogo");
+    if (uploadLogo) {
+        uploadLogo.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const base64 = event.target.result;
+                    if (logoPreview) {
+                        logoPreview.src = base64;
+                        logoPreview.style.display = "block";
+                    }
+                    if (logoPlaceholder) logoPlaceholder.style.display = "none";
+                    if (removeLogoBtn) removeLogoBtn.style.display = "inline-block";
+                    window.tempSchoolLogo = base64;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    if (removeLogoBtn) {
+        removeLogoBtn.addEventListener("click", () => {
+            if (logoPreview) {
+                logoPreview.src = "";
+                logoPreview.style.display = "none";
+            }
+            if (logoPlaceholder) logoPlaceholder.style.display = "block";
+            removeLogoBtn.style.display = "none";
+            window.tempSchoolLogo = null;
+            if (uploadLogo) uploadLogo.value = "";
+        });
+    }
+    
+    safeBind("btnSaveSchoolProfile", "click", () => {
+        const name = schoolNameInput.value.trim();
+        appState.schoolName = name;
+        
+        if (window.tempSchoolLogo !== undefined) {
+            appState.schoolLogo = window.tempSchoolLogo;
+        } else if (logoPreview && logoPreview.style.display === "none") {
+            appState.schoolLogo = null;
+        }
+        
+        saveState();
+        updateReportsSchoolProfile();
+        showToast(appState.language === 'km' ? 'រក្សាទុកប្រវត្តិរូបជោគជ័យ!' : 'Profile saved successfully!', 'success');
+    });
 
     // Preset Font selector change
     const fontPreset = document.getElementById("fontSelectPreset");
@@ -4186,3 +4276,49 @@ document.getElementById("editUserForm")?.addEventListener("submit", (e) => {
     document.getElementById("editUserModal").classList.remove("active");
     initUserPanel();
 });
+
+// Update the school profile displayed in printed/previewed reports
+function updateReportsSchoolProfile() {
+    const name = appState.schoolName || "";
+    const logo = appState.schoolLogo || "";
+    
+    // 1. Update Score Report Print Header
+    const rName = document.getElementById("reportSchoolName");
+    const rLogo = document.getElementById("reportSchoolLogo");
+    if (rName) {
+        if (name) {
+            rName.textContent = name;
+            rName.style.display = "block";
+        } else {
+            rName.style.display = "none";
+        }
+    }
+    if (rLogo) {
+        if (logo) {
+            rLogo.src = logo;
+            rLogo.style.display = "block";
+        } else {
+            rLogo.style.display = "none";
+        }
+    }
+    
+    // 2. Update Academic Report Print Header
+    const aName = document.getElementById("acadSchoolName");
+    const aLogo = document.getElementById("acadSchoolLogo");
+    if (aName) {
+        if (name) {
+            aName.textContent = name;
+            aName.style.display = "block";
+        } else {
+            aName.style.display = "none";
+        }
+    }
+    if (aLogo) {
+        if (logo) {
+            aLogo.src = logo;
+            aLogo.style.display = "block";
+        } else {
+            aLogo.style.display = "none";
+        }
+    }
+}

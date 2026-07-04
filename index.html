@@ -14,8 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260704_12">
-    <script src="app.js?v=20260704_12" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260704_13">
+    <script src="app.js?v=20260704_13" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -695,15 +695,19 @@
 
                     <!-- Print Layout wrapper -->
                     <div class="print-layout" id="reportPrintArea">
-                        <div class="print-header">
-                            <div class="kingdom-heading">
-                                <h3 data-km="ព្រះរាជាណាចក្រកម្ពុជា" data-en="Kingdom of Cambodia">ព្រះរាជាណាចក្រកម្ពុជា</h3>
-                                <h4 data-km="ជាតិ សាសនា ព្រះមហាក្សត្រ" data-en="Nation Religion King">ជាតិ សាសនា ព្រះមហាក្សត្រ</h4>
-                                <div class="heading-decor">🌟🌟🌟</div>
+                        <div class="print-header" style="display: flex; justify-content: space-between; align-items: flex-start; text-align: left; margin-bottom: 2rem;">
+                            <div class="school-profile-print" style="display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 45%;">
+                                <img id="reportSchoolLogo" src="" style="max-height: 65px; max-width: 65px; margin-bottom: 0.25rem; display: none;">
+                                <h3 id="reportSchoolName" style="font-family: 'Khmer OS Muol Light', Moul, cursive; font-size: 0.9rem; margin: 0; display: none; color: var(--text-main);"></h3>
                             </div>
-                            <div class="school-info">
-                                <h2 id="reportPrintTitle">កម្រងរបាយការណ៍លទ្ធផលសិក្សាសិស្ស</h2>
+                            <div class="kingdom-heading" style="text-align: center; width: 45%; margin-left: auto;">
+                                <h3 data-km="ព្រះរាជាណាចក្រកម្ពុជា" data-en="Kingdom of Cambodia" style="margin:0; font-family: 'Khmer OS Muol Light', Moul, cursive; font-size: 0.95rem;">ព្រះរាជាណាចក្រកម្ពុជា</h3>
+                                <h4 data-km="ជាតិ សាសនា ព្រះមហាក្សត្រ" data-en="Nation Religion King" style="margin: 0.25rem 0 0.5rem 0; font-size: 0.85rem;">ជាតិ សាសនា ព្រះមហាក្សត្រ</h4>
+                                <div class="heading-decor" style="letter-spacing: 0.25em;">🌟🌟🌟</div>
                             </div>
+                        </div>
+                        <div style="text-align: center; margin-bottom: 1.5rem;">
+                            <h2 id="reportPrintTitle" style="font-family: 'Khmer OS Muol Light', Moul, cursive; font-size: 1.2rem; margin: 0;">កម្រងរបាយការណ៍លទ្ធផលសិក្សាសិស្ស</h2>
                         </div>
 
                         <div class="report-meta-info">
@@ -849,11 +853,19 @@
 
                     <!-- Printable Container -->
                     <div class="card-style print-container" id="acadPrintArea">
-                        <div class="print-header">
-                            <h3 data-km="ព្រះរាជាណាចក្រកម្ពុជា" data-en="Kingdom of Cambodia">ព្រះរាជាណាចក្រកម្ពុជា</h3>
-                            <h4 data-km="ជាតិ សាសនា ព្រះមហាក្សត្រ" data-en="Nation Religion King" style="font-weight: 500;">ជាតិ សាសនា ព្រះមហាក្សត្រ</h4>
-                            <div class="accent-line" style="margin: 0.5rem auto; width: 80px; height: 1.5px; background: var(--text-main);"></div>
-                            <h2 id="acadReportTitle" style="font-size: 1.4rem; font-weight: 700; margin-top: 1.5rem; text-transform: uppercase;">សន្លឹកបញ្ជីលទ្ធផលសិក្សាសិស្សរួម (Academic Transcript)</h2>
+                        <div class="print-header" style="display: flex; justify-content: space-between; align-items: flex-start; text-align: left; margin-bottom: 2rem;">
+                            <div class="school-profile-print" style="display: flex; flex-direction: column; align-items: flex-start; text-align: left; width: 45%;">
+                                <img id="acadSchoolLogo" src="" style="max-height: 65px; max-width: 65px; margin-bottom: 0.25rem; display: none;">
+                                <h3 id="acadSchoolName" style="font-family: 'Khmer OS Muol Light', Moul, cursive; font-size: 0.9rem; margin: 0; display: none; color: var(--text-main);"></h3>
+                            </div>
+                            <div class="kingdom-heading" style="text-align: center; width: 45%; margin-left: auto;">
+                                <h3 data-km="ព្រះរាជាណាចក្រកម្ពុជា" data-en="Kingdom of Cambodia" style="margin:0; font-family: 'Khmer OS Muol Light', Moul, cursive; font-size: 0.95rem;">ព្រះរាជាណាចក្រកម្ពុជា</h3>
+                                <h4 data-km="ជាតិ សាសនា ព្រះមហាក្សត្រ" data-en="Nation Religion King" style="margin: 0.25rem 0 0.5rem 0; font-size: 0.85rem;">ជាតិ សាសនា ព្រះមហាក្សត្រ</h4>
+                                <div class="accent-line" style="margin: 0.5rem auto; width: 80px; height: 1.5px; background: var(--text-main);"></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-bottom: 1.5rem;">
+                            <h2 id="acadReportTitle" style="font-family: 'Khmer OS Muol Light', Moul, cursive; font-size: 1.2rem; margin: 0; text-transform: uppercase;">សន្លឹកបញ្ជីលទ្ធផលសិក្សាសិស្សរួម (Academic Transcript)</h2>
                         </div>
                         
                         <div class="report-meta-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
@@ -1054,6 +1066,34 @@
                             </div>
                             <p id="fontUploadStatus" style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem; font-style:italic; display:none;"></p>
                         </div>
+                    </div>
+
+                    <div class="card-style settings-card">
+                        <h3 data-km="ប្រវត្តិរូបស្ថាប័ន (សាលារៀន)" data-en="Institution Profile (School)">ប្រវត្តិរូបស្ថាប័ន (សាលារៀន)</h3>
+                        <p class="settings-desc" data-km="កំណត់ឈ្មោះសាលា និងបញ្ចូលរូបសញ្ញា (Logo) ដើម្បីបង្ហាញនៅលើក្បាលរបាយការណ៍ និងសន្លឹកកិច្ចការ Excel។" data-en="Set school name and upload logo to display on report headers and Excel exports.">កំណត់ឈ្មោះសាលា និងបញ្ចូលរូបសញ្ញា (Logo) ដើម្បីបង្ហាញនៅលើក្បាលរបាយការណ៍ និងសន្លឹកកិច្ចការ Excel។</p>
+                        
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="schoolNameInput" data-km="ឈ្មោះសាលារៀន / ស្ថាប័ន៖" data-en="School / Institution Name:">ឈ្មោះសាលារៀន / ស្ថាប័ន៖</label>
+                            <input type="text" id="schoolNameInput" class="form-control" placeholder="ឧ. សាលាបឋមសិក្សា..." style="margin-bottom: 0;">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label data-km="រូបសញ្ញាសាលា (Logo)៖" data-en="School Logo:">រូបសញ្ញាសាលា (Logo)៖</label>
+                            <div style="display:flex; gap:1rem; align-items:center;">
+                                <div style="width: 60px; height: 60px; border: 1px dashed var(--border-color, #ccc); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fafafa;">
+                                    <img id="schoolLogoPreview" src="" style="max-width: 100%; max-height: 100%; display: none;">
+                                    <i id="schoolLogoPlaceholder" class="fa-solid fa-image" style="font-size: 1.5rem; color: #ccc;"></i>
+                                </div>
+                                <div style="flex-grow:1; display:flex; flex-direction:column; gap:0.5rem;">
+                                    <label for="uploadSchoolLogo" class="btn btn-outline btn-sm" style="margin:0; text-align:center;">
+                                        <i class="fa-solid fa-upload"></i> <span data-km="ជ្រើសរើសរូបភាព" data-en="Select Image">ជ្រើសរើសរូបភាព</span>
+                                    </label>
+                                    <input type="file" id="uploadSchoolLogo" accept="image/*" style="display:none;">
+                                    <button type="button" class="btn btn-danger btn-sm" id="btnRemoveSchoolLogo" style="display:none;" data-km="លុបរូបសញ្ញា" data-en="Remove Logo">លុបរូបសញ្ញា</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btnSaveSchoolProfile" data-km="រក្សាទុកប្រវត្តិរូប" data-en="Save Profile">រក្សាទុកប្រវត្តិរូប</button>
                     </div>
 
                     <div class="card-style settings-card danger-zone">
