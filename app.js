@@ -2394,6 +2394,138 @@ function deleteStudent(studentId) {
     }
 }
 
+// Import students from Google Sheets
+async function handleGoogleSheetsImport(e) {
+    e.preventDefault();
+    const url = document.getElementById("sheetsUrlInput").value.trim();
+    if (!url) return;
+
+    const btnSubmit = document.getElementById("btnSubmitImportForm");
+    const originalText = btnSubmit.innerHTML;
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = appState.language === 'km' ? "កំពុងនាំចូល..." : "Importing...";
+
+    try {
+        const matches = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        if (!matches) {
+            throw new Error(appState.language === 'km' ? "តំណភ្ជាប់ Google Sheets មិនត្រឹមត្រូវទេ" : "Invalid Google Sheets URL");
+        }
+        const sheetId = matches[1];
+        const gidMatches = url.match(/gid=([0-9]+)/);
+        const gid = gidMatches ? gidMatches[1] : '0';
+        
+        const fetchUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&gid=${gid}`;
+        
+        const response = await fetch(fetchUrl);
+        if (!response.ok) {
+            throw new Error(appState.language === 'km' ? "មិនអាចទាញយកទិន្នន័យបានទេ! សូមពិនិត្យមើលការចែករំលែក (Anyone with link can view)។" : "Failed to fetch. Please verify sharing settings.");
+        }
+        
+        const text = await response.text();
+        const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);/);
+        if (!jsonMatch) {
+            throw new Error(appState.language === 'km' ? "ទម្រង់ទិន្នន័យមិនត្រឹមត្រូវទេ" : "Invalid data format returned by Google");
+        }
+        
+        const json = JSON.parse(jsonMatch[1]);
+        const table = json.table;
+        if (!table || !table.rows) {
+            throw new Error(appState.language === 'km' ? "មិនមានទិន្នន័យសិស្សទេ" : "No student data found in sheet");
+        }
+
+        const targetClass = appState.classes.find(c => c.id === activeClassId);
+        if (!targetClass) {
+            throw new Error("Class not found");
+        }
+
+        let importedCount = 0;
+        let skippedCount = 0;
+
+        table.rows.forEach((row, rowIndex) => {
+            if (!row || !row.c) return;
+            
+            const getVal = (colIdx) => {
+                const cell = row.c[colIdx];
+                return cell ? (cell.v !== null ? String(cell.v).trim() : "") : "";
+            };
+
+            let idVal = getVal(1);
+            let nameVal = getVal(2);
+            let genderVal = getVal(3);
+            let contactVal = getVal(4);
+            let genVal = getVal(5);
+
+            if (rowIndex === 0 && (nameVal.includes("ឈ្មោះ") || nameVal.toLowerCase().includes("name"))) {
+                return;
+            }
+
+            if (!nameVal) {
+                let fallbackName = getVal(1);
+                let fallbackGender = getVal(2);
+                if (fallbackName && (fallbackGender === "ស្រី" || fallbackGender === "ប្រុស" || fallbackGender === "ព្រះសង្ឃ" || fallbackGender.toLowerCase().startsWith("f") || fallbackGender.toLowerCase().startsWith("m"))) {
+                    nameVal = fallbackName;
+                    genderVal = fallbackGender;
+                    idVal = "";
+                    contactVal = getVal(3);
+                    genVal = getVal(4);
+                } else {
+                    return;
+                }
+            }
+
+            let finalGender = "ប្រុស";
+            if (genderVal === "ស្រី" || genderVal.toLowerCase() === "female" || genderVal.toLowerCase() === "f") {
+                finalGender = "ស្រី";
+            } else if (genderVal === "ព្រះសង្ឃ" || genderVal.toLowerCase() === "monk") {
+                finalGender = "ព្រះសង្ឃ";
+            } else if (genderVal === "ប្រុស" || genderVal.toLowerCase() === "male" || genderVal.toLowerCase() === "m") {
+                finalGender = "ប្រុស";
+            }
+
+            if (!idVal) {
+                idVal = `STU${Math.floor(1000 + Math.random() * 9000)}`;
+                while (targetClass.students.some(s => s.id === idVal)) {
+                    idVal = `STU${Math.floor(1000 + Math.random() * 9000)}`;
+                }
+            }
+
+            if (targetClass.students.some(s => s.name.toLowerCase() === nameVal.toLowerCase())) {
+                skippedCount++;
+                return;
+            }
+
+            targetClass.students.push({
+                id: idVal,
+                name: nameVal,
+                gender: finalGender,
+                contact: contactVal,
+                generation: genVal
+            });
+            importedCount++;
+        });
+
+        saveState();
+        renderStudentsList();
+        
+        document.getElementById("importSheetsModal").classList.remove("active");
+        document.getElementById("sheetsUrlInput").value = "";
+        
+        showToast(
+            appState.language === 'km' 
+                ? `នាំចូលជោគជ័យ! សិស្សថ្មី៖ ${importedCount} នាក់ (រំលងស្ទួន៖ ${skippedCount} នាក់)` 
+                : `Imported successfully! New students: ${importedCount} (Skipped duplicates: ${skippedCount})`,
+            "success"
+        );
+    } catch (error) {
+        console.error("Sheets Import Error: ", error);
+        alert(appState.language === 'km' ? "ការនាំចូលបានបរាជ័យ៖ " + error.message : "Import failed: " + error.message);
+    } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = originalText;
+    }
+}
+
+
 // Subject Actions
 function saveSubject(name, nameEn) {
     const editId = document.getElementById("editSubjectId").value;
@@ -2577,6 +2709,14 @@ function setupEventListeners() {
             document.getElementById("addStudentModal").classList.remove("active");
         }
     });
+
+    // Import from Google Sheets
+    document.getElementById("btnOpenImportSheetsModal").addEventListener("click", () => {
+        document.getElementById("sheetsUrlInput").value = "";
+        document.getElementById("importSheetsModal").classList.add("active");
+    });
+
+    document.getElementById("importSheetsForm").addEventListener("submit", handleGoogleSheetsImport);
 
     // Save Subject Form
     document.getElementById("subjectForm").addEventListener("submit", (e) => {

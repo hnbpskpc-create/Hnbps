@@ -14,8 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260704_10">
-    <script src="app.js?v=20260704_10" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260704_11">
+    <script src="app.js?v=20260704_11" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -369,6 +369,9 @@
                         <div class="detail-header-actions">
                             <button class="btn btn-outline btn-sm" id="btnEditClass">
                                 <i class="fa-solid fa-pen"></i> <span data-km="កែសម្រួលថ្នាក់" data-en="Edit Class">កែសម្រួលថ្នាក់</span>
+                            </button>
+                            <button class="btn btn-outline btn-sm" id="btnOpenImportSheetsModal" style="color: #0f9d58; border-color: #0f9d58;">
+                                <i class="fa-solid fa-file-excel"></i> <span data-km="នាំចូលពី Sheets" data-en="Import from Sheets">នាំចូលពី Sheets</span>
                             </button>
                             <button class="btn btn-success btn-sm" id="btnOpenAddStudentModal">
                                 <i class="fa-solid fa-user-plus"></i> <span data-km="បន្ថែមសិស្ស" data-en="Add Student">បន្ថែមសិស្ស</span>
@@ -1164,6 +1167,34 @@
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary close-btn-action" data-km="បោះបង់" data-en="Cancel">បោះបង់</button>
                     <button type="submit" class="btn btn-success" id="btnSubmitStudentForm" data-km="បន្ថែម" data-en="Add Student">បន្ថែម</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Import Google Sheets Modal -->
+    <div class="modal" id="importSheetsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-km="នាំចូលសិស្សពី Google Sheets" data-en="Import Students from Google Sheets">នាំចូលសិស្សពី Google Sheets</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="importSheetsForm">
+                <div class="form-group">
+                    <label for="sheetsUrlInput" data-km="តំណភ្ជាប់ Google Sheets (Share Link)" data-en="Google Sheets Link (Share Link)">តំណភ្ជាប់ Google Sheets (Share Link)</label>
+                    <input type="url" id="sheetsUrlInput" required placeholder="https://docs.google.com/spreadsheets/d/..." style="width: 100%; box-sizing: border-box;">
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
+                    <p data-km="⚠️ លក្ខខណ្ឌចាំបាច់៖" data-en="⚠️ Requirements:">⚠️ លក្ខខណ្ឌចាំបាច់៖</p>
+                    <ul style="padding-left: 1.2rem; margin: 0.25rem 0;">
+                        <li data-km="តារាង Google Sheets ត្រូវតែចែករំលែកជា៖ «អ្នកណាដែលមានតំណភ្ជាប់អាចមើលបាន» (Anyone with the link can view)" data-en="The Google Sheet must be shared as 'Anyone with the link can view'">តារាង Google Sheets ត្រូវតែចែករំលែកជា៖ «អ្នកណាដែលមានតំណភ្ជាប់អាចមើលបាន»</li>
+                        <li data-km="ជួរឈរ (Columns) ក្នុងតារាងត្រូវរៀបតាមលំដាប់៖ ល.រ (No), លេខសម្គាល់ (ID), ឈ្មោះសិស្ស (Name), ភេទ (Gender), លេខទូរស័ព្ទ (Phone), ជំនាន់ (Gen)" data-en="Columns must be in order: No, ID, Name, Gender, Phone, Gen">ជួរឈរ (Columns) ក្នុងតារាងត្រូវរៀបតាមលំដាប់៖ ល.រ, លេខសម្គាល់, ឈ្មោះសិស្ស, ភេទ, លេខទូរស័ព្ទ, ជំនាន់</li>
+                        <li data-km="ជួរទី១ ជាក្បាលតារាង (Header Row) ហើយទិន្នន័យសិស្សចាប់ផ្ដើមពីជួរទី២។" data-en="Row 1 is the header row, and student data starts from Row 2.">ជួរទី១ ជាក្បាលតារាង ហើយទិន្នន័យសិស្សចាប់ផ្ដើមពីជួរទី២។</li>
+                    </ul>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-btn-action" data-km="បោះបង់" data-en="Cancel">បោះបង់</button>
+                    <button type="submit" class="btn btn-success" id="btnSubmitImportForm" data-km="នាំចូល" data-en="Import">នាំចូល</button>
                 </div>
             </form>
         </div>
