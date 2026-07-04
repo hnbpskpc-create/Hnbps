@@ -1048,7 +1048,7 @@ function renderStudentsList() {
     tbody.innerHTML = "";
     
     if (targetClass.students.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="color: var(--text-muted);" data-km="មិនទាន់មានសិស្សក្នុងថ្នាក់នេះទេ" data-en="No students added to this class yet.">មិនទាន់មានសិស្សក្នុងថ្នាក់នេះទេ</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center" style="color: var(--text-muted);" data-km="មិនទាន់មានសិស្សក្នុងថ្នាក់នេះទេ" data-en="No students added to this class yet.">មិនទាន់មានសិស្សក្នុងថ្នាក់នេះទេ</td></tr>`;
     } else {
         targetClass.students.forEach((stu, index) => {
             const tr = document.createElement("tr");
@@ -1067,6 +1067,7 @@ function renderStudentsList() {
                 <td>${index + 1}</td>
                 <td>${stu.id}</td>
                 <td><strong>${stu.name}</strong></td>
+                <td>${stu.dob || "-"}</td>
                 <td>${genderText}</td>
                 <td>${stu.contact || "-"}</td>
                 <td>${genText}</td>
@@ -2330,7 +2331,7 @@ function deleteActiveClass() {
 }
 
 // Student Actions
-function saveStudent(id, name, gender, contact, generation) {
+function saveStudent(id, name, dob, gender, contact, generation) {
     const targetClass = appState.classes.find(c => c.id === activeClassId);
     if (!targetClass) return;
     
@@ -2341,6 +2342,7 @@ function saveStudent(id, name, gender, contact, generation) {
         const student = targetClass.students.find(s => s.id === studentEditId);
         if (student) {
             student.name = name;
+            student.dob = dob || "";
             student.gender = gender;
             student.contact = contact;
             student.generation = generation || "";
@@ -2351,6 +2353,7 @@ function saveStudent(id, name, gender, contact, generation) {
         targetClass.students.push({
             id: studentId,
             name,
+            dob: dob || "",
             gender,
             contact,
             generation: generation || ""
@@ -2370,6 +2373,7 @@ function editStudent(studentId) {
     document.getElementById("studentIdInput").value = stu.id;
     document.getElementById("studentIdInput").disabled = true;
     document.getElementById("studentNameInput").value = stu.name;
+    document.getElementById("studentDobInput").value = stu.dob || "";
     document.getElementById("studentGenderInput").value = stu.gender;
     document.getElementById("studentContactInput").value = stu.contact || "";
     document.getElementById("studentGenerationInput").value = stu.generation || "";
@@ -2441,19 +2445,52 @@ async function handleGoogleSheetsImport(e) {
         let importedCount = 0;
         let skippedCount = 0;
 
+        let idCol = 1;
+        let nameCol = 2;
+        let dobCol = 3;
+        let genderCol = 4;
+        let contactCol = 5;
+        let genCol = 6;
+
+        if (table.rows.length > 0 && table.rows[0].c) {
+            const getHeaderVal = (idx) => {
+                const cell = table.rows[0].c[idx];
+                return cell ? (cell.v !== null ? String(cell.v).toLowerCase().trim() : "") : "";
+            };
+            
+            for (let i = 0; i < table.rows[0].c.length; i++) {
+                const headerText = getHeaderVal(i);
+                if (headerText.includes("ឈ្មោះ") || headerText.includes("name")) {
+                    nameCol = i;
+                } else if (headerText.includes("ភេទ") || headerText.includes("gender") || headerText.includes("sex")) {
+                    genderCol = i;
+                } else if (headerText.includes("សម្គាល់") || headerText.includes("id")) {
+                    idCol = i;
+                } else if (headerText.includes("កំណើត") || headerText.includes("dob") || headerText.includes("birth") || headerText.includes("ថ្ងៃខែ")) {
+                    dobCol = i;
+                } else if (headerText.includes("ទូរស័ព្ទ") || headerText.includes("phone") || headerText.includes("contact") || headerText.includes("លេខ")) {
+                    contactCol = i;
+                } else if (headerText.includes("ជំនាន់") || headerText.includes("gen")) {
+                    genCol = i;
+                }
+            }
+        }
+
         table.rows.forEach((row, rowIndex) => {
             if (!row || !row.c) return;
             
             const getVal = (colIdx) => {
+                if (colIdx === -1) return "";
                 const cell = row.c[colIdx];
                 return cell ? (cell.v !== null ? String(cell.v).trim() : "") : "";
             };
 
-            let idVal = getVal(1);
-            let nameVal = getVal(2);
-            let genderVal = getVal(3);
-            let contactVal = getVal(4);
-            let genVal = getVal(5);
+            let idVal = getVal(idCol);
+            let nameVal = getVal(nameCol);
+            let dobVal = getVal(dobCol);
+            let genderVal = getVal(genderCol);
+            let contactVal = getVal(contactCol);
+            let genVal = getVal(genCol);
 
             if (rowIndex === 0 && (nameVal.includes("ឈ្មោះ") || nameVal.toLowerCase().includes("name"))) {
                 return;
@@ -2466,6 +2503,7 @@ async function handleGoogleSheetsImport(e) {
                     nameVal = fallbackName;
                     genderVal = fallbackGender;
                     idVal = "";
+                    dobVal = "";
                     contactVal = getVal(3);
                     genVal = getVal(4);
                 } else {
@@ -2497,6 +2535,7 @@ async function handleGoogleSheetsImport(e) {
             targetClass.students.push({
                 id: idVal,
                 name: nameVal,
+                dob: dobVal,
                 gender: finalGender,
                 contact: contactVal,
                 generation: genVal
@@ -2700,12 +2739,13 @@ function setupEventListeners() {
         e.preventDefault();
         const id = document.getElementById("studentIdInput").value.trim();
         const name = document.getElementById("studentNameInput").value.trim();
+        const dob = document.getElementById("studentDobInput").value.trim();
         const gender = document.getElementById("studentGenderInput").value;
         const contact = document.getElementById("studentContactInput").value.trim();
         const generation = document.getElementById("studentGenerationInput").value.trim();
         
         if (name) {
-            saveStudent(id, name, gender, contact, generation);
+            saveStudent(id, name, dob, gender, contact, generation);
             document.getElementById("addStudentModal").classList.remove("active");
         }
     });

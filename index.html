@@ -14,8 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260704_11">
-    <script src="app.js?v=20260704_11" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260704_12">
+    <script src="app.js?v=20260704_12" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -388,6 +388,7 @@
                                     <th data-km="លេខរៀង" data-en="No.">លេខរៀង</th>
                                     <th data-km="លេខសម្គាល់ខ្លួន (ID)" data-en="Student ID">លេខសម្គាល់ខ្លួន (ID)</th>
                                     <th data-km="ឈ្មោះសិស្ស" data-en="Student Name">ឈ្មោះសិស្ស</th>
+                                    <th data-km="ថ្ងៃខែឆ្នាំកំណើត" data-en="Date of Birth">ថ្ងៃខែឆ្នាំកំណើត</th>
                                     <th data-km="ភេទ" data-en="Gender">ភេទ</th>
                                     <th data-km="លេខទូរស័ព្ទអាណាព្យាបាល" data-en="Guardian Contact">លេខទូរស័ព្ទអាណាព្យាបាល</th>
                                     <th data-km="ជំនាន់" data-en="Generation">ជំនាន់</th>
@@ -1149,6 +1150,10 @@
                     <input type="text" id="studentNameInput" required placeholder="ឈ្មោះពិតសិស្ស">
                 </div>
                 <div class="form-group">
+                    <label for="studentDobInput" data-km="ថ្ងៃខែឆ្នាំកំណើត" data-en="Date of Birth">ថ្ងៃខែឆ្នាំកំណើត</label>
+                    <input type="text" id="studentDobInput" placeholder="ឧ. 15/01/2015">
+                </div>
+                <div class="form-group">
                     <label for="studentGenderInput" data-km="ភេទ" data-en="Gender">ភេទ</label>
                     <select id="studentGenderInput" class="form-control">
                         <option value="ស្រី" data-km="ស្រី (F)" data-en="Female">ស្រី</option>
@@ -1188,7 +1193,7 @@
                     <p data-km="⚠️ លក្ខខណ្ឌចាំបាច់៖" data-en="⚠️ Requirements:">⚠️ លក្ខខណ្ឌចាំបាច់៖</p>
                     <ul style="padding-left: 1.2rem; margin: 0.25rem 0;">
                         <li data-km="តារាង Google Sheets ត្រូវតែចែករំលែកជា៖ «អ្នកណាដែលមានតំណភ្ជាប់អាចមើលបាន» (Anyone with the link can view)" data-en="The Google Sheet must be shared as 'Anyone with the link can view'">តារាង Google Sheets ត្រូវតែចែករំលែកជា៖ «អ្នកណាដែលមានតំណភ្ជាប់អាចមើលបាន»</li>
-                        <li data-km="ជួរឈរ (Columns) ក្នុងតារាងត្រូវរៀបតាមលំដាប់៖ ល.រ (No), លេខសម្គាល់ (ID), ឈ្មោះសិស្ស (Name), ភេទ (Gender), លេខទូរស័ព្ទ (Phone), ជំនាន់ (Gen)" data-en="Columns must be in order: No, ID, Name, Gender, Phone, Gen">ជួរឈរ (Columns) ក្នុងតារាងត្រូវរៀបតាមលំដាប់៖ ល.រ, លេខសម្គាល់, ឈ្មោះសិស្ស, ភេទ, លេខទូរស័ព្ទ, ជំនាន់</li>
+                        <li data-km="ជួរឈរ (Columns) ក្នុងតារាងត្រូវរៀបតាមលំដាប់៖ ល.រ (No), លេខសម្គាល់ (ID), ឈ្មោះសិស្ស (Name), ថ្ងៃខែឆ្នាំកំណើត (DOB), ភេទ (Gender), លេខទូរស័ព្ទ (Phone), ជំនាន់ (Gen)" data-en="Columns must be in order: No, ID, Name, Date of Birth (DOB), Gender, Phone, Gen">ជួរឈរ (Columns) ក្នុងតារាងត្រូវរៀបតាមលំដាប់៖ ល.រ, លេខសម្គាល់, ឈ្មោះសិស្ស, ថ្ងៃខែឆ្នាំកំណើត, ភេទ, លេខទូរស័ព្ទ, ជំនាន់</li>
                         <li data-km="ជួរទី១ ជាក្បាលតារាង (Header Row) ហើយទិន្នន័យសិស្សចាប់ផ្ដើមពីជួរទី២។" data-en="Row 1 is the header row, and student data starts from Row 2.">ជួរទី១ ជាក្បាលតារាង ហើយទិន្នន័យសិស្សចាប់ផ្ដើមពីជួរទី២។</li>
                     </ul>
                 </div>
