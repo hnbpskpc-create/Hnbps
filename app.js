@@ -1946,7 +1946,8 @@ async function exportTableToExcelJS(tableId, titleText, metaObj, fileName, sheet
     const dateCol = isAcademic ? 4 : 8;
     fRow1.getCell(dateCol).value = "ធ្វើនៅ.........................ថ្ងៃទី..........ខែ............ឆ្នាំ២០២...";
     fRow1.getCell(dateCol).font = defaultFont;
-    fRow1.getCell(dateCol).alignment = leftAlign;
+    fRow1.getCell(dateCol).alignment = { vertical: 'middle', horizontal: 'left', wrapText: false };
+    worksheet.mergeCells(footerStartRow, dateCol, footerStartRow, maxCols);
 
     const fRow2 = worksheet.getRow(footerStartRow + 1);
     fRow2.getCell(2).value = "នាយកសាលា";
@@ -1957,13 +1958,13 @@ async function exportTableToExcelJS(tableId, titleText, metaObj, fileName, sheet
     fRow2.getCell(dateCol).value = "គ្រូបន្ទុកថ្នាក់";
     fRow2.getCell(dateCol).font = defaultFontBold;
     fRow2.getCell(dateCol).alignment = centerAlign;
-    worksheet.mergeCells(footerStartRow + 1, dateCol, footerStartRow + 1, dateCol + 2);
+    worksheet.mergeCells(footerStartRow + 1, dateCol, footerStartRow + 1, maxCols);
 
     const fRow5 = worksheet.getRow(footerStartRow + 5);
     fRow5.getCell(dateCol).value = metaObj.teacherName;
     fRow5.getCell(dateCol).font = khmerMuolFont;
     fRow5.getCell(dateCol).alignment = centerAlign;
-    worksheet.mergeCells(footerStartRow + 5, dateCol, footerStartRow + 5, dateCol + 2);
+    worksheet.mergeCells(footerStartRow + 5, dateCol, footerStartRow + 5, maxCols);
 
     // 6. Column Widths
     const colWidths = [];
