@@ -1791,6 +1791,24 @@ function prependRowsToSheet(ws, aoa) {
     return newWs;
 }
 
+// Helper function to append rows to SheetJS worksheet
+function appendRowsToSheet(ws, aoa) {
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    const startRow = range.e.r + 1;
+    for (let R = 0; R < aoa.length; ++R) {
+        for (let C = 0; C < aoa[R].length; ++C) {
+            if (aoa[R][C] !== null && aoa[R][C] !== undefined && aoa[R][C] !== "") {
+                const cellRef = XLSX.utils.encode_cell({c: C, r: startRow + R});
+                ws[cellRef] = {t: 's', v: aoa[R][C]};
+                if (C > range.e.c) range.e.c = C;
+            }
+        }
+    }
+    range.e.r += aoa.length;
+    ws['!ref'] = XLSX.utils.encode_range(range);
+    return ws;
+}
+
 // Export Excel Function for Score Report
 function exportReportExcel() {
     try {
@@ -1815,13 +1833,26 @@ function exportReportExcel() {
         const pName = document.getElementById("reportMetaPeriod").textContent;
         
         const customHeader = [
-            ["", "", "", "របាយការណ៍លទ្ធផលសិក្សាសិស្ស"],
+            ["", "", "", "", "ព្រះរាជាណាចក្រកម្ពុជា"],
+            ["", "", "", "", "ជាតិ សាសនា ព្រះមហាក្សត្រ"],
             [],
-            [`ថ្នាក់រៀន: ${cName}`, "", `គ្រូបន្ទុកថ្នាក់: ${tName}`, "", `កាលបរិច្ឆេទ: ${pName}`],
+            ["", "", "", "", "របាយការណ៍លទ្ធផលសិក្សាសិស្ស"],
+            [],
+            [`ថ្នាក់រៀន: ${cName}`, "", "", `គ្រូបន្ទុកថ្នាក់: ${tName}`, "", "", `កាលបរិច្ឆេទ: ${pName}`],
             []
         ];
         
         ws = prependRowsToSheet(ws, customHeader);
+        
+        const footer = [
+            [], [],
+            ["", "បានឃើញ និងឯកភាព", "", "", "", "", "", "ធ្វើនៅ.........................ថ្ងៃទី..........ខែ............ឆ្នាំ២០២..."],
+            ["", "នាយកសាលា", "", "", "", "", "", "គ្រូបន្ទុកថ្នាក់"],
+            [], [], [],
+            ["", "", "", "", "", "", "", tName]
+        ];
+        
+        ws = appendRowsToSheet(ws, footer);
         
         // Auto column widths
         const colWidths = [{wch: 6}, {wch: 15}, {wch: 25}, {wch: 8}];
@@ -1874,6 +1905,16 @@ function exportAcadExcel() {
         ];
         
         ws = prependRowsToSheet(ws, customHeader);
+        
+        const footer = [
+            [], [],
+            ["", "បានឃើញ និងឯកភាព", "", "", "ធ្វើនៅ.........................ថ្ងៃទី..........ខែ............ឆ្នាំ២០២..."],
+            ["", "នាយកសាលា", "", "", "គ្រូបន្ទុកថ្នាក់"],
+            [], [], [],
+            ["", "", "", "", tName]
+        ];
+        
+        ws = appendRowsToSheet(ws, footer);
         
         // Auto column widths
         const colWidths = [{wch: 6}, {wch: 25}, {wch: 15}]; // No, Name+Gender, Subject Results
