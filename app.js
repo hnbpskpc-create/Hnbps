@@ -1754,6 +1754,43 @@ function generateReport() {
     applyLanguage();
 }
 
+// Helper function to prepend rows to SheetJS worksheet without losing merges
+function prependRowsToSheet(ws, aoa) {
+    const shift = aoa.length;
+    const newWs = {};
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    for (let R = range.e.r; R >= range.s.r; --R) {
+        for (let C = range.s.c; C <= range.e.c; ++C) {
+            const cellRef = XLSX.utils.encode_cell({c: C, r: R});
+            const newRef = XLSX.utils.encode_cell({c: C, r: R + shift});
+            if (ws[cellRef]) {
+                newWs[newRef] = ws[cellRef];
+            }
+        }
+    }
+    for (let R = 0; R < shift; ++R) {
+        for (let C = 0; C < aoa[R].length; ++C) {
+            if (aoa[R][C] !== null && aoa[R][C] !== undefined && aoa[R][C] !== "") {
+                const cellRef = XLSX.utils.encode_cell({c: C, r: R});
+                newWs[cellRef] = {t: 's', v: aoa[R][C]};
+            }
+        }
+    }
+    range.e.r += shift;
+    aoa.forEach(row => {
+        if(row.length - 1 > range.e.c) range.e.c = row.length - 1;
+    });
+    newWs['!ref'] = XLSX.utils.encode_range(range);
+    
+    if (ws['!merges']) {
+        newWs['!merges'] = ws['!merges'].map(m => ({
+            s: {c: m.s.c, r: m.s.r + shift},
+            e: {c: m.e.c, r: m.e.r + shift}
+        }));
+    }
+    return newWs;
+}
+
 // Export Excel Function for Score Report
 function exportReportExcel() {
     try {
@@ -1771,14 +1808,31 @@ function exportReportExcel() {
         const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || "Period";
         const fileName = `Grade_Report_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
         
-        // Create workbook and worksheet
+        let ws = XLSX.utils.table_to_sheet(table);
+        
+        const cName = document.getElementById("reportMetaClass").textContent;
+        const tName = document.getElementById("reportMetaTeacher").textContent;
+        const pName = document.getElementById("reportMetaPeriod").textContent;
+        
+        const customHeader = [
+            ["", "", "", "របាយការណ៍លទ្ធផលសិក្សាសិស្ស"],
+            [],
+            [`ថ្នាក់រៀន: ${cName}`, "", `គ្រូបន្ទុកថ្នាក់: ${tName}`, "", `កាលបរិច្ឆេទ: ${pName}`],
+            []
+        ];
+        
+        ws = prependRowsToSheet(ws, customHeader);
+        
+        // Auto column widths
+        const colWidths = [{wch: 6}, {wch: 15}, {wch: 25}, {wch: 8}];
+        const range = XLSX.utils.decode_range(ws['!ref']);
+        for(let i = 4; i <= range.e.c; i++) {
+            colWidths.push({wch: 12});
+        }
+        ws['!cols'] = colWidths;
+        
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.table_to_sheet(table);
-        
-        // Add worksheet to workbook
         XLSX.utils.book_append_sheet(wb, ws, "Score Report");
-        
-        // Download File
         XLSX.writeFile(wb, fileName);
     } catch (error) {
         console.error("Excel Export Error: ", error);
@@ -1803,14 +1857,34 @@ function exportAcadExcel() {
         const periodName = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || "Period";
         const fileName = `Academic_Transcript_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
         
-        // Create workbook and worksheet
+        let ws = XLSX.utils.table_to_sheet(table);
+        
+        const cName = document.getElementById("acadMetaClass").textContent;
+        const tName = document.getElementById("acadMetaTeacher").textContent;
+        const pName = document.getElementById("acadMetaPeriod").textContent;
+        
+        const customHeader = [
+            ["", "", "ព្រះរាជាណាចក្រកម្ពុជា"],
+            ["", "", "ជាតិ សាសនា ព្រះមហាក្សត្រ"],
+            [],
+            ["", "", "បញ្ជីរាយនាមសិស្ស និងលទ្ធផលសិក្សា"],
+            [],
+            [`ថ្នាក់រៀន: ${cName}`, "", `គ្រូបន្ទុកថ្នាក់: ${tName}`, "", `កាលបរិច្ឆេទ: ${pName}`],
+            []
+        ];
+        
+        ws = prependRowsToSheet(ws, customHeader);
+        
+        // Auto column widths
+        const colWidths = [{wch: 6}, {wch: 25}, {wch: 15}]; // No, Name+Gender, Subject Results
+        const range = XLSX.utils.decode_range(ws['!ref']);
+        for(let i = 3; i <= range.e.c; i++) {
+            colWidths.push({wch: 12});
+        }
+        ws['!cols'] = colWidths;
+        
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.table_to_sheet(table);
-        
-        // Add worksheet to workbook
         XLSX.utils.book_append_sheet(wb, ws, "Academic Transcript");
-        
-        // Download File
         XLSX.writeFile(wb, fileName);
     } catch (error) {
         console.error("Excel Export Error: ", error);
