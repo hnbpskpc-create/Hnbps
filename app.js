@@ -968,14 +968,25 @@ function renderClassesPanel() {
         const studentCount = c.students.length;
         const teacherLabel = appState.language === 'km' ? 'គ្រូ៖' : 'Teacher:';
         const teacherText = c.teacherName || (appState.language === 'km' ? 'មិនទាន់ចាត់តាំង' : 'Not Assigned');
+        
+        const role = appState.currentUser?.role;
+        const showDelete = role !== 'teacher';
+
         const card = document.createElement("div");
         card.className = "card-style class-card animate-card";
         card.innerHTML = `
-            <div class="class-card-header">
-                <h3>${c.name}</h3>
-                <span class="class-badge" data-km="${studentCount} នាក់" data-en="${studentCount} Students">${studentCount} នាក់</span>
+            <div class="class-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                <div style="flex-grow: 1; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <h3 style="margin: 0;">${c.name}</h3>
+                    <span class="class-badge" data-km="${studentCount} នាក់" data-en="${studentCount} Students">${studentCount} នាក់</span>
+                </div>
+                ${showDelete ? `
+                <button class="btn-delete-class-card" style="background: none; border: none; color: var(--danger, #dc3545); cursor: pointer; padding: 4px 8px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="${appState.language === 'km' ? 'លុបថ្នាក់' : 'Delete Class'}">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                ` : ''}
             </div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; margin-top: -0.5rem;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; margin-top: 0.25rem;">
                 ${teacherLabel} <strong>${teacherText}</strong>
             </div>
             <div class="class-card-stats">
@@ -995,6 +1006,18 @@ function renderClassesPanel() {
         `;
         
         card.addEventListener("click", () => showClassDetail(c.id));
+        
+        if (showDelete) {
+            const deleteBtn = card.querySelector(".btn-delete-class-card");
+            if (deleteBtn) {
+                deleteBtn.addEventListener("click", (e) => {
+                    e.stopPropagation(); // Prevent opening class detail view
+                    activeClassId = c.id;
+                    deleteActiveClass();
+                });
+            }
+        }
+
         container.appendChild(card);
     });
     
