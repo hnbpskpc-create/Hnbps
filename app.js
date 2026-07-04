@@ -1755,178 +1755,288 @@ function generateReport() {
 }
 
 // Helper function to prepend rows to SheetJS worksheet without losing merges
-function prependRowsToSheet(ws, aoa) {
-    const shift = aoa.length;
-    const newWs = {};
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let R = range.e.r; R >= range.s.r; --R) {
-        for (let C = range.s.c; C <= range.e.c; ++C) {
-            const cellRef = XLSX.utils.encode_cell({c: C, r: R});
-            const newRef = XLSX.utils.encode_cell({c: C, r: R + shift});
-            if (ws[cellRef]) {
-                newWs[newRef] = ws[cellRef];
-            }
-        }
+// Helper function to export DOM table to Excel with style using ExcelJS
+async function exportTableToExcelJS(tableId, titleText, metaObj, fileName, sheetName, isAcademic = false) {
+    if (typeof ExcelJS === 'undefined' || typeof saveAs === 'undefined') {
+        alert(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងទាញយកទិន្នន័យ (កំពុងផ្ទុក Library)... សូមសាកល្បងម្ដងទៀត។" : "Please wait, library is loading... Please try again.");
+        return;
     }
-    for (let R = 0; R < shift; ++R) {
-        for (let C = 0; C < aoa[R].length; ++C) {
-            if (aoa[R][C] !== null && aoa[R][C] !== undefined && aoa[R][C] !== "") {
-                const cellRef = XLSX.utils.encode_cell({c: C, r: R});
-                newWs[cellRef] = {t: 's', v: aoa[R][C]};
-            }
-        }
+    const table = document.getElementById(tableId);
+    if (!table) {
+        alert("រកមិនឃើញតារាងទិន្នន័យ (Table not found)");
+        return;
     }
-    range.e.r += shift;
-    aoa.forEach(row => {
-        if(row.length - 1 > range.e.c) range.e.c = row.length - 1;
-    });
-    newWs['!ref'] = XLSX.utils.encode_range(range);
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet(sheetName);
+
+    // Default fonts
+    const khmerMuolFont = { name: 'Khmer OS Muol Light', size: 11, bold: true };
+    const khmerMuolFontTitle = { name: 'Khmer OS Muol Light', size: 13, bold: true };
+    const defaultFont = { name: 'Khmer OS Battambang', size: 10 };
+    const defaultFontBold = { name: 'Khmer OS Battambang', size: 10, bold: true };
+
+    // Alignments
+    const centerAlign = { vertical: 'middle', horizontal: 'center', wrapText: true };
+    const leftAlign = { vertical: 'middle', horizontal: 'left', wrapText: true };
+    const rightAlign = { vertical: 'middle', horizontal: 'right', wrapText: true };
+
+    // Borders
+    const thinBorder = {
+        top: { style: 'thin', color: { argb: 'FF000000' } },
+        left: { style: 'thin', color: { argb: 'FF000000' } },
+        bottom: { style: 'thin', color: { argb: 'FF000000' } },
+        right: { style: 'thin', color: { argb: 'FF000000' } }
+    };
+
+    // 1. Write Royal Headers
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+    worksheet.getCell('A1').value = "ព្រះរាជាណាចក្រកម្ពុជា";
+    worksheet.getCell('A2').value = "ជាតិ សាសនា ព្រះមហាក្សត្រ";
+    worksheet.getCell('A1').font = khmerMuolFont;
+    worksheet.getCell('A2').font = khmerMuolFont;
+    worksheet.getCell('A1').alignment = centerAlign;
+    worksheet.getCell('A2').alignment = centerAlign;
+
+    // 2. Write Report Title
+    worksheet.addRow([]);
+    worksheet.getCell('A4').value = titleText;
+    worksheet.getCell('A4').font = khmerMuolFontTitle;
+    worksheet.getCell('A4').alignment = centerAlign;
+
+    // 3. Write Meta Info
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+    const metaRow = worksheet.getRow(6);
+    metaRow.getCell(1).value = `ថ្នាក់រៀន: ${metaObj.className}`;
+    metaRow.getCell(1).font = defaultFontBold;
     
-    if (ws['!merges']) {
-        newWs['!merges'] = ws['!merges'].map(m => ({
-            s: {c: m.s.c, r: m.s.r + shift},
-            e: {c: m.e.c, r: m.e.r + shift}
-        }));
-    }
-    return newWs;
-}
+    const teacherCol = isAcademic ? 2 : 4;
+    metaRow.getCell(teacherCol).value = `គ្រូបន្ទុកថ្នាក់: ${metaObj.teacherName}`;
+    metaRow.getCell(teacherCol).font = defaultFontBold;
 
-// Helper function to append rows to SheetJS worksheet
-function appendRowsToSheet(ws, aoa) {
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    const startRow = range.e.r + 1;
-    for (let R = 0; R < aoa.length; ++R) {
-        for (let C = 0; C < aoa[R].length; ++C) {
-            if (aoa[R][C] !== null && aoa[R][C] !== undefined && aoa[R][C] !== "") {
-                const cellRef = XLSX.utils.encode_cell({c: C, r: startRow + R});
-                ws[cellRef] = {t: 's', v: aoa[R][C]};
-                if (C > range.e.c) range.e.c = C;
+    const periodCol = isAcademic ? 4 : 8;
+    metaRow.getCell(periodCol).value = `កាលបរិច្ឆេទ: ${metaObj.period}`;
+    metaRow.getCell(periodCol).font = defaultFontBold;
+    
+    worksheet.addRow([]); // Blank spacer
+
+    // 4. Parse Table and Write Rows
+    const startRowIndex = 8;
+    const rows = Array.from(table.querySelectorAll('tr'));
+    const matrix = [];
+
+    rows.forEach((tr, r) => {
+        if (!matrix[r]) matrix[r] = [];
+        let cOffset = 0;
+        Array.from(tr.cells).forEach((cell) => {
+            while (matrix[r][cOffset] && matrix[r][cOffset].isMergedCellCovered) {
+                cOffset++;
             }
+            const rowspan = parseInt(cell.getAttribute('rowspan')) || 1;
+            const colspan = parseInt(cell.getAttribute('colspan')) || 1;
+            const text = cell.innerText.trim();
+
+            matrix[r][cOffset] = {
+                text: text,
+                rowspan: rowspan,
+                colspan: colspan,
+                isHeader: cell.tagName.toLowerCase() === 'th',
+                isNumeric: !isNaN(text) && text !== "" && !text.includes('/')
+            };
+
+            for (let i = 0; i < rowspan; i++) {
+                for (let j = 0; j < colspan; j++) {
+                    if (i === 0 && j === 0) continue;
+                    const targetR = r + i;
+                    const targetC = cOffset + j;
+                    if (!matrix[targetR]) matrix[targetR] = [];
+                    matrix[targetR][targetC] = { isMergedCellCovered: true };
+                }
+            }
+            cOffset += colspan;
+        });
+    });
+
+    const maxCols = Math.max(...matrix.map(row => row.length));
+    
+    worksheet.mergeCells(1, 1, 1, maxCols);
+    worksheet.mergeCells(2, 1, 2, maxCols);
+    worksheet.mergeCells(4, 1, 4, maxCols);
+
+    matrix.forEach((row, r) => {
+        const xlRowIndex = startRowIndex + r;
+        const xlRow = worksheet.getRow(xlRowIndex);
+        
+        row.forEach((cellInfo, c) => {
+            if (!cellInfo) return;
+            const xlColIndex = c + 1;
+            const xlCell = xlRow.getCell(xlColIndex);
+
+            if (cellInfo.isMergedCellCovered) return;
+
+            if (cellInfo.isNumeric) {
+                xlCell.value = Number(cellInfo.text);
+            } else {
+                xlCell.value = cellInfo.text;
+            }
+
+            if (cellInfo.isHeader) {
+                xlCell.font = defaultFontBold;
+                xlCell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFF2F2F2' }
+                };
+                xlCell.alignment = centerAlign;
+            } else {
+                xlCell.font = defaultFont;
+                if (c === 0 || (isAcademic ? c === 2 : c === 1 || c === 3)) {
+                    xlCell.alignment = centerAlign;
+                } else if ((isAcademic ? c === 1 : c === 2)) {
+                    xlCell.alignment = leftAlign;
+                } else if (cellInfo.isNumeric) {
+                    xlCell.alignment = rightAlign;
+                } else {
+                    xlCell.alignment = centerAlign;
+                }
+            }
+
+            xlCell.border = thinBorder;
+
+            if (cellInfo.colspan > 1 || cellInfo.rowspan > 1) {
+                worksheet.mergeCells(
+                    xlRowIndex, 
+                    xlColIndex, 
+                    xlRowIndex + cellInfo.rowspan - 1, 
+                    xlColIndex + cellInfo.colspan - 1
+                );
+                
+                for (let i = 0; i < cellInfo.rowspan; i++) {
+                    for (let j = 0; j < cellInfo.colspan; j++) {
+                        const cell = worksheet.getRow(xlRowIndex + i).getCell(xlColIndex + j);
+                        cell.border = thinBorder;
+                        if (cellInfo.isHeader) {
+                            cell.fill = {
+                                type: 'pattern',
+                                pattern: 'solid',
+                                fgColor: { argb: 'FFF2F2F2' }
+                            };
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    // 5. Append Footers
+    const tableEndRow = startRowIndex + matrix.length;
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+    
+    const footerStartRow = tableEndRow + 2;
+
+    const fRow1 = worksheet.getRow(footerStartRow);
+    fRow1.getCell(2).value = "បានឃើញ និងឯកភាព";
+    fRow1.getCell(2).font = defaultFontBold;
+    fRow1.getCell(2).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow, 2, footerStartRow, 3);
+
+    const dateCol = isAcademic ? 4 : 8;
+    fRow1.getCell(dateCol).value = "ធ្វើនៅ.........................ថ្ងៃទី..........ខែ............ឆ្នាំ២០២...";
+    fRow1.getCell(dateCol).font = defaultFont;
+    fRow1.getCell(dateCol).alignment = leftAlign;
+
+    const fRow2 = worksheet.getRow(footerStartRow + 1);
+    fRow2.getCell(2).value = "នាយកសាលា";
+    fRow2.getCell(2).font = defaultFontBold;
+    fRow2.getCell(2).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow + 1, 2, footerStartRow + 1, 3);
+
+    fRow2.getCell(dateCol).value = "គ្រូបន្ទុកថ្នាក់";
+    fRow2.getCell(dateCol).font = defaultFontBold;
+    fRow2.getCell(dateCol).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow + 1, dateCol, footerStartRow + 1, dateCol + 2);
+
+    const fRow5 = worksheet.getRow(footerStartRow + 5);
+    fRow5.getCell(dateCol).value = metaObj.teacherName;
+    fRow5.getCell(dateCol).font = khmerMuolFont;
+    fRow5.getCell(dateCol).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow + 5, dateCol, footerStartRow + 5, dateCol + 2);
+
+    // 6. Column Widths
+    const colWidths = [];
+    if (isAcademic) {
+        colWidths[1] = { width: 8 };   // No.
+        colWidths[2] = { width: 30 };  // Student Name
+        colWidths[3] = { width: 12 };  // Gender
+        for (let i = 4; i <= maxCols; i++) {
+            colWidths[i] = { width: 15 };
+        }
+    } else {
+        colWidths[1] = { width: 8 };   // No.
+        colWidths[2] = { width: 15 };  // Student ID
+        colWidths[3] = { width: 30 };  // Student Name
+        colWidths[4] = { width: 10 };  // Gender
+        for (let i = 5; i <= maxCols; i++) {
+            colWidths[i] = { width: 15 };
         }
     }
-    range.e.r += aoa.length;
-    ws['!ref'] = XLSX.utils.encode_range(range);
-    return ws;
+    
+    for (let i = 1; i <= maxCols; i++) {
+        worksheet.getColumn(i).width = colWidths[i] ? colWidths[i].width : 12;
+    }
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(blob, fileName);
 }
 
-// Export Excel Function for Score Report
-function exportReportExcel() {
+// Export Excel Function for Score Report using ExcelJS
+async function exportReportExcel() {
     try {
-        if (typeof XLSX === 'undefined') {
-            alert(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងទាញយកទិន្នន័យ (កំពុងផ្ទុក Library)... សូមសាកល្បងម្ដងទៀត។" : "Please wait, library is loading... Please try again.");
-            return;
-        }
-        const table = document.getElementById("reportResultTable");
-        if (!table) {
-            alert("រកមិនឃើញតារាងទិន្នន័យ (Table not found)");
-            return;
-        }
-        
         const className = document.getElementById("reportFilterClass").options[document.getElementById("reportFilterClass").selectedIndex]?.textContent || "Class";
         const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || "Period";
         const fileName = `Grade_Report_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
-        
-        let ws = XLSX.utils.table_to_sheet(table);
         
         const cName = document.getElementById("reportMetaClass").textContent;
         const tName = document.getElementById("reportMetaTeacher").textContent;
         const pName = document.getElementById("reportMetaPeriod").textContent;
         
-        const customHeader = [
-            ["", "", "", "", "ព្រះរាជាណាចក្រកម្ពុជា"],
-            ["", "", "", "", "ជាតិ សាសនា ព្រះមហាក្សត្រ"],
-            [],
-            ["", "", "", "", "របាយការណ៍លទ្ធផលសិក្សាសិស្ស"],
-            [],
-            [`ថ្នាក់រៀន: ${cName}`, "", "", `គ្រូបន្ទុកថ្នាក់: ${tName}`, "", "", `កាលបរិច្ឆេទ: ${pName}`],
-            []
-        ];
-        
-        ws = prependRowsToSheet(ws, customHeader);
-        
-        const footer = [
-            [], [],
-            ["", "បានឃើញ និងឯកភាព", "", "", "", "", "", "ធ្វើនៅ.........................ថ្ងៃទី..........ខែ............ឆ្នាំ២០២..."],
-            ["", "នាយកសាលា", "", "", "", "", "", "គ្រូបន្ទុកថ្នាក់"],
-            [], [], [],
-            ["", "", "", "", "", "", "", tName]
-        ];
-        
-        ws = appendRowsToSheet(ws, footer);
-        
-        // Auto column widths
-        const colWidths = [{wch: 6}, {wch: 15}, {wch: 25}, {wch: 8}];
-        const range = XLSX.utils.decode_range(ws['!ref']);
-        for(let i = 4; i <= range.e.c; i++) {
-            colWidths.push({wch: 12});
-        }
-        ws['!cols'] = colWidths;
-        
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Score Report");
-        XLSX.writeFile(wb, fileName);
+        await exportTableToExcelJS(
+            "reportResultTable",
+            "របាយការណ៍លទ្ធផលសិក្សាសិស្ស",
+            { className: cName, teacherName: tName, period: pName },
+            fileName,
+            "Score Report",
+            false
+        );
     } catch (error) {
         console.error("Excel Export Error: ", error);
         alert("មានបញ្ហាក្នុងការទាញយក Excel (Error): " + error.message);
     }
 }
 
-// Export Excel Function for Academic Report
-function exportAcadExcel() {
+// Export Excel Function for Academic Report using ExcelJS
+async function exportAcadExcel() {
     try {
-        if (typeof XLSX === 'undefined') {
-            alert(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងទាញយកទិន្នន័យ (កំពុងផ្ទុក Library)... សូមសាកល្បងម្ដងទៀត។" : "Please wait, library is loading... Please try again.");
-            return;
-        }
-        const table = document.getElementById("acadResultTable");
-        if (!table) {
-            alert("រកមិនឃើញតារាងទិន្នន័យ (Table not found)");
-            return;
-        }
-        
         const className = document.getElementById("acadFilterClass").options[document.getElementById("acadFilterClass").selectedIndex]?.textContent || "Class";
         const periodName = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || "Period";
         const fileName = `Academic_Transcript_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
-        
-        let ws = XLSX.utils.table_to_sheet(table);
         
         const cName = document.getElementById("acadMetaClass").textContent;
         const tName = document.getElementById("acadMetaTeacher").textContent;
         const pName = document.getElementById("acadMetaPeriod").textContent;
         
-        const customHeader = [
-            ["", "", "ព្រះរាជាណាចក្រកម្ពុជា"],
-            ["", "", "ជាតិ សាសនា ព្រះមហាក្សត្រ"],
-            [],
-            ["", "", "បញ្ជីរាយនាមសិស្ស និងលទ្ធផលសិក្សា"],
-            [],
-            [`ថ្នាក់រៀន: ${cName}`, "", `គ្រូបន្ទុកថ្នាក់: ${tName}`, "", `កាលបរិច្ឆេទ: ${pName}`],
-            []
-        ];
-        
-        ws = prependRowsToSheet(ws, customHeader);
-        
-        const footer = [
-            [], [],
-            ["", "បានឃើញ និងឯកភាព", "", "", "ធ្វើនៅ.........................ថ្ងៃទី..........ខែ............ឆ្នាំ២០២..."],
-            ["", "នាយកសាលា", "", "", "គ្រូបន្ទុកថ្នាក់"],
-            [], [], [],
-            ["", "", "", "", tName]
-        ];
-        
-        ws = appendRowsToSheet(ws, footer);
-        
-        // Auto column widths
-        const colWidths = [{wch: 6}, {wch: 25}, {wch: 15}]; // No, Name+Gender, Subject Results
-        const range = XLSX.utils.decode_range(ws['!ref']);
-        for(let i = 3; i <= range.e.c; i++) {
-            colWidths.push({wch: 12});
-        }
-        ws['!cols'] = colWidths;
-        
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Academic Transcript");
-        XLSX.writeFile(wb, fileName);
+        await exportTableToExcelJS(
+            "acadResultTable",
+            "បញ្ជីរាយនាមសិស្ស និងលទ្ធផលសិក្សា",
+            { className: cName, teacherName: tName, period: pName },
+            fileName,
+            "Academic Transcript",
+            true
+        );
     } catch (error) {
         console.error("Excel Export Error: ", error);
         alert("មានបញ្ហាក្នុងការទាញយក Excel (Error): " + error.message);
