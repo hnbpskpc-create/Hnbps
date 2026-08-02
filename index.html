@@ -14,8 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260704_14">
-    <script src="app.js?v=20260704_14" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260802_3">
+    <script src="app.js?v=20260802_3" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -29,6 +29,14 @@
             }
             var resetSection = document.getElementById('emergencyResetSection');
             if (resetSection) resetSection.style.display = 'block';
+            return false;
+        };
+        window.onunhandledrejection = function(event) {
+            var banner = document.getElementById('jsErrorBanner');
+            if (banner) {
+                banner.style.display = 'block';
+                banner.textContent = 'Promise Error: ' + (event.reason && event.reason.message ? event.reason.message : String(event.reason));
+            }
             return false;
         };
     </script>
@@ -1095,6 +1103,45 @@
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary" id="btnSaveSchoolProfile" data-km="រក្សាទុកប្រវត្តិរូប" data-en="Save Profile">រក្សាទុកប្រវត្តិរូប</button>
+                    </div>
+
+                    <div class="card-style settings-card">
+                        <h3 data-km="សមកាលកម្ម Google Sheets Database" data-en="Google Sheets Database Sync">សមកាលកម្ម Google Sheets Database</h3>
+                        <p class="settings-desc" data-km="ភ្ជាប់កម្មវិធីនេះទៅកាន់ Google Sheets ដើម្បីប្រើប្រាស់ជា Database រក្សាទុកទិន្នន័យលើពពក (Cloud) ផ្ទាល់ខ្លួនរបស់លោកគ្រូ។" data-en="Connect this app to Google Sheets to use it as your own personal Cloud database.">ភ្ជាប់កម្មវិធីនេះទៅកាន់ Google Sheets ដើម្បីប្រើប្រាស់ជា Database រក្សាទុកទិន្នន័យលើពពក (Cloud) ផ្ទាល់ខ្លួនរបស់លោកគ្រូ។</p>
+                        
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="googleSheetsUrlInput" data-km="តំណភ្ជាប់ Google Apps Script Web App URL៖" data-en="Google Apps Script Web App URL:">តំណភ្ជាប់ Google Apps Script Web App URL៖</label>
+                            <input type="text" id="googleSheetsUrlInput" class="form-control" placeholder="https://script.google.com/macros/s/.../exec" style="margin-bottom: 0;">
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <input type="checkbox" id="chkEnableSheetsSync" style="width: 18px; height: 18px; cursor: pointer;">
+                            <label for="chkEnableSheetsSync" style="cursor: pointer; margin-bottom: 0;" data-km="បើកដំណើរការសមកាលកម្មជាមួយ Google Sheets" data-en="Enable Google Sheets Sync">បើកដំណើរការសមកាលកម្មជាមួយ Google Sheets</label>
+                        </div>
+                        
+                        <div class="settings-actions" style="margin-bottom: 1.5rem;">
+                            <button type="button" class="btn btn-primary" id="btnSaveSheetsConfig" data-km="រក្សាទុកការកំណត់" data-en="Save Config">រក្សាទុកការកំណត់</button>
+                            <button type="button" class="btn btn-outline" id="btnTestSheetsConnection" data-km="សាកល្បងការភ្ជាប់" data-en="Test Connection">សាកល្បងការភ្ជាប់</button>
+                            <button type="button" class="btn btn-outline" id="btnPullFromSheets" data-km="ទាញទិន្នន័យពី Sheets" data-en="Pull from Sheets" style="display: none;">ទាញទិន្នន័យពី Sheets</button>
+                        </div>
+
+                        <!-- Instructions Accordion -->
+                        <details style="background: rgba(0,0,0,0.02); border: 1px solid var(--border-color, #ccc); border-radius: 8px; padding: 0.75rem; font-size: 0.85rem;">
+                            <summary style="font-weight: bold; cursor: pointer;" data-km="📖 មើលការណែនាំពីរបៀបរៀបចំ Google Sheet" data-en="📖 View Instructions on How to Setup Google Sheet">📖 មើលការណែនាំពីរបៀបរៀបចំ Google Sheet</summary>
+                            <div style="margin-top: 0.75rem; line-height: 1.6;">
+                                <ol style="padding-left: 1.25rem; margin-bottom: 1rem;">
+                                    <li data-km="បង្កើត Google Sheet ថ្មីមួយនៅក្នុង Google Drive របស់អ្នក។" data-en="Create a new Google Sheet in your Google Drive.">បង្កើត Google Sheet ថ្មីមួយនៅក្នុង Google Drive របស់អ្នក។</li>
+                                    <li data-km="បើកមឺនុយ Extensions > Apps Script។" data-en="Go to Extensions > Apps Script.">បើកមឺនុយ Extensions > Apps Script។</li>
+                                    <li data-km="លុបកូដចាស់ចោលទាំងអស់ រួចចម្លង (Copy) កូដខាងក្រោមទៅផុស (Paste) ជំនួស។" data-en="Clear all default code, copy the Apps Script code below and paste it there.">លុបកូដចាស់ចោលទាំងអស់ រួចចម្លង (Copy) កូដខាងក្រោមទៅផុស (Paste) ជំនួស។</li>
+                                    <li data-km="ចុចប៊ូតុង Deploy > New Deployment (នៅខាងស្ដាំផ្នែកខាងលើ)។" data-en="Click Deploy > New Deployment.">ចុចប៊ូតុង Deploy > New Deployment (នៅខាងស្ដាំផ្នែកខាងលើ)។</li>
+                                    <li data-km="ជ្រើសរើសប្រភេទជា Web App។ កំណត់ Execute as: Me និង Who has access: Anyone។" data-en="Select Web App. Set 'Execute as' to 'Me' and 'Who has access' to 'Anyone'.">ជ្រើសរើសប្រភេទជា Web App។ កំណត់ Execute as: Me និង Who has access: Anyone។</li>
+                                    <li data-km="ចុច Deploy រួចចម្លងយក Web App URL មកវាយបញ្ចូលក្នុងប្រអប់ខាងលើ។" data-en="Click Deploy and copy the Web App URL into the input field above.">ចុច Deploy រួចចម្លងយក Web App URL មកវាយបញ្ចូលក្នុងប្រអប់ខាងលើ។</li>
+                                </ol>
+                                <label style="font-weight: bold; display: block; margin-bottom: 0.4rem;" data-km="កូដសម្រាប់ចម្លងទៅដាក់ក្នុង Apps Script (Apps Script Template Code)៖" data-en="Code for Apps Script (Copy & Paste):">កូដសម្រាប់ចម្លងទៅដាក់ក្នុង Apps Script (Apps Script Template Code)៖</label>
+                                <textarea readonly id="appsScriptTemplateCode" style="width: 100%; height: 180px; font-family: monospace; font-size: 0.75rem; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; background: #fff;" onclick="this.select()"></textarea>
+                                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;" data-km="*ចុចលើប្រអប់កូដខាងលើដើម្បីចម្លង (Select All & Copy)*" data-en="*Click the code box to select all and copy*">*ចុចលើប្រអប់កូដខាងលើដើម្បីចម្លង (Select All & Copy)*</p>
+                            </div>
+                        </details>
                     </div>
 
                     <div class="card-style settings-card danger-zone">
