@@ -3563,9 +3563,25 @@ function setupLoginEvents() {
             
             const classId = role === 'student' ? regClassSelect.value : null;
 
-            auth.createUserWithEmailAndPassword(email, password)
+            // Use secondary Firebase App instance if currently logged in, so the admin doesn't get signed out
+            let authInstance = auth;
+            let secondaryInstance = null;
+            if (auth && auth.currentUser) {
+                try {
+                    const secAppName = "SecondaryApp_" + Date.now();
+                    secondaryInstance = firebase.initializeApp(firebaseConfig, secAppName);
+                    authInstance = secondaryInstance.auth();
+                } catch(err) {
+                    console.warn("Could not create secondary Firebase app:", err);
+                }
+            }
+
+            authInstance.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
+                    if (secondaryInstance) {
+                        secondaryInstance.delete().catch(() => {});
+                    }
                     // Save additional data to Firestore
                     return db.collection("users").doc(user.uid).set({
                         name: name,
@@ -3579,11 +3595,25 @@ function setupLoginEvents() {
                 })
                 .then(() => {
                     regModal.classList.remove("active");
-                    alert(appState.language === 'km' ? 'ចុះឈ្មោះរួចរាល់!' : 'Registration successful!');
+                    alert(appState.language === 'km' ? 'ចុះឈ្មោះរួចរាល់ដោយជោគជ័យ!' : 'Registration successful!');
+                    if (typeof initUserPanel === 'function') initUserPanel();
                 })
                 .catch((error) => {
+                    if (secondaryInstance) {
+                        secondaryInstance.delete().catch(() => {});
+                    }
                     console.error("Registration error:", error);
-                    alert(appState.language === 'km' ? `ការចុះឈ្មោះបរាជ័យ៖ ${error.message}` : `Registration Failed: ${error.message}`);
+                    let errKh = error.message;
+                    if (error.code === 'auth/weak-password') {
+                        errKh = 'ពាក្យសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួអក្សរឡើងទៅ!';
+                    } else if (error.code === 'auth/email-already-in-use') {
+                        errKh = 'អ៊ីមែលនេះមានក្នុងប្រព័ន្ធរួចហើយ!';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errKh = 'ទម្រង់អ៊ីមែលមិនត្រឹមត្រូវទេ!';
+                    } else if (error.code === 'auth/operation-not-allowed') {
+                        errKh = 'Firebase មិនទាន់បានបើកដំណើរការ Email/Password Authentication ក្នុង Console ឡើយ!';
+                    }
+                    alert(appState.language === 'km' ? `ការចុះឈ្មោះបរាជ័យ៖ ${errKh}` : `Registration Failed: ${error.message}`);
                 });
         });
     }
