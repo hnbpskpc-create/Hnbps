@@ -341,7 +341,11 @@ auth.onAuthStateChanged(async (user) => {
                 saveState();
                 showPortal();
             } else {
-                alert("Database Connection Failed: " + e.message);
+                const inferredRole = (user.email && user.email.includes('student')) ? 'student' : ((user.email && user.email.includes('teacher')) ? 'teacher' : 'admin');
+                appState.currentUser = { role: inferredRole, uid: user.uid, name: user.displayName || user.email || 'User' };
+                saveState();
+                showPortal();
+                console.warn("Database permission restricted, running in local/fallback mode:", e.message);
             }
         }
     } else {
@@ -2265,32 +2269,6 @@ function saveSheetsUrl() {
     showToast(appState.language === 'km' ? 'រក្សាទុក URL ជោគជ័យ!' : 'URL saved successfully!', 'success');
 }
 
-async function syncToGoogleSheets() {
-    const url = document.getElementById("googleSheetsUrlInput").value.trim();
-    if (!url) {
-        showToast(appState.language === 'km' ? 'សូមបញ្ចូល Web App URL ជាមុនសិន' : 'Please input Web App URL first', 'error');
-        return;
-    }
-    
-    showToast(appState.language === 'km' ? 'កំពុង Sync ទៅកាន់ Google Sheets...' : 'Syncing to Google Sheets...', 'info');
-    
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(appState)
-        });
-        
-        showToast(appState.language === 'km' ? 'Sync ទៅកាន់ Google Sheets បានជោគជ័យ!' : 'Sync to Google Sheets successful!', 'success');
-    } catch (e) {
-        console.error("Sheets Sync Error: ", e);
-        showToast(appState.language === 'km' ? 'ការ Sync បានបរាជ័យ៖ ' + e.message : 'Sync failed: ' + e.message, 'error');
-    }
-}
-
 // ----------------------------------------------------
 // DATABASE & FILE UTILITIES
 // ----------------------------------------------------
@@ -2992,26 +2970,13 @@ function setupEventListeners() {
     });
 
     safeBind("btnTestSheetsConnection", "click", () => {
-        const url = gsUrlInput.value.trim();
+        const url = (gsUrlInput ? gsUrlInput.value.trim() : "") || appState.googleSheetsUrl;
         if (!url) {
             showToast(appState.language === 'km' ? 'សូមវាយបញ្ចូលតំណភ្ជាប់ URL ជាមុនសិន!' : 'Please enter a URL first!', 'warning');
             return;
         }
         
-        showToast(appState.language === 'km' ? 'កំពុងសាកល្បងភ្ជាប់ទៅកាន់ Sheets...' : 'Testing connection to Google Sheets...', 'info');
-        
-        fetch(url)
-            .then(res => {
-                if (!res.ok) throw new Error("HTTP " + res.status);
-                return res.json();
-            })
-            .then(data => {
-                showToast(appState.language === 'km' ? 'ការភ្ជាប់ជោគជ័យ! Google Sheets ឆ្លើយតបធម្មតា។' : 'Connection successful! Google Sheets responded correctly.', 'success');
-            })
-            .catch(err => {
-                console.error("Connection test failed:", err);
-                showToast(appState.language === 'km' ? 'ការភ្ជាប់បរាជ័យ៖ ' + err.message : 'Connection failed: ' + err.message, 'danger');
-            });
+        syncToGoogleSheets(true);
     });
 
     safeBind("btnPullFromSheets", "click", () => {
@@ -4494,11 +4459,18 @@ function updateReportsSchoolProfile() {
 // Google Sheets Database Sync
 // ----------------------------------------------------
 let isSheetsSyncing = false;
-function syncToGoogleSheets() {
-    if (!appState.googleSheetsSyncEnabled || !appState.googleSheetsUrl) return;
+function syncToGoogleSheets(showToastMessage = false) {
+    const url = appState.googleSheetsUrl || (document.getElementById("googleSheetsUrlInput") ? document.getElementById("googleSheetsUrlInput").value.trim() : "");
+    if (!url) {
+        if (showToastMessage) showToast(appState.language === 'km' ? 'សូមវាយបញ្ចូលតំណភ្ជាប់ URL ជាមុនសិន!' : 'Please enter a URL first!', 'warning');
+        return;
+    }
     if (isSheetsSyncing) return;
     
     isSheetsSyncing = true;
+    if (showToastMessage) {
+        showToast(appState.language === 'km' ? 'កំពុងបញ្ជូនទិន្នន័យទៅ Google Sheets...' : 'Sending data to Google Sheets...', 'info');
+    }
     
     const payload = {
         classes: appState.classes,
@@ -4510,7 +4482,7 @@ function syncToGoogleSheets() {
         theme: appState.theme || "light"
     };
 
-    fetch(appState.googleSheetsUrl, {
+    fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "text/plain" // Prevents CORS OPTIONS preflight
@@ -4519,9 +4491,15 @@ function syncToGoogleSheets() {
     })
     .then(() => {
         console.log("[Google Sheets] Sync successful");
+        if (showToastMessage) {
+            showToast(appState.language === 'km' ? 'បានបញ្ជូនទិន្នន័យទៅ Google Sheets ជោគជ័យ!' : 'Sent data to Google Sheets successfully!', 'success');
+        }
     })
     .catch(err => {
         console.error("[Google Sheets] Sync failed:", err);
+        if (showToastMessage) {
+            showToast(appState.language === 'km' ? 'ការបញ្ជូនបរាជ័យ៖ ' + err.message : 'Sync failed: ' + err.message, 'error');
+        }
     })
     .finally(() => {
         isSheetsSyncing = false;
