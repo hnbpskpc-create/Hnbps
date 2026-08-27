@@ -1681,7 +1681,7 @@ function renderVisualSummary(rankedData, period, classId) {
     // Class trend progress HTML
     let progressTrendHTML = "";
     if (period !== 'yearly') {
-        const monthsList = ["oct", "nov", "dec", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep"];
+        const monthsList = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
         const currentIndex = monthsList.indexOf(period);
         
         if (currentIndex > 0) {
@@ -3367,13 +3367,8 @@ function renderStudentPortal() {
     tbody.innerHTML = "";
     
     const periods = [
-        { key: "oct", label: isKm ? "ខែតុលា" : "October", isSummary: false },
-        { key: "nov", label: isKm ? "ខែវិច្ឆិកា" : "November", isSummary: false },
-        { key: "dec", label: isKm ? "ខែធ្នូ" : "December", isSummary: false },
         { key: "jan", label: isKm ? "ខែមករា" : "January", isSummary: false },
         { key: "feb", label: isKm ? "ខែកុម្ភៈ" : "February", isSummary: false },
-        { key: "sem1_exam", label: isKm ? "ប្រឡងឆមាសទី១" : "Semester 1 Exam", isSummary: false },
-        { key: "sem1", label: isKm ? "ឆមាសទី១" : "Semester 1", isSummary: true },
         { key: "mar", label: isKm ? "ខែមីនា" : "March", isSummary: false },
         { key: "apr", label: isKm ? "ខែមេសា" : "April", isSummary: false },
         { key: "may", label: isKm ? "ខែឧសភា" : "May", isSummary: false },
@@ -3381,6 +3376,11 @@ function renderStudentPortal() {
         { key: "jul", label: isKm ? "ខែកក្កដា" : "July", isSummary: false },
         { key: "aug", label: isKm ? "ខែសីហា" : "August", isSummary: false },
         { key: "sep", label: isKm ? "ខែកញ្ញា" : "September", isSummary: false },
+        { key: "oct", label: isKm ? "ខែតុលា" : "October", isSummary: false },
+        { key: "nov", label: isKm ? "ខែវិច្ឆិកា" : "November", isSummary: false },
+        { key: "dec", label: isKm ? "ខែធ្នូ" : "December", isSummary: false },
+        { key: "sem1_exam", label: isKm ? "ប្រឡងឆមាសទី១" : "Semester 1 Exam", isSummary: false },
+        { key: "sem1", label: isKm ? "ឆមាសទី១" : "Semester 1", isSummary: true },
         { key: "sem2_exam", label: isKm ? "ប្រឡងឆមាសទី២" : "Semester 2 Exam", isSummary: false },
         { key: "sem2", label: isKm ? "ឆមាសទី២" : "Semester 2", isSummary: true },
         { key: "yearly", label: isKm ? "ប្រចាំឆ្នាំ" : "Yearly", isSummary: true }
