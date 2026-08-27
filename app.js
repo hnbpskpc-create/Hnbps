@@ -314,9 +314,15 @@ auth.onAuthStateChanged(async (user) => {
                         isSyncing = false;
                         
                         // Re-render UI if already logged in and visible
-                        if (document.getElementById('portalAdmin')?.style.display === 'block') initAdminPortal();
-                        if (document.getElementById('portalTeacher')?.style.display === 'block') initTeacherPortal();
-                        if (document.getElementById('portalStudent')?.style.display === 'block') initStudentPortal();
+                        if (appState.currentUser) {
+                            if (appState.currentUser.role === 'student') {
+                                renderStudentPortal();
+                            } else {
+                                renderDashboard();
+                                renderClassesPanel();
+                                renderSubjectsPanel();
+                            }
+                        }
                         updateReportsSchoolProfile();
                     } else {
                         // If it doesn't exist (first time), save the initial DEFAULT_STATE to Firestore
@@ -774,27 +780,36 @@ function initDateTime() {
 
 // Role Portal Routing & Selection Handling
 function selectLoginRole(role) {
-    document.getElementById("loginRole").value = role;
-    document.getElementById("loginStepRoles").classList.add("hidden");
+    const roleInput = document.getElementById("loginRole");
+    const rolesStep = document.getElementById("loginStepRoles");
+    if (roleInput) roleInput.value = role;
+    if (rolesStep) rolesStep.classList.add("hidden");
     
     if (role === 'student') {
-        // Seed student class select list
         const classSel = document.getElementById("loginStudentClass");
-        classSel.innerHTML = "";
-        appState.classes.forEach(c => {
-            classSel.innerHTML += `<option value="${c.id}">${c.name}</option>`;
-        });
-        document.getElementById("loginStepStudent").classList.remove("hidden");
+        if (classSel) {
+            classSel.innerHTML = "";
+            appState.classes.forEach(c => {
+                classSel.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
+        }
+        const stuStep = document.getElementById("loginStepStudent");
+        if (stuStep) stuStep.classList.remove("hidden");
     } else {
-        document.getElementById("loginPasscode").value = "";
-        document.getElementById("loginStepPasscode").classList.remove("hidden");
+        const passInput = document.getElementById("loginPasscode");
+        if (passInput) passInput.value = "";
+        const passStep = document.getElementById("loginStepPasscode");
+        if (passStep) passStep.classList.remove("hidden");
     }
 }
 
 function goBackToRoles() {
-    document.getElementById("loginStepPasscode").classList.add("hidden");
-    document.getElementById("loginStepStudent").classList.add("hidden");
-    document.getElementById("loginStepRoles").classList.remove("hidden");
+    const passStep = document.getElementById("loginStepPasscode");
+    const stuStep = document.getElementById("loginStepStudent");
+    const rolesStep = document.getElementById("loginStepRoles");
+    if (passStep) passStep.classList.add("hidden");
+    if (stuStep) stuStep.classList.add("hidden");
+    if (rolesStep) rolesStep.classList.remove("hidden");
     
     const input = document.getElementById("loginPasscode");
     const icon = document.getElementById("togglePasscodeIcon");
@@ -4672,9 +4687,15 @@ function pullFromGoogleSheets(silent = false) {
                 localStorage.setItem("primary_school_grading_state", JSON.stringify(appState));
                 
                 // Re-render
-                if (typeof initAdminPortal === 'function' && document.getElementById('portalAdmin')?.style.display === 'block') initAdminPortal();
-                if (typeof initTeacherPortal === 'function' && document.getElementById('portalTeacher')?.style.display === 'block') initTeacherPortal();
-                if (typeof initStudentPortal === 'function' && document.getElementById('portalStudent')?.style.display === 'block') initStudentPortal();
+                if (appState.currentUser) {
+                    if (appState.currentUser.role === 'student') {
+                        renderStudentPortal();
+                    } else {
+                        renderDashboard();
+                        renderClassesPanel();
+                        renderSubjectsPanel();
+                    }
+                }
                 
                 if (typeof updateReportsSchoolProfile === 'function') updateReportsSchoolProfile();
                 
