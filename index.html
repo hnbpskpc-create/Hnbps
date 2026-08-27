@@ -14,8 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260818_4">
-    <script src="app.js?v=20260818_4" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260827_1">
+    <script src="app.js?v=20260827_1" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -181,7 +181,7 @@
                     <i class="fa-solid fa-bars" style="font-size: 1.2rem;"></i>
                 </button>
                 <h1 id="pageTitle" class="page-title" data-km="ផ្ទាំងគ្រប់គ្រង" data-en="Dashboard" style="flex-grow: 1;">ផ្ទាំងគ្រប់គ្រង</h1>
-                <div class="current-date-time">
+                <div class="current-date-time" id="btnHeaderClockCalendar" title="ចុចដើម្បីមើលប្រតិទិន និងម៉ោង / Click to view Calendar">
                     <i class="fa-regular fa-clock"></i>
                     <span id="dateTimeString">01-07-2026</span>
                 </div>
@@ -200,42 +200,68 @@
                             <span class="live-badge"><i class="fa-solid fa-circle" style="font-size:8px;margin-right:4px;"></i> Live</span>
                         </div>
                         <div class="banner-actions">
-                            <button class="banner-btn"><i class="fa-regular fa-calendar"></i> <span data-km="ថ្ងៃនេះ" data-en="Today">ថ្ងៃនេះ</span></button>
-                            <button class="banner-btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> <span data-km="ផ្ទុកឡើងវិញ" data-en="Refresh">ផ្ទុកឡើងវិញ</span></button>
+                            <button type="button" class="banner-btn" id="btnDashBannerToday"><i class="fa-regular fa-calendar"></i> <span data-km="ថ្ងៃនេះ" data-en="Today">ថ្ងៃនេះ</span></button>
+                            <button type="button" class="banner-btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> <span data-km="ផ្ទុកឡើងវិញ" data-en="Refresh">ផ្ទុកឡើងវិញ</span></button>
                         </div>
                     </div>
                     
                     <div class="banner-right">
-                        <div class="circular-chart-container">
-                            <svg viewBox="0 0 36 36" class="circular-chart">
-                                <path class="circle-bg"
-                                    d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                                />
-                                <path class="circle" id="dashPassingCircle"
-                                    stroke-dasharray="0, 100"
-                                    d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                                />
-                                <text x="18" y="16.5" class="percentage" id="dashPassingText">0%</text>
-                                <text x="18" y="22" class="chart-label" data-km="អត្រាប្រឡងជាប់" data-en="PASSING RATE">អត្រាប្រឡងជាប់</text>
-                            </svg>
-                        </div>
-                        
-                        <div class="banner-stats">
-                            <div class="banner-stat-item">
-                                <span class="bs-label" data-km="សិស្សសរុប" data-en="TOTAL">សិស្សសរុប</span>
-                                <span class="bs-value" id="dashTotalStus">0</span>
+                        <div class="banner-charts-trio">
+                            <!-- Ring 1: Total Students -->
+                            <div class="circular-chart-container" title="សិស្សសរុប / Total Students">
+                                <svg viewBox="0 0 36 36" class="circular-chart chart-total">
+                                    <path class="circle-bg"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <path class="circle circle-total" id="dashTotalCircle"
+                                        stroke-dasharray="100, 100"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <text x="18" y="16.5" class="percentage" id="dashTotalCountText">0</text>
+                                    <text x="18" y="22.5" class="chart-label" data-km="សិស្សសរុប" data-en="TOTAL">សិស្សសរុប</text>
+                                </svg>
                             </div>
-                            <div class="banner-stat-item">
-                                <span class="bs-label" data-km="ជាប់" data-en="PASSED">ជាប់</span>
-                                <span class="bs-value" id="dashTotalPassed">0</span>
+
+                            <!-- Ring 2: Passed Students -->
+                            <div class="circular-chart-container" title="សិស្សជាប់ / Passed Students">
+                                <svg viewBox="0 0 36 36" class="circular-chart chart-passed">
+                                    <path class="circle-bg"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <path class="circle circle-passed" id="dashPassingCircle"
+                                        stroke-dasharray="0, 100"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <text x="18" y="16.5" class="percentage" id="dashPassingText">0</text>
+                                    <text x="18" y="22.5" class="chart-label" data-km="សិស្សជាប់" data-en="PASSED">សិស្សជាប់</text>
+                                </svg>
                             </div>
-                            <div class="banner-stat-item" style="margin-top:0.75rem;">
-                                <span class="bs-label" data-km="ធ្លាក់" data-en="FAILED">ធ្លាក់</span>
-                                <span class="bs-value" id="dashTotalFailed">0</span>
+
+                            <!-- Ring 3: Failed Students -->
+                            <div class="circular-chart-container" title="សិស្សធ្លាក់ / Failed Students">
+                                <svg viewBox="0 0 36 36" class="circular-chart chart-failed">
+                                    <path class="circle-bg"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <path class="circle circle-failed" id="dashFailingCircle"
+                                        stroke-dasharray="0, 100"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <text x="18" y="16.5" class="percentage" id="dashFailingText">0</text>
+                                    <text x="18" y="22.5" class="chart-label" data-km="សិស្សធ្លាក់" data-en="FAILED">សិស្សធ្លាក់</text>
+                                </svg>
                             </div>
                         </div>
                     </div>
@@ -1508,6 +1534,59 @@
                     <button type="submit" class="btn btn-primary" data-km="ចុះឈ្មោះ" data-en="Register">ចុះឈ្មោះ</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Calendar & Clock Interactive Modal -->
+    <div class="modal" id="calendarClockModal">
+        <div class="modal-content calendar-modal-content">
+            <div class="modal-header" style="padding-bottom: 0.5rem; border-bottom: none;">
+                <h3 data-km="ប្រតិទិន និង ពេលវេលា" data-en="Calendar & Real-time Clock">ប្រតិទិន និង ពេលវេលា</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            
+            <!-- Live Clock Hero Box -->
+            <div class="calendar-clock-hero">
+                <div class="calendar-live-clock" id="modalLiveClock">00:00:00</div>
+                <div class="calendar-live-date-kh" id="modalLiveDateKh">ថ្ងៃ...</div>
+                <div class="calendar-live-era" id="modalLiveEraKh">ពុទ្ធសករាជ ... • គ្រិស្តសករាជ ...</div>
+            </div>
+
+            <!-- Calendar Month Navigation -->
+            <div class="calendar-nav-header">
+                <button type="button" class="calendar-nav-btn" id="btnPrevCalMonth" title="Previous Month">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="calendar-nav-title" id="calendarNavMonthYear">មករា ២០២៦</div>
+                <button type="button" class="calendar-nav-btn" id="btnNextCalMonth" title="Next Month">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Weekdays Header -->
+            <div class="calendar-weekdays-grid" id="calendarWeekdaysGrid">
+                <span>អា</span>
+                <span>ច</span>
+                <span>អ</span>
+                <span>ពុ</span>
+                <span>ព្រ</span>
+                <span>សុ</span>
+                <span>ស</span>
+            </div>
+
+            <!-- Days Grid -->
+            <div class="calendar-days-grid" id="calendarDaysGrid">
+                <!-- Populated dynamically in app.js -->
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="calendar-actions-footer">
+                <button type="button" class="btn btn-outline btn-sm" id="btnJumpToToday" style="display:flex; align-items:center; gap:0.4rem;">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <span data-km="ថ្ងៃនេះ" data-en="Today">ថ្ងៃនេះ</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm close-btn-action" data-km="បិទ" data-en="Close">បិទ</button>
+            </div>
         </div>
     </div>
 

@@ -618,6 +618,78 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+let calViewDate = new Date();
+
+function renderCalendarGrid() {
+    const isKm = appState.language === 'km';
+    const year = calViewDate.getFullYear();
+    const month = calViewDate.getMonth();
+    
+    const monthsKh = ["មករា", "កុម្ភៈ", "មីនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"];
+    const monthsEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    // Header Title
+    const navTitle = document.getElementById("calendarNavMonthYear");
+    if (navTitle) {
+        if (isKm) {
+            navTitle.textContent = `ខែ${monthsKh[month]} ឆ្នាំ${toKhDigits(year)}`;
+        } else {
+            navTitle.textContent = `${monthsEn[month]} ${year}`;
+        }
+    }
+    
+    // Weekdays header
+    const weekdaysGrid = document.getElementById("calendarWeekdaysGrid");
+    if (weekdaysGrid) {
+        if (isKm) {
+            weekdaysGrid.innerHTML = `<span>អា</span><span>ច</span><span>អ</span><span>ពុ</span><span>ព្រ</span><span>សុ</span><span>ស</span>`;
+        } else {
+            weekdaysGrid.innerHTML = `<span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>`;
+        }
+    }
+    
+    const daysGrid = document.getElementById("calendarDaysGrid");
+    if (!daysGrid) return;
+    daysGrid.innerHTML = "";
+    
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    
+    // Blanks before first day
+    for (let i = 0; i < firstDay; i++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-day-cell empty";
+        daysGrid.appendChild(cell);
+    }
+    
+    // Day cells
+    for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-day-cell";
+        cell.textContent = isKm ? toKhDigits(d) : d;
+        
+        if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === d) {
+            cell.classList.add("today");
+            cell.title = isKm ? "ថ្ងៃនេះ" : "Today";
+        }
+        
+        cell.addEventListener("click", () => {
+            document.querySelectorAll(".calendar-day-cell").forEach(c => c.style.outline = "none");
+            cell.style.outline = "2px solid var(--primary-blue)";
+        });
+        
+        daysGrid.appendChild(cell);
+    }
+}
+
+function openCalendarModal() {
+    calViewDate = new Date();
+    renderCalendarGrid();
+    const modal = document.getElementById("calendarClockModal");
+    if (modal) modal.classList.add("active");
+}
+
 function initDateTime() {
     const updateTime = () => {
         const d = new Date();
@@ -625,31 +697,79 @@ function initDateTime() {
         const dashDateEl = document.getElementById("dashDateBanner");
         const dashTimeEl = document.getElementById("dashTimeBanner");
         
+        // Modal live clock elements
+        const modalClock = document.getElementById("modalLiveClock");
+        const modalDateKh = document.getElementById("modalLiveDateKh");
+        const modalEraKh = document.getElementById("modalLiveEraKh");
+        
         const timeStr = d.toLocaleTimeString('en-US', { hour12: false });
         if (dashTimeEl) dashTimeEl.textContent = timeStr;
+        if (modalClock) modalClock.textContent = timeStr;
         
+        const isKm = appState.language === 'km';
         let dateStr = "";
-        if (appState.language !== 'km') {
+        let shortDateStr = "";
+        let fullKhDate = "";
+        
+        const weekdaysKh = ["ថ្ងៃអាទិត្យ", "ថ្ងៃច័ន្ទ", "ថ្ងៃអង្គារ", "ថ្ងៃពុធ", "ថ្ងៃព្រហស្បតិ៍", "ថ្ងៃសុក្រ", "ថ្ងៃសៅរ៍"];
+        const monthsKh = ["មករា", "កុម្ភៈ", "មីនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"];
+        
+        const weekday = weekdaysKh[d.getDay()];
+        const date = toKhDigits(d.getDate());
+        const month = monthsKh[d.getMonth()];
+        const year = toKhDigits(d.getFullYear());
+        const buddhistEra = toKhDigits(d.getFullYear() + 544); // Buddhist Era approx
+        
+        fullKhDate = `${weekday} ទី${date} ខែ${month} ឆ្នាំ${year}`;
+        
+        if (!isKm) {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             dateStr = d.toLocaleDateString('en-US', options);
+            shortDateStr = `${d.getDate()} ${d.toLocaleDateString('en-US', { month: 'short' })} ${d.getFullYear()}, ${timeStr}`;
         } else {
-            const weekdaysKh = ["ថ្ងៃអាទិត្យ", "ថ្ងៃច័ន្ទ", "ថ្ងៃអង្គារ", "ថ្ងៃពុធ", "ថ្ងៃព្រហស្បតិ៍", "ថ្ងៃសុក្រ", "ថ្ងៃសៅរ៍"];
-            const monthsKh = ["មករា", "កុម្ភៈ", "មីនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"];
-            
-            const weekday = weekdaysKh[d.getDay()];
-            const date = toKhDigits(d.getDate());
-            const month = monthsKh[d.getMonth()];
-            const year = toKhDigits(d.getFullYear());
-            
-            dateStr = `${weekday} ទី${date} ខែ${month} ឆ្នាំ${year}`;
+            dateStr = fullKhDate;
+            shortDateStr = `ទី${date} ${month} • ${timeStr}`;
         }
         
-        if (dateEl) dateEl.textContent = dateStr;
+        if (dateEl) dateEl.textContent = `${shortDateStr}`;
         if (dashDateEl) dashDateEl.textContent = dateStr;
+        if (modalDateKh) modalDateKh.textContent = isKm ? fullKhDate : dateStr;
+        if (modalEraKh) {
+            modalEraKh.textContent = isKm 
+                ? `ពុទ្ធសករាជ ${buddhistEra} • គ្រិស្តសករាជ ${year}`
+                : `Buddhist Era ${d.getFullYear() + 544} • AD ${d.getFullYear()}`;
+        }
     };
     
     updateTime();
     setInterval(updateTime, 1000);
+    
+    // Bind header clock & calendar click
+    const headerClockBtn = document.getElementById("btnHeaderClockCalendar");
+    if (headerClockBtn) {
+        headerClockBtn.addEventListener("click", openCalendarModal);
+    }
+    
+    const bannerTodayBtn = document.getElementById("btnDashBannerToday");
+    if (bannerTodayBtn) {
+        bannerTodayBtn.addEventListener("click", openCalendarModal);
+    }
+    
+    // Calendar modal navigation buttons
+    safeBind("btnPrevCalMonth", "click", () => {
+        calViewDate.setMonth(calViewDate.getMonth() - 1);
+        renderCalendarGrid();
+    });
+    
+    safeBind("btnNextCalMonth", "click", () => {
+        calViewDate.setMonth(calViewDate.getMonth() + 1);
+        renderCalendarGrid();
+    });
+    
+    safeBind("btnJumpToToday", "click", () => {
+        calViewDate = new Date();
+        renderCalendarGrid();
+    });
 }
 
 // Role Portal Routing & Selection Handling
@@ -935,20 +1055,43 @@ function renderDashboard() {
         }
     });
     
+    const isKm = appState.language === 'km';
     const passingRate = totalRanked > 0 ? Math.round((passingCount / totalRanked) * 100) : 0;
+    const failingRate = totalRanked > 0 ? Math.round((failingCount / totalRanked) * 100) : 0;
     
-    // 3. Update Banner Circular Chart & Stats
-    const dashTotalStus = document.getElementById("dashTotalStus");
-    const dashTotalPassed = document.getElementById("dashTotalPassed");
-    const dashTotalFailed = document.getElementById("dashTotalFailed");
+    // 3. Update Banner Circular Charts Trio
+    const dashTotalCountText = document.getElementById("dashTotalCountText");
+    const dashTotalCircle = document.getElementById("dashTotalCircle");
+    
     const dashPassingText = document.getElementById("dashPassingText");
     const dashPassingCircle = document.getElementById("dashPassingCircle");
     
-    if (dashTotalStus) dashTotalStus.textContent = totalStudents;
-    if (dashTotalPassed) dashTotalPassed.textContent = passingCount;
-    if (dashTotalFailed) dashTotalFailed.textContent = failingCount;
-    if (dashPassingText) dashPassingText.textContent = `${passingRate}%`;
-    if (dashPassingCircle) dashPassingCircle.style.strokeDasharray = `${passingRate}, 100`;
+    const dashFailingText = document.getElementById("dashFailingText");
+    const dashFailingCircle = document.getElementById("dashFailingCircle");
+    
+    // Ring 1: Total Students Count
+    if (dashTotalCountText) {
+        dashTotalCountText.textContent = isKm ? toKhDigits(totalStudents) : totalStudents;
+    }
+    if (dashTotalCircle) {
+        dashTotalCircle.style.strokeDasharray = totalStudents > 0 ? `100, 100` : `0, 100`;
+    }
+    
+    // Ring 2: Passed Students Count
+    if (dashPassingText) {
+        dashPassingText.textContent = isKm ? toKhDigits(passingCount) : passingCount;
+    }
+    if (dashPassingCircle) {
+        dashPassingCircle.style.strokeDasharray = `${passingRate}, 100`;
+    }
+    
+    // Ring 3: Failed Students Count
+    if (dashFailingText) {
+        dashFailingText.textContent = isKm ? toKhDigits(failingCount) : failingCount;
+    }
+    if (dashFailingCircle) {
+        dashFailingCircle.style.strokeDasharray = `${failingRate}, 100`;
+    }
     
     // 4. Update Summary Cards
     // Top Students (Count of students with avg >= 9.0)

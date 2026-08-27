@@ -228,19 +228,36 @@ body {
     gap: 0.65rem;
     padding: 0.45rem 1.15rem;
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
-    border: 1px solid rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.2);
     border-radius: 20px;
     color: var(--primary-blue);
     font-weight: 600;
     font-size: 0.85rem;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.04);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.06);
     transition: all var(--transition-fast);
+    cursor: pointer;
+    user-select: none;
+}
+
+.current-date-time:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(99, 102, 241, 0.12) 100%);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.18);
+}
+
+.current-date-time:active {
+    transform: translateY(0);
 }
 
 [data-theme="dark"] .current-date-time {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.08) 100%);
-    border-color: rgba(59, 130, 246, 0.3);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(99, 102, 241, 0.1) 100%);
+    border-color: rgba(59, 130, 246, 0.35);
     color: #60a5fa;
+}
+
+[data-theme="dark"] .current-date-time:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.28) 0%, rgba(99, 102, 241, 0.18) 100%);
 }
 
 .current-date-time i {
@@ -328,19 +345,19 @@ body {
 .banner-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
 .banner-btn:hover { background: rgba(255,255,255,0.3); }
 
-.banner-right { display: flex; align-items: center; gap: 2rem; }
-.circular-chart-container { position: relative; width: 120px; height: 120px; }
-.circular-chart { display: block; margin: 0 auto; max-width: 80%; max-height: 250px; }
-.circle-bg { fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 3.8; }
-.circle { fill: none; stroke-width: 2.8; stroke-linecap: round; animation: progress 1s ease-out forwards; stroke: white; }
-.circular-chart .percentage { fill: white; font-size: 0.5rem; text-anchor: middle; font-weight: 800; }
-.circular-chart .chart-label { fill: white; font-size: 0.18rem; text-anchor: middle; opacity: 0.9; font-weight: 600; }
+.banner-right { display: flex; align-items: center; justify-content: flex-end; }
+.banner-charts-trio { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: flex-end; }
+.circular-chart-container { position: relative; width: 105px; height: 105px; transition: transform 0.2s ease; cursor: pointer; }
+.circular-chart-container:hover { transform: translateY(-3px) scale(1.04); }
+.circular-chart { display: block; margin: 0 auto; width: 100%; height: 100%; }
+.circle-bg { fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 3.5; }
+.circle { fill: none; stroke-width: 3.2; stroke-linecap: round; animation: progress 1s ease-out forwards; }
+.circle-total { stroke: #ffffff; filter: drop-shadow(0 2px 6px rgba(255,255,255,0.3)); }
+.circle-passed { stroke: #4ade80; filter: drop-shadow(0 2px 6px rgba(74, 222, 128, 0.4)); }
+.circle-failed { stroke: #fb7185; filter: drop-shadow(0 2px 6px rgba(251, 113, 133, 0.4)); }
+.circular-chart .percentage { fill: white; font-size: 0.48rem; text-anchor: middle; font-weight: 800; }
+.circular-chart .chart-label { fill: white; font-size: 0.19rem; text-anchor: middle; opacity: 0.95; font-weight: 700; }
 @keyframes progress { 0% { stroke-dasharray: 0 100; } }
-
-.banner-stats { display: flex; flex-direction: column; gap: 0.25rem; }
-.banner-stat-item { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
-.bs-label { font-size: 0.75rem; font-weight: 700; opacity: 0.9; }
-.bs-value { font-size: 1.1rem; font-weight: 800; }
 
 .quick-actions-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 1rem; }
 .qa-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 1.25rem 0.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s; text-align: center; }
@@ -1683,15 +1700,17 @@ body {
     
     .current-date-time {
         font-size: 0.8rem;
-        margin-left: auto !important; /* Push to the right */
+        margin-left: auto !important;
         flex-shrink: 0 !important;
+        padding: 0.4rem 0.8rem;
+        cursor: pointer;
     }
     .current-date-time span {
-        display: none; /* Hide date details, keep clock icon only or make it short */
-    }
-    .current-date-time::after {
-        content: " 📅"; /* short placeholder */
-        font-size: 1rem;
+        display: inline-block !important;
+        max-width: 140px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     /* Grids stack vertically */
@@ -2054,4 +2073,136 @@ body {
         margin-left: 80px !important;
         width: calc(100% - 80px) !important;
     }
+}
+
+/* ====================================================
+   Calendar & Real-time Clock Modal Styling
+==================================================== */
+.calendar-modal-content {
+    max-width: 440px !important;
+    padding: 1.5rem !important;
+    border-radius: 20px !important;
+}
+
+.calendar-clock-hero {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: #ffffff;
+    padding: 1.25rem;
+    border-radius: 14px;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+}
+
+.calendar-live-clock {
+    font-size: 2.3rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-family: monospace, var(--font-family);
+    margin-bottom: 0.25rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.calendar-live-date-kh {
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.95;
+    margin-bottom: 0.25rem;
+}
+
+.calendar-live-era {
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+.calendar-nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.calendar-nav-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.calendar-nav-btn {
+    background: var(--input-bg, #f1f5f9);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: all var(--transition-fast);
+}
+
+.calendar-nav-btn:hover {
+    background: var(--primary-blue);
+    color: #ffffff;
+    border-color: var(--primary-blue);
+}
+
+.calendar-weekdays-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.calendar-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-day-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.calendar-day-cell:hover:not(.empty) {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--primary-blue);
+}
+
+.calendar-day-cell.today {
+    background: var(--primary-blue) !important;
+    color: #ffffff !important;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+}
+
+.calendar-day-cell.other-month {
+    opacity: 0.35;
+}
+
+.calendar-day-cell.empty {
+    cursor: default;
+}
+
+.calendar-actions-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
 }
