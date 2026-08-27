@@ -18,8 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260827_5">
-    <script src="app.js?v=20260827_5" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260827_6">
+    <script src="app.js?v=20260827_6" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -1013,16 +1013,16 @@
                     </div>
 
                     <!-- QR Code Login Card -->
-                    <div class="card-style" style="display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center;">
-                        <h3 data-km="QR Code សម្រាប់ចុះឈ្មោះសមាជិកថ្មី" data-en="QR Code for New Registration">QR Code សម្រាប់ចុះឈ្មោះសមាជិកថ្មី</h3>
-                        <p class="settings-desc" data-km="ស្កេន QR Code នេះដើម្បីបើកទំព័រចុះឈ្មោះនៅលើ Tablet ឬទូរស័ព្ទដៃសិស្ស/គ្រូផ្សេងទៀត។" data-en="Scan this QR Code to open the registration and login page on tablets/mobile devices.">ស្កេន QR Code នេះដើម្បីបើកទំព័រចុះឈ្មោះនៅលើ Tablet ឬទូរស័ព្ទដៃសិស្ស/គ្រូផ្សេងទៀត។</p>
+                    <div class="card-style qr-portal-card" style="display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; width: 100%; max-width: 100%;">
+                        <h3 data-km="QR Code សម្រាប់ចុះឈ្មោះសមាជិកថ្មី" data-en="QR Code for New Registration" style="width: 100%; text-align: center;">QR Code សម្រាប់ចុះឈ្មោះសមាជិកថ្មី</h3>
+                        <p class="settings-desc" style="width: 100%; text-align: center; max-width: 100%;" data-km="ស្កេន QR Code នេះដើម្បីបើកទំព័រចុះឈ្មោះនៅលើ Tablet ឬទូរស័ព្ទដៃសិស្ស/គ្រូផ្សេងទៀត។" data-en="Scan this QR Code to open the registration and login page on tablets/mobile devices.">ស្កេន QR Code នេះដើម្បីបើកទំព័រចុះឈ្មោះនៅលើ Tablet ឬទូរស័ព្ទដៃសិស្ស/គ្រូផ្សេងទៀត។</p>
                         
-                        <div id="loginQrCodeWrapper" style="margin: 1.25rem 0; padding: 1rem; background: #ffffff; border-radius: 12px; border: 1px solid var(--border-color); display: inline-block;">
-                            <img id="imgLoginQrCode" src="" alt="QR Code Portal" style="display:block; width:160px; height:160px;">
+                        <div id="loginQrCodeWrapper" style="margin: 1.25rem auto; padding: 0.75rem; background: #ffffff; border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; max-width: 180px;">
+                            <img id="imgLoginQrCode" src="" alt="QR Code Portal" style="display:block; width:150px; height:150px; max-width:100%;">
                         </div>
                         
-                        <div style="width: 100%;">
-                            <p style="font-size: 0.8rem; font-weight: 600; word-break: break-all; color: var(--primary-blue);" id="lblPortalUrlText">...</p>
+                        <div style="width: 100%; text-align: center;">
+                            <p style="font-size: 0.8rem; font-weight: 600; word-break: break-all; color: var(--primary-blue); max-width: 100%;" id="lblPortalUrlText">...</p>
                             <button type="button" class="btn btn-outline btn-sm" id="btnCopyPortalUrl" style="margin-top:0.5rem; border-radius:8px;">
                                 <i class="fa-solid fa-copy"></i> <span data-km="ចម្លងតំណភ្ជាប់" data-en="Copy Link">ចម្លងតំណភ្ជាប់</span>
                             </button>
