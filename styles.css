@@ -398,11 +398,39 @@ body {
     .perf-bars-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-    .dash-purple-banner { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
-    .banner-right { width: 100%; justify-content: space-around; }
-    .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
-    .summary-cards-grid { grid-template-columns: 1fr; }
-    .perf-bars-grid { grid-template-columns: 1fr; }
+    .dash-purple-banner {
+        flex-direction: column;
+        gap: 1.25rem;
+        align-items: stretch;
+        padding: 1.35rem 1rem !important;
+        border-radius: 16px !important;
+    }
+    .banner-left { width: 100%; }
+    .banner-date { font-size: 1.35rem !important; }
+    .banner-right { width: 100%; justify-content: center !important; }
+    .banner-charts-trio { width: 100%; justify-content: space-evenly !important; gap: 0.5rem; }
+    .circular-chart-container { width: 88px !important; height: 88px !important; }
+    .circular-chart .percentage { font-size: 0.52rem !important; }
+    .circular-chart .chart-label { font-size: 0.20rem !important; }
+    
+    .quick-actions-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 0.5rem !important; }
+    .qa-card { padding: 0.85rem 0.25rem !important; border-radius: 10px !important; }
+    .qa-card i { font-size: 1.4rem !important; }
+    .qa-card span { font-size: 0.68rem !important; }
+    
+    .summary-cards-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+    .perf-bars-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+}
+
+@media (max-width: 480px) {
+    .banner-date { font-size: 1.15rem !important; }
+    .circular-chart-container { width: 80px !important; height: 80px !important; }
+    .quick-actions-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 0.35rem !important; }
+    .qa-card { padding: 0.65rem 0.2rem !important; }
+    .qa-card i { font-size: 1.2rem !important; }
+    .qa-card span { font-size: 0.62rem !important; }
+    .summary-cards-grid { grid-template-columns: 1fr !important; }
+    .perf-bars-grid { grid-template-columns: 1fr !important; }
 }
 
 /* Card Styles */
@@ -1702,12 +1730,13 @@ body {
         font-size: 0.8rem;
         margin-left: auto !important;
         flex-shrink: 0 !important;
-        padding: 0.4rem 0.8rem;
+        padding: 0.4rem 0.75rem;
         cursor: pointer;
+        border-radius: 16px;
     }
     .current-date-time span {
         display: inline-block !important;
-        max-width: 140px;
+        max-width: 130px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1728,17 +1757,74 @@ body {
     }
     .subjects-split-layout {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1.25rem;
     }
     
-    /* Tables responsiveness */
+    /* Filter bars stack neatly on mobile */
+    .filter-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+    .filter-group {
+        width: 100% !important;
+    }
+    .filter-group select,
+    .filter-group input {
+        width: 100% !important;
+        min-height: 42px !important;
+        font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+    }
+    
+    /* Form inputs mobile styling */
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+    
+    /* Tables responsiveness with touch momentum */
     .table-container {
-        border-radius: 8px;
+        border-radius: 12px;
         margin-top: 0.5rem;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .data-table {
+        min-width: 600px;
     }
     .data-table th, .data-table td {
-        padding: 0.75rem 0.5rem;
+        padding: 0.65rem 0.5rem;
         font-size: 0.8rem;
+    }
+    
+    /* Touch-friendly score input boxes */
+    .score-input {
+        min-width: 54px !important;
+        height: 38px !important;
+        font-size: 1rem !important;
+        text-align: center !important;
+        border-radius: 8px !important;
+        font-weight: 700 !important;
+        padding: 0 4px !important;
+    }
+    
+    /* Mobile Buttons */
+    .btn {
+        min-height: 42px;
+        font-size: 0.85rem;
+    }
+    .panel-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .panel-actions .btn {
+        width: 100%;
     }
     
     /* Role Selection Grid */
@@ -1756,18 +1842,36 @@ body {
         align-items: flex-start;
         gap: 1rem;
         padding: 1rem !important;
+        border-radius: 16px !important;
     }
     .student-actions {
         width: 100%;
         justify-content: space-between;
         gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .student-actions .btn {
+        flex: 1;
+        min-width: 120px;
     }
     
     /* Modals adjustment for mobile screens */
     .modal-content {
         width: 95% !important;
-        margin: 0.5rem;
-        padding: 1.5rem !important;
+        max-width: 95% !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        margin: 0.5rem auto !important;
+        padding: 1.25rem !important;
+        border-radius: 18px !important;
+    }
+    
+    .calendar-modal-content {
+        max-width: 95% !important;
+        padding: 1.25rem 1rem !important;
+    }
+    .calendar-live-clock {
+        font-size: 1.85rem !important;
     }
 }
 
