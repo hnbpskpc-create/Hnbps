@@ -6416,5 +6416,121 @@ window.exportBestClassesCSV = function() {
     document.body.removeChild(link);
 };
 
+// ----------------------------------------------------
+// MESSAGES & REQUESTS MODAL CONTROLLER
+// ----------------------------------------------------
+let currentMessagesModalFilter = 'pending';
+
+window.openMessagesModal = function() {
+    const modal = document.getElementById("messagesModal");
+    if (!modal) return;
+
+    renderMessagesModalContent();
+    modal.classList.add("active");
+};
+
+window.switchMessagesModalFilter = function(filter) {
+    currentMessagesModalFilter = filter;
+    
+    const tabs = ['pending', 'resolved', 'all'];
+    tabs.forEach(t => {
+        const btn = document.getElementById(`msgTab-${t}`);
+        if (btn) {
+            if (t === filter) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+    });
+
+    filterMessagesModalList();
+};
+
+function renderMessagesModalContent() {
+    const pendingCountBadge = document.getElementById("msgModalPendingCount");
+    const messages = appState.messages || [];
+    const pendingCount = messages.filter(m => m.status === 'pending').length;
+
+    if (pendingCountBadge) pendingCountBadge.textContent = pendingCount;
+    filterMessagesModalList();
+}
+
+function filterMessagesModalList() {
+    const container = document.getElementById("messagesModalListContainer");
+    const searchInput = document.getElementById("msgModalSearchInput");
+    if (!container) return;
+
+    const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const messages = appState.messages || [];
+
+    const filtered = messages.filter(m => {
+        const matchesFilter = (currentMessagesModalFilter === 'all') || (m.status === currentMessagesModalFilter);
+        const textContent = `${m.studentName || ''} ${m.studentId || ''} ${m.className || ''} ${m.messageText || ''} ${m.subject || ''}`.toLowerCase();
+        const matchesSearch = textContent.includes(query);
+        return matchesFilter && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted); background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color);">
+                <i class="fa-regular fa-bell-slash" style="font-size: 2.5rem; color: #cbd5e1; margin-bottom: 0.75rem; display:block;"></i>
+                <h4 style="margin: 0 0 4px 0; font-size: 1.05rem; color: var(--text-main);">ពុំមានសារ ឬសំណើឡើយ</h4>
+                <p style="font-size: 0.85rem; margin: 0;">មិនមានសារដែលត្រូវនឹងលក្ខខណ្ឌចម្រាញ់នេះនៅក្នុងប្រព័ន្ធទេ។</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = filtered.map(m => {
+        const isPending = m.status === 'pending';
+        const statusBadge = isPending 
+            ? `<span style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:700;"><i class="fa-regular fa-clock"></i> កំពុងរង់ចាំពិនិត្យ</span>`
+            : `<span style="background:#dcfce7; color:#15803d; border:1px solid #bbf7d0; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:700;"><i class="fa-solid fa-check"></i> បានឆ្លើយតបរួច</span>`;
+
+        const replyBox = m.replyText ? `
+            <div style="margin-top: 8px; padding: 8px 12px; background: #f0fdf4; border-left: 3px solid #16a34a; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: #166534;">
+                <div style="font-weight: 700; font-size: 0.78rem; margin-bottom: 2px;"><i class="fa-solid fa-reply"></i> ការឆ្លើយតប (${m.repliedBy || 'រដ្ឋបាល'}):</div>
+                <div>${m.replyText}</div>
+            </div>
+        ` : '';
+
+        return `
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); transition: transform 0.2s;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(30,64,175,0.1); color: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.95rem;">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">
+                                ${m.studentName || 'សិស្ស'} 
+                                <span style="font-size: 0.78rem; color: var(--primary-blue); font-weight: 600; margin-left: 4px;">(${m.className || 'មិនស្គាល់ថ្នាក់'})</span>
+                            </div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">
+                                អត្តលេខ៖ <b>${m.studentId || '-'}</b> • ផ្ញើនៅ៖ ${m.timestamp || '-'}
+                            </div>
+                        </div>
+                    </div>
+                    <div>${statusBadge}</div>
+                </div>
+
+                <div style="background: var(--bg-main); padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; color: var(--text-main); line-height: 1.5; margin-bottom: 6px; border: 1px solid var(--border-color);">
+                    <i class="fa-solid fa-quote-left" style="color: var(--text-muted); margin-right: 6px;"></i>${m.messageText}
+                </div>
+
+                ${replyBox}
+
+                <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('messagesModal').classList.remove('active'); openReplyModal('${m.id}')" style="color: var(--primary-blue); font-size: 0.8rem; padding: 4px 12px;">
+                        <i class="fa-solid fa-reply"></i> ឆ្លើយតប / កែប្រែ
+                    </button>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="deleteMessage('${m.id}'); renderMessagesModalContent();" style="color: var(--crimson-red); border-color: #fca5a5; font-size: 0.8rem; padding: 4px 10px;">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+
 
 
