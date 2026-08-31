@@ -5634,3 +5634,209 @@ function filterNeedsAttentionList() {
     }).join('');
 }
 
+// ----------------------------------------------------
+// TOP STUDENTS MODAL CONTROLLER
+// ----------------------------------------------------
+let cachedTopStudentsList = [];
+
+window.openTopStudentsModal = function() {
+    const modal = document.getElementById("topStudentsModal");
+    if (!modal) return;
+    
+    // Populate class filter dropdown
+    const classSelect = document.getElementById("topStudentsClassFilter");
+    if (classSelect) {
+        let optionsHTML = `<option value="all">${appState.language === 'km' ? 'គ្រប់ថ្នាក់ទាំងអស់ (All Classes)' : 'All Classes'}</option>`;
+        appState.classes.forEach(c => {
+            optionsHTML += `<option value="${c.id}">${c.name}</option>`;
+        });
+        classSelect.innerHTML = optionsHTML;
+    }
+
+    renderTopStudentsModalContent();
+    modal.classList.add("active");
+};
+
+function renderTopStudentsModalContent() {
+    const tbody = document.getElementById("topStudentsTableBody");
+    const countBadge = document.getElementById("topStudentsCountBadge");
+    if (!tbody) return;
+
+    cachedTopStudentsList = [];
+    const periods = ["oct","nov","dec","jan","feb","mar","apr","may","jun","jul","sem1_exam","sem2_exam"];
+
+    // 1. Check all ranked students across classes
+    appState.classes.forEach(c => {
+        const activeSubjectIds = c.subjectIds && c.subjectIds.length > 0 ? c.subjectIds : appState.subjects.map(s => s.id);
+        
+        c.students.forEach(st => {
+            const studentScoresObj = appState.scores[st.id] || {};
+            
+            let latestPeriod = null;
+            for (let i = periods.length - 1; i >= 0; i--) {
+                if (studentScoresObj[periods[i]]) {
+                    latestPeriod = periods[i];
+                    break;
+                }
+            }
+
+            let total = 0;
+            let avg = 0;
+
+            if (latestPeriod && studentScoresObj[latestPeriod]) {
+                const pScores = studentScoresObj[latestPeriod];
+                let count = 0;
+                activeSubjectIds.forEach(subId => {
+                    const val = pScores[subId];
+                    if (val !== undefined && val !== null) {
+                        total += parseFloat(val);
+                        count++;
+                    }
+                });
+                avg = count > 0 ? Math.round((total / activeSubjectIds.length) * 100) / 100 : 0;
+            }
+
+            // Also check extractStudentsData
+            let extMatch = null;
+            if (typeof extractStudentsData !== 'undefined' && Array.isArray(extractStudentsData)) {
+                extMatch = extractStudentsData.find(e => e.id === st.id);
+                if (extMatch && extMatch.avg >= 8.5) {
+                    avg = extMatch.avg;
+                    total = extMatch.total;
+                }
+            }
+
+            if (avg >= 8.5) {
+                cachedTopStudentsList.push({
+                    id: st.id,
+                    name: st.name,
+                    gender: st.gender || 'ប្រុស',
+                    classId: c.id,
+                    className: c.name,
+                    total: Math.round(total * 100) / 100,
+                    avg: avg,
+                    rank: 0,
+                    extIndex: extMatch ? extractStudentsData.indexOf(extMatch) : null
+                });
+            }
+        });
+    });
+
+    // Also include any standalone students in extractStudentsData with avg >= 8.5 not in classes
+    if (typeof extractStudentsData !== 'undefined' && Array.isArray(extractStudentsData)) {
+        extractStudentsData.forEach((ext, idx) => {
+            if (ext.avg >= 8.5 && !cachedTopStudentsList.some(s => s.id === ext.id)) {
+                cachedTopStudentsList.push({
+                    id: ext.id,
+                    name: ext.name,
+                    gender: ext.gender || 'ប្រុស',
+                    classId: 'extract-' + ext.grade,
+                    className: ext.grade,
+                    total: ext.total,
+                    avg: ext.avg,
+                    rank: ext.rank || 0,
+                    extIndex: idx
+                });
+            }
+        });
+    }
+
+    // Sort descending by average & total
+    cachedTopStudentsList.sort((a, b) => b.avg - a.avg || b.total - a.total);
+
+    // Assign overall ranks
+    let curRank = 1;
+    for (let i = 0; i < cachedTopStudentsList.length; i++) {
+        if (i > 0 && Math.abs(cachedTopStudentsList[i].avg - cachedTopStudentsList[i - 1].avg) < 0.001) {
+            cachedTopStudentsList[i].rank = cachedTopStudentsList[i - 1].rank;
+        } else {
+            cachedTopStudentsList[i].rank = curRank;
+        }
+        curRank++;
+    }
+
+    if (countBadge) countBadge.textContent = cachedTopStudentsList.length;
+    filterTopStudentsList();
+}
+
+function filterTopStudentsList() {
+    const tbody = document.getElementById("topStudentsTableBody");
+    const classFilter = document.getElementById("topStudentsClassFilter")?.value || 'all';
+    const rankFilter = document.getElementById("topStudentsRankFilter")?.value || 'top5';
+    const searchInput = document.getElementById("topStudentsSearchInput");
+    const countBadge = document.getElementById("topStudentsCountBadge");
+    if (!tbody) return;
+
+    const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+    const filtered = cachedTopStudentsList.filter(st => {
+        const matchesClass = (classFilter === 'all') || (st.classId === classFilter) || (st.className.includes(classFilter));
+        const matchesSearch = st.name.toLowerCase().includes(query) || st.id.toLowerCase().includes(query) || st.className.toLowerCase().includes(query);
+        
+        let matchesRank = true;
+        if (rankFilter === 'top1') matchesRank = st.rank === 1;
+        else if (rankFilter === 'top3') matchesRank = st.rank <= 3;
+        else if (rankFilter === 'top5') matchesRank = st.rank <= 5;
+
+        return matchesClass && matchesSearch && matchesRank;
+    });
+
+    if (countBadge) countBadge.textContent = filtered.length;
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="9" class="text-center" style="padding: 2.5rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-trophy" style="font-size: 2.2rem; color: #cbd5e1; margin-bottom: 0.5rem; display:block;"></i>
+                    <span data-km="មិនមានសិស្សឆ្នើមត្រូវនឹងលក្ខខណ្ឌនេះទេ" data-en="No honor students found matching criteria">មិនមានសិស្សឆ្នើមត្រូវនឹងលក្ខខណ្ឌនេះទេ</span>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((st, idx) => {
+        let genderBadge = 'badge-male';
+        if (st.gender === 'ស្រី') genderBadge = 'badge-female';
+        if (st.gender === 'បព្វជិត') genderBadge = 'badge-monk';
+
+        let rankBadge = `<span style="font-weight:700; color:var(--text-main);">លេខ ${st.rank}</span>`;
+        if (st.rank === 1) rankBadge = `<span style="background:linear-gradient(135deg, #f59e0b, #d97706); color:#fff; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px; box-shadow:0 2px 5px rgba(245,158,11,0.3);"><i class="fa-solid fa-crown"></i> ជ័យលាភី ១</span>`;
+        else if (st.rank === 2) rankBadge = `<span style="background:linear-gradient(135deg, #94a3b8, #64748b); color:#fff; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-medal"></i> ជ័យលាភី ២</span>`;
+        else if (st.rank === 3) rankBadge = `<span style="background:linear-gradient(135deg, #d97706, #b45309); color:#fff; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-award"></i> ជ័យលាភី ៣</span>`;
+        else if (st.rank === 4) rankBadge = `<span style="background:rgba(37,99,235,0.12); color:#2563eb; border:1px solid rgba(37,99,235,0.3); padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-medal"></i> កិត្តិយស ៤</span>`;
+        else if (st.rank === 5) rankBadge = `<span style="background:rgba(124,58,237,0.12); color:#7c3aed; border:1px solid rgba(124,58,237,0.3); padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-award"></i> កិត្តិយស ៥</span>`;
+
+        const gradeInfo = getGradeLetterInfo(st.avg);
+
+        const certBtn = (st.extIndex !== null && typeof showIntegratedCertificates === 'function') 
+            ? `<button type="button" class="btn btn-icon btn-sm" onclick="document.getElementById('topStudentsModal').classList.remove('active'); document.querySelector('[data-tab=\\'scores\\']').click(); switchScoreMode('extract'); showIntegratedCertificates('all', ${st.extIndex});" title="មើលប័ណ្ណសរសើរ" style="color:#d97706; background:rgba(217,119,6,0.1);">
+                <i class="fa-solid fa-award"></i>
+               </button>`
+            : `<button type="button" class="btn btn-icon btn-sm" onclick="document.getElementById('topStudentsModal').classList.remove('active'); document.querySelector('[data-tab=\\'scores\\']').click(); switchScoreMode('extract');" title="ស្រង់ពិន្ទុ" style="color:var(--primary-blue); background:rgba(30,64,175,0.08);">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+               </button>`;
+
+        return `
+            <tr>
+                <td>${idx + 1}</td>
+                <td>${rankBadge}</td>
+                <td><b>${st.id}</b></td>
+                <td>
+                    <strong>${st.name}</strong> 
+                    <span class="badge ${genderBadge}" style="font-size:0.7rem; margin-left:4px;">${st.gender}</span>
+                </td>
+                <td><span style="font-weight:600; color:var(--primary-blue);">${st.className}</span></td>
+                <td><b style="color:var(--text-main); font-size:0.95rem;">${st.total.toFixed(1)}</b></td>
+                <td><b style="color:#10b981; font-size:1.05rem;">${st.avg.toFixed(2)}</b></td>
+                <td><span class="badge ${gradeInfo.badgeClass}" style="font-size:0.8rem; padding:3px 10px;">${gradeInfo.letter} (${gradeInfo.khmer})</span></td>
+                <td>
+                    <div style="display:flex; justify-content:center;">
+                        ${certBtn}
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+

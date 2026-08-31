@@ -18,8 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260831_4">
-    <script src="app.js?v=20260831_4" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260831_6">
+    <script src="app.js?v=20260831_6" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -273,7 +273,7 @@
 
                 <!-- 2. Summary Cards (Top Position) -->
                 <div class="summary-cards-grid">
-                    <div class="sum-card" style="background-color: #e0f2fe; border: 1px solid #bae6fd; cursor: pointer;" onclick="document.querySelector('[data-tab=\'reports\']').click()" title="មើលរបាយការណ៍សិស្សឆ្នើម">
+                    <div class="sum-card" style="background-color: #e0f2fe; border: 1px solid #bae6fd; cursor: pointer;" onclick="openTopStudentsModal()" title="ចុចដើម្បីមើលបញ្ជីសិស្សឆ្នើមតាមថ្នាក់">
                         <div class="sum-card-header"><i class="fa-solid fa-trophy" style="color:#0ea5e9"></i> <span data-km="សិស្សឆ្នើម" data-en="TOP STUDENTS">សិស្សឆ្នើម</span></div>
                         <div class="sum-card-val" style="color:#0ea5e9" id="sumTopStudentsCount">0</div>
                         <div class="sum-card-sub" style="color:#0284c7" data-km="សិស្សពិន្ទុមធ្យម ≥ ៨.៥" data-en="Students with avg >= 8.5">សិស្សពិន្ទុមធ្យម ≥ ៨.៥</div>
@@ -755,6 +755,9 @@
                             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                                 <button type="button" class="btn btn-outline btn-sm" onclick="showIntegratedCertificates('top3')" style="color: #d97706; border-color: #d97706;">
                                     <i class="fa-solid fa-award"></i> <span data-km="ប័ណ្ណសរសើរ Top 3" data-en="Top 3 Certificates">ប័ណ្ណសរសើរ Top 3</span>
+                                </button>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="showIntegratedCertificates('top5')" style="color: #7c3aed; border-color: #7c3aed;">
+                                    <i class="fa-solid fa-medal"></i> <span data-km="ប័ណ្ណសរសើរ Top 5" data-en="Top 5 Certificates">ប័ណ្ណសរសើរ Top 5</span>
                                 </button>
                                 <button type="button" class="btn btn-outline btn-sm" onclick="exportExtractCSV()">
                                     <i class="fa-solid fa-file-excel"></i> <span data-km="ទាញយក Excel/CSV" data-en="Export Excel">ទាញយក Excel/CSV</span>
@@ -1910,6 +1913,94 @@
                     <i class="fa-solid fa-file-invoice"></i> <span data-km="ទៅកាន់ទំព័ររបាយការណ៍លម្អិត" data-en="Go to Full Score Reports">ទៅកាន់ទំព័ររបាយការណ៍លម្អិត</span>
                 </button>
                 <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('needsAttentionModal').classList.remove('active')">
+                    <span data-km="បិទ" data-en="Close">បិទ</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Students Modal (បញ្ជីសិស្សឆ្នើម & ជ័យលាភី) -->
+    <div class="modal" id="topStudentsModal">
+        <div class="modal-content" style="max-width: 860px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;">
+            <div class="modal-header" style="background: #f0fdf4; border-bottom: 1px solid #bbf7d0; padding: 1rem 1.25rem;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:40px; height:40px; border-radius:10px; background:#dcfce7; color:#16a34a; display:flex; align-items:center; justify-content:center; font-size:1.25rem;">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h3 style="color:#15803d; margin:0; font-size:1.15rem;" data-km="បញ្ជីសិស្សឆ្នើម &amp; ជ័យលាភី" data-en="Honor &amp; Top Students">បញ្ជីសិស្សឆ្នើម &amp; ជ័យលាភី</h3>
+                        <p style="font-size:0.8rem; color:#16a34a; margin:0;" data-km="សិស្សដែលមានពិន្ទុមធ្យមភាគ &ge; ៨.៥០ (និទ្ទេស A &amp; B) តាមកម្រិតថ្នាក់នីមួយៗ" data-en="Students with average &ge; 8.50 (Grades A &amp; B)">សិស្សដែលមានពិន្ទុមធ្យមភាគ &ge; ៨.៥០ (និទ្ទេស A &amp; B) តាមកម្រិតថ្នាក់នីមួយៗ</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="document.getElementById('topStudentsModal').classList.remove('active')">&times;</button>
+            </div>
+            
+            <div style="padding: 1.25rem; overflow-y: auto; flex: 1;">
+                <!-- Filter Bar inside Top Students Modal -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1rem; background: var(--bg-card); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);">
+                    <div class="form-group" style="margin:0;">
+                        <label for="topStudentsClassFilter" style="font-size:0.82rem; font-weight:700; color:var(--text-main); margin-bottom:4px;">
+                            <i class="fa-solid fa-school" style="color:var(--primary-blue);"></i> <span data-km="ជ្រើសរើសថ្នាក់រៀន" data-en="Select Class">ជ្រើសរើសថ្នាក់រៀន</span>
+                        </label>
+                        <select id="topStudentsClassFilter" onchange="filterTopStudentsList()" style="width: 100%; height: 38px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600;">
+                            <option value="all">គ្រប់ថ្នាក់ទាំងអស់ (All Classes)</option>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin:0;">
+                        <label for="topStudentsRankFilter" style="font-size:0.82rem; font-weight:700; color:var(--text-main); margin-bottom:4px;">
+                            <i class="fa-solid fa-ranking-star" style="color:#d97706;"></i> <span data-km="កម្រិតចំណាត់ថ្នាក់" data-en="Rank Scope">កម្រិតចំណាត់ថ្នាក់</span>
+                        </label>
+                        <select id="topStudentsRankFilter" onchange="filterTopStudentsList()" style="width: 100%; height: 38px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600;">
+                            <option value="top5" selected>ត្រឹមលេខ ៥ (Top 5 Only)</option>
+                            <option value="all">គ្រប់ចំណាត់ថ្នាក់ (All Honors)</option>
+                            <option value="top3">ត្រឹមលេខ ៣ (Top 3)</option>
+                            <option value="top1">ជ័យលាភីលេខ ១ (Top 1)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin:0;">
+                        <label for="topStudentsSearchInput" style="font-size:0.82rem; font-weight:700; color:var(--text-main); margin-bottom:4px;">
+                            <i class="fa-solid fa-magnifying-glass" style="color:var(--amber-orange);"></i> <span data-km="ស្វែងរកតាមឈ្មោះ" data-en="Search by Name">ស្វែងរកតាមឈ្មោះ</span>
+                        </label>
+                        <input type="text" id="topStudentsSearchInput" placeholder="វាយឈ្មោះ ឬអត្តលេខ..." oninput="filterTopStudentsList()" style="width: 100%; height: 38px; border-radius: 8px; border: 1px solid var(--border-color); padding: 0 12px; font-size: 0.9rem;">
+                    </div>
+
+                    <div style="display: flex; align-items: flex-end; justify-content: flex-end;">
+                        <div style="font-size: 0.9rem; font-weight: 700; color: #15803d; background: #dcfce7; padding: 8px 14px; border-radius: 8px; width: 100%; text-align: center; border: 1px solid #bbf7d0;">
+                            <i class="fa-solid fa-medal"></i> <span data-km="សិស្សឆ្នើមសរុប៖" data-en="Total Honors:">សិស្សឆ្នើមសរុប៖</span> <span id="topStudentsCountBadge">0</span> <span data-km="នាក់" data-en="students">នាក់</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" id="topStudentsTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">ល.រ</th>
+                                <th style="width: 120px;">ចំណាត់ថ្នាក់</th>
+                                <th style="width: 95px;">អត្តលេខ</th>
+                                <th>ឈ្មោះសិស្ស</th>
+                                <th style="width: 110px;">ថ្នាក់រៀន</th>
+                                <th style="width: 95px;">ពិន្ទុសរុប</th>
+                                <th style="width: 100px;">មធ្យមភាគ</th>
+                                <th style="width: 110px;">និទ្ទេស</th>
+                                <th style="width: 90px;">ប័ណ្ណសរសើរ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topStudentsTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="border-top: 1px solid var(--border-color); padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-card);">
+                <button type="button" class="btn btn-outline btn-sm" onclick="document.querySelector('[data-tab=\'scores\']').click(); switchScoreMode('extract'); document.getElementById('topStudentsModal').classList.remove('active');" style="color:#d97706; border-color:#d97706;">
+                    <i class="fa-solid fa-award"></i> <span data-km="បើកផ្ទាំងប័ណ្ណសរសើរទាំងអស់" data-en="View All Certificates">បើកផ្ទាំងប័ណ្ណសរសើរទាំងអស់</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('topStudentsModal').classList.remove('active')">
                     <span data-km="បិទ" data-en="Close">បិទ</span>
                 </button>
             </div>

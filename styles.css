@@ -2457,6 +2457,8 @@ body {
 .rank-top1 { color: #d97706; font-weight: 800; }
 .rank-top2 { color: #64748b; font-weight: 800; }
 .rank-top3 { color: #b45309; font-weight: 800; }
+.rank-top4 { color: #2563eb; font-weight: 800; }
+.rank-top5 { color: #7c3aed; font-weight: 800; }
 
 /* Certificate of Honor */
 .cert-section {
