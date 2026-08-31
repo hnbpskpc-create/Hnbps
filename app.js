@@ -1060,16 +1060,16 @@ function renderDashboard() {
                         average: r.average
                     });
                     
-                    if (r.average >= 5.0) {
+                    if (r.average >= 5.5) {
                         passingCount++;
                         classPass++;
                     } else {
                         failingCount++;
                     }
                     
-                    if (r.average >= 9.0) excCount++;
-                    else if (r.average >= 7.0) goodCount++;
-                    else if (r.average >= 5.0) avgCount++;
+                    if (r.average >= 8.5) excCount++;
+                    else if (r.average >= 7.5) goodCount++;
+                    else if (r.average >= 5.5) avgCount++;
                     else failCount++;
                 }
             });
@@ -5839,4 +5839,305 @@ function filterTopStudentsList() {
         `;
     }).join('');
 }
+
+// ----------------------------------------------------
+// GRADE DETAILS MODAL CONTROLLER (PERFORMANCE DRILLDOWN)
+// ----------------------------------------------------
+let cachedGradeStudentsList = [];
+let currentGradeModalCategory = 'excellent';
+
+window.openGradeDetailsModal = function(category = 'excellent') {
+    const modal = document.getElementById("gradeDetailsModal");
+    if (!modal) return;
+
+    currentGradeModalCategory = category;
+
+    // Populate class filter dropdown
+    const classSelect = document.getElementById("gradeDetailsClassFilter");
+    if (classSelect) {
+        let optionsHTML = `<option value="all">${appState.language === 'km' ? 'គ្រប់ថ្នាក់ទាំងអស់ (All Classes)' : 'All Classes'}</option>`;
+        appState.classes.forEach(c => {
+            optionsHTML += `<option value="${c.id}">${c.name}</option>`;
+        });
+        classSelect.innerHTML = optionsHTML;
+    }
+
+    // Set active tab button
+    updateGradeModalTabUI(category);
+    renderGradeDetailsModalContent();
+    modal.classList.add("active");
+};
+
+window.switchGradeModalCategory = function(category) {
+    currentGradeModalCategory = category;
+    updateGradeModalTabUI(category);
+    filterGradeDetailsList();
+};
+
+function updateGradeModalTabUI(category) {
+    const tabs = ['excellent', 'good', 'average', 'failed', 'all'];
+    tabs.forEach(t => {
+        const btn = document.getElementById(`gTab-${t}`);
+        if (btn) {
+            if (t === category) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+    });
+
+    const header = document.getElementById("gradeModalHeader");
+    const iconBox = document.getElementById("gradeModalIconBox");
+    const title = document.getElementById("gradeModalTitle");
+    const subtitle = document.getElementById("gradeModalSubtitle");
+    const countBox = document.getElementById("gradeDetailsCountBadgeBox");
+
+    if (category === 'excellent') {
+        if (header) { header.style.background = '#f0fdf4'; header.style.borderBottom = '1px solid #bbf7d0'; }
+        if (iconBox) { iconBox.style.background = '#dcfce7'; iconBox.style.color = '#16a34a'; iconBox.innerHTML = '<i class="fa-solid fa-crown"></i>'; }
+        if (title) { title.style.color = '#15803d'; title.textContent = 'បញ្ជីសិស្សនិទ្ទេសល្អប្រសើរ & ល្អណាស់ (Grades A & B)'; }
+        if (subtitle) { subtitle.style.color = '#16a34a'; subtitle.textContent = 'សិស្សដែលមានពិន្ទុមធ្យមភាគ ≥ ៨.៥០'; }
+        if (countBox) { countBox.style.background = '#dcfce7'; countBox.style.color = '#15803d'; countBox.style.borderColor = '#bbf7d0'; }
+    } else if (category === 'good') {
+        if (header) { header.style.background = '#eff6ff'; header.style.borderBottom = '1px solid #bfdbfe'; }
+        if (iconBox) { iconBox.style.background = '#dbeafe'; iconBox.style.color = '#2563eb'; iconBox.innerHTML = '<i class="fa-solid fa-star"></i>'; }
+        if (title) { title.style.color = '#1e40af'; title.textContent = 'បញ្ជីសិស្សនិទ្ទេសល្អ (Grade C)'; }
+        if (subtitle) { subtitle.style.color = '#2563eb'; subtitle.textContent = 'សិស្សដែលមានពិន្ទុមធ្យមភាគ ៧.៥០ ដល់ ៨.៤៩'; }
+        if (countBox) { countBox.style.background = '#dbeafe'; countBox.style.color = '#1e40af'; countBox.style.borderColor = '#bfdbfe'; }
+    } else if (category === 'average') {
+        if (header) { header.style.background = '#fefce8'; header.style.borderBottom = '1px solid #fef08a'; }
+        if (iconBox) { iconBox.style.background = '#fef9c3'; iconBox.style.color = '#ca8a04'; iconBox.innerHTML = '<i class="fa-solid fa-circle-check"></i>'; }
+        if (title) { title.style.color = '#854d0e'; title.textContent = 'បញ្ជីសិស្សនិទ្ទេសល្អបង្គួរ & មធ្យម (Grades D & E)'; }
+        if (subtitle) { subtitle.style.color = '#ca8a04'; subtitle.textContent = 'សិស្សដែលមានពិន្ទុមធ្យមភាគ ៥.៥០ ដល់ ៧.៤៩'; }
+        if (countBox) { countBox.style.background = '#fef9c3'; countBox.style.color = '#854d0e'; countBox.style.borderColor = '#fef08a'; }
+    } else if (category === 'failed') {
+        if (header) { header.style.background = '#fef2f2'; header.style.borderBottom = '1px solid #fecaca'; }
+        if (iconBox) { iconBox.style.background = '#fee2e2'; iconBox.style.color = '#dc2626'; iconBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>'; }
+        if (title) { title.style.color = '#991b1b'; title.textContent = 'បញ្ជីសិស្សនិទ្ទេសខ្សោយ / ធ្លាក់ (Grade F)'; }
+        if (subtitle) { subtitle.style.color = '#dc2626'; subtitle.textContent = 'សិស្សដែលមានពិន្ទុមធ្យមភាគ < ៥.៥០ ត្រូវយកចិត្តទុកដាក់ពង្រឹង'; }
+        if (countBox) { countBox.style.background = '#fee2e2'; countBox.style.color = '#991b1b'; countBox.style.borderColor = '#fecaca'; }
+    } else {
+        if (header) { header.style.background = '#f8fafc'; header.style.borderBottom = '1px solid #e2e8f0'; }
+        if (iconBox) { iconBox.style.background = '#e2e8f0'; iconBox.style.color = '#475569'; iconBox.innerHTML = '<i class="fa-solid fa-users"></i>'; }
+        if (title) { title.style.color = '#1e293b'; title.textContent = 'បញ្ជីសិស្សទាំងអស់ (គ្រប់និទ្ទេស)'; }
+        if (subtitle) { subtitle.style.color = '#64748b'; subtitle.textContent = 'បង្ហាញសិស្សទាំងអស់ដែលមានពិន្ទុក្នុងប្រព័ន្ធ'; }
+        if (countBox) { countBox.style.background = '#e2e8f0'; countBox.style.color = '#1e293b'; countBox.style.borderColor = '#cbd5e1'; }
+    }
+}
+
+function renderGradeDetailsModalContent() {
+    cachedGradeStudentsList = [];
+    const periods = ["oct","nov","dec","jan","feb","mar","apr","may","jun","jul","sem1_exam","sem2_exam"];
+
+    appState.classes.forEach(c => {
+        const activeSubjectIds = c.subjectIds && c.subjectIds.length > 0 ? c.subjectIds : appState.subjects.map(s => s.id);
+        
+        c.students.forEach(st => {
+            const studentScoresObj = appState.scores[st.id] || {};
+            
+            let latestPeriod = null;
+            for (let i = periods.length - 1; i >= 0; i--) {
+                if (studentScoresObj[periods[i]]) {
+                    latestPeriod = periods[i];
+                    break;
+                }
+            }
+
+            let total = 0;
+            let avg = 0;
+
+            if (latestPeriod && studentScoresObj[latestPeriod]) {
+                const pScores = studentScoresObj[latestPeriod];
+                let count = 0;
+                activeSubjectIds.forEach(subId => {
+                    const val = pScores[subId];
+                    if (val !== undefined && val !== null) {
+                        total += parseFloat(val);
+                        count++;
+                    }
+                });
+                avg = count > 0 ? Math.round((total / activeSubjectIds.length) * 100) / 100 : 0;
+            }
+
+            // Also check extractStudentsData
+            let extMatch = null;
+            if (typeof extractStudentsData !== 'undefined' && Array.isArray(extractStudentsData)) {
+                extMatch = extractStudentsData.find(e => e.id === st.id);
+                if (extMatch && extMatch.avg > 0) {
+                    avg = extMatch.avg;
+                    total = extMatch.total;
+                }
+            }
+
+            if (avg > 0 || total > 0) {
+                cachedGradeStudentsList.push({
+                    id: st.id,
+                    name: st.name,
+                    gender: st.gender || 'ប្រុស',
+                    classId: c.id,
+                    className: c.name,
+                    total: Math.round(total * 100) / 100,
+                    avg: avg,
+                    extIndex: extMatch ? extractStudentsData.indexOf(extMatch) : null
+                });
+            }
+        });
+    });
+
+    // Also scan any standalone students in extractStudentsData
+    if (typeof extractStudentsData !== 'undefined' && Array.isArray(extractStudentsData)) {
+        extractStudentsData.forEach((ext, idx) => {
+            if (ext.avg > 0 && !cachedGradeStudentsList.some(s => s.id === ext.id)) {
+                cachedGradeStudentsList.push({
+                    id: ext.id,
+                    name: ext.name,
+                    gender: ext.gender || 'ប្រុស',
+                    classId: 'extract-' + ext.grade,
+                    className: ext.grade,
+                    total: ext.total,
+                    avg: ext.avg,
+                    extIndex: idx
+                });
+            }
+        });
+    }
+
+    // Sort descending by average
+    cachedGradeStudentsList.sort((a, b) => b.avg - a.avg || b.total - a.total);
+
+    filterGradeDetailsList();
+}
+
+function filterGradeDetailsList() {
+    const tbody = document.getElementById("gradeDetailsTableBody");
+    const classFilter = document.getElementById("gradeDetailsClassFilter")?.value || 'all';
+    const searchInput = document.getElementById("gradeDetailsSearchInput");
+    const countBadge = document.getElementById("gradeDetailsCountBadge");
+    if (!tbody) return;
+
+    const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+    const filtered = cachedGradeStudentsList.filter(st => {
+        const matchesClass = (classFilter === 'all') || (st.classId === classFilter) || (st.className.includes(classFilter));
+        const matchesSearch = st.name.toLowerCase().includes(query) || st.id.toLowerCase().includes(query) || st.className.toLowerCase().includes(query);
+        
+        let matchesCategory = true;
+        if (currentGradeModalCategory === 'excellent') {
+            matchesCategory = st.avg >= 8.5; // Grades A & B
+        } else if (currentGradeModalCategory === 'good') {
+            matchesCategory = st.avg >= 7.5 && st.avg < 8.5; // Grade C
+        } else if (currentGradeModalCategory === 'average') {
+            matchesCategory = st.avg >= 5.5 && st.avg < 7.5; // Grades D & E
+        } else if (currentGradeModalCategory === 'failed') {
+            matchesCategory = st.avg < 5.5; // Grade F
+        }
+
+        return matchesClass && matchesSearch && matchesCategory;
+    });
+
+    if (countBadge) countBadge.textContent = filtered.length;
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center" style="padding: 2.5rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-folder-open" style="font-size: 2.2rem; color: #cbd5e1; margin-bottom: 0.5rem; display:block;"></i>
+                    <span data-km="មិនមានទិន្នន័យសិស្សក្នុងកម្រិតនិទ្ទេសនេះឡើយ" data-en="No students found for this grade level">មិនមានទិន្នន័យសិស្សក្នុងកម្រិតនិទ្ទេសនេះឡើយ</span>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((st, idx) => {
+        let genderBadge = 'badge-male';
+        if (st.gender === 'ស្រី') genderBadge = 'badge-female';
+        if (st.gender === 'បព្វជិត') genderBadge = 'badge-monk';
+
+        const gradeInfo = getGradeLetterInfo(st.avg);
+
+        const actionBtn = (st.extIndex !== null && typeof showIntegratedCertificates === 'function')
+            ? `<button type="button" class="btn btn-icon btn-sm" onclick="document.getElementById('gradeDetailsModal').classList.remove('active'); document.querySelector('[data-tab=\\'scores\\']').click(); switchScoreMode('extract'); showIntegratedCertificates('all', ${st.extIndex});" title="មើលប័ណ្ណសរសើរ / ពិន្ទុ" style="color:#d97706; background:rgba(217,119,6,0.1);">
+                <i class="fa-solid fa-award"></i>
+               </button>`
+            : `<button type="button" class="btn btn-icon btn-sm" onclick="document.getElementById('gradeDetailsModal').classList.remove('active'); document.querySelector('[data-tab=\\'scores\\']').click();" title="មើលពិន្ទុ" style="color:var(--primary-blue); background:rgba(30,64,175,0.08);">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+               </button>`;
+
+        return `
+            <tr>
+                <td>${idx + 1}</td>
+                <td><b>${st.id}</b></td>
+                <td>
+                    <strong>${st.name}</strong> 
+                    <span class="badge ${genderBadge}" style="font-size:0.7rem; margin-left:4px;">${st.gender}</span>
+                </td>
+                <td><span style="font-weight:600; color:var(--primary-blue);">${st.className}</span></td>
+                <td><b style="color:var(--text-main); font-size:0.95rem;">${st.total.toFixed(1)}</b></td>
+                <td><b style="color:${st.avg >= 5.5 ? '#10b981' : '#ef4444'}; font-size:1.05rem;">${st.avg.toFixed(2)}</b></td>
+                <td>
+                    <span class="badge ${gradeInfo.badgeClass}" style="font-size:0.8rem; padding:3px 10px;">
+                        ${gradeInfo.letter} (${gradeInfo.khmer})
+                    </span>
+                </td>
+                <td>
+                    <div style="display:flex; justify-content:center;">
+                        ${actionBtn}
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+window.exportGradeDetailsCSV = function() {
+    const classFilter = document.getElementById("gradeDetailsClassFilter")?.value || 'all';
+    const searchInput = document.getElementById("gradeDetailsSearchInput");
+    const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+    const filtered = cachedGradeStudentsList.filter(st => {
+        const matchesClass = (classFilter === 'all') || (st.classId === classFilter) || (st.className.includes(classFilter));
+        const matchesSearch = st.name.toLowerCase().includes(query) || st.id.toLowerCase().includes(query) || st.className.toLowerCase().includes(query);
+        
+        let matchesCategory = true;
+        if (currentGradeModalCategory === 'excellent') matchesCategory = st.avg >= 8.5;
+        else if (currentGradeModalCategory === 'good') matchesCategory = st.avg >= 7.5 && st.avg < 8.5;
+        else if (currentGradeModalCategory === 'average') matchesCategory = st.avg >= 5.5 && st.avg < 7.5;
+        else if (currentGradeModalCategory === 'failed') matchesCategory = st.avg < 5.5;
+
+        return matchesClass && matchesSearch && matchesCategory;
+    });
+
+    if (filtered.length === 0) {
+        if (typeof showToast === 'function') showToast('មិនមានទិន្នន័យសម្រាប់ទាញយកទេ!', 'warning');
+        return;
+    }
+
+    let csvContent = "\uFEFF";
+    csvContent += "ល.រ,អត្តលេខ,ឈ្មោះសិស្ស,ភេទ,ថ្នាក់,ពិន្ទុសរុប,មធ្យមភាគ,និទ្ទេស,ការវាយតម្លៃ\n";
+
+    filtered.forEach((st, i) => {
+        const gradeInfo = getGradeLetterInfo(st.avg);
+        const row = [
+            i + 1,
+            `"${st.id}"`,
+            `"${st.name}"`,
+            `"${st.gender}"`,
+            `"${st.className}"`,
+            st.total,
+            st.avg.toFixed(2),
+            `"${gradeInfo.letter}"`,
+            `"${gradeInfo.khmer}"`
+        ].join(",");
+        csvContent += row + "\n";
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `បញ្ជីសិស្សតាមនិទ្ទេស_${currentGradeModalCategory}_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
 

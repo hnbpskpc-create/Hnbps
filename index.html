@@ -18,8 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260831_6">
-    <script src="app.js?v=20260831_6" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260831_7">
+    <script src="app.js?v=20260831_7" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -340,43 +340,43 @@
                     
                     <div class="perf-bars-grid">
                         <!-- Excellent -->
-                        <div class="perf-stat-box" style="background:#f0fdf4; border:1px solid #bbf7d0;">
+                        <div class="perf-stat-box" style="background:#f0fdf4; border:1px solid #bbf7d0; cursor:pointer;" onclick="openGradeDetailsModal('excellent')" title="ចុចដើម្បីមើលបញ្ជីសិស្សនិទ្ទេសល្អប្រសើរ &amp; ល្អណាស់">
                             <div class="ps-top">
-                                <div class="ps-label" style="color:#16a34a"><i class="fa-regular fa-circle-check"></i> <span data-km="និទ្ទេសល្អណាស់" data-en="EXCELLENT">និទ្ទេសល្អណាស់</span></div>
+                                <div class="ps-label" style="color:#16a34a"><i class="fa-regular fa-circle-check"></i> <span data-km="និទ្ទេសល្អប្រសើរ/ល្អណាស់" data-en="EXCELLENT">និទ្ទេសល្អប្រសើរ/ល្អណាស់</span></div>
                                 <div class="ps-circle" style="color:#16a34a" id="perfCircleExc">0%</div>
                             </div>
                             <div class="ps-val" style="color:#16a34a" id="perfValExc">0</div>
-                            <div class="ps-sub" style="color:#15803d"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalExc">0</span></div>
+                            <div class="ps-sub" style="color:#15803d"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalExc">0</span> (≥ ៨.៥)</div>
                         </div>
                         
                         <!-- Good -->
-                        <div class="perf-stat-box" style="background:#eff6ff; border:1px solid #bfdbfe;">
+                        <div class="perf-stat-box" style="background:#eff6ff; border:1px solid #bfdbfe; cursor:pointer;" onclick="openGradeDetailsModal('good')" title="ចុចដើម្បីមើលបញ្ជីសិស្សនិទ្ទេសល្អ">
                             <div class="ps-top">
                                 <div class="ps-label" style="color:#2563eb"><i class="fa-solid fa-arrow-up"></i> <span data-km="និទ្ទេសល្អ" data-en="GOOD">និទ្ទេសល្អ</span></div>
                                 <div class="ps-circle" style="color:#2563eb" id="perfCircleGood">0%</div>
                             </div>
                             <div class="ps-val" style="color:#2563eb" id="perfValGood">0</div>
-                            <div class="ps-sub" style="color:#1d4ed8"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalGood">0</span></div>
+                            <div class="ps-sub" style="color:#1d4ed8"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalGood">0</span> (៧.៥ - ៨.៤)</div>
                         </div>
                         
                         <!-- Average -->
-                        <div class="perf-stat-box" style="background:#fefce8; border:1px solid #fef08a;">
+                        <div class="perf-stat-box" style="background:#fefce8; border:1px solid #fef08a; cursor:pointer;" onclick="openGradeDetailsModal('average')" title="ចុចដើម្បីមើលបញ្ជីសិស្សនិទ្ទេសល្អបង្គួរ &amp; មធ្យម">
                             <div class="ps-top">
-                                <div class="ps-label" style="color:#ca8a04"><i class="fa-solid fa-minus"></i> <span data-km="និទ្ទេសមធ្យម" data-en="AVERAGE">និទ្ទេសមធ្យម</span></div>
+                                <div class="ps-label" style="color:#ca8a04"><i class="fa-solid fa-minus"></i> <span data-km="និទ្ទេសល្អបង្គួរ/មធ្យម" data-en="AVERAGE">និទ្ទេសល្អបង្គួរ/មធ្យម</span></div>
                                 <div class="ps-circle" style="color:#ca8a04" id="perfCircleAvg">0%</div>
                             </div>
                             <div class="ps-val" style="color:#ca8a04" id="perfValAvg">0</div>
-                            <div class="ps-sub" style="color:#a16207"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalAvg">0</span></div>
+                            <div class="ps-sub" style="color:#a16207"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalAvg">0</span> (៥.៥ - ៧.៤)</div>
                         </div>
                         
                         <!-- Failed -->
-                        <div class="perf-stat-box" style="background:#fef2f2; border:1px solid #fecaca;">
+                        <div class="perf-stat-box" style="background:#fef2f2; border:1px solid #fecaca; cursor:pointer;" onclick="openGradeDetailsModal('failed')" title="ចុចដើម្បីមើលបញ្ជីសិស្សនិទ្ទេសខ្សោយ / ធ្លាក់">
                             <div class="ps-top">
                                 <div class="ps-label" style="color:#dc2626"><i class="fa-regular fa-circle-xmark"></i> <span data-km="និទ្ទេសខ្សោយ/ធ្លាក់" data-en="FAILED">និទ្ទេសខ្សោយ/ធ្លាក់</span></div>
                                 <div class="ps-circle" style="color:#dc2626" id="perfCircleFail">0%</div>
                             </div>
                             <div class="ps-val" style="color:#dc2626" id="perfValFail">0</div>
-                            <div class="ps-sub" style="color:#b91c1c"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalFail">0</span></div>
+                            <div class="ps-sub" style="color:#b91c1c"><span data-km="សរុប" data-en="of total">សរុប</span> <span id="perfTotalFail">0</span> (&lt; ៥.៥)</div>
                         </div>
                     </div>
                 </div>
@@ -2001,6 +2001,100 @@
                     <i class="fa-solid fa-award"></i> <span data-km="បើកផ្ទាំងប័ណ្ណសរសើរទាំងអស់" data-en="View All Certificates">បើកផ្ទាំងប័ណ្ណសរសើរទាំងអស់</span>
                 </button>
                 <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('topStudentsModal').classList.remove('active')">
+                    <span data-km="បិទ" data-en="Close">បិទ</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grade Details Modal (បញ្ជីសិស្សតាមកម្រិតនិទ្ទេស) -->
+    <div class="modal" id="gradeDetailsModal">
+        <div class="modal-content" style="max-width: 880px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;">
+            <div class="modal-header" id="gradeModalHeader" style="background: #f0fdf4; border-bottom: 1px solid #bbf7d0; padding: 1rem 1.25rem;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div id="gradeModalIconBox" style="width:40px; height:40px; border-radius:10px; background:#dcfce7; color:#16a34a; display:flex; align-items:center; justify-content:center; font-size:1.25rem;">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h3 id="gradeModalTitle" style="color:#15803d; margin:0; font-size:1.15rem;">បញ្ជីសិស្សតាមកម្រិតនិទ្ទេស</h3>
+                        <p id="gradeModalSubtitle" style="font-size:0.8rem; color:#16a34a; margin:0;">បង្ហាញបញ្ជីសិស្សដែលមានពិន្ទុស្របតាមកម្រិតនិទ្ទេសនីមួយៗ</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="document.getElementById('gradeDetailsModal').classList.remove('active')">&times;</button>
+            </div>
+            
+            <div style="padding: 1.25rem; overflow-y: auto; flex: 1;">
+                <!-- Tab Switcher for Grades inside Modal -->
+                <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 1rem;" id="gradeModalTabs">
+                    <button type="button" class="score-mode-btn active" id="gTab-excellent" onclick="switchGradeModalCategory('excellent')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                        🌟 ល្អប្រសើរ &amp; ល្អណាស់ (A/B)
+                    </button>
+                    <button type="button" class="score-mode-btn" id="gTab-good" onclick="switchGradeModalCategory('good')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                        📘 ល្អ (C)
+                    </button>
+                    <button type="button" class="score-mode-btn" id="gTab-average" onclick="switchGradeModalCategory('average')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                        📙 ល្អបង្គួរ &amp; មធ្យម (D/E)
+                    </button>
+                    <button type="button" class="score-mode-btn" id="gTab-failed" onclick="switchGradeModalCategory('failed')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                        ❌ ខ្សោយ / ធ្លាក់ (F)
+                    </button>
+                    <button type="button" class="score-mode-btn" id="gTab-all" onclick="switchGradeModalCategory('all')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                        👥 គ្រប់និទ្ទេសទាំងអស់
+                    </button>
+                </div>
+
+                <!-- Filter Controls Bar -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1rem; background: var(--bg-card); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);">
+                    <div class="form-group" style="margin:0;">
+                        <label for="gradeDetailsClassFilter" style="font-size:0.82rem; font-weight:700; color:var(--text-main); margin-bottom:4px;">
+                            <i class="fa-solid fa-school" style="color:var(--primary-blue);"></i> <span data-km="ជ្រើសរើសថ្នាក់រៀន" data-en="Select Class">ជ្រើសរើសថ្នាក់រៀន</span>
+                        </label>
+                        <select id="gradeDetailsClassFilter" onchange="filterGradeDetailsList()" style="width: 100%; height: 38px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 600;">
+                            <option value="all">គ្រប់ថ្នាក់ទាំងអស់ (All Classes)</option>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin:0;">
+                        <label for="gradeDetailsSearchInput" style="font-size:0.82rem; font-weight:700; color:var(--text-main); margin-bottom:4px;">
+                            <i class="fa-solid fa-magnifying-glass" style="color:var(--amber-orange);"></i> <span data-km="ស្វែងរកតាមឈ្មោះ" data-en="Search by Name">ស្វែងរកតាមឈ្មោះ</span>
+                        </label>
+                        <input type="text" id="gradeDetailsSearchInput" placeholder="វាយឈ្មោះ ឬអត្តលេខ..." oninput="filterGradeDetailsList()" style="width: 100%; height: 38px; border-radius: 8px; border: 1px solid var(--border-color); padding: 0 12px; font-size: 0.9rem;">
+                    </div>
+
+                    <div style="display: flex; align-items: flex-end; justify-content: flex-end;">
+                        <div id="gradeDetailsCountBadgeBox" style="font-size: 0.9rem; font-weight: 700; color: #15803d; background: #dcfce7; padding: 8px 14px; border-radius: 8px; width: 100%; text-align: center; border: 1px solid #bbf7d0;">
+                            <i class="fa-solid fa-users"></i> <span data-km="សិស្សសរុប៖" data-en="Total:">សិស្សសរុប៖</span> <span id="gradeDetailsCountBadge">0</span> <span data-km="នាក់" data-en="students">នាក់</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" id="gradeDetailsTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">ល.រ</th>
+                                <th style="width: 95px;">អត្តលេខ</th>
+                                <th>ឈ្មោះសិស្ស</th>
+                                <th style="width: 110px;">ថ្នាក់រៀន</th>
+                                <th style="width: 95px;">ពិន្ទុសរុប</th>
+                                <th style="width: 100px;">មធ្យមភាគ</th>
+                                <th style="width: 130px;">និទ្ទេស &amp; ការវាយតម្លៃ</th>
+                                <th style="width: 90px;">ជម្រើស</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gradeDetailsTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="border-top: 1px solid var(--border-color); padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-card);">
+                <button type="button" class="btn btn-outline btn-sm" onclick="exportGradeDetailsCSV()" style="color: #0f9d58; border-color: #0f9d58;">
+                    <i class="fa-solid fa-file-excel"></i> <span data-km="ទាញយកបញ្ជីជា Excel" data-en="Export Excel">ទាញយកបញ្ជីជា Excel</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('gradeDetailsModal').classList.remove('active')">
                     <span data-km="បិទ" data-en="Close">បិទ</span>
                 </button>
             </div>
