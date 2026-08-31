@@ -6140,4 +6140,281 @@ window.exportGradeDetailsCSV = function() {
     document.body.removeChild(link);
 };
 
+// ----------------------------------------------------
+// BEST CLASS RANKING MODAL CONTROLLER
+// ----------------------------------------------------
+let cachedBestClassesList = [];
+let currentBestClassSort = 'honors';
+
+window.openBestClassModal = function() {
+    const modal = document.getElementById("bestClassModal");
+    if (!modal) return;
+
+    renderBestClassModalContent();
+    modal.classList.add("active");
+};
+
+window.switchBestClassSort = function(sortType) {
+    currentBestClassSort = sortType;
+    
+    const tabs = ['honors', 'passrate', 'avg', 'students'];
+    tabs.forEach(t => {
+        const btn = document.getElementById(`bcTab-${t}`);
+        if (btn) {
+            if (t === sortType) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+    });
+
+    filterAndRenderBestClassTable();
+};
+
+function renderBestClassModalContent() {
+    cachedBestClassesList = [];
+    const periods = ["oct","nov","dec","jan","feb","mar","apr","may","jun","jul","sem1_exam","sem2_exam"];
+
+    appState.classes.forEach(c => {
+        const activeSubjectIds = c.subjectIds && c.subjectIds.length > 0 ? c.subjectIds : appState.subjects.map(s => s.id);
+        let totalStudents = c.students.length;
+        let femaleCount = c.students.filter(s => s.gender === 'ស្រី').length;
+        let monkCount = c.students.filter(s => s.gender === 'បព្វជិត').length;
+
+        let gradedCount = 0;
+        let honorsCount = 0; // >= 8.5 (A/B)
+        let goodCount = 0;   // 7.5 - 8.49 (C)
+        let avgCount = 0;    // 5.5 - 7.49 (D/E)
+        let failCount = 0;   // < 5.5 (F)
+        let passCount = 0;   // >= 5.5
+        let sumAverages = 0;
+
+        c.students.forEach(st => {
+            const studentScoresObj = appState.scores[st.id] || {};
+            
+            let latestPeriod = null;
+            for (let i = periods.length - 1; i >= 0; i--) {
+                if (studentScoresObj[periods[i]]) {
+                    latestPeriod = periods[i];
+                    break;
+                }
+            }
+
+            let stAvg = 0;
+            if (latestPeriod && studentScoresObj[latestPeriod]) {
+                const pScores = studentScoresObj[latestPeriod];
+                let sum = 0;
+                let cnt = 0;
+                activeSubjectIds.forEach(subId => {
+                    const val = pScores[subId];
+                    if (val !== undefined && val !== null) {
+                        sum += parseFloat(val);
+                        cnt++;
+                    }
+                });
+                stAvg = cnt > 0 ? sum / activeSubjectIds.length : 0;
+            }
+
+            // Also check extractStudentsData
+            if (typeof extractStudentsData !== 'undefined' && Array.isArray(extractStudentsData)) {
+                const extMatch = extractStudentsData.find(e => e.id === st.id);
+                if (extMatch && extMatch.avg > 0) {
+                    stAvg = extMatch.avg;
+                }
+            }
+
+            if (stAvg > 0) {
+                gradedCount++;
+                sumAverages += stAvg;
+                if (stAvg >= 8.5) honorsCount++;
+                else if (stAvg >= 7.5) goodCount++;
+                else if (stAvg >= 5.5) avgCount++;
+                else failCount++;
+
+                if (stAvg >= 5.5) passCount++;
+            }
+        });
+
+        const passRate = gradedCount > 0 ? Math.round((passCount / gradedCount) * 100) : 0;
+        const classAvg = gradedCount > 0 ? Math.round((sumAverages / gradedCount) * 100) / 100 : 0;
+        const honorsRate = gradedCount > 0 ? Math.round((honorsCount / gradedCount) * 100) : 0;
+
+        cachedBestClassesList.push({
+            id: c.id,
+            name: c.name,
+            teacherName: c.teacherName || 'មិនទាន់កំណត់',
+            totalStudents,
+            femaleCount,
+            monkCount,
+            gradedCount,
+            honorsCount,
+            goodCount,
+            avgCount,
+            failCount,
+            passCount,
+            passRate,
+            classAvg,
+            honorsRate
+        });
+    });
+
+    // Update Highlight Trio Stats
+    if (cachedBestClassesList.length > 0) {
+        // Find best by honors & pass rate
+        const byHonors = [...cachedBestClassesList].sort((a, b) => b.honorsCount - a.honorsCount || b.goodCount - a.goodCount || b.classAvg - a.classAvg);
+        const byPassRate = [...cachedBestClassesList].sort((a, b) => b.passRate - a.passRate || b.honorsCount - a.honorsCount);
+        
+        const top1 = byHonors[0];
+        const topHonors = byHonors[0];
+        const topPass = byPassRate[0];
+
+        const r1El = document.getElementById("bcHighlightRank1");
+        const r1Sub = document.getElementById("bcHighlightRank1Sub");
+        if (r1El && top1) {
+            r1El.textContent = top1.name;
+            if (r1Sub) r1Sub.textContent = `គ្រូបន្ទុក៖ ${top1.teacherName} (ជាប់ ${top1.passRate}%)`;
+        }
+
+        const hEl = document.getElementById("bcHighlightHonors");
+        const hSub = document.getElementById("bcHighlightHonorsSub");
+        if (hEl && topHonors) {
+            hEl.textContent = `${topHonors.name} (${topHonors.honorsCount} នាក់)`;
+            if (hSub) hSub.textContent = `និទ្ទេស A & B: ${topHonors.honorsRate}% នៃសិស្សក្នុងថ្នាក់`;
+        }
+
+        const pEl = document.getElementById("bcHighlightPassRate");
+        const pSub = document.getElementById("bcHighlightPassRateSub");
+        if (pEl && topPass) {
+            pEl.textContent = `${topPass.name} (${topPass.passRate}%)`;
+            if (pSub) pSub.textContent = `សិស្សជាប់ ${topPass.passCount}/${topPass.gradedCount || topPass.totalStudents} នាក់`;
+        }
+    }
+
+    const badge = document.getElementById("bestClassesCountBadge");
+    if (badge) badge.textContent = cachedBestClassesList.length;
+
+    filterAndRenderBestClassTable();
+}
+
+function filterAndRenderBestClassTable() {
+    const tbody = document.getElementById("bestClassTableBody");
+    if (!tbody) return;
+
+    if (cachedBestClassesList.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="10" class="text-center" style="padding: 2.5rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-school" style="font-size: 2.2rem; color: #cbd5e1; margin-bottom: 0.5rem; display:block;"></i>
+                    <span>មិនទាន់មានទិន្នន័យថ្នាក់រៀនឡើយ</span>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    const sorted = [...cachedBestClassesList];
+    if (currentBestClassSort === 'honors') {
+        sorted.sort((a, b) => b.honorsCount - a.honorsCount || b.goodCount - a.goodCount || b.passRate - a.passRate || b.classAvg - a.classAvg);
+    } else if (currentBestClassSort === 'passrate') {
+        sorted.sort((a, b) => b.passRate - a.passRate || b.honorsCount - a.honorsCount || b.classAvg - a.classAvg);
+    } else if (currentBestClassSort === 'avg') {
+        sorted.sort((a, b) => b.classAvg - a.classAvg || b.passRate - a.passRate);
+    } else if (currentBestClassSort === 'students') {
+        sorted.sort((a, b) => b.totalStudents - a.totalStudents || b.honorsCount - a.honorsCount);
+    }
+
+    tbody.innerHTML = sorted.map((c, idx) => {
+        let rankBadge = `<span style="font-weight:700; color:var(--text-main);">#${idx + 1}</span>`;
+        if (idx === 0) rankBadge = `<span style="background:linear-gradient(135deg, #f59e0b, #d97706); color:#fff; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px; box-shadow:0 2px 5px rgba(245,158,11,0.3);"><i class="fa-solid fa-crown"></i> លេខ ១</span>`;
+        else if (idx === 1) rankBadge = `<span style="background:linear-gradient(135deg, #94a3b8, #64748b); color:#fff; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-medal"></i> លេខ ២</span>`;
+        else if (idx === 2) rankBadge = `<span style="background:linear-gradient(135deg, #d97706, #b45309); color:#fff; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:bold; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-award"></i> លេខ ៣</span>`;
+
+        let passColor = '#10b981';
+        if (c.passRate < 50) passColor = '#ef4444';
+        else if (c.passRate < 75) passColor = '#eab308';
+
+        return `
+            <tr>
+                <td>${rankBadge}</td>
+                <td>
+                    <div style="font-weight: 700; color: var(--primary-blue); font-size: 0.95rem;">${c.name}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);"><i class="fa-solid fa-chalkboard-user"></i> ${c.teacherName}</div>
+                </td>
+                <td>
+                    <b>${c.totalStudents}</b>
+                    <div style="font-size:0.7rem; color:var(--text-muted);">ស្រី ${c.femaleCount}</div>
+                </td>
+                <td style="background: rgba(16,185,129,0.05);">
+                    <b style="color: #10b981; font-size: 1.05rem;">${c.honorsCount}</b> <span style="font-size:0.75rem; color:#059669;">នាក់</span>
+                    <div style="font-size:0.72rem; color:#059669; font-weight:600;">(${c.honorsRate}%)</div>
+                </td>
+                <td style="background: rgba(37,99,235,0.05);">
+                    <b style="color: #2563eb; font-size: 1rem;">${c.goodCount}</b> <span style="font-size:0.75rem; color:#1d4ed8;">នាក់</span>
+                </td>
+                <td>
+                    <b style="color: #ca8a04;">${c.avgCount}</b> <span style="font-size:0.75rem; color:var(--text-muted);">នាក់</span>
+                </td>
+                <td>
+                    <b style="color: ${c.failCount > 0 ? '#ef4444' : '#10b981'};">${c.failCount}</b> <span style="font-size:0.75rem; color:var(--text-muted);">នាក់</span>
+                </td>
+                <td>
+                    <b style="color: var(--text-main); font-size: 0.95rem;">${c.classAvg > 0 ? c.classAvg.toFixed(2) : '-'}</b>
+                </td>
+                <td>
+                    <div style="font-weight: 800; color: ${passColor}; font-size: 0.95rem;">${c.passRate}%</div>
+                    <div style="width: 100%; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; margin-top: 3px;">
+                        <div style="width: ${c.passRate}%; height: 100%; background: ${passColor}; border-radius: 3px;"></div>
+                    </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-icon btn-sm" onclick="document.getElementById('bestClassModal').classList.remove('active'); document.querySelector('[data-tab=\\'academic-reports\\']').click();" title="មើលរបាយការណ៍លម្អិត" style="color:var(--primary-blue); background:rgba(30,64,175,0.08);">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+window.exportBestClassesCSV = function() {
+    if (cachedBestClassesList.length === 0) {
+        if (typeof showToast === 'function') showToast('មិនមានទិន្នន័យសម្រាប់ទាញយកទេ!', 'warning');
+        return;
+    }
+
+    let csvContent = "\uFEFF";
+    csvContent += "ចំណាត់ថ្នាក់,ឈ្មោះថ្នាក់រៀន,គ្រូបន្ទុក,សិស្សសរុប,សិស្សស្រី,និទ្ទេស A & B (ល្អប្រសើរ/ល្អណាស់),និទ្ទេស C (ល្អ),និទ្ទេស D & E (មធ្យម),និទ្ទេស F (ធ្លាក់),ពិន្ទុមធ្យមថ្នាក់,អត្រាជាប់ (%)\n";
+
+    const sorted = [...cachedBestClassesList];
+    if (currentBestClassSort === 'honors') sorted.sort((a, b) => b.honorsCount - a.honorsCount || b.goodCount - a.goodCount || b.passRate - a.passRate);
+    else if (currentBestClassSort === 'passrate') sorted.sort((a, b) => b.passRate - a.passRate || b.honorsCount - a.honorsCount);
+    else if (currentBestClassSort === 'avg') sorted.sort((a, b) => b.classAvg - a.classAvg);
+    else if (currentBestClassSort === 'students') sorted.sort((a, b) => b.totalStudents - a.totalStudents);
+
+    sorted.forEach((c, i) => {
+        const row = [
+            i + 1,
+            `"${c.name}"`,
+            `"${c.teacherName}"`,
+            c.totalStudents,
+            c.femaleCount,
+            c.honorsCount,
+            c.goodCount,
+            c.avgCount,
+            c.failCount,
+            c.classAvg.toFixed(2),
+            `${c.passRate}%`
+        ].join(",");
+        csvContent += row + "\n";
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `តារាងចំណាត់ថ្នាក់ថ្នាក់រៀន_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
+
 

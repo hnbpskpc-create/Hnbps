@@ -18,8 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <!-- Main Style Sheet -->
-    <link rel="stylesheet" href="styles.css?v=20260831_7">
-    <script src="app.js?v=20260831_7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260831_8">
+    <script src="app.js?v=20260831_8" defer></script>
     <!-- Early error catcher: catches JS errors before app.js loads -->
     <script>
         window.onerror = function(msg, src, line, col, err) {
@@ -278,7 +278,7 @@
                         <div class="sum-card-val" style="color:#0ea5e9" id="sumTopStudentsCount">0</div>
                         <div class="sum-card-sub" style="color:#0284c7" data-km="សិស្សពិន្ទុមធ្យម ≥ ៨.៥" data-en="Students with avg >= 8.5">សិស្សពិន្ទុមធ្យម ≥ ៨.៥</div>
                     </div>
-                    <div class="sum-card" style="background-color: #ecfdf5; border: 1px solid #a7f3d0; cursor: pointer;" onclick="document.querySelector('[data-tab=\'academic-reports\']').click()" title="មើលរបាយការណ៍ថ្នាក់រៀន">
+                    <div class="sum-card" style="background-color: #ecfdf5; border: 1px solid #a7f3d0; cursor: pointer;" onclick="openBestClassModal()" title="ចុចដើម្បីមើលតារាងចំណាត់ថ្នាក់ និងលទ្ធផលតាមថ្នាក់រៀន">
                         <div class="sum-card-header"><i class="fa-solid fa-star" style="color:#10b981"></i> <span data-km="ថ្នាក់រៀនល្អបំផុត" data-en="BEST CLASS">ថ្នាក់រៀនល្អបំផុត</span></div>
                         <div class="sum-card-val" style="color:#10b981" id="sumBestClass">N/A</div>
                         <div class="sum-card-sub" style="color:#047857" data-km="អត្រាប្រឡងជាប់ខ្ពស់ជាងគេ" data-en="Highest overall passing rate">អត្រាប្រឡងជាប់ខ្ពស់ជាងគេ</div>
@@ -2095,6 +2095,118 @@
                     <i class="fa-solid fa-file-excel"></i> <span data-km="ទាញយកបញ្ជីជា Excel" data-en="Export Excel">ទាញយកបញ្ជីជា Excel</span>
                 </button>
                 <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('gradeDetailsModal').classList.remove('active')">
+                    <span data-km="បិទ" data-en="Close">បិទ</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Best Classes Ranking Modal (តារាងចំណាត់ថ្នាក់ថ្នាក់រៀនឆ្នើម) -->
+    <div class="modal" id="bestClassModal">
+        <div class="modal-content" style="max-width: 950px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;">
+            <div class="modal-header" style="background: #f0fdf4; border-bottom: 1px solid #bbf7d0; padding: 1rem 1.25rem;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:40px; height:40px; border-radius:10px; background:#dcfce7; color:#16a34a; display:flex; align-items:center; justify-content:center; font-size:1.25rem;">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h3 style="color:#15803d; margin:0; font-size:1.15rem;" data-km="តារាងចំណាត់ថ្នាក់ថ្នាក់រៀនឆ្នើម &amp; លទ្ធផលសិក្សា" data-en="Best Classes Ranking &amp; Performance">តារាងចំណាត់ថ្នាក់ថ្នាក់រៀនឆ្នើម &amp; លទ្ធផលសិក្សា</h3>
+                        <p style="font-size:0.8rem; color:#16a34a; margin:0;" data-km="ប្រៀបធៀបថ្នាក់ដែលមានសិស្សនិទ្ទេសល្អប្រសើរ (A), ល្អណាស់ (B), ល្អ (C) ច្រើនជាងគេ និងអត្រាជាប់ខ្ពស់បំផុត" data-en="Comparing classes with highest honors (A, B, C) and top passing rates">ប្រៀបធៀបថ្នាក់ដែលមានសិស្សនិទ្ទេសល្អប្រសើរ (A), ល្អណាស់ (B), ល្អ (C) ច្រើនជាងគេ និងអត្រាជាប់ខ្ពស់បំផុត</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="document.getElementById('bestClassModal').classList.remove('active')">&times;</button>
+            </div>
+            
+            <div style="padding: 1.25rem; overflow-y: auto; flex: 1;">
+                <!-- Highlight Trio Stats -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 1.25rem;">
+                    <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 44px; height: 44px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 3px 6px rgba(22,163,74,0.3);">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #15803d; text-transform: uppercase;">ថ្នាក់ចំណាត់ថ្នាក់លេខ ១</div>
+                            <div id="bcHighlightRank1" style="font-size: 1.15rem; font-weight: 800; color: #166534;">កំពុងគណនា...</div>
+                            <div id="bcHighlightRank1Sub" style="font-size: 0.75rem; color: #15803d;">-</div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 44px; height: 44px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 3px 6px rgba(37,99,235,0.3);">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #1e40af; text-transform: uppercase;">សិស្សនិទ្ទេស A &amp; B ច្រើនជាងគេ</div>
+                            <div id="bcHighlightHonors" style="font-size: 1.15rem; font-weight: 800; color: #1e3a8a;">-</div>
+                            <div id="bcHighlightHonorsSub" style="font-size: 0.75rem; color: #1e40af;">-</div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fefce8, #fef9c3); border: 1px solid #fef08a; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 44px; height: 44px; border-radius: 50%; background: #ca8a04; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 3px 6px rgba(202,138,4,0.3);">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #854d0e; text-transform: uppercase;">អត្រាប្រឡងជាប់ខ្ពស់បំផុត</div>
+                            <div id="bcHighlightPassRate" style="font-size: 1.15rem; font-weight: 800; color: #713f12;">-</div>
+                            <div id="bcHighlightPassRateSub" style="font-size: 0.75rem; color: #854d0e;">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sorter Tabs & Search -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem;">
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;" id="bestClassTabs">
+                        <button type="button" class="score-mode-btn active" id="bcTab-honors" onclick="switchBestClassSort('honors')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                            🌟 និទ្ទេស A/B &amp; C ច្រើនជាងគេ
+                        </button>
+                        <button type="button" class="score-mode-btn" id="bcTab-passrate" onclick="switchBestClassSort('passrate')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                            📈 អត្រាជាប់ខ្ពស់បំផុត
+                        </button>
+                        <button type="button" class="score-mode-btn" id="bcTab-avg" onclick="switchBestClassSort('avg')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                            🎯 ពិន្ទុមធ្យមថ្នាក់ខ្ពស់បំផុត
+                        </button>
+                        <button type="button" class="score-mode-btn" id="bcTab-students" onclick="switchBestClassSort('students')" style="font-size:0.82rem; padding:6px 14px; border-radius:20px;">
+                            👥 ចំនួនសិស្សច្រើនជាងគេ
+                        </button>
+                    </div>
+
+                    <div style="font-size: 0.9rem; font-weight: 700; color: #15803d; background: #dcfce7; padding: 6px 14px; border-radius: 20px; border: 1px solid #bbf7d0;">
+                        <i class="fa-solid fa-school"></i> សរុប៖ <span id="bestClassesCountBadge">0</span> ថ្នាក់
+                    </div>
+                </div>
+
+                <!-- Comparison Table -->
+                <div class="table-container">
+                    <table class="data-table" id="bestClassTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">ចំណាត់ថ្នាក់</th>
+                                <th>ថ្នាក់រៀន &amp; គ្រូបន្ទុក</th>
+                                <th style="width: 90px;">សិស្សសរុប</th>
+                                <th style="width: 130px; background: rgba(16,185,129,0.08);">និទ្ទេស A &amp; B (≥ ៨.៥)</th>
+                                <th style="width: 110px; background: rgba(37,99,235,0.08);">និទ្ទេស C (៧.៥-៨.៤)</th>
+                                <th style="width: 100px;">មធ្យម (D/E)</th>
+                                <th style="width: 85px;">ធ្លាក់ (F)</th>
+                                <th style="width: 100px;">ពិន្ទុមធ្យមរួម</th>
+                                <th style="width: 120px;">អត្រាប្រឡងជាប់</th>
+                                <th style="width: 80px;">លម្អិត</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bestClassTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="border-top: 1px solid var(--border-color); padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-card);">
+                <button type="button" class="btn btn-outline btn-sm" onclick="exportBestClassesCSV()" style="color: #0f9d58; border-color: #0f9d58;">
+                    <i class="fa-solid fa-file-excel"></i> <span data-km="ទាញយកបញ្ជីជា Excel" data-en="Export Excel">ទាញយកបញ្ជីជា Excel</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('bestClassModal').classList.remove('active')">
                     <span data-km="បិទ" data-en="Close">បិទ</span>
                 </button>
             </div>
