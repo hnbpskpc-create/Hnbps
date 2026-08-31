@@ -1,3873 +1,5636 @@
-// --- HNBPS INITIAL MOCK DATA ---
-const initialSchoolInfo = {
-  ministry: "ក្រសួងធម្មការនិងសាសនា",
-  department: "មន្ទីរធម្មការនិងសាសនា ខេត្តកំពង់ចាម",
-  name: "ពុទ្ធិកបឋមសិក្សាកម្រិត ហ៊ុន ណេង",
-  nameLevel1: "",
-  academicYear: "២០២៦-២០២៧",
-  startYear: "២០២៦",
-  endYear: "២០២៧",
-  principalType: "ព្រះនាយក",
-  personInCharge: "ម៉ែន ហាក់",
-  lunarDate: "",
-  solarDate: "",
-  province: "កំពង់ចាម",
-  district: "កំពង់ចាម",
-  commune: "សំបួរមាស",
-  village: "បឹងបាសាក់",
-  
-  englishName: "Prasat Hun Neng Buddhist Primary School",
-  established: "2018",
-  phone: "042-505-555 / 089-999-888",
-  email: "hnbps.school@gmail.com",
-  principal: "ព្រះគ្រូវជិរប្បញ្ញោ នួន ឡូយ",
-  vicePrincipal: "ភិក្ខុ សំ អាត",
-  vision: "បណ្តុះបណ្តាលចំណេះដឹងទូទៅ និងពុទ្ធោវាទ ដើម្បីធានាបាននូវធនធានមនុស្សប្រកបដោយសីលធម៌ គុណធម៌ និងចំណេះដឹងពិតប្រាកដ។"
-};
-
-const initialStaff = [
-  {
-    id: "ST001",
-    name: "ព្រះគ្រូវជិរប្បញ្ញោ នួន ឡូយ",
-    role: "principal",
-    position: "ព្រះចៅអធិការ / នាយកសាលា",
-    phone: "092-111-222",
-    email: "nuon.loy@gmail.com",
-    photo: "",
-    gender: "ព្រះសង្ឃ",
-    degree: "បរិញ្ញាបត្រជាន់ខ្ពស់ ផ្នែកពុទ្ធសាសនា",
-    joinedDate: "2018-05-10"
-  },
-  {
-    id: "ST002",
-    name: "ភិក្ខុ សំ អាត",
-    role: "vice-principal",
-    position: "គ្រូជំនួយការ / គ្រូបង្រៀន",
-    phone: "099-333-444",
-    email: "sam.at@gmail.com",
-    photo: "",
-    gender: "ព្រះសង្ឃ",
-    degree: "បរិញ្ញាបត្រ ផ្នែកអក្សរសាស្ត្រខ្មែរ",
-    joinedDate: "2019-02-15"
-  },
-  {
-    id: "ST003",
-    name: "ភិក្ខុ យូ រ៉ាឌី",
-    role: "teacher",
-    position: "គ្រូបង្រៀន (ថ្នាក់ទី៣)",
-    phone: "088-555-666",
-    email: "you.radi@gmail.com",
-    photo: "",
-    gender: "ព្រះសង្ឃ",
-    degree: "បរិញ្ញាបត្រ ផ្នែកទស្សនវិជ្ជា",
-    joinedDate: "2020-10-01"
-  },
-  {
-    id: "ST004",
-    name: "លោក ស៊ាង ឡាយហៀក",
-    role: "teacher",
-    position: "គ្រូបង្រៀន (ថ្នាក់ទី២)",
-    phone: "015-777-888",
-    email: "seang.layhiek@gmail.com",
-    photo: "",
-    gender: "ប្រុស",
-    degree: "បរិញ្ញាបត្រ គណិតវិទ្យា",
-    joinedDate: "2021-09-10"
-  },
-  {
-    id: "ST005",
-    name: "លោក ស៊ាង ប៊ុនធឿន",
-    role: "teacher",
-    position: "គ្រូបង្រៀន (ថ្នាក់ទី១)",
-    phone: "096-888-999",
-    email: "seang.bunthoeun@gmail.com",
-    photo: "",
-    gender: "ប្រុស",
-    degree: "គរុកោសល្យបឋមសិក្សា",
-    joinedDate: "2021-09-10"
-  },
-  {
-    id: "ST006",
-    name: "លោកស្រី យ៉ង ស្រីលីន",
-    role: "teacher",
-    position: "គ្រូបង្រៀន (ថ្នាក់មត្តេយ្យ)",
-    phone: "012-333-222",
-    email: "yong.sreylin@gmail.com",
-    photo: "",
-    gender: "ស្រី",
-    degree: "គរុកោសល្យមត្តេយ្យសិក្សា",
-    joinedDate: "2022-03-01"
-  },
-  {
-    id: "ST007",
-    name: "លោកស្រី ឌឿន ឡានី",
-    role: "staff",
-    position: "គណនេយ្យករ និងរដ្ឋបាល",
-    phone: "017-444-555",
-    email: "duen.lany@gmail.com",
-    photo: "",
-    gender: "ស្រី",
-    degree: "បរិញ្ញាបត្រ គណនេយ្យ",
-    joinedDate: "2020-05-15"
-  },
-  {
-    id: "ST008",
-    name: "ភិក្ខុ គន្ធ ឡុង",
-    role: "teacher",
-    position: "គ្រូបង្រៀនវិទ្យាសាស្ត្រ",
-    phone: "077-888-111",
-    email: "kunth.long@gmail.com",
-    photo: "",
-    gender: "ព្រះសង្ឃ",
-    degree: "បរិញ្ញាបត្រ វិទ្យាសាស្ត្រអប់រំ",
-    joinedDate: "2022-11-01"
-  },
-  {
-    id: "ST009",
-    name: "ភិក្ខុ ឃុត សុខឿន",
-    role: "teacher",
-    position: "គ្រូបង្រៀនសិក្សាសង្គម",
-    phone: "089-222-333",
-    email: "khut.sokhoeun@gmail.com",
-    photo: "",
-    gender: "ព្រះសង្ឃ",
-    degree: "បរិញ្ញាបត្រ ពុទ្ធសាសនវិទ្យា",
-    joinedDate: "2023-01-10"
-  },
-  {
-    id: "ST010",
-    name: "លោក ម៉ែន ហាក់",
-    role: "staff",
-    position: "បណ្ណារក្ស និងបច្ចេកទេស",
-    phone: "093-444-999",
-    email: "men.hak@gmail.com",
-    photo: "",
-    gender: "ប្រុស",
-    degree: "បរិញ្ញាបត្រ ព័ត៌មានវិទ្យា",
-    joinedDate: "2022-05-12"
-  }
-];
-
-const initialStudents = [
-  {
-    id: "STU001",
-    name: "សឿន ម៉ានិត",
-    gender: "ប្រុស",
-    grade: "kindergarten",
-    dob: "2021-05-12",
-    pob: "កំពង់ចាម",
-    fatherName: "សឿន សុខា",
-    motherName: "ចាន់ ធារី",
-    fatherPhone: "012-888-111",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU002",
-    name: "គង់ ស្រីពេជ្រ",
-    gender: "ស្រី",
-    grade: "kindergarten",
-    dob: "2021-08-20",
-    pob: "កំពង់ចាម",
-    fatherName: "គង់ ណារ៉ុង",
-    motherName: "សាន ស្រីនឿន",
-    fatherPhone: "096-777-222",
-    address: "សង្កាត់បឹងកុក ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU003",
-    name: "លី ហាក់សេង",
-    gender: "ប្រុស",
-    grade: "kindergarten",
-    dob: "2021-02-15",
-    pob: "កំពង់ចាម",
-    fatherName: "លី សុភ័ក្ត្រ",
-    motherName: "ហេង ម៉ារីណា",
-    fatherPhone: "088-333-444",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU010",
-    name: "សុខ ហេង",
-    gender: "ប្រុស",
-    grade: "grade-1",
-    dob: "2020-03-05",
-    pob: "កំពង់ចាម",
-    fatherName: "សុខ វាសនា",
-    motherName: "អ៊ុករតនា",
-    fatherPhone: "017-999-123",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU011",
-    name: "អ៊ឹម សោភា",
-    gender: "ស្រី",
-    grade: "grade-1",
-    dob: "2020-11-12",
-    pob: "កំពង់ចាម",
-    fatherName: "អ៊ឹម សារ៉េត",
-    motherName: "មាស សុជាតា",
-    fatherPhone: "012-777-666",
-    address: "សង្កាត់សំបួរមាស ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU012",
-    name: "ជា វិរៈ",
-    gender: "ប្រុស",
-    grade: "grade-1",
-    dob: "2020-07-22",
-    pob: "ព្រៃវែង",
-    fatherName: "ជា សុជាតិ",
-    motherName: "នួន សុភី",
-    fatherPhone: "099-222-111",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU020",
-    name: "រ័ត្ន ដានី",
-    gender: "ស្រី",
-    grade: "grade-2",
-    dob: "2019-01-14",
-    pob: "កំពង់ចាម",
-    fatherName: "រ័ត្ន ដារា",
-    motherName: "ម៉ៅ សុខន",
-    fatherPhone: "092-888-777",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU021",
-    name: "ម៉ៅ សម្បត្តិ",
-    gender: "ប្រុស",
-    grade: "grade-2",
-    dob: "2019-09-30",
-    pob: "កំពង់ចាម",
-    fatherName: "ម៉ៅ ចាន់ឌី",
-    motherName: "ឡាច សំណាង",
-    fatherPhone: "015-333-111",
-    address: "សង្កាត់បឹងកុក ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU022",
-    name: "ផេង ស្រីលីស",
-    gender: "ស្រី",
-    grade: "grade-2",
-    dob: "2019-05-18",
-    pob: "ត្បូងឃ្មុំ",
-    fatherName: "ផេង សុខឿន",
-    motherName: "ទូច ស្រីណាក់",
-    fatherPhone: "088-222-999",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU030",
-    name: "ខៀវ សុវណ្ណារ៉ា",
-    gender: "ប្រុស",
-    grade: "grade-3",
-    dob: "2018-04-10",
-    pob: "កំពង់ចាម",
-    fatherName: "ខៀវ ចាន់ណា",
-    motherName: "លី ស្រីមុំ",
-    fatherPhone: "093-555-111",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU031",
-    name: "សេង ច័ន្ទមករា",
-    gender: "ប្រុស",
-    grade: "grade-3",
-    dob: "2018-01-01",
-    pob: "កំពង់ចាម",
-    fatherName: "សេង គឹមស៊ន",
-    motherName: "កែវ សោភ័ណ",
-    fatherPhone: "097-444-222",
-    address: "សង្កាត់សំបួរមាស ក្រុងកំពង់ចាម",
-    photo: ""
-  },
-  {
-    id: "STU032",
-    name: "ឡុង សុជាតា",
-    gender: "ស្រី",
-    grade: "grade-3",
-    dob: "2018-10-15",
-    pob: "កំពង់ចាម",
-    fatherName: "ឡុង វិបុល",
-    motherName: "ហេង សុវណ្ណី",
-    fatherPhone: "012-555-888",
-    address: "សង្កាត់វាលវង់ ក្រុងកំពង់ចាម",
-    photo: ""
-  }
-];
-
-const initialAttendance = {
-  "2026-07": {
-    "kindergarten": {
-      "STU001": { "1": "P", "2": "P", "3": "P", "6": "A", "7": "P", "8": "P", "9": "P", "10": "P", "13": "P", "14": "P", "15": "P", "16": "P", "17": "P" },
-      "STU002": { "1": "P", "2": "P", "3": "P", "6": "P", "7": "P", "8": "P", "9": "P", "10": "P", "13": "P", "14": "P", "15": "P", "16": "P", "17": "P" },
-      "STU003": { "1": "P", "2": "P", "3": "P", "6": "P", "7": "P", "8": "P", "9": "P", "10": "A", "13": "P", "14": "P", "15": "P", "16": "P", "17": "P" }
-    },
-    "grade-1": {
-      "STU010": { "1": "P", "2": "P", "3": "P", "6": "P", "7": "P", "8": "P", "9": "P", "10": "P", "13": "P", "14": "P", "15": "P", "16": "P", "17": "P" },
-      "STU011": { "1": "P", "2": "P", "3": "P", "6": "P", "7": "P", "8": "A", "9": "P", "10": "P", "13": "P", "14": "P", "15": "P", "16": "P", "17": "P" },
-      "STU012": { "1": "P", "2": "P", "3": "P", "6": "P", "7": "P", "8": "P", "9": "P", "10": "P", "13": "P", "14": "P", "15": "P", "16": "P", "17": "P" }
-    }
-  }
-};
-
-const initialScores = {
-  "2026-06": {
-    "STU030": { khmer: 85, math: 90, science: 80, social: 75, english: 88 },
-    "STU031": { khmer: 75, math: 65, science: 70, social: 60, english: 55 },
-    "STU032": { khmer: 95, math: 98, science: 90, social: 92, english: 96 },
-    "STU020": { khmer: 80, math: 85, science: 75, social: 80, english: 70 },
-    "STU021": { khmer: 60, math: 70, science: 65, social: 55, english: 50 },
-    "STU022": { khmer: 88, math: 92, science: 85, social: 88, english: 82 },
-    "STU010": { khmer: 90, math: 85, science: 80, social: 85, english: 75 },
-    "STU011": { khmer: 70, math: 60, science: 65, social: 70, english: 60 },
-    "STU012": { khmer: 78, math: 80, science: 72, social: 75, english: 68 }
-  },
-  "2026-07": {
-    "STU030": { khmer: 88, math: 92, science: 82, social: 78, english: 90 },
-    "STU031": { khmer: 78, math: 68, science: 72, social: 65, english: 58 },
-    "STU032": { khmer: 96, math: 99, science: 92, social: 94, english: 98 },
-    "STU020": { khmer: 82, math: 87, science: 78, social: 82, english: 72 },
-    "STU021": { khmer: 62, math: 72, science: 68, social: 58, english: 52 },
-    "STU022": { khmer: 90, math: 94, science: 87, social: 90, english: 85 },
-    "STU010": { khmer: 92, math: 88, science: 82, social: 87, english: 78 },
-    "STU011": { khmer: 72, math: 62, science: 68, social: 72, english: 62 },
-    "STU012": { khmer: 80, math: 82, science: 75, social: 78, english: 70 }
-  }
-};
-
-const initialEarlyWork = [
-  { id: "EW1", text: "ប្រជុំគ្រូបង្រៀនដើម្បីបែងចែកថ្នាក់រៀន និងភារកិច្ច", checked: true },
-  { id: "EW2", text: "រៀបចំការផ្សព្វផ្សាយ និងចុះឈ្មោះសិស្សថ្មីចូលរៀន", checked: true },
-  { id: "EW3", text: "បោសសម្អាត រៀបចំតុ កៅអី និងសម្ភារៈក្នុងបន្ទប់រៀន", checked: false },
-  { id: "EW4", text: "រៀបចំកាលវិភាគសិក្សាប្រចាំថ្នាក់ និងសៀវភៅបញ្ជីវត្តមាន", checked: false },
-  { id: "EW5", text: "ចែកសៀវភៅសិក្សាគោល និងសម្ភារៈសិក្សាជូនសិស្ស", checked: false },
-  { id: "EW6", text: "ប្រជុំគណៈកម្មការទ្រទ្រង់សាលារៀន និងអាណាព្យាបាលសិស្ស", checked: false }
-];
-
-const initialLateWork = [
-  { id: "LW1", text: "រៀបចំការប្រឡងឆមាសទី២ និងបញ្ចប់ឆ្នាំសិក្សា", checked: false },
-  { id: "LW2", text: "បូកសរុបលទ្ធផលការសិក្សាប្រចាំឆ្នាំ និងចំណាត់ថ្នាក់", checked: false },
-  { id: "LW3", text: "សរសេរសៀវភៅលឿង (ព្រឹត្តិបត្រពិន្ទុ) និងចែកជូនសិស្ស", checked: false },
-  { id: "LW4", text: "ប្រជុំបូកសរុបរបាយការណ៍ការងារអប់រំប្រចាំឆ្នាំសិក្សា", checked: false },
-  { id: "LW5", text: "រៀបចំពិធីចែករង្វាន់ជ័យលាភី និងបិទឆ្នាំសិក្សា", checked: false },
-  { id: "LW6", text: "សម្អាត ជម្រះបញ្ជីសារពើភណ្ឌ និងចាក់សោថែរក្សាបន្ទប់រៀន", checked: false }
-];
-
-const initialSchoolTexts = {
-  rules1: `បទបញ្ជាផ្ទៃក្នុងសម្រាប់សិស្សានុសិស្ស៖\n\n១. ត្រូវគោរពទង់ជាតិ ព្រះសង្ឃ និងគ្រូបង្រៀនឱ្យបានខ្ជាប់ខ្ជួន។\n២. ត្រូវមកសាលារៀនឱ្យបានទាន់ពេលវេលា (យ៉ាងតិច ១៥នាទីមុនចូលរៀន)។\n៣. ត្រូវស្លៀកពាក់ឯកសណ្ឋានសាលាឱ្យបានត្រឹមត្រូវ និងស្អាតបាត។\n៤. ហាមបង្កជម្លោះ ឬសកម្មភាពអសីលធម៌ផ្សេងៗក្នុងបរិវេណសាលា។\n៥. ត្រូវចូលរួមថែរក្សាបរិស្ថាន សម្ភារៈសាលារៀន និងអនាម័យជាប្រចាំ។`,
-  rules2: `បទបញ្ជាផ្ទៃក្នុង និងវិន័យមន្ត្រី-គ្រូបង្រៀន៖\n\n១. ត្រូវមកបង្រៀនឱ្យបានទៀងទាត់ម៉ោង និងរៀបចំកិច្ចតែងការបង្រៀនជាមុន។\n២. ត្រូវរក្សាសីលធម៌វិជ្ជាជីវៈជាគ្រូបង្រៀន និងជាគំរូដ៏ល្អដល់សិស្សានុសិស្ស។\n៣. ហាមប្រើប្រាស់ហិង្សា ឬពាក្យសម្តីអសុរោះទៅកាន់សិស្សានុសិស្ស។\n៤. ត្រូវចូលរួមរាល់កិច្ចប្រជុំ និងសកម្មភាពនានាដែលសាលារៀបចំឡើង។\n៥. ត្រូវសហការគ្នាយ៉ាងជិតស្និទ្ធជាមួយអាណាព្យាបាល ដើម្បីតាមដានការសិក្សារបសិស្ស។`,
-  pedagogy1: `គោលការណ៍គរុកោសល្យថ្នាក់រៀន៖\n\n១. ការរៀបចំថ្នាក់រៀន៖ ត្រូវមានផែនទីគំនិត បញ្ជីឈ្មោះសិស្ស និងកាលវិភាគបង្រៀនឱ្យច្បាស់លាស់។\n២. វិធីសាស្ត្របង្រៀន៖ ផ្ដោតលើការយកសិស្សជាមជ្ឈមណ្ឌល (Active Learning) តាមរយៈការធ្វើការងារជាក្រុម និងសួរសំណួរចម្លើយ។\n៣. ការគ្រប់គ្រងថ្នាក់៖ បង្កើតបរិយាកាសសិក្សាប្រកបដោយមេត្តា វិន័យធូរស្រាល និងការលើកទឹកចិត្តជាប្រចាំ។`,
-  pedagogy2: `ផែនការគរុកោសល្យ និងគុណភាពអប់រំកម្រិតសាលា៖\n\n១. ការត្រួតពិនិត្យបច្ចេកទេស៖ នាយកសាលា ឬគ្រូជំនួយការត្រូវចុះស្តាប់ការបង្រៀនរបស់គ្រូជាប្រចាំខែ។\n២. ការអភិវឌ្ឍវិជ្ជាជីវៈ៖ រៀបចំសិក្ខាសាលាចែករំលែកបទពិសោធន៍បង្រៀនក្នុងចំណោមលោកគ្រូអ្នកគ្រូ។\n៣. ការវាស់ស្ទង់គុណភាព៖ រៀបចំការប្រឡងរួមប្រចាំខែ ដើម្បីវាយតម្លៃសមត្ថភាពសិស្សស្មើគ្នា។`,
-  notes: `កំណត់ត្រា និងទម្រង់ការងារទូទៅរបស់សាលា៖\n\n- កំណត់ហេតុប្រជុំគណៈគ្រប់គ្រងសាលាប្រចាំខែ\n- ទម្រង់លិខិតសុំច្បាប់ឈប់សម្រាករបស់គ្រូ-មន្ត្រី\n- កំណត់ត្រាសប្បុរសជន និងការឧបត្ថម្ភគាំទ្រសាលា\n- របាយការណ៍សកម្មភាពពុទ្ធិកសិក្សា និងការងារសហគមន៍`
-};
-
-const initialTimetables = {
-  "kindergarten": [
-    { day: "ចន្ទ", m1: "សីលធម៌", m2: "ភាសាខ្មែរ", a1: "គូររូប", a2: "ល្បែងសិក្សា" },
-    { day: "អង្គារ", m1: "ភាសាខ្មែរ", m2: "គណិតវិទ្យា", a1: "ចម្រៀង", a2: "ល្បែងសិក្សា" },
-    { day: "ពុធ", m1: "សីលធម៌", m2: "ភាសាខ្មែរ", a1: "រឿងនិទាន", a2: "អនាម័យ" },
-    { day: "ព្រហស្បតិ៍", m1: "គណិតវិទ្យា", m2: "ភាសាខ្មែរ", a1: "គូររូប", a2: "ល្បែងសិក្សា" },
-    { day: "សុក្រ", m1: "ភាសាខ្មែរ", m2: "ហាត់ប្រាណ", a1: "ចម្រៀង", a2: "សម្អាតថ្នាក់" }
-  ],
-  "grade-1": [
-    { day: "ចន្ទ", m1: "ភាសាខ្មែរ", m2: "គណិតវិទ្យា", a1: "សិក្សាសង្គម", a2: "ភាសាអង់គ្លេស" },
-    { day: "អង្គារ", m1: "គណិតវិទ្យា", m2: "ភាសាខ្មែរ", a1: "វិទ្យាសាស្ត្រ", a2: "ភាសាអង់គ្លេស" },
-    { day: "ពុធ", m1: "ភាសាខ្មែរ", m2: "គណិតវិទ្យា", a1: "សិក្សាសង្គម", a2: "ពុទ្ធប្រវត្តិ" },
-    { day: "ព្រហស្បតិ៍", m1: "វិទ្យាសាស្ត្រ", m2: "ភាសាខ្មែរ", a1: "គណិតវិទ្យា", a2: "ភាសាអង់គ្លេស" },
-    { day: "សុក្រ", m1: "ភាសាខ្មែរ", m2: "គណិតវិទ្យា", a1: "កីឡា/សិល្បៈ", a2: "អនាម័យសាលា" }
-  ],
-  "grade-2": [
-    { day: "ចន្ទ", m1: "គណិតវិទ្យា", m2: "ភាសាខ្មែរ", a1: "វិទ្យាសាស្ត្រ", a2: "ភាសាអង់គ្លេស" },
-    { day: "អង្គារ", m1: "ភាសាខ្មែរ", m2: "គណិតវិទ្យា", a1: "សិក្សាសង្គម", a2: "ភាសាអង់គ្លេស" },
-    { day: "ពុធ", m1: "គណិតវិទ្យា", m2: "ភាសាខ្មែរ", a1: "វិទ្យាសាស្ត្រ", a2: "ពុទ្ធសាសនា" },
-    { day: "ព្រហស្បតិ៍", m1: "ភាសាខ្មែរ", m2: "សិក្សាសង្គម", a1: "គណិតវិទ្យា", a2: "ភាសាអង់គ្លេស" },
-    { day: "សុក្រ", m1: "ភាសាខ្មែរ", m2: "គណិតវិទ្យា", a1: "សិល្បៈ", a2: "ពលកម្មសាលា" }
-  ],
-  "grade-3": [
-    { day: "ចន្ទ", m1: "ភាសាខ្មែរ (តែងសេចក្តី)", m2: "គណិតវិទ្យា (ប្រភាគ)", a1: "រូបវិទ្យាស្ទង់", a2: "ភាសាអង់គ្លេស" },
-    { day: "អង្គារ", m1: "គណិតវិទ្យា", m2: "ភាសាខ្មែរ (អាន)", a1: "ភូមិវិទ្យា", a2: "ភាសាអង់គ្លេស" },
-    { day: "ពុធ", m1: "ភាសាខ្មែរ (អក្ខរាវិរុទ្ធ)", m2: "គណិតវិទ្យា", a1: "ប្រវត្តិវិទ្យា", a2: "ពុទ្ធសាសនា/ធម៌វិន័យ" },
-    { day: "ព្រហស្បតិ៍", m1: "វិទ្យាសាស្ត្រផែនដី", m2: "ភាសាខ្មែរ (អក្សរសាស្ត្រ)", a1: "គណិតវិទ្យា", a2: "ភាសាអង់គ្លេស" },
-    { day: "សុក្រ", m1: "ភាសាខ្មែរ", m2: "គណិតវិទ្យា", a1: "កីឡា/គូររូប", a2: "សម្អាតសាលា" }
-  ]
-};
-
-// --- NEW MOCK STRINGS FOR EARLY YEAR SUBMENU ---
-const initialEarlySyllabus = `សម្រង់អត្ថបទគំរូ និងសេចក្តីណែនាំបង្រៀន៖\n\n១. មុខវិជ្ជាភាសាខ្មែរ៖ ផ្តោតលើការប្រកបព្យញ្ជនៈ ស្រៈ និងការអានពាក្យគន្លឹះងាយៗ។\n២. មុខវិជ្ជាគណិតវិទ្យា៖ ការស្គាល់លេខខ្មែរ លេខអារ៉ាប់ និងការគណនាបូកដកលេខខ្ទង់ទោល។\n៣. ការអប់រំសីលធម៌៖ ការបណ្តុះវិន័យ សីលធម៌សង្គម និងការយល់ដឹងពីសាសនាសមរម្យ។`;
-
-const initialEarlyFramework1 = `ក្របខណ្ឌអត្ថបទទី១ (ការងារអប់រំ និងផែនការការងារ)៖\n\n- គោលនយោបាយកែលម្អគុណភាពអប់រំពុទ្ធិកសិក្សាជាតិ\n- បទដ្ឋានអភិវឌ្ឍសមត្ថភាពគរុកោសល្យគ្រូបង្រៀនប្រចាំឆ្នាំ\n- កិច្ចសហការរៀបចំសម្ភារឧបទេសសិក្សាជាមួយសហគមន៍`;
-
-const initialEarlyFramework2 = `ក្របខណ្ឌអត្ថបទទី២ (ការគ្រប់គ្រងថ្នាក់ និងការវាស់ស្ទង់)៖\n\n- សេចក្តីណែនាំស្តីពីការវាយតម្លៃពិន្ទុ និងអាកប្បកិរិយាសិស្ស\n- ផែនការគ្រប់គ្រងបរិស្ថានសិក្សា និងអនាម័យក្នុងថ្នាក់\n- កំណត់ត្រាសិស្សពិសេស ឬសិស្សត្រូវការជំនួយបន្ថែម`;
-
-const initialEarlyCurriculumText = `កម្មវិធីសិក្សាលម្អិត៖\n\n- ថ្នាក់មត្តេយ្យ៖ សិក្សារយៈពេល ៣ម៉ោងក្នុងមួយថ្ងៃ (សីលធម៌, ភាសាខ្មែរ, គូររូប, ល្បែងសិក្សា)\n- ថ្នាក់បឋម (ទី១-ទី៣)៖ សិក្សារយៈពេល ៤ម៉ោងក្នុងមួយថ្ងៃ (ភាសាខ្មែរ, គណិត, វិទ្យាសាស្ត្រ, សិក្សាសង្គម, អង់គ្លេស និងពុទ្ធសាសនា)`;
-
-const initialEarlyOtherText = `ឯកសារ និងកំណត់ត្រាផ្សេងៗការងារដើមឆ្នាំ៖\n\n- បញ្ជីរាយនាមសៀវភៅជំនួយ និងសៀវភៅអានបន្ថែមក្នុងបណ្ណាល័យ\n- របាយការណ៍បម្រុងទុកសម្ភារសិក្សាចែកជូនសិស្សក្រីក្រ\n- កំណត់ហេតុប្រជុំបង្កើតគណៈកម្មការថ្នាក់រៀន`;
-
-// --- APPLICATION STATE ---
-let state = {
-  schoolInfo: {},
-  staff: [],
-  students: [],
-  attendance: {},
-  scores: {},
-  
-  earlyWork: [],
-  lateWork: [],
-  schoolTexts: {},
-  timetables: {},
-
-  // New Early Year Texts State
-  earlySyllabusText: "",
-  earlyFramework1Text: "",
-  earlyFramework2Text: "",
-  earlyCurriculumText: "",
-  earlyOtherText: "",
-
-  // Class-specific documents state
-  classTexts: {},
-  customOrgCharts: [],
-
-  currentView: 'dashboard',
-  selectedGradeFilter: 'all',
-  selectedStaffFilter: 'all',
-  searchQuery: '',
-  selectedMonth: '2026-07',
-  selectedAttendanceGrade: 'kindergarten',
-  selectedScoreGrade: 'grade-3',
-  
-  selectedTimetableGrade: 'kindergarten',
-  selectedClassDashboardGrade: 'grade-1'
-};
-
-const defaultClassTexts = {
-  "kindergarten": { registry: "", grids: "", plans: "", biographies: "", applications: "", monitoring: "", curriculum: "", pedagogy: "" },
-  "grade-1": { registry: "", grids: "", plans: "", biographies: "", applications: "", monitoring: "", curriculum: "", pedagogy: "" },
-  "grade-2": { registry: "", grids: "", plans: "", biographies: "", applications: "", monitoring: "", curriculum: "", pedagogy: "" },
-  "grade-3": { registry: "", grids: "", plans: "", biographies: "", applications: "", monitoring: "", curriculum: "", pedagogy: "" }
-};
-
-// Initialize State
-function initApp() {
-  state.schoolInfo = JSON.parse(localStorage.getItem('hnbps_schoolInfo')) || initialSchoolInfo;
-  state.staff = JSON.parse(localStorage.getItem('hnbps_staff')) || initialStaff;
-  state.students = JSON.parse(localStorage.getItem('hnbps_students')) || initialStudents;
-  state.attendance = JSON.parse(localStorage.getItem('hnbps_attendance')) || initialAttendance;
-  state.scores = JSON.parse(localStorage.getItem('hnbps_scores')) || initialScores;
-
-  state.earlyWork = JSON.parse(localStorage.getItem('hnbps_earlyWork')) || initialEarlyWork;
-  state.lateWork = JSON.parse(localStorage.getItem('hnbps_lateWork')) || initialLateWork;
-  state.schoolTexts = JSON.parse(localStorage.getItem('hnbps_schoolTexts')) || initialSchoolTexts;
-  state.timetables = JSON.parse(localStorage.getItem('hnbps_timetables')) || initialTimetables;
-
-  // New Early Year Submenu text loading
-  state.earlySyllabusText = localStorage.getItem('hnbps_earlySyllabusText') || initialEarlySyllabus;
-  state.earlyFramework1Text = localStorage.getItem('hnbps_earlyFramework1Text') || initialEarlyFramework1;
-  state.earlyFramework2Text = localStorage.getItem('hnbps_earlyFramework2Text') || initialEarlyFramework2;
-  state.earlyCurriculumText = localStorage.getItem('hnbps_earlyCurriculumText') || initialEarlyCurriculumText;
-  state.earlyOtherText = localStorage.getItem('hnbps_earlyOtherText') || initialEarlyOtherText;
-
-  // Class-specific text document loading
-  state.classTexts = JSON.parse(localStorage.getItem('hnbps_classTexts')) || defaultClassTexts;
-  state.customOrgCharts = JSON.parse(localStorage.getItem('hnbps_customOrgCharts')) || [];
-
-  saveStateToStorage();
-  
-  setupNavigation();
-  setupStaffHandlers();
-  setupStudentHandlers();
-  setupSchoolHandlers();
-  setupAttendanceHandlers();
-  setupScoreboardHandlers();
-  setupBackupHandlers();
-  setupClassDashboardHandlers();
-  setupBatchCardsHandlers();
-
-  setupSchoolSubMenuNavigation();
-  setupSchoolSubMenuLogic();
-
-  setupEarlyYearSubMenuNavigation();
-  setupEarlyYearSubMenuLogic();
-  setupCustomOrgChartHandlers();
-
-  renderAll();
-  showToast('កម្មវិធីបានដំណើរការដោយជោគជ័យ!', 'success');
-}
-
-function saveStateToStorage() {
-  localStorage.setItem('hnbps_schoolInfo', JSON.stringify(state.schoolInfo));
-  localStorage.setItem('hnbps_staff', JSON.stringify(state.staff));
-  localStorage.setItem('hnbps_students', JSON.stringify(state.students));
-  localStorage.setItem('hnbps_attendance', JSON.stringify(state.attendance));
-  localStorage.setItem('hnbps_scores', JSON.stringify(state.scores));
-  
-  localStorage.setItem('hnbps_earlyWork', JSON.stringify(state.earlyWork));
-  localStorage.setItem('hnbps_lateWork', JSON.stringify(state.lateWork));
-  localStorage.setItem('hnbps_schoolTexts', JSON.stringify(state.schoolTexts));
-  localStorage.setItem('hnbps_timetables', JSON.stringify(state.timetables));
-
-  // Save new early year text values
-  localStorage.setItem('hnbps_earlySyllabusText', state.earlySyllabusText);
-  localStorage.setItem('hnbps_earlyFramework1Text', state.earlyFramework1Text);
-  localStorage.setItem('hnbps_earlyFramework2Text', state.earlyFramework2Text);
-  localStorage.setItem('hnbps_earlyCurriculumText', state.earlyCurriculumText);
-  localStorage.setItem('hnbps_earlyOtherText', state.earlyOtherText);
-
-  // Save class texts & custom org charts
-  localStorage.setItem('hnbps_classTexts', JSON.stringify(state.classTexts));
-  localStorage.setItem('hnbps_customOrgCharts', JSON.stringify(state.customOrgCharts));
-}
-
-// --- NAVIGATION / ROUTING (SPA) ---
-function setupNavigation() {
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      const view = item.getAttribute('data-view');
-      switchView(view);
-    });
-  });
-
-  document.querySelectorAll('.grade-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const grade = card.getAttribute('data-grade');
-      state.selectedClassDashboardGrade = grade;
-      switchView('class-dashboard');
-    });
-  });
-}
-
-function switchView(viewName) {
-  state.currentView = viewName;
-  
-  document.querySelectorAll('.menu-item').forEach(item => {
-    // If we're on class-dashboard, set students menu item as active for UI correctness
-    const targetView = (viewName === 'class-dashboard') ? 'students' : viewName;
-    if (item.getAttribute('data-view') === targetView) {
-      item.classList.add('active');
-    } else {
-      item.classList.remove('active');
-    }
-  });
-
-  document.querySelectorAll('.view-container').forEach(view => {
-    if (view.id === `${viewName}-view`) {
-      view.classList.add('active');
-    } else {
-      view.classList.remove('active');
-    }
-  });
-
-  if (viewName === 'school') {
-    showSchoolSubview('school-menu-dashboard');
-  }
-
-  if (viewName === 'dashboard') {
-    renderDashboardStats();
-  } else if (viewName === 'school') {
-    renderSchoolProfile();
-    renderOrgChart();
-  } else if (viewName === 'staff') {
-    renderStaffList();
-  } else if (viewName === 'students') {
-    renderStudentList();
-  } else if (viewName === 'attendance') {
-    renderAttendanceGrid();
-  } else if (viewName === 'scores') {
-    renderScoreboard();
-  } else if (viewName === 'reports') {
-    renderReports();
-  } else if (viewName === 'class-dashboard') {
-    renderClassDashboard(state.selectedClassDashboardGrade);
-  } else if (viewName === 'batch-cards') {
-    renderBatchCardsView();
-  }
-}
-
-// --- TOAST NOTIFICATIONS ---
-function showToast(message, type = 'success') {
-  const toast = document.getElementById('toast');
-  toast.className = `toast toast-${type} show`;
-  document.getElementById('toast-message').innerText = message;
-  
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3000);
-}
-
-// --- RENDER ALL ---
-function renderAll() {
-  renderDashboardStats();
-  renderSchoolProfile();
-  renderOrgChart();
-  renderStaffList();
-  renderStudentList();
-  renderAttendanceGrid();
-  renderScoreboard();
-  renderReports();
-}
-
-// --- SCHOOL SUB-MENU ROUTING ---
-function setupSchoolSubMenuNavigation() {
-  const subviews = [
-    { btnId: 'btn-school-early-work', viewId: 'subview-early-work', loadFn: () => showEarlyYearSubview('early-menu-dashboard') },
-    { btnId: 'btn-school-late-work', viewId: 'subview-late-work', loadFn: renderLateWorkChecklist },
-    { btnId: 'btn-school-rules1', viewId: 'subview-rules1', loadFn: () => loadSchoolTextEditor('rules1', 'editor-rules1') },
-    { btnId: 'btn-school-rules2', viewId: 'subview-rules2', loadFn: () => loadSchoolTextEditor('rules2', 'editor-rules2') },
-    { btnId: 'btn-school-pedagogy1', viewId: 'subview-pedagogy1', loadFn: () => loadSchoolTextEditor('pedagogy1', 'editor-pedagogy1') },
-    { btnId: 'btn-school-pedagogy2', viewId: 'subview-pedagogy2', loadFn: () => loadSchoolTextEditor('pedagogy2', 'editor-pedagogy2') },
-    { btnId: 'btn-school-curriculum', viewId: 'subview-curriculum', loadFn: renderTimetableEditor },
-    { btnId: 'btn-school-profile', viewId: 'subview-profile', loadFn: () => { renderSchoolProfile(); renderOrgChart(); } },
-    { btnId: 'btn-school-notes', viewId: 'subview-notes', loadFn: () => loadSchoolTextEditor('notes', 'editor-notes') }
-  ];
-
-  subviews.forEach(sv => {
-    document.getElementById(sv.btnId).addEventListener('click', () => {
-      showSchoolSubview(sv.viewId);
-      if (sv.loadFn) sv.loadFn();
-    });
-  });
-
-  document.querySelectorAll('.btn-back-menu').forEach(btn => {
-    // Only back buttons that don't have .btn-back-early
-    if (!btn.classList.contains('btn-back-early')) {
-      btn.addEventListener('click', () => {
-        showSchoolSubview('school-menu-dashboard');
-      });
-    }
-  });
-}
-
-function showSchoolSubview(activeId) {
-  document.getElementById('school-menu-dashboard').style.display = 'none';
-  document.getElementById('subview-early-work').style.display = 'none';
-  document.getElementById('subview-late-work').style.display = 'none';
-  document.getElementById('subview-rules1').style.display = 'none';
-  document.getElementById('subview-rules2').style.display = 'none';
-  document.getElementById('subview-pedagogy1').style.display = 'none';
-  document.getElementById('subview-pedagogy2').style.display = 'none';
-  document.getElementById('subview-curriculum').style.display = 'none';
-  document.getElementById('subview-profile').style.display = 'none';
-  document.getElementById('subview-notes').style.display = 'none';
-
-  document.getElementById(activeId).style.display = 'block';
-}
-
-// --- NEW EARLY YEAR 8-BUTTON SUB-MENU NAVIGATION & LOGIC ---
-function setupEarlyYearSubMenuNavigation() {
-  const earlySubviews = [
-    { btnId: 'btn-early-syllabus', subId: 'subview-early-syllabus', valKey: 'earlySyllabusText', editorId: 'editor-early-syllabus' },
-    { btnId: 'btn-early-framework1', subId: 'subview-early-framework1', valKey: 'earlyFramework1Text', editorId: 'editor-early-framework1' },
-    { btnId: 'btn-early-framework2', subId: 'subview-early-framework2', valKey: 'earlyFramework2Text', editorId: 'editor-early-framework2' },
-    { btnId: 'btn-early-curriculum', subId: 'subview-early-curriculum', valKey: 'earlyCurriculumText', editorId: 'editor-early-curriculum' },
-    { btnId: 'btn-early-other', subId: 'subview-early-other', valKey: 'earlyOtherText', editorId: 'editor-early-other' }
-  ];
-
-  // Text editor sub-pages navigation
-  earlySubviews.forEach(sv => {
-    document.getElementById(sv.btnId).addEventListener('click', () => {
-      showEarlyYearSubview(sv.subId);
-      if (sv.btnId === 'btn-early-syllabus') {
-        loadSyllabusTableEditor();
-      } else {
-        document.getElementById(sv.editorId).value = state[sv.valKey];
-      }
-    });
-  });
-
-  // Short-cuts navigation keys
-  document.getElementById('btn-early-attendance').addEventListener('click', () => {
-    switchView('attendance');
-  });
-
-  document.getElementById('btn-early-scores').addEventListener('click', () => {
-    switchView('scores');
-  });
-
-  document.getElementById('btn-early-timetable').addEventListener('click', () => {
-    showSchoolSubview('subview-curriculum');
-    renderTimetableEditor();
-  });
-
-  // Main back button (blue curved arrow)
-  document.getElementById('btn-back-early-main').addEventListener('click', () => {
-    showSchoolSubview('school-menu-dashboard');
-  });
-
-  // Editor back buttons (.btn-back-early)
-  document.querySelectorAll('.btn-back-early').forEach(btn => {
-    btn.addEventListener('click', () => {
-      showEarlyYearSubview('early-menu-dashboard');
-    });
-  });
-}
-
-function showEarlyYearSubview(subId) {
-  document.getElementById('early-menu-dashboard').style.display = 'none';
-  document.getElementById('subview-early-syllabus').style.display = 'none';
-  document.getElementById('subview-early-framework1').style.display = 'none';
-  document.getElementById('subview-early-framework2').style.display = 'none';
-  document.getElementById('subview-early-curriculum').style.display = 'none';
-  document.getElementById('subview-early-other').style.display = 'none';
-
-  document.getElementById(subId).style.display = 'block';
-}
-
-function setupEarlyYearSubMenuLogic() {
-  document.getElementById('btn-save-early-syllabus').addEventListener('click', () => {
-    saveSyllabusTableData();
-    showToast('បានរក្សាទុកសម្រង់អត្ថបទរួចរាល់!', 'success');
-  });
-
-  document.getElementById('btn-syllabus-add-row').addEventListener('click', () => {
-    addSyllabusRowToDOM();
-  });
-
-  document.getElementById('btn-print-early-syllabus').addEventListener('click', () => {
-    printSyllabusTable(false);
-  });
-
-  document.getElementById('btn-print-blank-syllabus').addEventListener('click', () => {
-    printSyllabusTable(true);
-  });
-
-  document.getElementById('btn-save-early-framework1').addEventListener('click', () => {
-    state.earlyFramework1Text = document.getElementById('editor-early-framework1').value;
-    saveStateToStorage();
-    showToast('បានរក្សាទុកក្របខណ្ឌអត្ថបទ១រួចរាល់!', 'success');
-  });
-
-  document.getElementById('btn-save-early-framework2').addEventListener('click', () => {
-    state.earlyFramework2Text = document.getElementById('editor-early-framework2').value;
-    saveStateToStorage();
-    showToast('បានរក្សាទុកក្របខណ្ឌអត្ថបទ២រួចរាល់!', 'success');
-  });
-
-  document.getElementById('btn-save-early-curriculum').addEventListener('click', () => {
-    state.earlyCurriculumText = document.getElementById('editor-early-curriculum').value;
-    saveStateToStorage();
-    showToast('បានរក្សាទុកកម្មវិធីសិក្សារួចរាល់!', 'success');
-  });
-
-  document.getElementById('btn-save-early-other').addEventListener('click', () => {
-    state.earlyOtherText = document.getElementById('editor-early-other').value;
-    saveStateToStorage();
-    showToast('បានរក្សាទុកឯកសាររួចរាល់!', 'success');
-  });
-}
-
-// --- SYLLABUS TABLE EDITOR HELPER FUNCTIONS ---
-function getSyllabusData() {
-  let raw = state.earlySyllabusText;
-  if (!raw) {
-    raw = localStorage.getItem('hnbps_earlySyllabusText') || initialEarlySyllabus;
-  }
-  
-  try {
-    const data = JSON.parse(raw);
-    if (data && data.rows && Array.isArray(data.rows)) {
-      return data;
-    }
-  } catch (e) {
-    // raw plain text mock string parser
-  }
-  
-  const defaultSyllabus = {
-    month: "កក្កដា",
-    semester: "ទី១",
-    rows: []
-  };
-  
-  const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-  lines.forEach((line, index) => {
-    const match = line.match(/^([០-៩\d]+)\.\s*(.*)$/);
-    if (match) {
-      defaultSyllabus.rows.push({
-        date: match[1],
-        content: match[2],
-        classHours: "៤",
-        selfHours: "២",
-        notes: ""
-      });
-    } else if (line !== "សម្រង់អត្ថបទគំរូ និងសេចក្ដីណែនាំបង្រៀន") {
-      defaultSyllabus.rows.push({
-        date: (index + 1).toString(),
-        content: line,
-        classHours: "៤",
-        selfHours: "២",
-        notes: ""
-      });
-    }
-  });
-  
-  if (defaultSyllabus.rows.length === 0) {
-    defaultSyllabus.rows = [
-      { date: "១", content: "មុនវិជ្ជាភាសាខ្មែរ៖ ស្គាល់តួអក្សរស្រៈព្យញ្ជនៈ ស្រៈ និងការអានពាក្យខ្លីៗងាយៗ។", classHours: "៤", selfHours: "២", notes: "" },
-      { date: "២", content: "មុនវិជ្ជាគណិតវិទ្យា៖ ការស្គាល់លេខខ្មែរ លេខអារ៉ាប់ និងការគណនាបូកដកលេខខ្ទង់ទាប។", classHours: "៤", selfHours: "២", notes: "" },
-      { date: "៣", content: "ការអប់រំសីលធម៌៖ ការបណ្តុះវិន័យ សីលធម៌សមរម្យ និងការយល់ដឹងពីសាសនាផ្សេងៗ។", classHours: "២", selfHours: "១", notes: "" }
-    ];
-  }
-  
-  return defaultSyllabus;
-}
-
-function loadSyllabusTableEditor() {
-  const data = getSyllabusData();
-  
-  document.getElementById('syllabus-month-input').value = data.month || "";
-  document.getElementById('syllabus-semester-select').value = data.semester || "ទី១";
-  
-  const tbody = document.getElementById('syllabus-table-body');
-  tbody.innerHTML = "";
-  
-  data.rows.forEach(row => {
-    addSyllabusRowToDOM(row);
-  });
-}
-
-function addSyllabusRowToDOM(row = { date: "", content: "", classHours: "", selfHours: "", notes: "" }) {
-  const tbody = document.getElementById('syllabus-table-body');
-  const tr = document.createElement('tr');
-  tr.style.borderBottom = '1px solid var(--border-color)';
-  tr.innerHTML = `
-    <td style="padding: 8px 10px; text-align: center;">
-      <input type="text" class="syllabus-row-date" value="${row.date}" style="width: 100%; text-align: center; border: 1px solid var(--border-color); background: var(--primary-light); color: white; padding: 4px; border-radius: 4px;">
-    </td>
-    <td style="padding: 8px 10px;">
-      <textarea class="syllabus-row-content" style="width: 100%; border: 1px solid var(--border-color); background: var(--primary-light); color: white; padding: 4px; border-radius: 4px; resize: vertical; min-height: 40px; font-family: var(--font-khmer);">${row.content}</textarea>
-    </td>
-    <td style="padding: 8px 10px; text-align: center;">
-      <input type="text" class="syllabus-row-class-hours" value="${row.classHours}" style="width: 100%; text-align: center; border: 1px solid var(--border-color); background: var(--primary-light); color: white; padding: 4px; border-radius: 4px;">
-    </td>
-    <td style="padding: 8px 10px; text-align: center;">
-      <input type="text" class="syllabus-row-self-hours" value="${row.selfHours}" style="width: 100%; text-align: center; border: 1px solid var(--border-color); background: var(--primary-light); color: white; padding: 4px; border-radius: 4px;">
-    </td>
-    <td style="padding: 8px 10px;">
-      <input type="text" class="syllabus-row-notes" value="${row.notes}" style="width: 100%; border: 1px solid var(--border-color); background: var(--primary-light); color: white; padding: 4px; border-radius: 4px;">
-    </td>
-    <td style="padding: 8px 10px; text-align: center;">
-      <button type="button" class="btn btn-secondary btn-sm btn-delete-syllabus-row" style="padding: 3px 8px !important; color: red;">&times;</button>
-    </td>
-  `;
-  
-  tr.querySelector('.btn-delete-syllabus-row').addEventListener('click', () => {
-    tr.remove();
-  });
-  
-  tbody.appendChild(tr);
-}
-
-function saveSyllabusTableData() {
-  const month = document.getElementById('syllabus-month-input').value;
-  const semester = document.getElementById('syllabus-semester-select').value;
-  
-  const rows = [];
-  const tbody = document.getElementById('syllabus-table-body');
-  const trs = tbody.querySelectorAll('tr');
-  
-  trs.forEach(tr => {
-    const date = tr.querySelector('.syllabus-row-date').value;
-    const content = tr.querySelector('.syllabus-row-content').value;
-    const classHours = tr.querySelector('.syllabus-row-class-hours').value;
-    const selfHours = tr.querySelector('.syllabus-row-self-hours').value;
-    const notes = tr.querySelector('.syllabus-row-notes').value;
-    
-    if (content.trim()) {
-      rows.push({ date, content, classHours, selfHours, notes });
-    }
-  });
-  
-  const data = { month, semester, rows };
-  state.earlySyllabusText = JSON.stringify(data);
-  saveStateToStorage();
-}
-
-function printSyllabusTable(isBlank = false) {
-  const data = getSyllabusData();
-  const schoolName = state.schoolInfo.name || "សាលារៀន";
-  const principalType = state.schoolInfo.principalType || "នាយក";
-
-  const printWindowDiv = document.createElement('div');
-  printWindowDiv.id = 'syllabus-print-view';
-  
-  const style = document.createElement('style');
-  style.innerHTML = `
-    /* Hide from screen display */
-    #syllabus-print-view {
-      display: none !important;
-    }
-    
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #syllabus-print-view, #syllabus-print-view * {
-        visibility: visible;
-      }
-      #syllabus-print-view {
-        display: block !important;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        color: black !important;
-        background: white !important;
-        font-family: "Khmer OS Battambang", "Arial", sans-serif;
-        padding: 5mm 5mm;
-        box-sizing: border-box;
-      }
-      @page {
-        size: A4 portrait;
-        margin: 15mm 10mm;
-      }
-    }
-    
-    .print-header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-    .print-title-main {
-      font-family: "Khmer OS Muol Light", "Khmer OS Muol", sans-serif;
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .print-title-sub {
-      font-size: 13px;
-      font-weight: normal;
-    }
-    .print-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-    .print-table th, .print-table td {
-      border: 1px solid black !important;
-      padding: 6px 4px !important;
-      font-size: 12px;
-      color: black;
-      line-height: 1.3 !important;
-    }
-    .print-table td {
-      height: 28px; /* Give it a nice height for hand-writing */
-    }
-    .print-table th {
-      font-family: "Khmer OS Muol Light", sans-serif;
-      font-weight: normal;
-      background-color: #f2f2f2 !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-      text-align: center;
-    }
-    .print-footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 40px;
-      padding: 0 20px;
-    }
-    .print-footer-column {
-      text-align: center;
-      width: 200px;
-      font-size: 12px;
-    }
-    .print-footer-title {
-      font-family: "Khmer OS Muol Light", sans-serif;
-      font-size: 12px;
-      margin-bottom: 70px;
-    }
-  `;
-  document.head.appendChild(style);
-
-  let rowsHtml = '';
-  
-  if (isBlank) {
-    // Render 15 empty rows for writing by hand
-    for (let i = 0; i < 15; i++) {
-      rowsHtml += `
-        <tr>
-          <td style="text-align: center; width: 10%;"></td>
-          <td style="width: 56%; text-align: left; padding-left: 8px;"></td>
-          <td style="text-align: center; width: 11%;"></td>
-          <td style="text-align: center; width: 11%;"></td>
-          <td style="width: 12%;"></td>
-        </tr>
-      `;
-    }
-  } else {
-    // Render exactly the rows filled by the user
-    const maxRows = data.rows.length;
-    for (let i = 0; i < maxRows; i++) {
-      const row = data.rows[i] || { date: "", content: "", classHours: "", selfHours: "", notes: "" };
-      rowsHtml += `
-        <tr>
-          <td style="text-align: center; width: 10%;">${row.date || ""}</td>
-          <td style="width: 56%; text-align: left; padding-left: 8px;">${row.content || ""}</td>
-          <td style="text-align: center; width: 11%;">${row.classHours || ""}</td>
-          <td style="text-align: center; width: 11%;">${row.selfHours || ""}</td>
-          <td style="width: 12%;">${row.notes || ""}</td>
-        </tr>
-      `;
-    }
-  }
-
-  printWindowDiv.innerHTML = `
-    <div class="print-header">
-      <div class="print-title-main">សម្រង់អត្ថបទបង្រៀន</div>
-      <div class="print-title-sub" style="font-family: 'Khmer OS Battambang', sans-serif;">ប្រចាំខែ <span style="border-bottom: 1px dotted black; padding: 0 15px; font-weight: bold;">${data.month || "............."}</span> ឆមាសទី <span style="border-bottom: 1px dotted black; padding: 0 15px; font-weight: bold;">${data.semester || "............."}</span></div>
-    </div>
-    
-    <table class="print-table">
-      <thead>
-        <tr>
-          <th rowspan="2" style="width: 10%;">ថ្ងៃខែ / ល.រ</th>
-          <th rowspan="2" style="width: 56%;">ខ្លឹមសារមេរៀន / សកម្មភាព</th>
-          <th colspan="2" style="width: 22%;">ម៉ោងសិក្សា</th>
-          <th rowspan="2" style="width: 12%;">ផ្សេងៗ / ចំណាំ</th>
-        </tr>
-        <tr>
-          <th style="font-size: 10px; font-family: 'Khmer OS Battambang', sans-serif; padding: 4px 2px !important; font-weight: bold;">ក្នុងថ្នាក់</th>
-          <th style="font-size: 10px; font-family: 'Khmer OS Battambang', sans-serif; padding: 4px 2px !important; font-weight: bold;">ស្វ័យសិក្សា</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${rowsHtml}
-      </tbody>
-    </table>
-    
-    <div style="text-align: right; font-size: 12px; margin-right: 40px; margin-bottom: 5px; font-family: 'Khmer OS Battambang', sans-serif;">
-      ថ្ងៃទី........ ខែ........ ឆ្នាំ២០២...
-    </div>
-    
-    <div class="print-footer" style="font-family: 'Khmer OS Battambang', sans-serif;">
-      <div class="print-footer-column">
-        <div class="print-footer-title" style="font-family: 'Khmer OS Muol Light', sans-serif;">${principalType}សាលា</div>
-        <div style="font-size: 11px; color: #888;">(ហត្ថលេខា និងត្រា)</div>
-      </div>
-      <div class="print-footer-column">
-        <div class="print-footer-title" style="font-family: 'Khmer OS Muol Light', sans-serif;">គ្រូបង្រៀន</div>
-        <div style="font-size: 11px; color: #888;">(ហត្ថលេខា និងឈ្មោះ)</div>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(printWindowDiv);
-  window.print();
-  
-  setTimeout(() => {
-    printWindowDiv.remove();
-    style.remove();
-  }, 1000);
-}
-
-
-// --- SCHOOL SUB-MENU LOGIC ---
-function setupSchoolSubMenuLogic() {
-  document.getElementById('btn-save-rules1').addEventListener('click', () => saveSchoolTextEditor('rules1', 'editor-rules1'));
-  document.getElementById('btn-save-rules2').addEventListener('click', () => saveSchoolTextEditor('rules2', 'editor-rules2'));
-  document.getElementById('btn-save-pedagogy1').addEventListener('click', () => saveSchoolTextEditor('pedagogy1', 'editor-pedagogy1'));
-  document.getElementById('btn-save-pedagogy2').addEventListener('click', () => saveSchoolTextEditor('pedagogy2', 'editor-pedagogy2'));
-  document.getElementById('btn-save-notes').addEventListener('click', () => saveSchoolTextEditor('notes', 'editor-notes'));
-
-  document.getElementById('timetable-grade-select').addEventListener('change', (e) => {
-    state.selectedTimetableGrade = e.target.value;
-    renderTimetableEditor();
-  });
-
-  document.getElementById('btn-save-timetable').addEventListener('click', () => {
-    const grade = state.selectedTimetableGrade;
-    const list = [];
-    
-    document.querySelectorAll('.timetable-row-data').forEach(row => {
-      const day = row.getAttribute('data-day');
-      const m1 = row.querySelector('.tt-m1').value;
-      const m2 = row.querySelector('.tt-m2').value;
-      const a1 = row.querySelector('.tt-a1').value;
-      const a2 = row.querySelector('.tt-a2').value;
-      list.push({ day, m1, m2, a1, a2 });
-    });
-
-    state.timetables[grade] = list;
-    saveStateToStorage();
-    showToast('បានរក្សាទុកកាលវិភាគដោយជោគជ័យ!', 'success');
-  });
-}
-
-function renderLateWorkChecklist() {
-  const container = document.getElementById('late-checklist-container');
-  container.innerHTML = '';
-  
-  state.lateWork.forEach(item => {
-    const itemDiv = document.createElement('div');
-    itemDiv.className = `checklist-item ${item.checked ? 'checked' : ''}`;
-    itemDiv.innerHTML = `
-      <input type="checkbox" class="checklist-checkbox" ${item.checked ? 'checked' : ''}>
-      <span class="checklist-text">${item.text}</span>
-      <button class="btn-remove-item" title="លុបចោល">
-        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-    `;
-
-    itemDiv.querySelector('.checklist-checkbox').addEventListener('change', (e) => {
-      item.checked = e.target.checked;
-      itemDiv.className = `checklist-item ${item.checked ? 'checked' : ''}`;
-      saveStateToStorage();
-    });
-
-    itemDiv.querySelector('.btn-remove-item').addEventListener('click', () => {
-      state.lateWork = state.lateWork.filter(i => i.id !== item.id);
-      saveStateToStorage();
-      renderLateWorkChecklist();
-    });
-
-    container.appendChild(itemDiv);
-  });
-}
-
-function loadSchoolTextEditor(key, editorId) {
-  const text = state.schoolTexts[key] || '';
-  document.getElementById(editorId).value = text;
-}
-
-function saveSchoolTextEditor(key, editorId) {
-  const text = document.getElementById(editorId).value;
-  state.schoolTexts[key] = text;
-  saveStateToStorage();
-  showToast('បានរក្សាទុកឯកសារដោយជោគជ័យ!', 'success');
-}
-
-function renderTimetableEditor() {
-  const container = document.getElementById('timetable-editor-grid');
-  container.innerHTML = '';
-
-  const grade = state.selectedTimetableGrade;
-  const list = state.timetables[grade] || [];
-
-  let html = `
-    <div class="timetable-header-cell">ថ្ងៃសិក្សា</div>
-    <div class="timetable-header-cell">ព្រឹក ម៉ោងទី១</div>
-    <div class="timetable-header-cell">ព្រឹក ម៉ោងទី២</div>
-    <div class="timetable-header-cell">រសៀល ម៉ោងទី១</div>
-    <div class="timetable-header-cell">រសៀល ម៉ោងទី២</div>
-  `;
-
-  const days = ["ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ"];
-
-  days.forEach(day => {
-    const record = list.find(r => r.day === day) || { m1: "", m2: "", a1: "", a2: "" };
-    html += `
-      <div class="timetable-day-cell">${day}</div>
-      <div class="timetable-input-cell timetable-row-data" data-day="${day}">
-        <input type="text" class="tt-m1" value="${record.m1}" placeholder="ទំនេរ">
-      </div>
-      <div class="timetable-input-cell">
-        <input type="text" class="tt-m2" value="${record.m2}" placeholder="ទំនេរ">
-      </div>
-      <div class="timetable-input-cell">
-        <input type="text" class="tt-a1" value="${record.a1}" placeholder="ទំនេរ">
-      </div>
-      <div class="timetable-input-cell">
-        <input type="text" class="tt-a2" value="${record.a2}" placeholder="ទំនេរ">
-      </div>
-    `;
-  });
-
-  container.innerHTML = html;
-  
-  container.querySelectorAll('.timetable-row-data').forEach(rowCell => {
-    const parentRow = rowCell;
-    const m2Cell = parentRow.nextElementSibling;
-    const a1Cell = m2Cell.nextElementSibling;
-    const a2Cell = a1Cell.nextElementSibling;
-
-    m2Cell.querySelector('input').className = 'tt-m2';
-    a1Cell.querySelector('input').className = 'tt-a1';
-    a2Cell.querySelector('input').className = 'tt-a2';
-    
-    m2Cell.setAttribute('data-day', parentRow.getAttribute('data-day'));
-    a1Cell.setAttribute('data-day', parentRow.getAttribute('data-day'));
-    a2Cell.setAttribute('data-day', parentRow.getAttribute('data-day'));
-  });
-}
-
-// --- DASHBOARD VIEW ---
-function renderDashboardStats() {
-  const totalStudents = state.students.length;
-  const femaleStudents = state.students.filter(s => s.gender === 'ស្រី').length;
-  const maleStudents = totalStudents - femaleStudents;
-  const totalStaff = state.staff.length;
-  const totalTeachers = state.staff.filter(s => s.role === 'teacher' || s.role === 'vice-principal').length;
-  const totalOfficers = totalStaff - totalTeachers;
-
-  document.getElementById('stat-total-students').innerText = totalStudents;
-  document.getElementById('stat-student-genders').innerText = `ប្រុស: ${maleStudents} | ស្រី: ${femaleStudents}`;
-  document.getElementById('stat-total-teachers').innerText = totalTeachers;
-  document.getElementById('stat-total-officers').innerText = totalOfficers;
-
-  const currentMonthData = state.attendance[state.selectedMonth];
-  let markedToday = 0;
-  let presentToday = 0;
-
-  if (currentMonthData) {
-    Object.keys(currentMonthData).forEach(grade => {
-      Object.keys(currentMonthData[grade]).forEach(stuId => {
-        const records = currentMonthData[grade][stuId];
-        const days = Object.keys(records);
-        if (days.length > 0) {
-          const lastDay = days[days.length - 1];
-          markedToday++;
-          if (records[lastDay] === 'P') presentToday++;
-        }
-      });
-    });
-  }
-
-  const attendanceRate = markedToday > 0 ? Math.round((presentToday / markedToday) * 100) : 98;
-  document.getElementById('stat-attendance-rate').innerText = `${attendanceRate}%`;
-}
-
-// --- SCHOOL PROFILE & ORG CHART ---
-function renderSchoolProfile() {
-  const info = state.schoolInfo;
-  
-  // Excel panel labels/values
-  document.getElementById('school-val-ministry').innerText = info.ministry || '-';
-  document.getElementById('school-val-department').innerText = info.department || '-';
-  document.getElementById('school-val-name').innerText = info.name || '-';
-  document.getElementById('school-val-nameLevel1').innerText = info.nameLevel1 || '-';
-  document.getElementById('school-val-academicYear').innerText = info.academicYear || '-';
-  document.getElementById('school-val-principalType').innerText = info.principalType || '-';
-  document.getElementById('school-val-personInCharge').innerText = info.personInCharge || '-';
-  document.getElementById('school-val-lunarDate').innerText = info.lunarDate || '-';
-  document.getElementById('school-val-solarDate').innerText = info.solarDate || '-';
-  
-  document.getElementById('school-val-province').innerText = info.province || '-';
-  document.getElementById('school-val-district').innerText = info.district || '-';
-  document.getElementById('school-val-commune').innerText = info.commune || '-';
-  document.getElementById('school-val-village').innerText = info.village || '-';
-  
-  // Extra fields
-  document.getElementById('school-name-en').innerText = info.englishName || '-';
-  document.getElementById('profile-established').innerText = info.established || '-';
-  document.getElementById('profile-phone').innerText = info.phone || '-';
-  document.getElementById('profile-email').innerText = info.email || '-';
-  document.getElementById('profile-vision').innerText = info.vision || '-';
-  
-  // Populate form inputs
-  document.getElementById('edit-school-ministry').value = info.ministry || '';
-  document.getElementById('edit-school-department').value = info.department || '';
-  document.getElementById('edit-school-name').value = info.name || '';
-  document.getElementById('edit-school-nameLevel1').value = info.nameLevel1 || '';
-  document.getElementById('edit-school-startYear').value = info.startYear || '';
-  document.getElementById('edit-school-endYear').value = info.endYear || '';
-  document.getElementById('edit-school-principalType').value = info.principalType || 'ព្រះនាយក';
-  document.getElementById('edit-school-personInCharge').value = info.personInCharge || '';
-  document.getElementById('edit-school-lunarDate').value = info.lunarDate || '';
-  document.getElementById('edit-school-solarDate').value = info.solarDate || '';
-  
-  document.getElementById('edit-school-province').value = info.province || '';
-  document.getElementById('edit-school-district').value = info.district || '';
-  document.getElementById('edit-school-commune').value = info.commune || '';
-  document.getElementById('edit-school-village').value = info.village || '';
-  
-  document.getElementById('edit-school-eng').value = info.englishName || '';
-  document.getElementById('edit-school-established').value = info.established || '';
-  document.getElementById('edit-school-phone').value = info.phone || '';
-  document.getElementById('edit-school-email').value = info.email || '';
-  document.getElementById('edit-school-vision').value = info.vision || '';
-}
-
-function setupSchoolHandlers() {
-  document.getElementById('btn-edit-school').addEventListener('click', () => {
-    openModal('school-modal');
-  });
-
-  document.getElementById('school-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const startYear = document.getElementById('edit-school-startYear').value;
-    const endYear = document.getElementById('edit-school-endYear').value;
-    
-    state.schoolInfo = {
-      ministry: document.getElementById('edit-school-ministry').value,
-      department: document.getElementById('edit-school-department').value,
-      name: document.getElementById('edit-school-name').value,
-      nameLevel1: document.getElementById('edit-school-nameLevel1').value,
-      startYear: startYear,
-      endYear: endYear,
-      academicYear: `${startYear}-${endYear}`,
-      principalType: document.getElementById('edit-school-principalType').value,
-      personInCharge: document.getElementById('edit-school-personInCharge').value,
-      lunarDate: document.getElementById('edit-school-lunarDate').value,
-      solarDate: document.getElementById('edit-school-solarDate').value,
-      
-      province: document.getElementById('edit-school-province').value,
-      district: document.getElementById('edit-school-district').value,
-      commune: document.getElementById('edit-school-commune').value,
-      village: document.getElementById('edit-school-village').value,
-      
-      englishName: document.getElementById('edit-school-eng').value,
-      established: document.getElementById('edit-school-established').value,
-      phone: document.getElementById('edit-school-phone').value,
-      email: document.getElementById('edit-school-email').value,
-      vision: document.getElementById('edit-school-vision').value
-    };
-    
-    saveStateToStorage();
-    renderSchoolProfile();
-    closeModal('school-modal');
-    showToast('បានកែប្រែព័ត៌មានសាលាដោយជោគជ័យ!', 'success');
-  });
-}
-
-let currentEditingNodeRef = null;
-let tempNodePhoto = '';
-
-function renderOrgChart() {
-  const container = document.getElementById('org-chart-container');
-  if (!container) return;
-  container.innerHTML = '';
-
-  // 1. RENDER DEFAULT MAIN LEADERSHIP CHART
-  const defaultChartWrapper = document.createElement('div');
-  defaultChartWrapper.className = 'custom-orgchart-box';
-  
-  const principal = state.staff.find(s => s.role === 'principal');
-  let viceLeft = state.staff.find(s => s.role === 'vice-principal-left');
-  let viceRight = state.staff.find(s => s.role === 'vice-principal-right');
-  
-  const legacyVps = state.staff.filter(s => s.role === 'vice-principal');
-  if (!viceLeft && legacyVps[0]) viceLeft = legacyVps[0];
-  if (!viceRight && legacyVps[1]) viceRight = legacyVps[1];
-
-  const teachers = state.staff.filter(s => s.role === 'teacher');
-  const staffMembers = state.staff.filter(s => s.role === 'staff');
-
-  const createNodeHTML = (member, fallbackRole, defaultPosLabel) => {
-    if (!member) {
-      return `
-        <div class="chart-node empty-node" data-role="${fallbackRole}">
-          <div class="node-photo empty-photo">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          </div>
-          <div class="node-title" style="color: var(--text-muted); font-size: 13px;">+ បន្ថែមព័ត៌មាន</div>
-          <div class="node-position">${defaultPosLabel}</div>
-          <span class="node-role-badge role-${fallbackRole}">${getRoleNameKhmer(fallbackRole)}</span>
-        </div>
-      `;
-    }
-
-    const photoHTML = member.photo 
-      ? `<img src="${member.photo}" class="node-photo" alt="${member.name}">` 
-      : `<div class="node-photo"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`;
-    
-    const phoneHTML = member.phone ? `
-      <div class="node-phone">
-        <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-        <span>${member.phone}</span>
-      </div>
-    ` : `<div class="node-phone" style="opacity: 0.5;"><span>-</span></div>`;
-
-    return `
-      <div class="chart-node clickable-node" data-id="${member.id}">
-        ${photoHTML}
-        <div class="node-title">${member.name}</div>
-        <div class="node-position">${member.position || getRoleNameKhmer(member.role)}</div>
-        <span class="node-role-badge role-${member.role}">${getRoleNameKhmer(member.role)}</span>
-        ${phoneHTML}
-      </div>
-    `;
-  };
-
-  let mainHtml = `
-    <div class="custom-orgchart-header">
-      <div class="custom-orgchart-title">
-        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        រចនាសម្ព័ន្ធដឹកនាំសាលារៀន (ទូទៅ)
-      </div>
-    </div>
-    <div class="org-chart-wrapper">
-      <div class="chart-row level-1">${createNodeHTML(principal, 'principal', 'នាយក / ព្រះចៅអធិការ')}</div>
-      <div class="chart-connector-vertical"></div>
-      <div class="chart-row level-2 vice-principals-row">
-        <div class="vice-col">
-          <div class="vice-header-tag">នាយករង ទី១ (ខាងឆ្វេង)</div>
-          ${createNodeHTML(viceLeft, 'vice-principal-left', 'នាយករង (ខាងឆ្វេង)')}
-        </div>
-        <div class="vice-col">
-          <div class="vice-header-tag">នាយករង ទី២ (ខាងស្តាំ)</div>
-          ${createNodeHTML(viceRight, 'vice-principal-right', 'នាយករង (ខាងស្តាំ)')}
-        </div>
-      </div>
-      <div class="chart-connector-vertical"></div>
-      <div class="chart-row level-3 teachers-row">
-  `;
-
-  teachers.forEach(t => mainHtml += createNodeHTML(t, 'teacher', 'គ្រូបង្រៀន'));
-  staffMembers.forEach(s => mainHtml += createNodeHTML(s, 'staff', 'មន្ត្រីរដ្ឋបាល'));
-  if (teachers.length === 0 && staffMembers.length === 0) {
-    mainHtml += `<div class="empty-teacher-notice" style="color: var(--text-muted); font-size: 13px;">គ្មានទិន្នន័យគ្រូបង្រៀននៅឡើយ</div>`;
-  }
-  mainHtml += `</div></div>`;
-
-  defaultChartWrapper.innerHTML = mainHtml;
-  container.appendChild(defaultChartWrapper);
-
-  // Click handlers for default chart
-  defaultChartWrapper.querySelectorAll('.clickable-node').forEach(node => {
-    node.addEventListener('click', () => {
-      const id = node.getAttribute('data-id');
-      const member = state.staff.find(s => s.id === id);
-      if (member) openStaffModal(member);
-    });
-  });
-
-  defaultChartWrapper.querySelectorAll('.empty-node').forEach(node => {
-    node.addEventListener('click', () => {
-      const role = node.getAttribute('data-role');
-      openStaffModal(null);
-      if (role) document.getElementById('staff-role').value = role;
-    });
-  });
-
-  // 2. RENDER CUSTOM ORG CHARTS
-  if (state.customOrgCharts && state.customOrgCharts.length > 0) {
-    state.customOrgCharts.forEach(chart => {
-      const customWrapper = document.createElement('div');
-      customWrapper.className = 'custom-orgchart-box';
-      customWrapper.setAttribute('data-chart-id', chart.id);
-
-      const createCustomNodeHTML = (nodeData, slotType, index = null, defaultLabel = 'សមាជិក') => {
-        if (!nodeData) {
-          return `
-            <div class="chart-node empty-node custom-node-btn" data-chart-id="${chart.id}" data-slot-type="${slotType}" ${index !== null ? `data-index="${index}"` : ''}>
-              <div class="node-photo empty-photo">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              </div>
-              <div class="node-title" style="color: var(--text-muted); font-size: 13px;">+ បន្ថែមព័ត៌មាន</div>
-              <div class="node-position">${defaultLabel}</div>
-            </div>
-          `;
-        }
-
-        const photoHTML = nodeData.photo 
-          ? `<img src="${nodeData.photo}" class="node-photo" alt="${nodeData.name}">` 
-          : `<div class="node-photo"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`;
-        
-        const phoneHTML = nodeData.phone ? `
-          <div class="node-phone">
-            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <span>${nodeData.phone}</span>
-          </div>
-        ` : `<div class="node-phone" style="opacity: 0.5;"><span>-</span></div>`;
-
-        return `
-          <div class="chart-node clickable-node custom-node-btn" data-chart-id="${chart.id}" data-slot-type="${slotType}" ${index !== null ? `data-index="${index}"` : ''}>
-            ${photoHTML}
-            <div class="node-title">${nodeData.name}</div>
-            <div class="node-position">${nodeData.position || defaultLabel}</div>
-            ${phoneHTML}
-          </div>
-        `;
-      };
-
-      const nodes = chart.nodes || {};
-      let membersHTML = '';
-      if (nodes.members && nodes.members.length > 0) {
-        nodes.members.forEach((m, idx) => {
-          membersHTML += createCustomNodeHTML(m, 'members', idx, 'សមាជិក');
-        });
-      }
-
-      customWrapper.innerHTML = `
-        <div class="custom-orgchart-header">
-          <div class="custom-orgchart-title">
-            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            ${chart.title}
-          </div>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn btn-secondary btn-edit-chart-title" data-chart-id="${chart.id}" style="font-size: 11px; padding: 4px 10px;">✏️ កែប្រែឈ្មោះ</button>
-            <button class="btn btn-danger btn-delete-chart" data-chart-id="${chart.id}" style="font-size: 11px; padding: 4px 10px;">🗑️ លុប</button>
-          </div>
-        </div>
-        <div class="org-chart-wrapper">
-          <div class="chart-row level-1">
-            ${createCustomNodeHTML(nodes.head, 'head', null, 'ប្រធាន')}
-          </div>
-          <div class="chart-connector-vertical"></div>
-          <div class="chart-row level-2 vice-principals-row">
-            <div class="vice-col">
-              <div class="vice-header-tag">អនុប្រធាន ទី១ (ខាងឆ្វេង)</div>
-              ${createCustomNodeHTML(nodes.viceLeft, 'viceLeft', null, 'អនុប្រធាន (ខាងឆ្វេង)')}
-            </div>
-            <div class="vice-col">
-              <div class="vice-header-tag">អនុប្រធាន ទី២ (ខាងស្តាំ)</div>
-              ${createCustomNodeHTML(nodes.viceRight, 'viceRight', null, 'អនុប្រធាន (ខាងស្តាំ)')}
-            </div>
-          </div>
-          <div class="chart-connector-vertical"></div>
-          <div class="chart-row level-3 teachers-row">
-            ${membersHTML}
-          </div>
-          <div class="add-member-btn-container">
-            <button class="btn btn-secondary btn-add-chart-member" data-chart-id="${chart.id}" style="font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
-              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              + បន្ថែមសមាជិក
-            </button>
-          </div>
-        </div>
-      `;
-
-      container.appendChild(customWrapper);
-
-      // Event handlers for custom chart
-      customWrapper.querySelectorAll('.custom-node-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const cId = btn.getAttribute('data-chart-id');
-          const slotType = btn.getAttribute('data-slot-type');
-          const idxAttr = btn.getAttribute('data-index');
-          const index = idxAttr !== null ? parseInt(idxAttr, 10) : null;
-          
-          openCustomNodeModal(cId, slotType, index);
-        });
-      });
-
-      customWrapper.querySelector('.btn-edit-chart-title').addEventListener('click', () => {
-        const newTitle = prompt('កែប្រែឈ្មោះរចនាសម្ព័ន្ធ៖', chart.title);
-        if (newTitle && newTitle.trim()) {
-          chart.title = newTitle.trim();
-          saveStateToStorage();
-          renderOrgChart();
-          showToast('បានកែប្រែឈ្មោះរចនាសម្ព័ន្ធរួចរាល់!', 'success');
-        }
-      });
-
-      customWrapper.querySelector('.btn-delete-chart').addEventListener('click', () => {
-        if (confirm(`តើអ្នកពិតជាចង់លុបរចនាសម្ព័ន្ធ «${chart.title}» នេះមែនទេ?`)) {
-          state.customOrgCharts = state.customOrgCharts.filter(c => c.id !== chart.id);
-          saveStateToStorage();
-          renderOrgChart();
-          showToast('បានលុបរចនាសម្ព័ន្ធរួចរាល់!', 'success');
-        }
-      });
-
-      customWrapper.querySelector('.btn-add-chart-member').addEventListener('click', () => {
-        openCustomNodeModal(chart.id, 'members', null);
-      });
-    });
-  }
-}
-
-function setupCustomOrgChartHandlers() {
-  const addBtn = document.getElementById('btn-add-custom-orgchart');
-  if (addBtn) {
-    addBtn.addEventListener('click', () => {
-      document.getElementById('new-orgchart-title').value = '';
-      openModal('orgchart-create-modal');
-    });
-  }
-
-  const createForm = document.getElementById('orgchart-create-form');
-  if (createForm) {
-    createForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const title = document.getElementById('new-orgchart-title').value.trim();
-      if (!title) return;
-
-      const newChart = {
-        id: 'chart_' + Date.now(),
-        title,
-        nodes: {
-          head: null,
-          viceLeft: null,
-          viceRight: null,
-          members: []
-        }
-      };
-
-      if (!state.customOrgCharts) state.customOrgCharts = [];
-      state.customOrgCharts.push(newChart);
-      saveStateToStorage();
-      renderOrgChart();
-      closeModal('orgchart-create-modal');
-      showToast('បានបង្កើតរចនាសម្ព័ន្ធថ្មីរួចរាល់!', 'success');
-    });
-  }
-
-  const photoInput = document.getElementById('node-photo-input');
-  if (photoInput) {
-    photoInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          tempNodePhoto = evt.target.result;
-          document.getElementById('node-photo-preview').src = tempNodePhoto;
-          document.getElementById('node-photo-preview').style.display = 'block';
-          document.getElementById('node-photo-placeholder').style.display = 'none';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  }
-
-  const picker = document.getElementById('node-staff-picker');
-  if (picker) {
-    picker.addEventListener('change', (e) => {
-      const staffId = e.target.value;
-      if (!staffId) return;
-      const member = state.staff.find(s => s.id === staffId);
-      if (member) {
-        document.getElementById('node-name').value = member.name;
-        document.getElementById('node-position').value = member.position || getRoleNameKhmer(member.role);
-        document.getElementById('node-phone').value = member.phone || '';
-        if (member.photo) {
-          tempNodePhoto = member.photo;
-          document.getElementById('node-photo-preview').src = tempNodePhoto;
-          document.getElementById('node-photo-preview').style.display = 'block';
-          document.getElementById('node-photo-placeholder').style.display = 'none';
-        }
-      }
-    });
-  }
-
-  const editForm = document.getElementById('orgnode-edit-form');
-  if (editForm) {
-    editForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!currentEditingNodeRef) return;
-
-      const { chartId, slotType, index } = currentEditingNodeRef;
-      const chart = state.customOrgCharts.find(c => c.id === chartId);
-      if (!chart) return;
-
-      const nodeData = {
-        name: document.getElementById('node-name').value.trim(),
-        position: document.getElementById('node-position').value.trim(),
-        phone: document.getElementById('node-phone').value.trim(),
-        photo: tempNodePhoto
-      };
-
-      if (!chart.nodes) {
-        chart.nodes = { head: null, viceLeft: null, viceRight: null, members: [] };
-      }
-
-      if (slotType === 'members') {
-        if (!chart.nodes.members) chart.nodes.members = [];
-        if (index !== null && index >= 0 && chart.nodes.members[index]) {
-          chart.nodes.members[index] = nodeData;
-        } else {
-          chart.nodes.members.push(nodeData);
-        }
-      } else {
-        chart.nodes[slotType] = nodeData;
-      }
-
-      saveStateToStorage();
-      renderOrgChart();
-      closeModal('orgnode-edit-modal');
-      showToast('បានកែប្រែព័ត៌មានសមាជិករចនាសម្ព័ន្ធរួចរាល់!', 'success');
-    });
-  }
-}
-
-function openCustomNodeModal(chartId, slotType, index = null) {
-  currentEditingNodeRef = { chartId, slotType, index };
-  tempNodePhoto = '';
-
-  const picker = document.getElementById('node-staff-picker');
-  if (picker) {
-    picker.innerHTML = '<option value="">-- ជ្រើសរើសដើម្បីបំពេញស្វ័យប្រវត្ត --</option>';
-    state.staff.forEach(s => {
-      picker.innerHTML += `<option value="${s.id}">${s.name} (${s.position || getRoleNameKhmer(s.role)})</option>`;
-    });
-  }
-
-  const chart = state.customOrgCharts.find(c => c.id === chartId);
-  let existingNode = null;
-  if (chart && chart.nodes) {
-    if (slotType === 'members') {
-      if (index !== null && chart.nodes.members && chart.nodes.members[index]) {
-        existingNode = chart.nodes.members[index];
-      }
-    } else {
-      existingNode = chart.nodes[slotType];
-    }
-  }
-
-  if (existingNode) {
-    document.getElementById('node-name').value = existingNode.name || '';
-    document.getElementById('node-position').value = existingNode.position || '';
-    document.getElementById('node-phone').value = existingNode.phone || '';
-    if (existingNode.photo) {
-      tempNodePhoto = existingNode.photo;
-      document.getElementById('node-photo-preview').src = tempNodePhoto;
-      document.getElementById('node-photo-preview').style.display = 'block';
-      document.getElementById('node-photo-placeholder').style.display = 'none';
-    } else {
-      document.getElementById('node-photo-preview').style.display = 'none';
-      document.getElementById('node-photo-placeholder').style.display = 'flex';
-    }
-  } else {
-    document.getElementById('node-name').value = '';
-    let defaultPos = 'សមាជិក';
-    if (slotType === 'head') defaultPos = 'ប្រធាន';
-    else if (slotType === 'viceLeft') defaultPos = 'អនុប្រធាន (ខាងឆ្វេង)';
-    else if (slotType === 'viceRight') defaultPos = 'អនុប្រធាន (ខាងស្តាំ)';
-    
-    document.getElementById('node-position').value = defaultPos;
-    document.getElementById('node-phone').value = '';
-    document.getElementById('node-photo-preview').style.display = 'none';
-    document.getElementById('node-photo-placeholder').style.display = 'flex';
-  }
-
-  openModal('orgnode-edit-modal');
-}
-
-function getRoleNameKhmer(role) {
-  switch (role) {
-    case 'principal': return 'នាយក / ព្រះចៅអធិការ';
-    case 'vice-principal': return 'នាយករង';
-    case 'vice-principal-left': return 'នាយករង ទី១ (ខាងឆ្វេង)';
-    case 'vice-principal-right': return 'នាយករង ទី២ (ខាងស្តាំ)';
-    case 'teacher': return 'គ្រូបង្រៀន';
-    case 'staff': return 'មន្ត្រីរដ្ឋបាល';
-    default: return role;
-  }
-}
-
-// --- STAFF VIEW ---
-function renderStaffList() {
-  const tbody = document.getElementById('staff-table-body');
-  tbody.innerHTML = '';
-
-  let filteredStaff = state.staff.filter(member => {
-    const matchesSearch = member.name.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
-                          member.id.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
-                          member.position.toLowerCase().includes(state.searchQuery.toLowerCase());
-    const matchesFilter = state.selectedStaffFilter === 'all' || member.role === state.selectedStaffFilter;
-    return matchesSearch && matchesFilter;
-  });
-
-  filteredStaff.forEach(member => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${member.id}</td>
-      <td><strong>${member.name}</strong></td>
-      <td>${member.gender}</td>
-      <td>${member.position}</td>
-      <td>${member.phone}</td>
-      <td>${member.email}</td>
-      <td>
-        <button class="btn-icon view-card" data-id="${member.id}" title="កាតសម្គាល់ខ្លួន" style="color: #a855f7;">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="4"></line><line x1="8" y1="2" x2="8" y2="4"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        </button>
-        <button class="btn-icon edit" data-id="${member.id}" title="កែប្រែ">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg>
-        </button>
-        <button class="btn-icon delete" data-id="${member.id}" title="លុប">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  tbody.querySelectorAll('.view-card').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const member = state.staff.find(s => s.id === btn.getAttribute('data-id'));
-      openStaffCardModal(member);
-    });
-  });
-
-  tbody.querySelectorAll('.edit').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const member = state.staff.find(s => s.id === btn.getAttribute('data-id'));
-      openStaffModal(member);
-    });
-  });
-
-  tbody.querySelectorAll('.delete').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (confirm('តើអ្នកពិតជាចង់លុបមន្ត្រី/គ្រូនេះមែនទេ?')) {
-        state.staff = state.staff.filter(s => s.id !== btn.getAttribute('data-id'));
-        saveStateToStorage();
-        renderStaffList();
-        renderOrgChart();
-        showToast('បានលុបព័ត៌មានរួចរាល់!', 'success');
-      }
-    });
-  });
-}
-
-function setupStaffHandlers() {
-  document.getElementById('staff-search').addEventListener('input', (e) => {
-    state.searchQuery = e.target.value;
-    renderStaffList();
-  });
-
-  document.getElementById('staff-role-filter').addEventListener('change', (e) => {
-    state.selectedStaffFilter = e.target.value;
-    renderStaffList();
-  });
-
-  document.getElementById('btn-add-staff').addEventListener('click', () => {
-    openStaffModal(null);
-  });
-
-  document.getElementById('staff-photo-input').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        document.getElementById('staff-photo-preview').src = event.target.result;
-        document.getElementById('staff-photo-preview').style.display = 'block';
-        document.getElementById('staff-photo-placeholder').style.display = 'none';
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-  document.getElementById('staff-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const id = document.getElementById('staff-id').value;
-    const name = document.getElementById('staff-name').value;
-    const gender = document.getElementById('staff-gender').value;
-    const role = document.getElementById('staff-role').value;
-    const position = document.getElementById('staff-position').value;
-    const phone = document.getElementById('staff-phone').value;
-    const email = document.getElementById('staff-email').value;
-    const degree = document.getElementById('staff-degree').value;
-    const joinedDate = document.getElementById('staff-joined-date').value;
-    const photo = document.getElementById('staff-photo-preview').style.display === 'block' 
-      ? document.getElementById('staff-photo-preview').src 
-      : '';
-
-    const newStaff = { id, name, gender, role, position, phone, email, degree, joinedDate, photo };
-
-    const index = state.staff.findIndex(s => s.id === id);
-    if (index > -1) {
-      state.staff[index] = newStaff;
-      showToast('បានកែប្រែព័ត៌មានដោយជោគជ័យ!', 'success');
-    } else {
-      state.staff.push(newStaff);
-      showToast('បានបន្ថែមមន្ត្រី/គ្រូថ្មីដោយជោគជ័យ!', 'success');
-    }
-
-    saveStateToStorage();
-    renderStaffList();
-    renderOrgChart();
-    closeModal('staff-modal');
-  });
-
-  document.getElementById('btn-print-staff-card').addEventListener('click', () => {
-    const cardContent = document.getElementById('staff-card-preview').outerHTML;
-    const printDiv = document.createElement('div');
-    printDiv.id = 'print-view';
-    printDiv.innerHTML = cardContent;
-    document.body.appendChild(printDiv);
-    
-    window.print();
-    document.getElementById('print-view').remove();
-  });
-
-  // --- IMPORT STAFF FROM EXCEL / GOOGLE SHEETS ---
-  let tempParsedStaff = [];
-
-  // Toggle Tab: Paste
-  document.getElementById('btn-import-staff-tab-paste').addEventListener('click', () => {
-    document.getElementById('btn-import-staff-tab-paste').style.color = 'var(--text-yellow)';
-    document.getElementById('btn-import-staff-tab-paste').style.borderBottom = '3px solid var(--accent)';
-    document.getElementById('btn-import-staff-tab-file').style.color = 'var(--text-muted)';
-    document.getElementById('btn-import-staff-tab-file').style.borderBottom = 'none';
-    
-    document.getElementById('import-staff-tab-content-paste').style.display = 'block';
-    document.getElementById('import-staff-tab-content-file').style.display = 'none';
-  });
-
-  // Toggle Tab: File
-  document.getElementById('btn-import-staff-tab-file').addEventListener('click', () => {
-    document.getElementById('btn-import-staff-tab-file').style.color = 'var(--text-yellow)';
-    document.getElementById('btn-import-staff-tab-file').style.borderBottom = '3px solid var(--accent)';
-    document.getElementById('btn-import-staff-tab-paste').style.color = 'var(--text-muted)';
-    document.getElementById('btn-import-staff-tab-paste').style.borderBottom = 'none';
-    
-    document.getElementById('import-staff-tab-content-file').style.display = 'block';
-    document.getElementById('import-staff-tab-content-paste').style.display = 'none';
-  });
-
-  // Open Modal
-  document.getElementById('btn-import-staff').addEventListener('click', () => {
-    tempParsedStaff = [];
-    document.getElementById('import-staff-paste-area').value = '';
-    document.getElementById('import-staff-file-input').value = '';
-    document.getElementById('import-staff-file-name').style.display = 'none';
-    document.getElementById('import-staff-preview-section').style.display = 'none';
-    document.getElementById('btn-submit-import-staff').disabled = true;
-    openModal('import-staff-modal');
-  });
-
-  // Process pasted content on input
-  document.getElementById('import-staff-paste-area').addEventListener('input', (e) => {
-    const text = e.target.value;
-    processPastedStaffData(text);
-  });
-
-  function processPastedStaffData(text) {
-    if (!text.trim()) {
-      document.getElementById('import-staff-preview-section').style.display = 'none';
-      document.getElementById('btn-submit-import-staff').disabled = true;
-      return;
-    }
-    
-    tempParsedStaff = parseImportStaffData(text);
-    renderImportStaffPreview();
-  }
-
-  // File drag & drop / select
-  const dragStaffArea = document.getElementById('import-staff-drag-area');
-  const fileStaffInput = document.getElementById('import-staff-file-input');
-
-  dragStaffArea.addEventListener('click', () => fileStaffInput.click());
-
-  dragStaffArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dragStaffArea.style.borderColor = 'var(--accent)';
-    dragStaffArea.style.background = 'rgba(212, 175, 55, 0.05)';
-  });
-
-  dragStaffArea.addEventListener('dragleave', () => {
-    dragStaffArea.style.borderColor = 'var(--border-color)';
-    dragStaffArea.style.background = 'rgba(255,255,255,0.02)';
-  });
-
-  dragStaffArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dragStaffArea.style.borderColor = 'var(--border-color)';
-    dragStaffArea.style.background = 'rgba(255,255,255,0.02)';
-    
-    if (e.dataTransfer.files.length > 0) {
-      handleImportStaffFile(e.dataTransfer.files[0]);
-    }
-  });
-
-  fileStaffInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) {
-      handleImportStaffFile(e.target.files[0]);
-    }
-  });
-
-  function handleImportStaffFile(file) {
-    const fileNameDiv = document.getElementById('import-staff-file-name');
-    fileNameDiv.innerText = `ឯកសារ៖ ${file.name}`;
-    fileNameDiv.style.display = 'block';
-
-    const fileExt = file.name.split('.').pop().toLowerCase();
-    
-    if (fileExt === 'csv') {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = e.target.result;
-        const tsvText = csvToTsv(text);
-        tempParsedStaff = parseImportStaffData(tsvText);
-        renderImportStaffPreview();
-      };
-      reader.readAsText(file, 'UTF-8');
-    } else if (fileExt === 'xlsx' || fileExt === 'xls') {
-      if (typeof XLSX === 'undefined') {
-        showToast('កំពុងទាញយកបណ្ណាល័យជំនួយសម្រាប់ Excel...', 'info');
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
-        script.onload = () => {
-          readExcelStaffFile(file);
-        };
-        script.onerror = () => {
-          showToast('មិនអាចទាញយកបណ្ណាល័យបានទេ! សូមពិនិត្យការភ្ជាប់អ៊ីនធឺណិត ឬប្រើវិធី ចម្លងនិងបិទភ្ជាប់ ជំនួសវិញ!', 'error');
-        };
-        document.head.appendChild(script);
-      } else {
-        readExcelStaffFile(file);
-      }
-    } else {
-      showToast('ប្រភេទឯកសារមិនត្រឹមត្រូវ! គាំទ្រតែ Excel និង CSV ប៉ុណ្ណោះ។', 'error');
-    }
-  }
-
-  function readExcelStaffFile(file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        
-        const csv = XLSX.utils.sheet_to_txt(worksheet);
-        tempParsedStaff = parseImportStaffData(csv);
-        renderImportStaffPreview();
-      } catch (err) {
-        showToast('ការអានឯកសារ Excel មានបញ្ហា! សូមព្យាយាមម្តងទៀត។', 'error');
-        console.error(err);
-      }
-    };
-    reader.readAsArrayBuffer(file);
-  }
-
-  function parseImportStaffData(rowsText) {
-    const lines = rowsText.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
-    if (lines.length === 0) return [];
-    
-    const firstLineCells = lines[0].split('\t');
-    let mappings = {
-      id: 0,
-      name: 1,
-      gender: 2,
-      position: 3,
-      phone: 4,
-      email: 5,
-      degree: 6,
-      joinedDate: 7
-    };
-    
-    const headerTerms = {
-      id: ['លេខសម្គាល់', 'អត្តលេខ', 'id', 'staff id', 'number', 'លេខ'],
-      name: ['ឈ្មោះ', 'នាម', 'គោត្តនាម', 'name', 'staff name', 'full name'],
-      gender: ['ភេទ', 'gender', 'sex'],
-      position: ['តួនាទី', 'position', 'role name', 'ងារ'],
-      phone: ['ទូរស័ព្ទ', 'លេខទូរស័ព្ទ', 'phone', 'contact', 'telephone', 'phone number'],
-      email: ['អ៊ីមែល', 'email', 'e-mail', 'mail'],
-      degree: ['កម្រិតវប្បធម៌', 'សញ្ញាបត្រ', 'degree', 'qualification', 'វប្បធម៌'],
-      joinedDate: ['ថ្ងៃចូលបម្រើការ', 'ថ្ងៃចូលធ្វើការ', 'joined date', 'joineddate', 'entry date']
-    };
-    
-    let matchCount = 0;
-    firstLineCells.forEach((cell, index) => {
-      const cleanCell = cell.toLowerCase().trim();
-      for (const [field, terms] of Object.entries(headerTerms)) {
-        if (terms.some(term => cleanCell.includes(term.toLowerCase()))) {
-          mappings[field] = index;
-          matchCount++;
-          break;
-        }
-      }
-    });
-    
-    let dataLines = lines;
-    if (matchCount >= 3) {
-      dataLines = lines.slice(1);
-    } else {
-      mappings = {
-        id: 0,
-        name: 1,
-        gender: 2,
-        position: 3,
-        phone: 4,
-        email: 5,
-        degree: 6,
-        joinedDate: 7
-      };
-    }
-    
-    const parsedStaff = [];
-    let tempIdCounter = state.staff.length + 1;
-
-    dataLines.forEach(line => {
-      const cells = line.split('\t');
-      if (cells.length < 2) return;
-      
-      let id = cells[mappings.id] ? cells[mappings.id].trim() : '';
-      const name = cells[mappings.name] ? cells[mappings.name].trim() : '';
-      let gender = cells[mappings.gender] ? cells[mappings.gender].trim() : '';
-      let position = cells[mappings.position] ? cells[mappings.position].trim() : '';
-      let phone = cells[mappings.phone] ? cells[mappings.phone].trim() : '-';
-      let email = cells[mappings.email] ? cells[mappings.email].trim() : '-';
-      const degree = cells[mappings.degree] ? cells[mappings.degree].trim() : '-';
-      let joinedDate = cells[mappings.joinedDate] ? cells[mappings.joinedDate].trim() : '';
-      
-      if (!name) return;
-
-      if (!id) {
-        id = 'ST' + String(tempIdCounter++).padStart(3, '0');
-      }
-
-      if (gender) {
-        gender = gender.replace(/m|male|ប្រុស/i, 'ប្រុស');
-        gender = gender.replace(/f|female|ស្រី/i, 'ស្រី');
-      } else {
-        gender = 'ប្រុស';
-      }
-
-      if (joinedDate && /^\d+$/.test(joinedDate)) {
-        const excelDate = parseInt(joinedDate, 10);
-        const dateObj = new Date((excelDate - 25569) * 86400 * 1000);
-        joinedDate = dateObj.toISOString().split('T')[0];
-      } else if (!joinedDate) {
-        joinedDate = '-';
-      }
-
-      let role = 'teacher';
-      const cleanPos = position.toLowerCase();
-      if (cleanPos.includes('នាយករង') || cleanPos.includes('vice principal') || cleanPos.includes('vice-principal') || cleanPos.includes('deputy')) {
-        if (cleanPos.includes('ឆ្វេង') || cleanPos.includes('១') || cleanPos.includes('1')) {
-          role = 'vice-principal-left';
-        } else if (cleanPos.includes('ស្តាំ') || cleanPos.includes('២') || cleanPos.includes('2')) {
-          role = 'vice-principal-right';
-        } else {
-          role = 'vice-principal-left';
-        }
-      } else if (cleanPos.includes('នាយក') || cleanPos.includes('principal') || cleanPos.includes('director') || cleanPos.includes('អធិការ')) {
-        role = 'principal';
-      } else if (cleanPos.includes('បណ្ណារក្ស') || cleanPos.includes('គណនេយ្យ') || cleanPos.includes('អនាម័យ') || cleanPos.includes('យាម') || cleanPos.includes('support')) {
-        role = 'staff';
-      }
-      
-      parsedStaff.push({
-        id,
-        name,
-        gender,
-        role,
-        position: position || 'គ្រូបង្រៀន',
-        phone,
-        email,
-        degree,
-        joinedDate,
-        photo: ''
-      });
-    });
-    
-    return parsedStaff;
-  }
-
-  function renderImportStaffPreview() {
-    const previewTbody = document.getElementById('import-staff-preview-tbody');
-    const previewSection = document.getElementById('import-staff-preview-section');
-    const importBtn = document.getElementById('btn-submit-import-staff');
-    const countSpan = document.getElementById('import-staff-count');
-
-    previewTbody.innerHTML = '';
-    
-    if (tempParsedStaff.length === 0) {
-      previewSection.style.display = 'none';
-      importBtn.disabled = true;
-      return;
-    }
-
-    countSpan.innerText = tempParsedStaff.length;
-
-    tempParsedStaff.forEach(member => {
-      const tr = document.createElement('tr');
-      tr.style.borderBottom = '1px solid var(--border-color)';
-      tr.innerHTML = `
-        <td style="padding: 8px 10px; font-weight: bold; color: var(--text-yellow);">${member.id}</td>
-        <td style="padding: 8px 10px; font-weight: bold;">${member.name}</td>
-        <td style="padding: 8px 10px;">${member.gender}</td>
-        <td style="padding: 8px 10px;">${member.position}</td>
-        <td style="padding: 8px 10px;">${member.phone}</td>
-        <td style="padding: 8px 10px;">${member.email}</td>
-        <td style="padding: 8px 10px;">${member.degree}</td>
-        <td style="padding: 8px 10px;">${member.joinedDate}</td>
-      `;
-      previewTbody.appendChild(tr);
-    });
-
-    previewSection.style.display = 'block';
-    importBtn.disabled = false;
-  }
-
-  // Handle Save Import Data
-  document.getElementById('btn-submit-import-staff').addEventListener('click', () => {
-    if (tempParsedStaff.length === 0) return;
-
-    let addedCount = 0;
-    let updatedCount = 0;
-
-    tempParsedStaff.forEach(newStaff => {
-      const idx = state.staff.findIndex(s => s.id === newStaff.id);
-      if (idx > -1) {
-        newStaff.photo = state.staff[idx].photo || '';
-        state.staff[idx] = newStaff;
-        updatedCount++;
-      } else {
-        state.staff.push(newStaff);
-        addedCount++;
-      }
-    });
-
-    saveStateToStorage();
-    renderStaffList();
-    renderOrgChart();
-    closeModal('import-staff-modal');
-    
-    showToast(`នាំចូលដោយជោគជ័យ! បន្ថែមថ្មី: ${addedCount} នាក់, កែប្រែ: ${updatedCount} នាក់`, 'success');
-  });
-}
-
-function openStaffModal(member) {
-  const isEdit = !!member;
-  document.getElementById('staff-modal-title').innerText = isEdit ? 'កែប្រែព័ត៌មានមន្ត្រី/គ្រូ' : 'បន្ថែមមន្ត្រី/គ្រូថ្មី';
-  
-  if (isEdit) {
-    document.getElementById('staff-id').value = member.id;
-    document.getElementById('staff-id').readOnly = true;
-    document.getElementById('staff-name').value = member.name;
-    document.getElementById('staff-gender').value = member.gender;
-    document.getElementById('staff-role').value = member.role;
-    document.getElementById('staff-position').value = member.position;
-    document.getElementById('staff-phone').value = member.phone;
-    document.getElementById('staff-email').value = member.email;
-    document.getElementById('staff-degree').value = member.degree;
-    document.getElementById('staff-joined-date').value = member.joinedDate;
-    
-    if (member.photo) {
-      document.getElementById('staff-photo-preview').src = member.photo;
-      document.getElementById('staff-photo-preview').style.display = 'block';
-      document.getElementById('staff-photo-placeholder').style.display = 'none';
-    } else {
-      document.getElementById('staff-photo-preview').style.display = 'none';
-      document.getElementById('staff-photo-placeholder').style.display = 'block';
-    }
-  } else {
-    document.getElementById('staff-id').value = 'ST' + String(state.staff.length + 1).padStart(3, '0');
-    document.getElementById('staff-id').readOnly = false;
-    document.getElementById('staff-name').value = '';
-    document.getElementById('staff-gender').value = 'ប្រុស';
-    document.getElementById('staff-role').value = 'teacher';
-    document.getElementById('staff-position').value = '';
-    document.getElementById('staff-phone').value = '';
-    document.getElementById('staff-email').value = '';
-    document.getElementById('staff-degree').value = '';
-    document.getElementById('staff-joined-date').value = new Date().toISOString().split('T')[0];
-    document.getElementById('staff-photo-preview').style.display = 'none';
-    document.getElementById('staff-photo-placeholder').style.display = 'block';
-    document.getElementById('staff-photo-input').value = '';
-  }
-
-  openModal('staff-modal');
-}
-
-// --- STUDENTS VIEW ---
-function renderStudentList() {
-  const tbody = document.getElementById('student-table-body');
-  tbody.innerHTML = '';
-
-  let filteredStudents = state.students.filter(student => {
-    const matchesSearch = student.name.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
-                          student.id.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
-                          student.fatherName.toLowerCase().includes(state.searchQuery.toLowerCase());
-    const matchesFilter = state.selectedGradeFilter === 'all' || student.grade === state.selectedGradeFilter;
-    return matchesSearch && matchesFilter;
-  });
-
-  filteredStudents.forEach(student => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${student.id}</td>
-      <td><strong>${student.name}</strong></td>
-      <td>${student.gender}</td>
-      <td>${getGradeNameKhmer(student.grade)}</td>
-      <td>${student.dob}</td>
-      <td>${student.fatherPhone}</td>
-      <td>
-        <button class="btn-icon card-gen" data-id="${student.id}" title="បង្កើតកាតសិស្ស">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><line x1="7" y1="8" x2="17" y2="8"></line><line x1="7" y1="12" x2="17" y2="12"></line><line x1="7" y1="16" x2="13" y2="16"></line></svg>
-        </button>
-        <button class="btn-icon edit" data-id="${student.id}" title="កែប្រែ">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg>
-        </button>
-        <button class="btn-icon delete" data-id="${student.id}" title="លុប">
-          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  tbody.querySelectorAll('.card-gen').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const student = state.students.find(s => s.id === btn.getAttribute('data-id'));
-      openStudentCardModal(student);
-    });
-  });
-
-  tbody.querySelectorAll('.edit').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const student = state.students.find(s => s.id === btn.getAttribute('data-id'));
-      openStudentModal(student);
-    });
-  });
-
-  tbody.querySelectorAll('.delete').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (confirm('តើអ្នកពិតជាចង់លុបឈ្មោះសិស្សនេះមែនទេ?')) {
-        state.students = state.students.filter(s => s.id !== btn.getAttribute('data-id'));
-        saveStateToStorage();
-        renderStudentList();
-        showToast('បានលុបព័ត៌មានសិស្សរួចរាល់!', 'success');
-      }
-    });
-  });
-}
-
-function setupStudentHandlers() {
-  document.getElementById('student-search').addEventListener('input', (e) => {
-    state.searchQuery = e.target.value;
-    renderStudentList();
-  });
-
-  document.getElementById('student-grade-filter').addEventListener('change', (e) => {
-    state.selectedGradeFilter = e.target.value;
-    renderStudentList();
-  });
-
-  document.getElementById('btn-add-student').addEventListener('click', () => {
-    openStudentModal(null);
-  });
-
-  document.getElementById('student-photo-input').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        document.getElementById('student-photo-preview').src = event.target.result;
-        document.getElementById('student-photo-preview').style.display = 'block';
-        document.getElementById('student-photo-placeholder').style.display = 'none';
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-  document.getElementById('student-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const id = document.getElementById('student-id').value;
-    const name = document.getElementById('student-name').value;
-    const gender = document.getElementById('student-gender').value;
-    const grade = document.getElementById('student-grade').value;
-    const dob = document.getElementById('student-dob').value;
-    const pob = document.getElementById('student-pob').value;
-    const fatherName = document.getElementById('student-father-name').value;
-    const motherName = document.getElementById('student-mother-name').value;
-    const fatherPhone = document.getElementById('student-father-phone').value;
-    const address = document.getElementById('student-address').value;
-    const photo = document.getElementById('student-photo-preview').style.display === 'block' 
-      ? document.getElementById('student-photo-preview').src 
-      : '';
-
-    const newStudent = { id, name, gender, grade, dob, pob, fatherName, motherName, fatherPhone, address, photo };
-
-    const index = state.students.findIndex(s => s.id === id);
-    if (index > -1) {
-      state.students[index] = newStudent;
-      showToast('បានកែប្រែព័ត៌មានសិស្សដោយជោគជ័យ!', 'success');
-    } else {
-      state.students.push(newStudent);
-      showToast('បានបន្ថែមសិស្សថ្មីដោយជោគជ័យ!', 'success');
-    }
-
-    saveStateToStorage();
-    renderStudentList();
-    closeModal('student-modal');
-  });
-
-  document.getElementById('btn-print-card').addEventListener('click', () => {
-    const cardContent = document.getElementById('student-card-preview').outerHTML;
-    const printDiv = document.createElement('div');
-    printDiv.id = 'print-view';
-    printDiv.innerHTML = cardContent;
-    document.body.appendChild(printDiv);
-    
-    window.print();
-    document.getElementById('print-view').remove();
-  });
-
-  // --- IMPORT STUDENTS FROM EXCEL / GOOGLE SHEETS ---
-  let tempParsedStudents = [];
-
-  // Toggle Tab: Paste
-  document.getElementById('btn-import-tab-paste').addEventListener('click', () => {
-    document.getElementById('btn-import-tab-paste').style.color = 'var(--text-yellow)';
-    document.getElementById('btn-import-tab-paste').style.borderBottom = '3px solid var(--accent)';
-    document.getElementById('btn-import-tab-file').style.color = 'var(--text-muted)';
-    document.getElementById('btn-import-tab-file').style.borderBottom = 'none';
-    
-    document.getElementById('import-tab-content-paste').style.display = 'block';
-    document.getElementById('import-tab-content-file').style.display = 'none';
-  });
-
-  // Toggle Tab: File
-  document.getElementById('btn-import-tab-file').addEventListener('click', () => {
-    document.getElementById('btn-import-tab-file').style.color = 'var(--text-yellow)';
-    document.getElementById('btn-import-tab-file').style.borderBottom = '3px solid var(--accent)';
-    document.getElementById('btn-import-tab-paste').style.color = 'var(--text-muted)';
-    document.getElementById('btn-import-tab-paste').style.borderBottom = 'none';
-    
-    document.getElementById('import-tab-content-file').style.display = 'block';
-    document.getElementById('import-tab-content-paste').style.display = 'none';
-  });
-
-  // Open Modal
-  document.getElementById('btn-import-students').addEventListener('click', () => {
-    tempParsedStudents = [];
-    document.getElementById('import-paste-area').value = '';
-    document.getElementById('import-file-input').value = '';
-    document.getElementById('import-file-name').style.display = 'none';
-    document.getElementById('import-preview-section').style.display = 'none';
-    document.getElementById('btn-submit-import').disabled = true;
-    openModal('import-students-modal');
-  });
-
-  // Process pasted content on input
-  document.getElementById('import-paste-area').addEventListener('input', (e) => {
-    const text = e.target.value;
-    processPastedData(text);
-  });
-
-  function processPastedData(text) {
-    if (!text.trim()) {
-      document.getElementById('import-preview-section').style.display = 'none';
-      document.getElementById('btn-submit-import').disabled = true;
-      return;
-    }
-    
-    tempParsedStudents = parseImportData(text);
-    renderImportPreview();
-  }
-
-  // File drag & drop / select
-  const dragArea = document.getElementById('import-drag-area');
-  const fileInput = document.getElementById('import-file-input');
-
-  dragArea.addEventListener('click', () => fileInput.click());
-
-  dragArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dragArea.style.borderColor = 'var(--accent)';
-    dragArea.style.background = 'rgba(212, 175, 55, 0.05)';
-  });
-
-  dragArea.addEventListener('dragleave', () => {
-    dragArea.style.borderColor = 'var(--border-color)';
-    dragArea.style.background = 'rgba(255,255,255,0.02)';
-  });
-
-  dragArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dragArea.style.borderColor = 'var(--border-color)';
-    dragArea.style.background = 'rgba(255,255,255,0.02)';
-    
-    if (e.dataTransfer.files.length > 0) {
-      handleImportFile(e.dataTransfer.files[0]);
-    }
-  });
-
-  fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) {
-      handleImportFile(e.target.files[0]);
-    }
-  });
-
-  function handleImportFile(file) {
-    const fileNameDiv = document.getElementById('import-file-name');
-    fileNameDiv.innerText = `ឯកសារ៖ ${file.name}`;
-    fileNameDiv.style.display = 'block';
-
-    const fileExt = file.name.split('.').pop().toLowerCase();
-    
-    if (fileExt === 'csv') {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = e.target.result;
-        const tsvText = csvToTsv(text);
-        tempParsedStudents = parseImportData(tsvText);
-        renderImportPreview();
-      };
-      reader.readAsText(file, 'UTF-8');
-    } else if (fileExt === 'xlsx' || fileExt === 'xls') {
-      if (typeof XLSX === 'undefined') {
-        showToast('កំពុងទាញយកបណ្ណាល័យជំនួយសម្រាប់ Excel...', 'info');
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
-        script.onload = () => {
-          readExcelFile(file);
-        };
-        script.onerror = () => {
-          showToast('មិនអាចទាញយកបណ្ណាល័យបានទេ! សូមពិនិត្យការភ្ជាប់អ៊ីនធឺណិត ឬប្រើវិធី ចម្លងនិងបិទភ្ជាប់ ជំនួសវិញ!', 'error');
-        };
-        document.head.appendChild(script);
-      } else {
-        readExcelFile(file);
-      }
-    } else {
-      showToast('ប្រភេទឯកសារមិនត្រឹមត្រូវ! គាំទ្រតែ Excel និង CSV ប៉ុណ្ណោះ។', 'error');
-    }
-  }
-
-  function readExcelFile(file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        
-        const csv = XLSX.utils.sheet_to_txt(worksheet);
-        tempParsedStudents = parseImportData(csv);
-        renderImportPreview();
-      } catch (err) {
-        showToast('ការអានឯកសារ Excel មានបញ្ហា! សូមព្យាយាមម្តងទៀត។', 'error');
-        console.error(err);
-      }
-    };
-    reader.readAsArrayBuffer(file);
-  }
-
-  function csvToTsv(csvText) {
-    const lines = [];
-    let row = [];
-    let inQuotes = false;
-    let current = '';
-    
-    for (let i = 0; i < csvText.length; i++) {
-      const char = csvText[i];
-      const nextChar = csvText[i + 1];
-      
-      if (char === '"') {
-        if (inQuotes && nextChar === '"') {
-          current += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (char === ',' && !inQuotes) {
-        row.push(current);
-        current = '';
-      } else if ((char === '\n' || char === '\r') && !inQuotes) {
-        if (char === '\r' && nextChar === '\n') i++;
-        row.push(current);
-        lines.push(row.join('\t'));
-        row = [];
-        current = '';
-      } else {
-        current += char;
-      }
-    }
-    if (current || row.length > 0) {
-      row.push(current);
-      lines.push(row.join('\t'));
-    }
-    return lines.join('\n');
-  }
-
-  function parseImportData(rowsText) {
-    const lines = rowsText.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
-    if (lines.length === 0) return [];
-    
-    const firstLineCells = lines[0].split('\t');
-    let mappings = {
-      id: 0,
-      name: 1,
-      gender: 2,
-      grade: 3,
-      dob: 4,
-      fatherPhone: 5,
-      pob: 6,
-      fatherName: 7,
-      motherName: 8,
-      address: 9
-    };
-    
-    const headerTerms = {
-      id: ['អត្តលេខ', 'លេខសម្គាល់', 'id', 'student id', 'number', 'លេខ'],
-      name: ['ឈ្មោះ', 'នាម', 'គោត្តនាម', 'name', 'student name', 'full name'],
-      gender: ['ភេទ', 'gender', 'sex'],
-      grade: ['ថ្នាក់', 'ថ្នាក់ទី', 'grade', 'class'],
-      dob: ['ថ្ងៃខែឆ្នាំកំណើត', 'ថ្ងៃកំណើត', 'dob', 'date of birth', 'birthdate'],
-      fatherPhone: ['ទូរស័ព្ទ', 'លេខទូរស័ព្ទ', 'phone', 'contact', 'telephone', 'phone number', 'guardian phone'],
-      pob: ['ទីកន្លែងកំណើត', 'pob', 'place of birth', 'កំណើត'],
-      fatherName: ['ឈ្មោះឪពុក', 'ឪពុក', 'father', 'father name'],
-      motherName: ['ឈ្មោះម្តាយ', 'ម្តាយ', 'mother', 'mother name'],
-      address: ['អាសយដ្ឋាន', 'address', 'ទីលំនៅ']
-    };
-    
-    let matchCount = 0;
-    firstLineCells.forEach((cell, index) => {
-      const cleanCell = cell.toLowerCase().trim();
-      for (const [field, terms] of Object.entries(headerTerms)) {
-        if (terms.some(term => cleanCell.includes(term.toLowerCase()))) {
-          mappings[field] = index;
-          matchCount++;
-          break;
-        }
-      }
-    });
-    
-    let dataLines = lines;
-    if (matchCount >= 3) {
-      dataLines = lines.slice(1);
-    } else {
-      mappings = {
-        id: 0,
-        name: 1,
-        gender: 2,
-        grade: 3,
-        dob: 4,
-        fatherPhone: 5,
-        pob: 6,
-        fatherName: 7,
-        motherName: 8,
-        address: 9
-      };
-    }
-    
-    const parsedStudents = [];
-    let tempIdCounter = state.students.length + 1;
-
-    dataLines.forEach(line => {
-      const cells = line.split('\t');
-      if (cells.length < 2) return;
-      
-      let id = cells[mappings.id] ? cells[mappings.id].trim() : '';
-      const name = cells[mappings.name] ? cells[mappings.name].trim() : '';
-      let gender = cells[mappings.gender] ? cells[mappings.gender].trim() : '';
-      let grade = cells[mappings.grade] ? cells[mappings.grade].trim() : '';
-      let dob = cells[mappings.dob] ? cells[mappings.dob].trim() : '';
-      let fatherPhone = cells[mappings.fatherPhone] ? cells[mappings.fatherPhone].trim() : '';
-      const pob = cells[mappings.pob] ? cells[mappings.pob].trim() : '-';
-      const fatherName = cells[mappings.fatherName] ? cells[mappings.fatherName].trim() : '-';
-      const motherName = cells[mappings.motherName] ? cells[mappings.motherName].trim() : '-';
-      const address = cells[mappings.address] ? cells[mappings.address].trim() : '-';
-      
-      if (!name) return;
-
-      if (!id) {
-        id = 'STU' + String(tempIdCounter++).padStart(3, '0');
-      }
-
-      if (gender) {
-        gender = gender.replace(/m|male|ប្រុស/i, 'ប្រុស');
-        gender = gender.replace(/f|female|ស្រី/i, 'ស្រី');
-      } else {
-        gender = 'ប្រុស';
-      }
-
-      if (dob && /^\d+$/.test(dob)) {
-        const excelDate = parseInt(dob, 10);
-        const dateObj = new Date((excelDate - 25569) * 86400 * 1000);
-        dob = dateObj.toISOString().split('T')[0];
-      }
-
-      let gradeKey = 'grade-1';
-      const cleanGrade = grade.toLowerCase();
-      if (cleanGrade.includes('មត្តេយ្យ') || cleanGrade.includes('kinder')) {
-        gradeKey = 'kindergarten';
-      } else if (cleanGrade.includes('១') || cleanGrade.includes('1') || cleanGrade.includes('g1') || cleanGrade.includes('ទី១') || cleanGrade.includes('ទី 1')) {
-        gradeKey = 'grade-1';
-      } else if (cleanGrade.includes('២') || cleanGrade.includes('2') || cleanGrade.includes('g2') || cleanGrade.includes('ទី២') || cleanGrade.includes('ទី 2')) {
-        gradeKey = 'grade-2';
-      } else if (cleanGrade.includes('៣') || cleanGrade.includes('3') || cleanGrade.includes('g3') || cleanGrade.includes('ទី៣') || cleanGrade.includes('ទី 3')) {
-        gradeKey = 'grade-3';
-      }
-      
-      parsedStudents.push({
-        id,
-        name,
-        gender,
-        grade: gradeKey,
-        dob: dob || '-',
-        pob,
-        fatherName,
-        motherName,
-        fatherPhone: fatherPhone || '-',
-        address,
-        photo: ''
-      });
-    });
-    
-    return parsedStudents;
-  }
-
-  function renderImportPreview() {
-    const previewTbody = document.getElementById('import-preview-tbody');
-    const previewSection = document.getElementById('import-preview-section');
-    const importBtn = document.getElementById('btn-submit-import');
-    const countSpan = document.getElementById('import-count');
-
-    previewTbody.innerHTML = '';
-    
-    if (tempParsedStudents.length === 0) {
-      previewSection.style.display = 'none';
-      importBtn.disabled = true;
-      return;
-    }
-
-    countSpan.innerText = tempParsedStudents.length;
-
-    tempParsedStudents.forEach(student => {
-      const tr = document.createElement('tr');
-      tr.style.borderBottom = '1px solid var(--border-color)';
-      tr.innerHTML = `
-        <td style="padding: 8px 10px; font-weight: bold; color: var(--text-yellow);">${student.id}</td>
-        <td style="padding: 8px 10px; font-weight: bold;">${student.name}</td>
-        <td style="padding: 8px 10px;">${student.gender}</td>
-        <td style="padding: 8px 10px;">${getGradeNameKhmer(student.grade)}</td>
-        <td style="padding: 8px 10px;">${student.dob}</td>
-        <td style="padding: 8px 10px;">${student.fatherPhone}</td>
-        <td style="padding: 8px 10px;">${student.pob}</td>
-        <td style="padding: 8px 10px;">${student.fatherName}</td>
-        <td style="padding: 8px 10px;">${student.motherName}</td>
-        <td style="padding: 8px 10px;">${student.address}</td>
-      `;
-      previewTbody.appendChild(tr);
-    });
-
-    previewSection.style.display = 'block';
-    importBtn.disabled = false;
-  }
-
-  // Handle Save Import Data
-  document.getElementById('btn-submit-import').addEventListener('click', () => {
-    if (tempParsedStudents.length === 0) return;
-
-    let addedCount = 0;
-    let updatedCount = 0;
-
-    tempParsedStudents.forEach(newStudent => {
-      const idx = state.students.findIndex(s => s.id === newStudent.id);
-      if (idx > -1) {
-        newStudent.photo = state.students[idx].photo || '';
-        state.students[idx] = newStudent;
-        updatedCount++;
-      } else {
-        state.students.push(newStudent);
-        addedCount++;
-      }
-    });
-
-    saveStateToStorage();
-    renderStudentList();
-    closeModal('import-students-modal');
-    
-    showToast(`នាំចូលដោយជោគជ័យ! បន្ថែមថ្មី: ${addedCount} នាក់, កែប្រែ: ${updatedCount} នាក់`, 'success');
-  });
-}
-
-function openStudentModal(student) {
-  const isEdit = !!student;
-  document.getElementById('student-modal-title').innerText = isEdit ? 'កែប្រែព័ត៌មានសិស្ស' : 'បន្ថែមសិស្សថ្មី';
-  
-  if (isEdit) {
-    document.getElementById('student-id').value = student.id;
-    document.getElementById('student-id').readOnly = true;
-    document.getElementById('student-name').value = student.name;
-    document.getElementById('student-gender').value = student.gender;
-    document.getElementById('student-grade').value = student.grade;
-    document.getElementById('student-dob').value = student.dob;
-    document.getElementById('student-pob').value = student.pob;
-    document.getElementById('student-father-name').value = student.fatherName;
-    document.getElementById('student-mother-name').value = student.motherName;
-    document.getElementById('student-father-phone').value = student.fatherPhone;
-    document.getElementById('student-address').value = student.address;
-    
-    if (student.photo) {
-      document.getElementById('student-photo-preview').src = student.photo;
-      document.getElementById('student-photo-preview').style.display = 'block';
-      document.getElementById('student-photo-placeholder').style.display = 'none';
-    } else {
-      document.getElementById('student-photo-preview').style.display = 'none';
-      document.getElementById('student-photo-placeholder').style.display = 'block';
-    }
-  } else {
-    document.getElementById('student-id').value = 'STU' + String(state.students.length + 1).padStart(3, '0');
-    document.getElementById('student-id').readOnly = false;
-    document.getElementById('student-name').value = '';
-    document.getElementById('student-gender').value = 'ប្រុស';
-    document.getElementById('student-grade').value = 'kindergarten';
-    document.getElementById('student-dob').value = '';
-    document.getElementById('student-pob').value = '';
-    document.getElementById('student-father-name').value = '';
-    document.getElementById('student-mother-name').value = '';
-    document.getElementById('student-father-phone').value = '';
-    document.getElementById('student-address').value = '';
-    document.getElementById('student-photo-preview').style.display = 'none';
-    document.getElementById('student-photo-placeholder').style.display = 'block';
-    document.getElementById('student-photo-input').value = '';
-  }
-
-  openModal('student-modal');
-}
-
-function openStudentCardModal(student) {
-  document.getElementById('card-id').innerText = student.id;
-  document.getElementById('card-name').innerText = student.name;
-  document.getElementById('card-gender').innerText = student.gender;
-  document.getElementById('card-grade').innerText = getGradeNameKhmer(student.grade);
-  document.getElementById('card-dob').innerText = student.dob;
-  document.getElementById('card-phone').innerText = student.fatherPhone;
-
-  const photoContainer = document.getElementById('card-photo-container');
-  if (student.photo) {
-    photoContainer.innerHTML = `<img src="${student.photo}" alt="${student.name}">`;
-  } else {
-    photoContainer.innerHTML = `<svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-  }
-
-  const barcodeContainer = document.getElementById('card-barcode');
-  barcodeContainer.innerHTML = '';
-  
-  const barcodeCanvas = document.createElement('canvas');
-  barcodeCanvas.width = 150;
-  barcodeCanvas.height = 30;
-  const ctx = barcodeCanvas.getContext('2d');
-  ctx.fillStyle = '#000';
-  ctx.clearRect(0,0,150,30);
-  
-  let seed = 0;
-  for(let i=0; i<student.id.length; i++) seed += student.id.charCodeAt(i);
-  
-  let x = 5;
-  while(x < 145) {
-    const width = 1 + (seed % 3);
-    const spacing = 1 + ((seed + 7) % 4);
-    ctx.fillRect(x, 0, width, 30);
-    x += width + spacing;
-    seed = (seed * 9301 + 49297) % 233280;
-  }
-  barcodeContainer.appendChild(barcodeCanvas);
-
-  const qrContainer = document.getElementById('card-qrcode');
-  qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(student.id)}" alt="QR Code" width="60" height="60">`;
-
-  openModal('student-card-modal');
-}
-
-// --- ATTENDANCE VIEW ---
-function renderAttendanceGrid() {
-  const container = document.getElementById('attendance-grid-container');
-  container.innerHTML = '';
-
-  const grade = state.selectedAttendanceGrade;
-  const month = state.selectedMonth;
-
-  const gradeStudents = state.students.filter(s => s.grade === grade);
-
-  if (gradeStudents.length === 0) {
-    container.innerHTML = '<div class="card" style="text-align:center; padding:30px; color:var(--text-muted);">មិនទាន់មានសិស្សនៅក្នុងថ្នាក់នេះនៅឡើយទេ។</div>';
-    return;
-  }
-
-  const [year, mon] = month.split('-').map(Number);
-  const totalDays = new Date(year, mon, 0).getDate();
-
-  let tableHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th style="min-width: 150px; position: sticky; left: 0; background: var(--primary-dark); z-index: 10;">ឈ្មោះសិស្ស</th>
-  `;
-
-  for (let d = 1; d <= totalDays; d++) {
-    tableHTML += `<th style="text-align: center; font-size: 11px;">${d}</th>`;
-  }
-  tableHTML += `
-        </tr>
-      </thead>
-      <tbody>
-  `;
-
-  gradeStudents.forEach(student => {
-    tableHTML += `
-      <tr>
-        <td style="position: sticky; left: 0; background: var(--primary-light); z-index: 5; font-weight: bold; border-right: 1px solid var(--border-color);">
-          ${student.name}
-        </td>
-    `;
-
-    for (let d = 1; d <= totalDays; d++) {
-      const status = getAttendanceStatus(month, grade, student.id, d);
-      const displayStatus = status === 'P' ? 'វត្តមាន' : (status === 'A' ? 'ច្បាប់' : (status === 'L' ? 'អវត្តមាន' : '-'));
-      const statusClass = status ? `status-${status}` : '';
-
-      tableHTML += `
-        <td class="cell-clickable status-cell" data-student-id="${student.id}" data-day="${d}" style="text-align: center;">
-          <span class="status-badge ${statusClass}">${status || '-'}</span>
-        </td>
-      `;
-    }
-
-    tableHTML += `</tr>`;
-  });
-
-  tableHTML += `
-      </tbody>
-    </table>
-  `;
-
-  container.innerHTML = tableHTML;
-
-  container.querySelectorAll('.cell-clickable').forEach(cell => {
-    cell.addEventListener('click', () => {
-      const studentId = cell.getAttribute('data-student-id');
-      const day = cell.getAttribute('data-day');
-      toggleAttendance(month, grade, studentId, day, cell);
-    });
-  });
-}
-
-function getAttendanceStatus(month, grade, studentId, day) {
-  if (state.attendance[month] && 
-      state.attendance[month][grade] && 
-      state.attendance[month][grade][studentId]) {
-    return state.attendance[month][grade][studentId][day] || '';
-  }
-  return '';
-}
-
-function toggleAttendance(month, grade, studentId, day, cellElement) {
-  if (!state.attendance[month]) state.attendance[month] = {};
-  if (!state.attendance[month][grade]) state.attendance[month][grade] = {};
-  if (!state.attendance[month][grade][studentId]) state.attendance[month][grade][studentId] = {};
-
-  const currentStatus = state.attendance[month][grade][studentId][day] || '';
-  let nextStatus = '';
-
-  if (currentStatus === '') nextStatus = 'P';
-  else if (currentStatus === 'P') nextStatus = 'A';
-  else if (currentStatus === 'A') nextStatus = 'L';
-  else nextStatus = '';
-
-  state.attendance[month][grade][studentId][day] = nextStatus;
-  saveStateToStorage();
-
-  const badge = cellElement.querySelector('.status-badge');
-  badge.className = `status-badge ${nextStatus ? `status-${nextStatus}` : ''}`;
-  badge.innerText = nextStatus || '-';
-  
-  renderDashboardStats();
-}
-
-function setupAttendanceHandlers() {
-  document.getElementById('att-grade-select').addEventListener('change', (e) => {
-    state.selectedAttendanceGrade = e.target.value;
-    renderAttendanceGrid();
-  });
-
-  document.getElementById('att-month-select').addEventListener('change', (e) => {
-    state.selectedMonth = e.target.value;
-    renderAttendanceGrid();
-  });
-}
-
-// --- SCOREBOARD VIEW ---
-function renderScoreboard() {
-  const container = document.getElementById('scoreboard-container');
-  container.innerHTML = '';
-
-  const grade = state.selectedScoreGrade;
-  const month = state.selectedMonth;
-
-  const gradeStudents = state.students.filter(s => s.grade === grade);
-
-  if (gradeStudents.length === 0) {
-    container.innerHTML = '<div class="card" style="text-align:center; padding:30px; color:var(--text-muted);">មិនទាន់មានសិស្សនៅក្នុងថ្នាក់នេះនៅឡើយទេ។</div>';
-    return;
-  }
-
-  const studentScores = gradeStudents.map(student => {
-    const scores = (state.scores[month] && state.scores[month][student.id]) || { khmer: 0, math: 0, science: 0, social: 0, english: 0 };
-    const total = scores.khmer + scores.math + scores.science + scores.social + scores.english;
-    const average = Math.round((total / 5) * 10) / 10;
-    
-    return {
-      student,
-      scores,
-      total,
-      average
-    };
-  });
-
-  studentScores.sort((a, b) => b.average - a.average);
-  studentScores.forEach((item, index) => {
-    item.rank = item.total > 0 ? (index + 1) : '-';
-  });
-
-  let tableHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-      <h3 style="color:var(--text-yellow); font-size:16px;">លទ្ធផលការសិក្សា - ${getGradeNameKhmer(grade)}</h3>
-      <button class="btn btn-secondary btn-icon" id="btn-edit-scores" style="font-size:13px; padding:6px 12px;">
-        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-        បញ្ចូល/កែពិន្ទុថ្នាក់នេះ
-      </button>
-    </div>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>ល.រ</th>
-            <th>ឈ្មោះសិស្ស</th>
-            <th style="text-align:center;">អក្សរសាស្ត្រខ្មែរ</th>
-            <th style="text-align:center;">គណិតវិទ្យា</th>
-            <th style="text-align:center;">វិទ្យាសាស្ត្រ</th>
-            <th style="text-align:center;">សិក្សាសង្គម</th>
-            <th style="text-align:center;">ភាសាអង់គ្លេស</th>
-            <th style="text-align:center; color:var(--text-yellow);">ពិន្ទុសរុប</th>
-            <th style="text-align:center; color:var(--text-yellow);">មធ្យមភាគ</th>
-            <th style="text-align:center; color:var(--accent);">ចំណាត់ថ្នាក់</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  studentScores.forEach((item, index) => {
-    tableHTML += `
-      <tr>
-        <td>${index + 1}</td>
-        <td><strong>${item.student.name}</strong></td>
-        <td style="text-align:center; font-family:var(--font-eng);">${item.scores.khmer || '-'}</td>
-        <td style="text-align:center; font-family:var(--font-eng);">${item.scores.math || '-'}</td>
-        <td style="text-align:center; font-family:var(--font-eng);">${item.scores.science || '-'}</td>
-        <td style="text-align:center; font-family:var(--font-eng);">${item.scores.social || '-'}</td>
-        <td style="text-align:center; font-family:var(--font-eng);">${item.scores.english || '-'}</td>
-        <td style="text-align:center; font-weight:bold; font-family:var(--font-eng);">${item.total || '-'}</td>
-        <td style="text-align:center; font-weight:bold; font-family:var(--font-eng); color:var(--text-yellow);">${item.average || '-'}</td>
-        <td style="text-align:center; font-weight:bold; color:var(--accent); font-family:var(--font-eng);">${item.rank}</td>
-      </tr>
-    `;
-  });
-
-  tableHTML += `
-        </tbody>
-      </table>
-    </div>
-  `;
-
-  container.innerHTML = tableHTML;
-
-  document.getElementById('btn-edit-scores').addEventListener('click', () => {
-    openScoreEntryModal(grade, month, studentScores);
-  });
-}
-
-function openScoreEntryModal(grade, month, studentScores) {
-  document.getElementById('score-modal-title').innerText = `បញ្ចូលពិន្ទុ៖ ${getGradeNameKhmer(grade)} - ${month}`;
-  
-  const container = document.getElementById('score-entry-container');
-  container.innerHTML = '';
-
-  let formsHTML = `
-    <div class="score-student-row header">
-      <div>ឈ្មោះសិស្ស</div>
-      <div style="text-align:center;">ខ្មែរ</div>
-      <div style="text-align:center;">គណិត</div>
-      <div style="text-align:center;">វិទ្យា</div>
-      <div style="text-align:center;">សង្គម</div>
-      <div style="text-align:center;">អង់គ្លេស</div>
-    </div>
-  `;
-
-  studentScores.forEach(item => {
-    formsHTML += `
-      <div class="score-student-row" data-student-id="${item.student.id}">
-        <div style="font-weight:bold;">${item.student.name}</div>
-        <input type="number" min="0" max="100" class="score-khmer" value="${item.scores.khmer || ''}" placeholder="-">
-        <input type="number" min="0" max="100" class="score-math" value="${item.scores.math || ''}" placeholder="-">
-        <input type="number" min="0" max="100" class="score-science" value="${item.scores.science || ''}" placeholder="-">
-        <input type="number" min="0" max="100" class="score-social" value="${item.scores.social || ''}" placeholder="-">
-        <input type="number" min="0" max="100" class="score-english" value="${item.scores.english || ''}" placeholder="-">
-      </div>
-    `;
-  });
-
-  container.innerHTML = formsHTML;
-  openModal('score-modal');
-}
-
-function setupScoreboardHandlers() {
-  document.getElementById('score-grade-select').addEventListener('change', (e) => {
-    state.selectedScoreGrade = e.target.value;
-    renderScoreboard();
-  });
-
-  document.getElementById('score-month-select').addEventListener('change', (e) => {
-    state.selectedMonth = e.target.value;
-    renderScoreboard();
-  });
-
-  document.getElementById('score-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const month = state.selectedMonth;
-    if (!state.scores[month]) state.scores[month] = {};
-
-    document.querySelectorAll('#score-entry-container .score-student-row:not(.header)').forEach(row => {
-      const studentId = row.getAttribute('data-student-id');
-      const khmer = Number(row.querySelector('.score-khmer').value) || 0;
-      const math = Number(row.querySelector('.score-math').value) || 0;
-      const science = Number(row.querySelector('.score-science').value) || 0;
-      const social = Number(row.querySelector('.score-social').value) || 0;
-      const english = Number(row.querySelector('.score-english').value) || 0;
-
-      state.scores[month][studentId] = { khmer, math, science, social, english };
-    });
-
-    saveStateToStorage();
-    renderScoreboard();
-    closeModal('score-modal');
-    showToast('បានរក្សាទុកពិន្ទុដោយជោគជ័យ!', 'success');
-  });
-}
-
-// --- REPORTS / CHARTS VIEW ---
-let chartInstance1 = null;
-let chartInstance2 = null;
-
-function renderReports() {
-  setTimeout(() => {
-    const canvas1 = document.getElementById('chart-students-dist');
-    const canvas2 = document.getElementById('chart-gender-dist');
-    if (!canvas1 || !canvas2) return;
-
-    const ctx1 = canvas1.getContext('2d');
-    const ctx2 = canvas2.getContext('2d');
-
-    const grades = ['kindergarten', 'grade-1', 'grade-2', 'grade-3'];
-    const gradeLabels = ['មត្តេយ្យ', 'ថ្នាក់ទី១', 'ថ្នាក់ទី២', 'ថ្នាក់ទី៣'];
-    const gradeCounts = grades.map(g => state.students.filter(s => s.grade === g).length);
-
-    const maleCount = state.students.filter(s => s.gender === 'ប្រុស').length;
-    const femaleCount = state.students.filter(s => s.gender === 'ស្រី').length;
-
-    if (chartInstance1) chartInstance1.destroy();
-    if (chartInstance2) chartInstance2.destroy();
-
-    chartInstance1 = new Chart(ctx1, {
-      type: 'bar',
-      data: {
-        labels: gradeLabels,
-        datasets: [{
-          label: 'ចំនួនសិស្ស',
-          data: gradeCounts,
-          backgroundColor: '#d4af37',
-          borderColor: '#ffd700',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
+/**
+ * Core Logic & State Management for Primary School Grading App
+ */
+
+// Emergency reset (available immediately)
+window.emergencyResetAndReload = function() { localStorage.removeItem('primary_school_grading_state'); location.reload(); };
+
+// Application Default State (seeded if localStorage is empty)
+const DEFAULT_STATE = {
+    classes: [
+        {
+            id: "class-preschool",
+            name: "ថ្នាក់មត្តេយ្យ",
+            teacherName: "អ្នកគ្រូ សុខ ធីតា",
+            subjectIds: ["sub-pali", "sub-khmer", "sub-math", "sub-vinaya", "sub-buddhism", "sub-history"],
+            students: [
+                { id: "PRE001", name: "មុន្នី រតនា", gender: "ស្រី", contact: "012345678" },
+                { id: "PRE002", name: "សុខ ជា", gender: "ប្រុស", contact: "088123456" }
+            ]
         },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { color: '#a0aec0', stepSize: 1 },
-            grid: { color: 'rgba(255, 255, 255, 0.05)' }
-          },
-          x: {
-            ticks: { color: '#a0aec0' },
-            grid: { display: false }
-          }
+        {
+            id: "class-1",
+            name: "ថ្នាក់ទី១ក",
+            teacherName: "អ្នកគ្រូ គង់ សុម៉ាលី",
+            subjectIds: ["sub-pali", "sub-khmer", "sub-math", "sub-vinaya", "sub-buddhism", "sub-history", "sub-eng"],
+            students: [
+                { id: "STU001", name: "ចាន់ សុភ័ក្ត្រ", gender: "ប្រុស", contact: "098765432" },
+                { id: "STU002", name: "គង់ ស្រីលីន", gender: "ស្រី", contact: "099887766" }
+            ]
+        },
+        {
+            id: "class-2",
+            name: "ថ្នាក់ទី២ខ",
+            teacherName: "លោកគ្រូ ហ៊ឹម សុភ័ក្ត្រ",
+            subjectIds: ["sub-pali", "sub-khmer", "sub-math", "sub-vinaya", "sub-buddhism", "sub-history", "sub-eng", "sub-social", "sub-sci"],
+            students: [
+                { id: "STU003", name: "លី ម៉េងហុង", gender: "ប្រុស", contact: "077665544" },
+                { id: "STU004", name: "ភិក្ខុ វណ្ណា មុនី", gender: "បព្វជិត", contact: "012889900" }
+            ]
+        },
+        {
+            id: "class-3",
+            name: "ថ្នាក់ទី៣ក",
+            teacherName: "លោកគ្រូ សេង វណ្ណដា",
+            subjectIds: ["sub-pali", "sub-khmer", "sub-math", "sub-vinaya", "sub-buddhism", "sub-history", "sub-eng", "sub-social", "sub-sci"],
+            students: [
+                { id: "STU005", name: "កែវ សុខុម", gender: "ប្រុស", contact: "096778899" }
+            ]
         }
-      }
-    });
-
-    chartInstance2 = new Chart(ctx2, {
-      type: 'pie',
-      data: {
-        labels: ['ប្រុស', 'ស្រី'],
-        datasets: [{
-          data: [maleCount, femaleCount],
-          backgroundColor: ['#1e40af', '#ec4899'],
-          borderColor: '#162a45',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { color: '#a0aec0', padding: 20 }
-          }
+    ],
+    subjects: [
+        { id: "sub-pali", name: "ភាសាបាលី", nameEn: "Pali Language" },
+        { id: "sub-khmer", name: "ភាសាខ្មែរ", nameEn: "Khmer Literature" },
+        { id: "sub-math", name: "គណិតវិទ្យា", nameEn: "Mathematics" },
+        { id: "sub-vinaya", name: "ព្រះវិន័យ", nameEn: "Buddhist Vinaya / Discipline" },
+        { id: "sub-buddhism", name: "ព្រះពុទ្ធសាសនា", nameEn: "Buddhism Studies" },
+        { id: "sub-history", name: "ពុទ្ធប្បវត្តិ", nameEn: "Life of the Buddha" },
+        { id: "sub-eng", name: "ភាសាអង់គ្លេស", nameEn: "English Language" },
+        { id: "sub-social", name: "សិក្សាសង្គម", nameEn: "Social Studies" },
+        { id: "sub-sci", name: "វិទ្យាសាស្ត្រ", nameEn: "Science" }
+    ],
+    scores: {
+        // Format: studentId: { period: { subjectId: score } }
+        "STU001": {
+            "oct": { "sub-1": 8.5, "sub-2": 9.0, "sub-3": 8.0, "sub-4": 8.5 },
+            "nov": { "sub-1": 9.0, "sub-2": 9.5, "sub-3": 8.5, "sub-4": 9.0 },
+            "sem1_exam": { "sub-1": 8.0, "sub-2": 9.0, "sub-3": 8.0, "sub-4": 8.5 },
+            "sem2_exam": { "sub-1": 9.0, "sub-2": 9.5, "sub-3": 9.0, "sub-4": 9.0 }
+        },
+        "STU002": {
+            "oct": { "sub-1": 5.5, "sub-2": 6.0, "sub-3": 6.5, "sub-4": 5.0 },
+            "nov": { "sub-1": 6.0, "sub-2": 5.5, "sub-3": 7.0, "sub-4": 6.0 },
+            "sem1_exam": { "sub-1": 6.0, "sub-2": 6.0, "sub-3": 6.5, "sub-4": 5.5 },
+            "sem2_exam": { "sub-1": 6.5, "sub-2": 7.0, "sub-3": 7.0, "sub-4": 6.0 }
+        },
+        "STU003": {
+            "oct": { "sub-1": 4.0, "sub-2": 4.5, "sub-3": 5.0, "sub-4": 4.0 },
+            "nov": { "sub-1": 4.5, "sub-2": 4.0, "sub-3": 5.5, "sub-4": 4.5 },
+            "sem1_exam": { "sub-1": 4.0, "sub-2": 4.0, "sub-3": 5.0, "sub-4": 4.5 },
+            "sem2_exam": { "sub-1": 5.0, "sub-2": 4.5, "sub-3": 5.5, "sub-4": 5.0 }
+        },
+        "STU004": {
+            "oct": { "sub-1": 7.5, "sub-2": 8.0, "sub-3": 7.5, "sub-4": 8.0 },
+            "nov": { "sub-1": 8.0, "sub-2": 8.5, "sub-3": 8.0, "sub-4": 8.0 },
+            "sem1_exam": { "sub-1": 8.0, "sub-2": 8.0, "sub-3": 7.5, "sub-4": 8.5 }
+        },
+        "STU005": {
+            "oct": { "sub-1": 6.0, "sub-2": 7.0, "sub-3": 6.5, "sub-4": 6.0 },
+            "nov": { "sub-1": 6.5, "sub-2": 6.5, "sub-3": 7.0, "sub-4": 6.5 },
+            "sem1_exam": { "sub-1": 6.0, "sub-2": 6.5, "sub-3": 6.5, "sub-4": 6.0 }
         }
-      }
-    });
-  }, 100);
-}
+    },
+    language: "km",
+    theme: "light",
+    currentUser: null,
+    messages: [],
+    pendingUsers: [],
+    teachers: [
+        { name: "គ្រូបន្ទុកថ្នាក់", passcode: "teacher123" }
+    ],
+    schoolName: "",
+    schoolLogo: "",
+    googleSheetsUrl: "",
+    googleSheetsSyncEnabled: false
+};
 
-// --- DATABASE BACKUP / IMPORT ---
-function setupBackupHandlers() {
-  document.getElementById('btn-export-backup').addEventListener('click', () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href",     dataStr);
-    downloadAnchor.setAttribute("download", `hnbps_database_backup_${new Date().toISOString().split('T')[0]}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-    showToast('បានទាញយកឯកសារបម្រុងទុកដោយជោគជ័យ!', 'success');
-  });
+// Global App State
+let appState = {};
 
-  document.getElementById('btn-import-backup').addEventListener('click', () => {
-    document.getElementById('backup-file-input').click();
-  });
-
-  document.getElementById('backup-file-input').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        try {
-          const importedState = JSON.parse(event.target.result);
-          if (importedState.schoolInfo && importedState.staff && importedState.students) {
-            state = importedState;
-            saveStateToStorage();
-            renderAll();
-            showToast('បានស្ដារទិន្នន័យឡើងវិញដោយជោគជ័យ!', 'success');
-          } else {
-            showToast('ឯកសារពុំត្រឹមត្រូវឡើយ!', 'error');
-          }
-        } catch (err) {
-          showToast('ឯកសារខូច ឬមិនត្រឹមត្រូវ!', 'error');
-        }
-      };
-      reader.readAsText(file);
+// Translation dictionary
+const translations = {
+    km: {
+        dashboard: "ផ្ទាំងគ្រប់គ្រង",
+        classes: "គ្រប់គ្រងថ្នាក់រៀន",
+        subjects: "កំណត់មុខវិជ្ជា",
+        scores: "បញ្ចូលពិន្ទុ",
+        reports: "របាយការណ៍ពិន្ទុ",
+        "academic-reports": "របាយការណ៍សិក្សា",
+        settings: "ទិន្នន័យ & ការកំណត់",
+        messages: "សារស្នើសុំ",
+        users: "គ្រប់គ្រងគណនី",
+        total_classes: "ថ្នាក់រៀនសរុប",
+        total_students: "សិស្សសរុប",
+        total_subjects: "មុខវិជ្ជាសរុប",
+        passing_rate: "អត្រាជាប់សរុប",
+        top_students: "សិស្សឆ្នើមប្រចាំឆ្នាំ",
+        grade_overview: "ទិដ្ឋភាពទូទៅនៃពិន្ទុតាមថ្នាក់",
+        pass: "ជាប់",
+        fail: "ធ្លាក់",
+        female: "ស្រី",
+        male: "ប្រុស",
+        rank: "ចំណាត់ថ្នាក់",
+        average: "មធ្យមភាគ",
+        total: "សរុប",
+        month_oct: "ខែតុលា",
+        month_nov: "ខែវិច្ឆិកា",
+        month_dec: "ខែធ្នូ",
+        month_jan: "ខែមករា",
+        month_feb: "ខែកុម្ភៈ",
+        month_mar: "ខែមីនា",
+        month_apr: "ខែមេសា",
+        month_may: "ខែឧសភា",
+        month_jun: "ខែមិថុនា",
+        month_jul: "ខែកក្កដា",
+        month_aug: "ខែសីហា",
+        month_sep: "ខែកញ្ញា",
+        sem1_exam: "ប្រឡងឆមាសទី១",
+        sem2_exam: "ប្រឡងឆមាសទី២",
+        sem1: "ឆមាសទី១",
+        sem2: "ឆមាសទី២",
+        yearly: "ប្រចាំឆ្នាំ",
+        save_success: "រក្សាទុកពិន្ទុបានជោគជ័យ!",
+        invalid_score: "សូមបញ្ចូលពិន្ទុចន្លោះពី ០ ដល់ ១០",
+        confirm_delete_class: "តើអ្នកពិតជាចង់លុបថ្នាក់នេះមែនទេ? សិស្ស និងពិន្ទុទាំងអស់ក្នុងថ្នាក់នេះនឹងត្រូវលុបចោល។",
+        confirm_reset: "តើអ្នកពិតជាចង់លុបទិន្នន័យទាំងអស់មែនទេ? សកម្មភាពនេះមិនអាចត្រឡប់ថយក្រោយបានទេ។",
+        data_reset_success: "បានលុបទិន្នន័យទាំងអស់រួចរាល់!",
+        backup_success: "បានទាញយកទិន្នន័យជោគជ័យ!",
+        restore_success: "បានស្ដារទិន្នន័យឡើងវិញជោគជ័យ!",
+        restore_fail: "ឯកសារមិនត្រឹមត្រូវទេ!"
+    },
+    en: {
+        dashboard: "Dashboard",
+        classes: "Manage Classes",
+        subjects: "Subjects Config",
+        scores: "Enter Scores",
+        reports: "Score Reports",
+        "academic-reports": "Academic Reports",
+        settings: "Data & Settings",
+        messages: "Messages Requests",
+        users: "User Accounts",
+        total_classes: "Total Classes",
+        total_students: "Total Students",
+        total_subjects: "Total Subjects",
+        passing_rate: "Passing Rate",
+        top_students: "Top Students of the Year",
+        grade_overview: "Class Grade Overview",
+        pass: "Pass",
+        fail: "Fail",
+        female: "Female",
+        male: "Male",
+        rank: "Rank",
+        average: "Average",
+        total: "Total",
+        month_oct: "October",
+        month_nov: "November",
+        month_dec: "December",
+        month_jan: "January",
+        month_feb: "February",
+        month_mar: "March",
+        month_apr: "April",
+        month_may: "May",
+        month_jun: "June",
+        month_jul: "July",
+        month_aug: "August",
+        month_sep: "September",
+        sem1_exam: "Semester 1 Exam",
+        sem2_exam: "Semester 2 Exam",
+        sem1: "Semester 1",
+        sem2: "Semester 2",
+        yearly: "Yearly",
+        save_success: "Scores saved successfully!",
+        invalid_score: "Please enter scores between 0 and 10",
+        confirm_delete_class: "Are you sure you want to delete this class? All students and scores will be deleted.",
+        confirm_reset: "Are you sure you want to erase all data? This action cannot be undone.",
+        data_reset_success: "Database wiped successfully!",
+        backup_success: "Database backed up successfully!",
+        restore_success: "Database restored successfully!",
+        restore_fail: "Invalid backup file format!"
     }
-  });
+};
+
+// ----------------------------------------------------
+// STATE MANAGEMENT & LOCALSTORAGE
+// ----------------------------------------------------
+
+function loadState() {
+    const saved = localStorage.getItem("primary_school_grading_state");
+    if (saved) {
+        try {
+            appState = JSON.parse(saved);
+            // Data integrity guards
+            if (!Array.isArray(appState.classes)) appState.classes = JSON.parse(JSON.stringify(DEFAULT_STATE.classes));
+            if (!Array.isArray(appState.subjects)) appState.subjects = JSON.parse(JSON.stringify(DEFAULT_STATE.subjects));
+            if (typeof appState.scores !== 'object' || appState.scores === null) appState.scores = JSON.parse(JSON.stringify(DEFAULT_STATE.scores));
+            if (!appState.messages) appState.messages = [];
+            if (!appState.pendingUsers) appState.pendingUsers = [];
+            if (!appState.teachers) appState.teachers = [{ name: "គ្រូបន្ទុកថ្នាក់", passcode: "teacher123" }];
+            if (appState.currentUser === undefined) appState.currentUser = null;
+            if (!appState.language) appState.language = 'km';
+            if (!appState.theme) appState.theme = 'light';
+        } catch (e) {
+            console.error("Failed to parse state, resetting to defaults", e);
+            localStorage.removeItem("primary_school_grading_state");
+            appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+            saveState();
+        }
+    } else {
+        appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+        saveState();
+    }
+    applyFontFromConfig();
+    
+    // Set up Google Translate callback check
+    if (appState.selectedLanguageCode && appState.selectedLanguageCode !== 'km') {
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                triggerGoogleTranslate(appState.selectedLanguageCode);
+                updateLanguageButtonsUI(appState.selectedLanguageLabel || appState.selectedLanguageCode);
+            }, 600);
+        });
+    }
 }
 
-// --- GENERIC MODAL CONTROLS ---
-function openModal(id) {
-  const modal = document.getElementById(id);
-  modal.classList.add('active');
+// Emergency reset function
+window.emergencyResetAndReload = function() {
+    localStorage.removeItem("primary_school_grading_state");
+    location.reload();
+};
+
+let isSyncing = false;
+
+let sheetsSyncTimeout = null;
+function saveState() {
+    localStorage.setItem("primary_school_grading_state", JSON.stringify(appState));
+    
+    // Sync to Google Sheets (Debounced to 4 seconds to avoid API spamming)
+    if (appState.googleSheetsSyncEnabled && appState.googleSheetsUrl) {
+        if (sheetsSyncTimeout) clearTimeout(sheetsSyncTimeout);
+        sheetsSyncTimeout = setTimeout(() => {
+            if (typeof syncToGoogleSheets === 'function') syncToGoogleSheets();
+        }, 4000);
+    }
+    
+    // Sync data to Firestore if logged in
+    if (auth && auth.currentUser && !isSyncing) {
+        const dataToSave = {
+            classes: appState.classes,
+            subjects: appState.subjects,
+            scores: appState.scores,
+            messages: appState.messages,
+            pendingUsers: appState.pendingUsers,
+            teachers: appState.teachers,
+            schoolName: appState.schoolName || "",
+            schoolLogo: appState.schoolLogo || ""
+        };
+        db.collection('school').doc('appData').set(dataToSave).catch(e => console.error("Firestore sync error:", e));
+    }
 }
 
-function closeModal(id) {
-  const modal = document.getElementById(id);
-  modal.classList.remove('active');
-}
-
-document.querySelectorAll('.modal-close').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const modalId = btn.closest('.modal-backdrop').id;
-    closeModal(modalId);
-  });
+// Global Auth State Listener
+auth.onAuthStateChanged(async (user) => {
+    if (user) {
+        try {
+            const fetchPromise = db.collection("users").doc(user.uid).get();
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 2000));
+            const userDoc = await Promise.race([fetchPromise, timeoutPromise]);
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                if (userData.status === 'pending') {
+                    alert(appState.language === 'km' ? 'គណនីរបស់អ្នកកំពុងរង់ចាំការអនុម័ត!' : 'Your account is pending approval!');
+                    auth.signOut();
+                    return;
+                }
+                
+                appState.currentUser = {
+                    uid: user.uid,
+                    role: userData.role,
+                    name: userData.name,
+                    id: userData.role === 'student' ? user.uid : userData.email, // using UID as student ID, or email for teachers
+                    classId: userData.classId
+                };
+                
+                // Start real-time sync for global app data
+                db.collection('school').doc('appData').onSnapshot(doc => {
+                    if (doc.exists) {
+                        isSyncing = true;
+                        const data = doc.data();
+                        appState.classes = data.classes || [];
+                        appState.subjects = data.subjects || [];
+                        appState.scores = data.scores || {};
+                        appState.messages = data.messages || [];
+                        appState.pendingUsers = data.pendingUsers || [];
+                        appState.teachers = data.teachers || [];
+                        appState.schoolName = data.schoolName || "";
+                        appState.schoolLogo = data.schoolLogo || "";
+                        localStorage.setItem("primary_school_grading_state", JSON.stringify(appState));
+                        isSyncing = false;
+                        
+                        // Re-render UI if already logged in and visible
+                        if (appState.currentUser) {
+                            if (appState.currentUser.role === 'student') {
+                                renderStudentPortal();
+                            } else {
+                                renderDashboard();
+                                renderClassesPanel();
+                                renderSubjectsPanel();
+                            }
+                        }
+                        updateReportsSchoolProfile();
+                    } else {
+                        // If it doesn't exist (first time), save the initial DEFAULT_STATE to Firestore
+                        saveState();
+                    }
+                });
+                
+                saveState();
+                showPortal();
+            } else {
+                console.warn("No user document found for UID:", user.uid);
+                // Assume it's a manually created admin from console
+                appState.currentUser = { role: 'admin', uid: user.uid, name: 'Super Admin' };
+                saveState();
+                showPortal();
+            }
+        } catch (e) {
+            console.error("Auth fetch error:", e);
+            const enteredEmail = document.getElementById("loginEmail") ? document.getElementById("loginEmail").value.trim().toLowerCase() : "";
+            if (user.email === "admin@gmail.com" || enteredEmail === "admin@gmail.com") {
+                appState.currentUser = { role: 'admin', uid: user.uid, name: 'Super Admin (Offline)' };
+                saveState();
+                showPortal();
+            } else {
+                const inferredRole = (user.email && user.email.includes('student')) ? 'student' : ((user.email && user.email.includes('teacher')) ? 'teacher' : 'admin');
+                appState.currentUser = { role: inferredRole, uid: user.uid, name: user.displayName || user.email || 'User' };
+                saveState();
+                showPortal();
+                console.warn("Database permission restricted, running in local/fallback mode:", e.message);
+            }
+        }
+    } else {
+        appState.currentUser = null;
+        saveState();
+        showPortal(); // Returns to login screen
+    }
 });
 
-function getGradeNameKhmer(grade) {
-  switch (grade) {
-    case 'kindergarten': return 'ថ្នាក់មត្តេយ្យ';
-    case 'grade-1': return 'ថ្នាក់ទី១';
-    case 'grade-2': return 'ថ្នាក់ទី២';
-    case 'grade-3': return 'ថ្នាក់ទី៣';
-    default: return grade;
-  }
+// Helper: Find a student's class
+function getStudentClass(studentId) {
+    for (let c of appState.classes) {
+        if (c.students.some(s => s.id === studentId)) {
+            return c;
+        }
+    }
+    return null;
 }
 
-// --- CLASS DASHBOARD & FOLDERS LOGIC ---
-const folderNamesKhmer = {
-  registry: "សៀវភៅបញ្ជីសិស្ស",
-  grids: "តារាងផែនការសិក្សា",
-  plans: "ផែនការសកម្មភាពប្រចាំថ្នាក់",
-  biographies: "ជីវប្រវត្តសង្ខេបរបស់សិស្ស",
-  applications: "ពាក្យសុំផ្សេងៗរបស់សិស្ស",
-  monitoring: "សៀវភៅតាមដានអាកប្បកិរិយា និងការសិក្សា",
-  curriculum: "កម្មវិធីសិក្សាប្រចាំថ្នាក់",
-  pedagogy: "វិធីសាស្ត្រគរុកោសល្យប្រចាំថ្នាក់"
+// ----------------------------------------------------
+// CALCULATIONS & FORMULAS (Standard Cambodian Grading)
+// ----------------------------------------------------
+
+/**
+ * Calculates a student's average for a specific month
+ */
+function getStudentMonthlyAverage(studentId, month) {
+    const studentScores = appState.scores[studentId]?.[month];
+    if (!studentScores) return 0;
+    
+    const studentClass = getStudentClass(studentId);
+    const activeSubjectIds = studentClass && studentClass.subjectIds ? studentClass.subjectIds : appState.subjects.map(s => s.id);
+    
+    if (activeSubjectIds.length === 0) return 0;
+    
+    let sum = 0;
+    let count = 0;
+    
+    activeSubjectIds.forEach(subId => {
+        const val = studentScores[subId];
+        if (val !== undefined && val !== null) {
+            sum += parseFloat(val);
+            count++;
+        }
+    });
+    
+    return count > 0 ? sum / activeSubjectIds.length : 0;
+}
+
+/**
+ * Calculates average of monthly averages for a student in a range of months
+ */
+function getMonthlyAverageRange(studentId, months) {
+    let sum = 0;
+    let count = 0;
+    
+    months.forEach(m => {
+        const avg = getStudentMonthlyAverage(studentId, m);
+        if (avg > 0) {
+            sum += avg;
+            count++;
+        }
+    });
+    
+    return count > 0 ? sum / count : 0;
+}
+
+/**
+ * Semester 1 Average = (Average(Oct-Feb Monthly) + Semester 1 Exam) / 2
+ */
+function getStudentSem1Average(studentId) {
+    const sem1Months = ["oct", "nov", "dec", "jan", "feb"];
+    const monthlyAvg = getMonthlyAverageRange(studentId, sem1Months);
+    const examScoreObj = appState.scores[studentId]?.["sem1_exam"];
+    
+    const studentClass = getStudentClass(studentId);
+    const activeSubjectIds = studentClass && studentClass.subjectIds ? studentClass.subjectIds : appState.subjects.map(s => s.id);
+    
+    // Calculate average of exam scores
+    let examSum = 0;
+    let examCount = 0;
+    if (examScoreObj && activeSubjectIds.length > 0) {
+        activeSubjectIds.forEach(subId => {
+            const val = examScoreObj[subId];
+            if (val !== undefined && val !== null) {
+                examSum += parseFloat(val);
+                examCount++;
+            }
+        });
+    }
+    const examAvg = examCount > 0 ? examSum / activeSubjectIds.length : 0;
+    
+    if (examCount > 0) {
+        return monthlyAvg > 0 ? (monthlyAvg + examAvg) / 2 : examAvg;
+    }
+    return monthlyAvg; // fallback to monthly average if exam is not yet conducted
+}
+
+/**
+ * Semester 2 Average = (Average(Mar-Jul Monthly) + Semester 2 Exam) / 2
+ */
+function getStudentSem2Average(studentId) {
+    const sem2Months = ["mar", "apr", "may", "jun", "jul"];
+    const monthlyAvg = getMonthlyAverageRange(studentId, sem2Months);
+    const examScoreObj = appState.scores[studentId]?.["sem2_exam"];
+    
+    const studentClass = getStudentClass(studentId);
+    const activeSubjectIds = studentClass && studentClass.subjectIds ? studentClass.subjectIds : appState.subjects.map(s => s.id);
+    
+    // Calculate average of exam scores
+    let examSum = 0;
+    let examCount = 0;
+    if (examScoreObj && activeSubjectIds.length > 0) {
+        activeSubjectIds.forEach(subId => {
+            const val = examScoreObj[subId];
+            if (val !== undefined && val !== null) {
+                examSum += parseFloat(val);
+                examCount++;
+            }
+        });
+    }
+    const examAvg = examCount > 0 ? examSum / activeSubjectIds.length : 0;
+    
+    if (examCount > 0) {
+        return monthlyAvg > 0 ? (monthlyAvg + examAvg) / 2 : examAvg;
+    }
+    return monthlyAvg;
+}
+
+/**
+ * Yearly Average = (Semester 1 Average + Semester 2 Average) / 2
+ */
+function getStudentYearlyAverage(studentId) {
+    const sem1 = getStudentSem1Average(studentId);
+    const sem2 = getStudentSem2Average(studentId);
+    
+    if (sem1 > 0 && sem2 > 0) {
+        return (sem1 + sem2) / 2;
+    } else if (sem1 > 0) {
+        return sem1; // fallback to sem 1 if sem 2 hasn't occurred yet
+    }
+    return 0;
+}
+
+/**
+ * Assigns competition ranks based on sorted scores
+ */
+function calculateRanks(studentList) {
+    // Sort descending by average
+    studentList.sort((a, b) => b.average - a.average);
+    
+    let currentRank = 1;
+    for (let i = 0; i < studentList.length; i++) {
+        if (i > 0 && studentList[i].average === studentList[i - 1].average) {
+            studentList[i].rank = studentList[i - 1].rank;
+        } else {
+            studentList[i].rank = i + 1;
+        }
+    }
+    return studentList;
+}
+
+/**
+ * Ranks all students in a class for a specific period
+ * period can be: 'oct', 'nov', ..., 'sem1_exam', 'sem2_exam', 'sem1', 'sem2', 'yearly'
+ */
+function rankStudentsInClass(classId, period) {
+    const targetClass = appState.classes.find(c => c.id === classId);
+    if (!targetClass) return [];
+    
+    const studentsData = targetClass.students.map(student => {
+        let avg = 0;
+        if (["oct","nov","dec","jan","feb","mar","apr","may","jun","jul"].includes(period)) {
+            avg = getStudentMonthlyAverage(student.id, period);
+        } else if (period === "sem1_exam") {
+            const examObj = appState.scores[student.id]?.["sem1_exam"];
+            let sum = 0;
+            let count = 0;
+            if (examObj) {
+                appState.subjects.forEach(sub => {
+                    if (examObj[sub.id] !== undefined) {
+                        sum += parseFloat(examObj[sub.id]);
+                        count++;
+                    }
+                });
+            }
+            avg = count > 0 ? sum / appState.subjects.length : 0;
+        } else if (period === "sem2_exam") {
+            const examObj = appState.scores[student.id]?.["sem2_exam"];
+            let sum = 0;
+            let count = 0;
+            if (examObj) {
+                appState.subjects.forEach(sub => {
+                    if (examObj[sub.id] !== undefined) {
+                        sum += parseFloat(examObj[sub.id]);
+                        count++;
+                    }
+                });
+            }
+            avg = count > 0 ? sum / appState.subjects.length : 0;
+        } else if (period === "sem1") {
+            avg = getStudentSem1Average(student.id);
+        } else if (period === "sem2") {
+            avg = getStudentSem2Average(student.id);
+        } else if (period === "yearly") {
+            avg = getStudentYearlyAverage(student.id);
+        }
+        
+        return {
+            student,
+            average: parseFloat(avg.toFixed(2)),
+            status: avg >= 5.0 ? (appState.language === 'km' ? 'ជាប់' : 'Pass') : (appState.language === 'km' ? 'ធ្លាក់' : 'Fail')
+        };
+    });
+    
+    return calculateRanks(studentsData);
+}
+
+// ----------------------------------------------------
+// UI PRESENTATION & DOM INTERACTIONS
+// ----------------------------------------------------
+
+let activeClassId = null;
+let loadedScorePeriod = null;
+let loadedScoreSubjectId = null;
+
+// Helper: Convert digits to Khmer script digits
+function toKhDigits(num) {
+    const digitsKh = ["០", "១", "២", "៣", "៤", "៥", "៦", "៧", "៨", "៩"];
+    return num.toString().split("").map(digit => digitsKh[parseInt(digit)] || digit).join("");
+}
+
+// Initialize dynamic elements and listeners
+document.addEventListener("DOMContentLoaded", () => {
+    let initFailed = false;
+    
+    const showEmergencyReset = (label, e) => {
+        console.error('[INIT] ' + label + ' failed:', e);
+        initFailed = true;
+        const banner = document.getElementById('jsErrorBanner');
+        if (banner) {
+            banner.style.display = 'block';
+            banner.textContent = 'Error in ' + label + ': ' + (e && e.message ? e.message : String(e));
+        }
+        const resetSection = document.getElementById('emergencyResetSection');
+        if (resetSection) resetSection.style.display = 'block';
+    };
+    
+    try { loadState(); } catch(e) {
+        showEmergencyReset('loadState', e);
+        localStorage.removeItem("primary_school_grading_state");
+        appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+    try { initDateTime(); } catch(e) { showEmergencyReset('initDateTime', e); }
+    try { applyTheme(); } catch(e) { showEmergencyReset('applyTheme', e); }
+    try { applyLanguage(); } catch(e) { showEmergencyReset('applyLanguage', e); }
+    try { setupNavigation(); } catch(e) { showEmergencyReset('setupNavigation', e); }
+    try { setupEventListeners(); } catch(e) { showEmergencyReset('setupEventListeners', e); }
+    try { setupLoginEvents(); } catch(e) { showEmergencyReset('setupLoginEvents', e); }
+    
+    // Show correct portal on startup
+    try { showPortal(); } catch(e) { showEmergencyReset('showPortal', e); }
+    try { updateReportsSchoolProfile(); } catch(e) { console.error("updateReportsSchoolProfile failed:", e); }
+    try {
+        if (appState.googleSheetsSyncEnabled && appState.googleSheetsUrl) {
+            pullFromGoogleSheets(true).catch(e => console.warn("Initial pullFromGoogleSheets failed:", e));
+        }
+    } catch(e) {
+        console.error("Initial sheets pull error:", e);
+    }
+});
+
+let calViewDate = new Date();
+
+function renderCalendarGrid() {
+    const isKm = appState.language === 'km';
+    const year = calViewDate.getFullYear();
+    const month = calViewDate.getMonth();
+    
+    const monthsKh = ["មករា", "កុម្ភៈ", "មីនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"];
+    const monthsEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    // Header Title
+    const navTitle = document.getElementById("calendarNavMonthYear");
+    if (navTitle) {
+        if (isKm) {
+            navTitle.textContent = `ខែ${monthsKh[month]} ឆ្នាំ${toKhDigits(year)}`;
+        } else {
+            navTitle.textContent = `${monthsEn[month]} ${year}`;
+        }
+    }
+    
+    // Weekdays header
+    const weekdaysGrid = document.getElementById("calendarWeekdaysGrid");
+    if (weekdaysGrid) {
+        if (isKm) {
+            weekdaysGrid.innerHTML = `<span>អា</span><span>ច</span><span>អ</span><span>ពុ</span><span>ព្រ</span><span>សុ</span><span>ស</span>`;
+        } else {
+            weekdaysGrid.innerHTML = `<span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>`;
+        }
+    }
+    
+    const daysGrid = document.getElementById("calendarDaysGrid");
+    if (!daysGrid) return;
+    daysGrid.innerHTML = "";
+    
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    
+    // Blanks before first day
+    for (let i = 0; i < firstDay; i++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-day-cell empty";
+        daysGrid.appendChild(cell);
+    }
+    
+    // Day cells
+    for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-day-cell";
+        cell.textContent = isKm ? toKhDigits(d) : d;
+        
+        if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === d) {
+            cell.classList.add("today");
+            cell.title = isKm ? "ថ្ងៃនេះ" : "Today";
+        }
+        
+        cell.addEventListener("click", () => {
+            document.querySelectorAll(".calendar-day-cell").forEach(c => c.style.outline = "none");
+            cell.style.outline = "2px solid var(--primary-blue)";
+        });
+        
+        daysGrid.appendChild(cell);
+    }
+}
+
+function openCalendarModal() {
+    calViewDate = new Date();
+    renderCalendarGrid();
+    const modal = document.getElementById("calendarClockModal");
+    if (modal) modal.classList.add("active");
+}
+
+function initDateTime() {
+    const updateTime = () => {
+        const d = new Date();
+        const dateEl = document.getElementById("dateTimeString");
+        const dashDateEl = document.getElementById("dashDateBanner");
+        const dashTimeEl = document.getElementById("dashTimeBanner");
+        
+        // Modal live clock elements
+        const modalClock = document.getElementById("modalLiveClock");
+        const modalDateKh = document.getElementById("modalLiveDateKh");
+        const modalEraKh = document.getElementById("modalLiveEraKh");
+        
+        const timeStr = d.toLocaleTimeString('en-US', { hour12: false });
+        if (dashTimeEl) dashTimeEl.textContent = timeStr;
+        if (modalClock) modalClock.textContent = timeStr;
+        
+        const isKm = appState.language === 'km';
+        let dateStr = "";
+        let shortDateStr = "";
+        let fullKhDate = "";
+        
+        const weekdaysKh = ["ថ្ងៃអាទិត្យ", "ថ្ងៃច័ន្ទ", "ថ្ងៃអង្គារ", "ថ្ងៃពុធ", "ថ្ងៃព្រហស្បតិ៍", "ថ្ងៃសុក្រ", "ថ្ងៃសៅរ៍"];
+        const monthsKh = ["មករា", "កុម្ភៈ", "មីនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"];
+        
+        const weekday = weekdaysKh[d.getDay()];
+        const date = toKhDigits(d.getDate());
+        const month = monthsKh[d.getMonth()];
+        const year = toKhDigits(d.getFullYear());
+        const buddhistEra = toKhDigits(d.getFullYear() + 544); // Buddhist Era approx
+        
+        fullKhDate = `${weekday} ទី${date} ខែ${month} ឆ្នាំ${year}`;
+        
+        if (!isKm) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateStr = d.toLocaleDateString('en-US', options);
+            shortDateStr = `${d.getDate()} ${d.toLocaleDateString('en-US', { month: 'short' })} ${d.getFullYear()}, ${timeStr}`;
+        } else {
+            dateStr = fullKhDate;
+            shortDateStr = `ទី${date} ${month} • ${timeStr}`;
+        }
+        
+        if (dateEl) dateEl.textContent = `${shortDateStr}`;
+        if (dashDateEl) dashDateEl.textContent = dateStr;
+        if (modalDateKh) modalDateKh.textContent = isKm ? fullKhDate : dateStr;
+        if (modalEraKh) {
+            modalEraKh.textContent = isKm 
+                ? `ពុទ្ធសករាជ ${buddhistEra} • គ្រិស្តសករាជ ${year}`
+                : `Buddhist Era ${d.getFullYear() + 544} • AD ${d.getFullYear()}`;
+        }
+    };
+    
+    updateTime();
+    setInterval(updateTime, 1000);
+    
+    // Bind header clock & calendar click
+    const headerClockBtn = document.getElementById("btnHeaderClockCalendar");
+    if (headerClockBtn) {
+        headerClockBtn.addEventListener("click", openCalendarModal);
+    }
+    
+    const bannerTodayBtn = document.getElementById("btnDashBannerToday");
+    if (bannerTodayBtn) {
+        bannerTodayBtn.addEventListener("click", openCalendarModal);
+    }
+    
+    // Calendar modal navigation buttons
+    safeBind("btnPrevCalMonth", "click", () => {
+        calViewDate.setMonth(calViewDate.getMonth() - 1);
+        renderCalendarGrid();
+    });
+    
+    safeBind("btnNextCalMonth", "click", () => {
+        calViewDate.setMonth(calViewDate.getMonth() + 1);
+        renderCalendarGrid();
+    });
+    
+    safeBind("btnJumpToToday", "click", () => {
+        calViewDate = new Date();
+        renderCalendarGrid();
+    });
+}
+
+// Role Portal Routing & Selection Handling
+function selectLoginRole(role) {
+    const roleInput = document.getElementById("loginRole");
+    const rolesStep = document.getElementById("loginStepRoles");
+    if (roleInput) roleInput.value = role;
+    if (rolesStep) rolesStep.classList.add("hidden");
+    
+    if (role === 'student') {
+        const classSel = document.getElementById("loginStudentClass");
+        if (classSel) {
+            classSel.innerHTML = "";
+            appState.classes.forEach(c => {
+                classSel.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
+        }
+        const stuStep = document.getElementById("loginStepStudent");
+        if (stuStep) stuStep.classList.remove("hidden");
+    } else {
+        const passInput = document.getElementById("loginPasscode");
+        if (passInput) passInput.value = "";
+        const passStep = document.getElementById("loginStepPasscode");
+        if (passStep) passStep.classList.remove("hidden");
+    }
+}
+
+function goBackToRoles() {
+    const passStep = document.getElementById("loginStepPasscode");
+    const stuStep = document.getElementById("loginStepStudent");
+    const rolesStep = document.getElementById("loginStepRoles");
+    if (passStep) passStep.classList.add("hidden");
+    if (stuStep) stuStep.classList.add("hidden");
+    if (rolesStep) rolesStep.classList.remove("hidden");
+    
+    const input = document.getElementById("loginPasscode");
+    const icon = document.getElementById("togglePasscodeIcon");
+    if (input && icon) {
+        input.type = "password";
+        icon.className = "fa-solid fa-eye";
+    }
+}
+
+function showPortal() {
+    const user = appState.currentUser;
+    const loginScreen = document.getElementById("loginScreen");
+    const adminTeacherLayout = document.getElementById("adminTeacherLayout");
+    const studentPortalLayout = document.getElementById("studentPortalLayout");
+    
+    if (!user) {
+        loginScreen.classList.add("active");
+        adminTeacherLayout.style.display = "none";
+        studentPortalLayout.style.display = "none";
+        return;
+    }
+    
+    loginScreen.classList.remove("active");
+    
+    if (user.role === 'admin' || user.role === 'teacher') {
+        adminTeacherLayout.style.display = "flex";
+        studentPortalLayout.style.display = "none";
+        
+        applyRolePermissions();
+        
+        renderDashboard();
+        renderClassesPanel();
+        renderSubjectsPanel();
+        initSelectors();
+        renderMessagesPanel();
+    } else if (user.role === 'student') {
+        adminTeacherLayout.style.display = "none";
+        studentPortalLayout.style.display = "block";
+        
+        renderStudentPortal();
+    }
+}
+
+function applyRolePermissions() {
+    const role = appState.currentUser?.role;
+    const isTeacher = role === 'teacher';
+    
+    // Hide delete class button in details view
+    const deleteClassBtn = document.getElementById("btnDeleteClass");
+    if (deleteClassBtn) {
+        deleteClassBtn.style.display = isTeacher ? "none" : "block";
+    }
+    
+    // Hide reset database card in settings
+    const resetCard = document.getElementById("btnResetDatabase")?.closest('.card-style');
+    if (resetCard) {
+        resetCard.style.display = isTeacher ? "none" : "block";
+    }
+    
+    // User Accounts nav controls
+    const usersNav = document.getElementById("navItemUsers");
+    if (usersNav) {
+        usersNav.style.display = isTeacher ? "none" : "flex";
+    }
+    
+    updatePendingUsersBadge();
+}
+
+// Sidebar Navigation Toggles
+function setupNavigation() {
+    const navItems = document.querySelectorAll(".nav-item");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+    const pageTitle = document.getElementById("pageTitle");
+
+    navItems.forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            const tabId = item.getAttribute("data-tab");
+            
+            navItems.forEach(nav => nav.classList.remove("active"));
+            item.classList.add("active");
+            
+            tabPanels.forEach(panel => panel.classList.remove("active"));
+            const targetPanel = document.getElementById(`${tabId}Panel`);
+            if (targetPanel) {
+                targetPanel.classList.add("active");
+            }
+            
+            // Update Header Title
+            const translationKey = tabId;
+            pageTitle.textContent = translations[appState.language][translationKey] || tabId;
+            pageTitle.setAttribute("data-km", translations.km[translationKey]);
+            pageTitle.setAttribute("data-en", translations.en[translationKey]);
+
+            // Render fresh data on tab open
+            if (tabId === "dashboard") renderDashboard();
+            if (tabId === "classes") {
+                // close class details view first
+                document.getElementById("classDetailView").style.display = "none";
+                document.getElementById("classesContainer").style.display = "grid";
+                renderClassesPanel();
+            }
+            if (tabId === "subjects") renderSubjectsPanel();
+            if (tabId === "scores") initSelectors();
+            if (tabId === "reports") {
+                initSelectors();
+                if (window.goBackToReportDashboard) window.goBackToReportDashboard();
+            }
+            if (tabId === "academic-reports") {
+                initAcadSelectors();
+                document.getElementById("acadReportContainer").style.display = "none";
+                document.getElementById("acadPlaceholder").style.display = "block";
+            }
+            if (tabId === "messages") renderMessagesPanel();
+            if (tabId === "users") initUserPanel();
+        });
+    });
+}
+
+// Apply theme toggle styles
+function applyTheme() {
+    document.documentElement.setAttribute("data-theme", appState.theme);
+    const themeText = document.querySelector(".toggle-text");
+    if (themeText) {
+        themeText.textContent = appState.theme === "dark" 
+            ? (appState.language === "km" ? "របៀបពន្លឺ" : "Light Mode")
+            : (appState.language === "km" ? "របៀបងងឹត" : "Dark Mode");
+    }
+}
+
+// Translate labels using HTML attributes
+function applyLanguage() {
+    const translatableElements = document.querySelectorAll("[data-km][data-en]");
+    translatableElements.forEach(el => {
+        const text = appState.language === "km" ? el.getAttribute("data-km") : el.getAttribute("data-en");
+        if (el.tagName === "INPUT" && el.hasAttribute("placeholder")) {
+            el.setAttribute("placeholder", text);
+        } else {
+            // Keep icon inside if any
+            const icon = el.querySelector("i");
+            if (icon) {
+                el.innerHTML = "";
+                el.appendChild(icon);
+                el.appendChild(document.createTextNode(" " + text));
+            } else {
+                el.textContent = text;
+            }
+        }
+    });
+
+    const langText = document.querySelector(".lang-text");
+    if (langText) {
+        langText.textContent = appState.language === "km" ? "English" : "ភាសាខ្មែរ";
+    }
+
+    initDateTime();
+    
+    if (appState.selectedLanguageLabel) {
+        updateLanguageButtonsUI(appState.selectedLanguageLabel);
+    }
+}
+
+// Toast Notifications Helper
+function showToast(messageKey, type = "success") {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    
+    const message = translations[appState.language][messageKey] || messageKey;
+    
+    let iconClass = "fa-circle-check";
+    if (type === "error") iconClass = "fa-circle-xmark";
+    if (type === "warning") iconClass = "fa-triangle-exclamation";
+    
+    toast.innerHTML = `<i class="fa-solid ${iconClass}"></i> <span>${message}</span>`;
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.transform = "translateX(120%)";
+        toast.style.transition = "transform 0.4s ease";
+        setTimeout(() => toast.remove(), 400);
+    }, 3000);
+}
+
+// ----------------------------------------------------
+// DASHBOARD VIEW RENDERING
+// ----------------------------------------------------
+function renderDashboard() {
+    // 1. Update Role Banner
+    const roleBanner = document.getElementById("dashRoleBanner");
+    if (roleBanner) {
+        if (appState.role === "admin") roleBanner.textContent = "ADMIN";
+        else if (appState.role === "teacher") roleBanner.textContent = "TEACHER";
+        else roleBanner.textContent = "STUDENT";
+    }
+
+    // Handle Quick Action Buttons visibility based on role
+    const usersBtn = document.getElementById("qaBtnUsers");
+    if (usersBtn) {
+        usersBtn.style.display = (appState.role === "admin") ? "flex" : "none";
+    }
+
+    // 2. Calculate Overall Stats
+    let totalStudents = 0;
+    appState.classes.forEach(c => totalStudents += c.students.length);
+    
+    let passingCount = 0;
+    let failingCount = 0;
+    let totalRanked = 0;
+    
+    // Arrays for advanced stats
+    let allStudentAverages = [];
+    let classPassingRates = [];
+    
+    // Performance Tiers Count
+    let excCount = 0; // >= 9.0
+    let goodCount = 0; // 7.0 - 8.99
+    let avgCount = 0; // 5.0 - 6.99
+    let failCount = 0; // < 5.0
+
+    appState.classes.forEach(c => {
+        let classPass = 0;
+        let classTotal = 0;
+        
+        if (c.students.length > 0) {
+            const ranked = rankStudentsInClass(c.id, "yearly");
+            ranked.forEach(r => {
+                if (r.average > 0) {
+                    totalRanked++;
+                    classTotal++;
+                    
+                    allStudentAverages.push({
+                        name: r.student.name,
+                        className: c.name,
+                        average: r.average
+                    });
+                    
+                    if (r.average >= 5.0) {
+                        passingCount++;
+                        classPass++;
+                    } else {
+                        failingCount++;
+                    }
+                    
+                    if (r.average >= 9.0) excCount++;
+                    else if (r.average >= 7.0) goodCount++;
+                    else if (r.average >= 5.0) avgCount++;
+                    else failCount++;
+                }
+            });
+        }
+        
+        if (classTotal > 0) {
+            classPassingRates.push({
+                name: c.name,
+                rate: (classPass / classTotal) * 100
+            });
+        }
+    });
+    
+    const isKm = appState.language === 'km';
+    const passingRate = totalRanked > 0 ? Math.round((passingCount / totalRanked) * 100) : 0;
+    const failingRate = totalRanked > 0 ? Math.round((failingCount / totalRanked) * 100) : 0;
+    
+    // 3. Update Banner Circular Charts Trio
+    const dashTotalCountText = document.getElementById("dashTotalCountText");
+    const dashTotalCircle = document.getElementById("dashTotalCircle");
+    
+    const dashPassingText = document.getElementById("dashPassingText");
+    const dashPassingCircle = document.getElementById("dashPassingCircle");
+    
+    const dashFailingText = document.getElementById("dashFailingText");
+    const dashFailingCircle = document.getElementById("dashFailingCircle");
+    
+    // Ring 1: Total Students Count
+    if (dashTotalCountText) {
+        dashTotalCountText.textContent = isKm ? toKhDigits(totalStudents) : totalStudents;
+    }
+    if (dashTotalCircle) {
+        dashTotalCircle.style.strokeDasharray = totalStudents > 0 ? `100, 100` : `0, 100`;
+    }
+    
+    // Ring 2: Passed Students Count
+    if (dashPassingText) {
+        dashPassingText.textContent = isKm ? toKhDigits(passingCount) : passingCount;
+    }
+    if (dashPassingCircle) {
+        dashPassingCircle.style.strokeDasharray = `${passingRate}, 100`;
+    }
+    
+    // Ring 3: Failed Students Count
+    if (dashFailingText) {
+        dashFailingText.textContent = isKm ? toKhDigits(failingCount) : failingCount;
+    }
+    if (dashFailingCircle) {
+        dashFailingCircle.style.strokeDasharray = `${failingRate}, 100`;
+    }
+    
+    // 4. Update Summary Cards
+    // Top Students (Count of students with avg >= 9.0)
+    const sumTopStudentsCount = document.getElementById("sumTopStudentsCount");
+    if (sumTopStudentsCount) sumTopStudentsCount.textContent = excCount;
+    
+    // Best Class (Class with highest passing rate)
+    classPassingRates.sort((a, b) => b.rate - a.rate);
+    const sumBestClass = document.getElementById("sumBestClass");
+    if (sumBestClass) {
+        sumBestClass.textContent = classPassingRates.length > 0 ? classPassingRates[0].name : "N/A";
+    }
+    
+    // New Messages (Pending approvals count)
+    const sumNewMessages = document.getElementById("sumNewMessages");
+    if (sumNewMessages) {
+        sumNewMessages.textContent = appState.pendingUsers ? appState.pendingUsers.length : 0;
+    }
+    
+    // Needs Attention (Count of students failing)
+    const sumNeedsAttention = document.getElementById("sumNeedsAttention");
+    if (sumNeedsAttention) {
+        sumNeedsAttention.textContent = failingCount;
+    }
+    
+    // 5. Update Performance Summary Bars
+    const perfTotalStudents = document.getElementById("perfTotalStudents");
+    if (perfTotalStudents) {
+        perfTotalStudents.textContent = `${appState.language === 'km' ? 'សិស្សមានពិន្ទុសរុប៖' : 'Total graded students:'} ${totalRanked}`;
+    }
+    
+    const updatePerfBar = (idSuffix, count, total) => {
+        const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+        const valEl = document.getElementById(`perfVal${idSuffix}`);
+        const circleEl = document.getElementById(`perfCircle${idSuffix}`);
+        const totalEl = document.getElementById(`perfTotal${idSuffix}`);
+        
+        if (valEl) valEl.textContent = count;
+        if (totalEl) totalEl.textContent = total;
+        if (circleEl) circleEl.textContent = `${pct}%`;
+    };
+    
+    updatePerfBar('Exc', excCount, totalRanked);
+    updatePerfBar('Good', goodCount, totalRanked);
+    updatePerfBar('Avg', avgCount, totalRanked);
+    updatePerfBar('Fail', failCount, totalRanked);
+}
+
+// ----------------------------------------------------
+// CLASS MANAGEMENT VIEW RENDERING
+// ----------------------------------------------------
+function renderClassesPanel() {
+    const container = document.getElementById("classesContainer");
+    container.innerHTML = "";
+    
+    appState.classes.forEach(c => {
+        const studentCount = c.students.length;
+        const teacherLabel = appState.language === 'km' ? 'គ្រូ៖' : 'Teacher:';
+        const teacherText = c.teacherName || (appState.language === 'km' ? 'មិនទាន់ចាត់តាំង' : 'Not Assigned');
+        const card = document.createElement("div");
+        card.className = "card-style class-card animate-card";
+        card.innerHTML = `
+            <div class="class-card-header">
+                <h3>${c.name}</h3>
+                <span class="class-badge" data-km="${studentCount} នាក់" data-en="${studentCount} Students">${studentCount} នាក់</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; margin-top: -0.5rem;">
+                ${teacherLabel} <strong>${teacherText}</strong>
+            </div>
+            <div class="class-card-stats">
+                <div class="class-stat-item">
+                    <p data-km="ស្រី" data-en="Female">ស្រី</p>
+                    <span>${c.students.filter(s => s.gender === 'ស្រី').length}</span>
+                </div>
+                <div class="class-stat-item">
+                    <p data-km="ប្រុស" data-en="Male">ប្រុស</p>
+                    <span>${c.students.filter(s => s.gender === 'ប្រុស').length}</span>
+                </div>
+                <div class="class-stat-item">
+                    <p data-km="ព្រះសង្ឃ" data-en="Monk">ព្រះសង្ឃ</p>
+                    <span>${c.students.filter(s => s.gender === 'ព្រះសង្ឃ').length}</span>
+                </div>
+            </div>
+        `;
+        
+        card.addEventListener("click", () => showClassDetail(c.id));
+        container.appendChild(card);
+    });
+    
+    applyLanguage();
+}
+
+function showClassDetail(classId) {
+    activeClassId = classId;
+    const targetClass = appState.classes.find(c => c.id === classId);
+    if (!targetClass) return;
+    
+    document.getElementById("classesContainer").style.display = "none";
+    document.getElementById("classDetailView").style.display = "block";
+    document.getElementById("currentClassName").textContent = targetClass.name;
+    
+    const teacherLabel = appState.language === 'km' ? 'គ្រូបន្ទុកថ្នាក់៖' : 'Class Teacher:';
+    const teacherVal = targetClass.teacherName || (appState.language === 'km' ? 'មិនទាន់ចាត់តាំង' : 'Not Assigned');
+    document.getElementById("currentClassTeacher").textContent = `${teacherLabel} ${teacherVal}`;
+    
+    renderStudentsList();
+}
+
+// Helper: Render subject checkboxes in class modal
+function renderSubjectsChecklist(selectedSubjectIds = []) {
+    const container = document.getElementById("classSubjectsChecklist");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    if (appState.subjects.length === 0) {
+        container.innerHTML = `<span style="font-size:0.85rem; color:var(--text-muted);">${appState.language === 'km' ? 'គ្មានមុខវិជ្ជាកំណត់ឡើយ' : 'No subjects configured'}</span>`;
+        return;
+    }
+    
+    appState.subjects.forEach(sub => {
+        const label = appState.language === 'km' ? sub.name : sub.nameEn;
+        const isChecked = selectedSubjectIds.length === 0 || selectedSubjectIds.includes(sub.id);
+        
+        const labelEl = document.createElement("label");
+        labelEl.className = "subject-checkbox-item";
+        labelEl.innerHTML = `
+            <input type="checkbox" value="${sub.id}" ${isChecked ? "checked" : ""}>
+            <span>${label}</span>
+        `;
+        container.appendChild(labelEl);
+    });
+}
+
+function renderStudentsList() {
+    const targetClass = appState.classes.find(c => c.id === activeClassId);
+    const tbody = document.getElementById("studentsTableBody");
+    tbody.innerHTML = "";
+    
+    if (targetClass.students.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center" style="color: var(--text-muted);" data-km="មិនទាន់មានសិស្សក្នុងថ្នាក់នេះទេ" data-en="No students added to this class yet.">មិនទាន់មានសិស្សក្នុងថ្នាក់នេះទេ</td></tr>`;
+    } else {
+        targetClass.students.forEach((stu, index) => {
+            const tr = document.createElement("tr");
+            const genText = stu.generation ? stu.generation : "-";
+            
+            let genderText = "-";
+            if (stu.gender === 'ស្រី') {
+                genderText = appState.language === 'km' ? 'ស្រី' : 'Female';
+            } else if (stu.gender === 'ប្រុស') {
+                genderText = appState.language === 'km' ? 'ប្រុស' : 'Male';
+            } else if (stu.gender === 'ព្រះសង្ឃ') {
+                genderText = appState.language === 'km' ? 'ព្រះសង្ឃ' : 'Monk';
+            }
+            
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${stu.id}</td>
+                <td><strong>${stu.name}</strong></td>
+                <td>${stu.dob || "-"}</td>
+                <td>${genderText}</td>
+                <td>${stu.contact || "-"}</td>
+                <td>${genText}</td>
+                <td>
+                    <button class="btn btn-icon btn-sm" onclick="editStudent('${stu.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                    ${appState.currentUser?.role === 'teacher' ? '' : `
+                    <button class="btn btn-icon btn-sm btn-danger-action" onclick="deleteStudent('${stu.id}')" title="Delete" style="background: rgba(244,63,94,0.1); color: var(--crimson-red);"><i class="fa-solid fa-trash"></i></button>
+                    `}
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    
+    applyLanguage();
+}
+
+// ----------------------------------------------------
+// SUBJECT CONFIGURATION VIEW RENDERING
+// ----------------------------------------------------
+function renderSubjectsPanel() {
+    const tbody = document.getElementById("subjectsTableBody");
+    tbody.innerHTML = "";
+    
+    if (appState.subjects.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center" style="color: var(--text-muted);" data-km="មិនទាន់មានមុខវិជ្ជាបញ្ចូលនៅឡើយ" data-en="No subjects configured yet.">មិនទាន់មានមុខវិជ្ជាបញ្ចូលនៅឡើយ</td></tr>`;
+    } else {
+        appState.subjects.forEach((sub, index) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td><strong>${sub.name}</strong></td>
+                <td>${sub.nameEn}</td>
+                <td>
+                    <button class="btn btn-icon btn-sm" onclick="editSubject('${sub.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                    ${appState.currentUser?.role === 'teacher' ? '' : `
+                    <button class="btn btn-icon btn-sm btn-danger-action" onclick="deleteSubject('${sub.id}')" title="Delete" style="background: rgba(244,63,94,0.1); color: var(--crimson-red);"><i class="fa-solid fa-trash"></i></button>
+                    `}
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    
+    applyLanguage();
+}
+
+// ----------------------------------------------------
+// SELECTORS SEEDING FOR SCORES & REPORTS
+// ----------------------------------------------------
+function initSelectors() {
+    // Score Selectors
+    const scoreClassSel = document.getElementById("scoreFilterClass");
+    const scoreSubSel = document.getElementById("scoreFilterSubject");
+    const scorePeriodSel = document.getElementById("scoreFilterPeriod");
+    
+    // Report Selectors
+    const reportClassSel = document.getElementById("reportFilterClass");
+    
+    // Preserve current selections
+    const currentScoreClass = scoreClassSel ? scoreClassSel.value : null;
+    const currentScoreSub = scoreSubSel ? scoreSubSel.value : null;
+    const currentScorePeriod = scorePeriodSel ? scorePeriodSel.value : null;
+    const currentReportClass = reportClassSel ? reportClassSel.value : null;
+    
+    // Seed Classes
+    if (scoreClassSel) scoreClassSel.innerHTML = "";
+    if (reportClassSel) reportClassSel.innerHTML = "";
+    
+    if (appState.classes.length === 0) {
+        const opt = `<option value="" data-km="-- គ្មានថ្នាក់រៀន --" data-en="-- No Classes Available --">-- គ្មានថ្នាក់រៀន --</option>`;
+        if (scoreClassSel) scoreClassSel.innerHTML = opt;
+        if (reportClassSel) reportClassSel.innerHTML = opt;
+    } else {
+        appState.classes.forEach(c => {
+            const opt = `<option value="${c.id}">${c.name}</option>`;
+            if (scoreClassSel) scoreClassSel.innerHTML += opt;
+            if (reportClassSel) reportClassSel.innerHTML += opt;
+        });
+        
+        // Restore selections if valid
+        if (scoreClassSel && currentScoreClass && appState.classes.find(c => c.id === currentScoreClass)) {
+            scoreClassSel.value = currentScoreClass;
+        }
+        if (reportClassSel && currentReportClass && appState.classes.find(c => c.id === currentReportClass)) {
+            reportClassSel.value = currentReportClass;
+        }
+    }
+    
+    // Seed Subjects by calling the updater helper
+    updateScoreSubjectSelector();
+    
+    // Try to restore subject selection
+    if (scoreSubSel && currentScoreSub) {
+        const optionExists = Array.from(scoreSubSel.options).some(opt => opt.value === currentScoreSub);
+        if (optionExists) {
+            scoreSubSel.value = currentScoreSub;
+        }
+    }
+
+    if (scorePeriodSel && currentScorePeriod) {
+        scorePeriodSel.value = currentScorePeriod;
+    }
+    
+    applyLanguage();
+    
+    // Auto-fetch data without clicking button if in Score tab
+    if (document.getElementById("scoreViewContainer") && document.getElementById("scoreViewContainer").style.display !== "none") {
+        if (typeof loadScoreSheet === 'function') loadScoreSheet();
+    }
+}
+
+// Helper: Filter score entry subjects selector based on selected class
+function updateScoreSubjectSelector() {
+    const classId = document.getElementById("scoreFilterClass").value;
+    const scoreSubSel = document.getElementById("scoreFilterSubject");
+    if (!scoreSubSel) return;
+    
+    scoreSubSel.innerHTML = "";
+    
+    const targetClass = appState.classes.find(c => c.id === classId);
+    const activeSubjects = targetClass && targetClass.subjectIds 
+        ? appState.subjects.filter(s => targetClass.subjectIds.includes(s.id))
+        : appState.subjects;
+        
+    if (activeSubjects.length === 0) {
+        scoreSubSel.innerHTML = `<option value="" data-km="-- គ្មានមុខវិជ្ជា --" data-en="-- No Subjects Allowed --">-- គ្មានមុខវិជ្ជា --</option>`;
+    } else {
+        activeSubjects.forEach(sub => {
+            const name = appState.language === 'km' ? sub.name : `${sub.name} (${sub.nameEn})`;
+            scoreSubSel.innerHTML += `<option value="${sub.id}">${name}</option>`;
+        });
+    }
+}
+
+// ----------------------------------------------------
+// SCORE ENTRY ACTIONS
+// ----------------------------------------------------
+function loadScoreSheet() {
+    const classId = document.getElementById("scoreFilterClass").value;
+    const period = document.getElementById("scoreFilterPeriod").value;
+    const subjectId = document.getElementById("scoreFilterSubject").value;
+    
+    if (!classId || !period || !subjectId) {
+        showToast("invalid_score", "warning");
+        return;
+    }
+    
+    loadedScorePeriod = period;
+    loadedScoreSubjectId = subjectId;
+    
+    const targetClass = appState.classes.find(c => c.id === classId);
+    const targetSub = appState.subjects.find(s => s.id === subjectId);
+    
+    if (!targetClass || !targetSub) return;
+    
+    document.getElementById("scoreSheetPlaceholder").style.display = "none";
+    const container = document.getElementById("scoreEntryContainer");
+    container.style.display = "block";
+    
+    // Update titles
+    const subName = appState.language === 'km' ? targetSub.name : targetSub.nameEn;
+    const periodText = document.getElementById("scoreFilterPeriod").options[document.getElementById("scoreFilterPeriod").selectedIndex].textContent;
+    document.getElementById("scoreSheetTitle").textContent = `${appState.language === 'km' ? 'បញ្ចូលពិន្ទុ' : 'Enter Scores'} - ${targetClass.name} [${subName}] (${periodText})`;
+    
+    const tbody = document.getElementById("scoreSheetTableBody");
+    tbody.innerHTML = "";
+    
+    if (targetClass.students.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="color: var(--text-muted);" data-km="គ្មានសិស្សក្នុងថ្នាក់នេះទេ" data-en="No students in this class.">គ្មានសិស្សក្នុងថ្នាក់នេះទេ</td></tr>`;
+        document.getElementById("btnSaveScores").style.display = "none";
+    } else {
+        document.getElementById("btnSaveScores").style.display = "inline-flex";
+        
+        targetClass.students.forEach((stu, index) => {
+            // Load existing score if any
+            const existingVal = appState.scores[stu.id]?.[period]?.[subjectId] ?? "";
+            
+            let genderText = "-";
+            if (stu.gender === 'ស្រី') {
+                genderText = appState.language === 'km' ? 'ស្រី' : 'Female';
+            } else if (stu.gender === 'ប្រុស') {
+                genderText = appState.language === 'km' ? 'ប្រុស' : 'Male';
+            } else if (stu.gender === 'ព្រះសង្ឃ') {
+                genderText = appState.language === 'km' ? 'ព្រះសង្ឃ' : 'Monk';
+            }
+            
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${stu.id}</td>
+                <td><strong>${stu.name}</strong></td>
+                <td>${genderText}</td>
+                <td>
+                    <input type="text" 
+                           class="score-input-cell" 
+                           data-student-id="${stu.id}" 
+                           value="${existingVal}" 
+                           placeholder="0.0">
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+        
+        // Setup input validation listener
+        const inputs = tbody.querySelectorAll(".score-input-cell");
+        inputs.forEach(input => {
+            input.addEventListener("input", () => {
+                // Automatically convert commas to dots for convenience
+                let valStr = input.value.replace(",", ".");
+                input.value = valStr;
+                
+                const val = parseFloat(valStr);
+                if (valStr !== "" && (isNaN(val) || val < 0 || val > 10 || !/^\d+(\.\d+)?$/.test(valStr))) {
+                    input.classList.add("invalid");
+                } else {
+                    input.classList.remove("invalid");
+                }
+            });
+        });
+    }
+    
+    applyLanguage();
+}
+
+function saveScores() {
+    if (!loadedScorePeriod || !loadedScoreSubjectId) return;
+    const period = loadedScorePeriod;
+    const subjectId = loadedScoreSubjectId;
+    const inputs = document.querySelectorAll(".score-input-cell");
+    
+    let hasError = false;
+    inputs.forEach(input => {
+        let valStr = input.value.trim().replace(",", ".");
+        const val = parseFloat(valStr);
+        if (valStr !== "" && (isNaN(val) || val < 0 || val > 10 || !/^\d+(\.\d+)?$/.test(valStr))) {
+            input.classList.add("invalid");
+            hasError = true;
+        }
+    });
+    
+    if (hasError) {
+        showToast("invalid_score", "error");
+        return;
+    }
+    
+    // Save scores into state
+    inputs.forEach(input => {
+        const studentId = input.getAttribute("data-student-id");
+        let valStr = input.value.trim().replace(",", ".");
+        
+        if (!appState.scores[studentId]) {
+            appState.scores[studentId] = {};
+        }
+        if (!appState.scores[studentId][period]) {
+            appState.scores[studentId][period] = {};
+        }
+        
+        if (valStr === "") {
+            delete appState.scores[studentId][period][subjectId];
+        } else {
+            appState.scores[studentId][period][subjectId] = parseFloat(valStr);
+        }
+    });
+    
+    saveState();
+    showToast("save_success", "success");
+}
+
+// ----------------------------------------------------
+// SCORE REPORT GENERATION & RENDERING
+// ----------------------------------------------------
+// Helper functions for Grade Distributions
+function getGradeLetter(avg) {
+    if (avg >= 9.5) return 'A';
+    if (avg >= 8.5) return 'B';
+    if (avg >= 7.5) return 'C';
+    if (avg >= 6.5) return 'D';
+    if (avg >= 5.5) return 'E';
+    return 'F';
+}
+
+function getGradeLabel(grade, lang = 'km') {
+    const labels = {
+        'A': { km: 'ល្អប្រសើរ (Excellent)', en: 'Excellent (A)' },
+        'B': { km: 'ល្អណាស់ (Very Good)', en: 'Very Good (B)' },
+        'C': { km: 'ល្អ (Good)', en: 'Good (C)' },
+        'D': { km: 'ល្អបង្គួរ (Fairly Good)', en: 'Fairly Good (D)' },
+        'E': { km: 'មធ្យម - ជាប់ (Pass)', en: 'Medium - Pass (E)' },
+        'F': { km: 'ខ្សោយ - ធ្លាក់ (Fail)', en: 'Weak - Fail (F)' }
+    };
+    return labels[grade]?.[lang] || grade;
+}
+
+function getGradeColorClass(grade) {
+    const classes = {
+        'A': 'bg-purple',
+        'B': 'bg-blue',
+        'C': 'bg-green',
+        'D': 'bg-yellow',
+        'E': 'bg-orange',
+        'F': 'bg-red'
+    };
+    return classes[grade] || 'bg-blue';
+}
+
+window.selectReportType = function(type) {
+    const dashboard = document.getElementById("reportDashboardView");
+    const filters = document.getElementById("reportFilterView");
+    const container = document.getElementById("reportViewContainer");
+    
+    if (dashboard) dashboard.style.display = "none";
+    if (filters) filters.style.display = "block";
+    if (container) container.style.display = "none";
+    
+    // Hide all dynamic filter groups first
+    const periodGroup = document.getElementById("reportFilterPeriodGroup");
+    const dateGroup = document.getElementById("reportFilterDateGroup");
+    const weekGroup = document.getElementById("reportFilterWeekGroup");
+    
+    if (periodGroup) periodGroup.style.display = "none";
+    if (dateGroup) dateGroup.style.display = "none";
+    if (weekGroup) weekGroup.style.display = "none";
+    
+    const periodSelect = document.getElementById("reportFilterPeriod");
+    
+    if (type === 'daily') {
+        if (dateGroup) dateGroup.style.display = "block";
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = document.getElementById("reportFilterDate");
+        if (dateInput) dateInput.value = today;
+        if (periodSelect) periodSelect.value = "daily";
+    } else if (type === 'weekly') {
+        if (weekGroup) weekGroup.style.display = "block";
+        if (periodSelect) periodSelect.value = "weekly";
+    } else {
+        if (periodGroup) periodGroup.style.display = "block";
+        if (periodSelect) {
+            if (type === 'monthly') {
+                periodSelect.value = "oct";
+            } else {
+                periodSelect.value = type;
+            }
+        }
+    }
 };
 
-function renderClassDashboard(grade) {
-  const gradeName = getGradeNameKhmer(grade);
-  document.getElementById('class-dashboard-title').innerText = `ព័ត៌មានលម្អិតសិស្ស ${gradeName} - ឆ្នាំសិក្សា ${state.schoolInfo.academicYear || '២០២៦-២០២៧'}`;
-  
-  // Hide editor subview initially
-  document.getElementById('class-text-editor-container').style.display = 'none';
-  document.querySelector('.class-dashboard-panel-body').style.display = 'block';
-}
+window.goBackToReportDashboard = function() {
+    const dashboard = document.getElementById("reportDashboardView");
+    const filters = document.getElementById("reportFilterView");
+    const container = document.getElementById("reportViewContainer");
+    
+    if (dashboard) dashboard.style.display = "block";
+    if (filters) filters.style.display = "none";
+    if (container) container.style.display = "none";
+};
 
-function openClassTextEditor(grade, folder) {
-  state.activeEditingClassFolder = folder;
-  const gradeName = getGradeNameKhmer(grade);
-  const folderName = folderNamesKhmer[folder] || "កត់ត្រាឯកសារ";
-  
-  document.getElementById('class-text-editor-title').innerText = `${folderName} - ${gradeName}`;
-  
-  const content = (state.classTexts[grade] && state.classTexts[grade][folder]) || "";
-  document.getElementById('editor-class-text').value = content;
-  
-  // Hide folders grid, show editor
-  document.querySelector('.class-dashboard-panel-body').style.display = 'none';
-  document.getElementById('class-text-editor-container').style.display = 'block';
-}
-
-function setupClassDashboardHandlers() {
-  // Home button
-  document.getElementById('btn-class-dashboard-home').addEventListener('click', () => {
-    switchView('dashboard');
-  });
-
-  // Folder buttons
-  document.querySelectorAll('.folder-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const folder = btn.getAttribute('data-folder');
-      const grade = state.selectedClassDashboardGrade;
-      
-      if (folder === 'profiles' || folder === 'list') {
-        state.selectedGradeFilter = grade;
-        document.getElementById('student-grade-filter').value = grade;
-        renderStudentList();
-        switchView('students');
-      } else if (folder === 'scores') {
-        state.selectedScoreGrade = grade;
-        document.getElementById('score-grade-select').value = grade;
-        renderScoreboard();
-        switchView('scores');
-      } else if (folder === 'attendance') {
-        state.selectedAttendanceGrade = grade;
-        document.getElementById('att-grade-select').value = grade;
-        renderAttendanceGrid();
-        switchView('attendance');
-      } else if (folder === 'timetable') {
-        document.getElementById('timetable-grade-select').value = grade;
-        state.selectedTimetableGrade = grade;
-        renderTimetableEditor();
+function renderVisualSummary(rankedData, period, classId) {
+    const container = document.getElementById("reportVisualSummary");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    
+    const isDaily = period === 'daily';
+    const isWeekly = period === 'weekly';
+    const isKm = appState.language === 'km';
+    
+    // Daily/Weekly will now use the standard Grade Distribution below.
+    const total = rankedData.length;
+    if (total === 0) return;
+    
+    let grades = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
+    let passed = 0;
+    let sumAvg = 0;
+    
+    rankedData.forEach(row => {
+        sumAvg += row.average;
+        if (row.average >= 5.0) passed++;
         
-        switchView('school');
-        showSchoolSubview('subview-curriculum');
-      } else if (folder === 'cards') {
-        state.selectedGradeFilter = grade;
-        document.getElementById('student-grade-filter').value = grade;
-        renderStudentList();
-        switchView('students');
-        showToast('សូមចុច «កាតសិស្ស» លើសិស្សណាម្នាក់ ដើម្បីបោះពុម្ពកាត!', 'info');
-      } else {
-        // Text editing folders
-        openClassTextEditor(grade, folder);
-      }
+        const g = getGradeLetter(row.average);
+        grades[g]++;
     });
-  });
-
-  // Editor back button
-  document.getElementById('btn-back-class-dashboard').addEventListener('click', () => {
-    document.getElementById('class-text-editor-container').style.display = 'none';
-    document.querySelector('.class-dashboard-panel-body').style.display = 'block';
-  });
-
-  // Editor save button
-  document.getElementById('btn-save-class-text').addEventListener('click', () => {
-    const grade = state.selectedClassDashboardGrade;
-    const folder = state.activeEditingClassFolder;
-    const content = document.getElementById('editor-class-text').value;
     
-    if (!state.classTexts[grade]) {
-      state.classTexts[grade] = {};
-    }
-    state.classTexts[grade][folder] = content;
-    saveStateToStorage();
-    showToast('រក្សាទុកឯកសារប្រចាំថ្នាក់ដោយជោគជ័យ!', 'success');
-  });
-}
-
-// --- BATCH UNIFIED CARDS PRINTING ---
-function getCardMarkup(person, slotIndex) {
-  if (!person) {
-    return `
-      <div class="student-card-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="9" y1="3" x2="9" y2="21"></line>
-          <line x1="15" y1="3" x2="15" y2="21"></line>
-          <line x1="3" y1="9" x2="21" y2="9"></line>
-          <line x1="3" y1="15" x2="21" y2="15"></line>
-        </svg>
-        <span>ប្រអប់ទី ${slotIndex} (ទទេ)</span>
-      </div>
-    `;
-  }
-
-  const barcodeCanvasId = `batch-barcode-canvas-${slotIndex}`;
-  const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(person.id)}`;
-  const photoHTML = person.photo 
-    ? `<img src="${person.photo}" alt="${person.name}">`
-    : `<svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-
-  if (person.type === 'student') {
-    return `
-      <div class="student-card-layout" style="margin: 0;">
-        <div class="card-inner-content">
-          <div class="card-school-header">
-            <svg class="card-school-logo" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="16"></line>
-              <line x1="8" y1="12" x2="16" y2="12"></line>
-            </svg>
-            <div class="card-school-name">ពុទ្ធិកបឋមសិក្សាកម្រិត ហ៊ុន ណេង</div>
-            <div class="card-school-eng">HUN NENG BUDDHIST PRIMARY SCHOOL</div>
-          </div>
-          <div class="card-body-section">
-            <div class="card-photo-box">
-              ${photoHTML}
-            </div>
-            <div class="card-details-box">
-              <div class="card-detail-item">
-                <span class="label">ឈ្មោះសិស្ស៖</span>
-                <span class="value" style="font-size: 11px;">${person.name}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">ភេទ៖</span>
-                <span class="value">${person.gender}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">ថ្នាក់សិក្សា៖</span>
-                <span class="value">${getGradeNameKhmer(person.grade)}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">ថ្ងៃកំណើត៖</span>
-                <span class="value">${person.dob}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">ទូរស័ព្ទ៖</span>
-                <span class="value">${person.fatherPhone}</span>
-              </div>
-            </div>
-            <div class="card-right-section">
-              <div class="card-qr-container">
-                <img src="${qrImageSrc}" alt="QR Code">
-              </div>
-              <div class="card-id-text">${person.id}</div>
-            </div>
-          </div>
-          <div class="card-footer-section">
-            <div class="card-barcode-container">
-              <canvas id="${barcodeCanvasId}" width="150" height="30"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  } else {
-    // Staff Member
-    return `
-      <div class="staff-card-layout" style="margin: 0;">
-        <div class="card-inner-content">
-          <div class="card-school-header">
-            <svg class="card-school-logo" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="16"></line>
-              <line x1="8" y1="12" x2="16" y2="12"></line>
-            </svg>
-            <div class="card-school-name">ពុទ្ធិកបឋមសិក្សាកម្រិត ហ៊ុន ណេង</div>
-            <div class="card-school-eng">HUN NENG BUDDHIST PRIMARY SCHOOL</div>
-          </div>
-          <div class="card-body-section">
-            <div class="card-photo-box">
-              ${photoHTML}
-            </div>
-            <div class="card-details-box">
-              <div class="card-detail-item">
-                <span class="label">ឈ្មោះមន្ត្រី៖</span>
-                <span class="value" style="font-size: 11px;">${person.name}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">ភេទ៖</span>
-                <span class="value">${person.gender}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">តួនាទី៖</span>
-                <span class="value">${person.position}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">លេខសម្គាល់៖</span>
-                <span class="value">${person.id}</span>
-              </div>
-              <div class="card-detail-item">
-                <span class="label">ទូរស័ព្ទ៖</span>
-                <span class="value">${person.phone}</span>
-              </div>
-            </div>
-            <div class="card-right-section">
-              <div class="card-qr-container">
-                <img src="${qrImageSrc}" alt="QR Code">
-              </div>
-              <div class="card-id-text">${person.id}</div>
-            </div>
-          </div>
-          <div class="card-footer-section">
-            <div class="card-barcode-container">
-              <canvas id="${barcodeCanvasId}" width="150" height="30"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-}
-
-function drawBatchBarcode(personId, slotIndex) {
-  const canvas = document.getElementById(`batch-barcode-canvas-${slotIndex}`);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#000';
-  ctx.clearRect(0, 0, 150, 30);
-  
-  let seed = 0;
-  for(let i=0; i<personId.length; i++) seed += personId.charCodeAt(i);
-  
-  let x = 5;
-  while(x < 145) {
-    const width = 1 + (seed % 3);
-    const spacing = 1 + ((seed + 7) % 4);
-    ctx.fillRect(x, 0, width, 30);
-    x += width + spacing;
-    seed = (seed * 9301 + 49297) % 233280;
-  }
-}
-
-// Tracks current filter: 'all', 'student', 'staff'
-let batchFilter = 'all';
-
-function updateBatchCardsGrid() {
-  const container = document.getElementById('batch-cards-grid-container');
-  container.innerHTML = '';
-  
-  const selects = document.querySelectorAll('.batch-unified-select');
-  selects.forEach((select, index) => {
-    const val = select.value;
-    let person = null;
-    if (val) {
-      const [type, id] = val.split(':');
-      if (type === 'student') {
-        const student = state.students.find(s => s.id === id);
-        if (student) person = { ...student, type: 'student' };
-      } else if (type === 'staff') {
-        const member = state.staff.find(s => s.id === id);
-        if (member) person = { ...member, type: 'staff' };
-      }
-    }
+    const passRate = ((passed / total) * 100).toFixed(0);
+    const classAvg = (sumAvg / total).toFixed(2);
     
-    const cardWrapper = document.createElement('div');
-    cardWrapper.innerHTML = getCardMarkup(person, index + 1);
-    container.appendChild(cardWrapper.firstElementChild);
-    
-    if (person) {
-      drawBatchBarcode(person.id, index + 1);
-    }
-  });
-}
-
-function renderBatchCardsView() {
-  const selects = document.querySelectorAll('.batch-unified-select');
-  
-  const sortedStudents = [...state.students].sort((a,b) => a.name.localeCompare(b.name, 'kh'));
-  const sortedStaff = [...state.staff].sort((a,b) => a.name.localeCompare(b.name, 'kh'));
-
-  selects.forEach(select => {
-    const currentValue = select.value;
-    select.innerHTML = '<option value="">-- ជ្រើសរើសសិស្ស ឬមន្ត្រី/គ្រូ --</option>';
-    
-    // Only show students if filter is 'all' or 'student'
-    if (batchFilter !== 'staff') {
-      const studentGroup = document.createElement('optgroup');
-      studentGroup.label = 'សិស្ស (Students)';
-      sortedStudents.forEach(student => {
-        const option = document.createElement('option');
-        option.value = `student:${student.id}`;
-        option.innerText = `សិស្ស៖ ${student.name} (អត្តលេខ: ${student.id}, ${getGradeNameKhmer(student.grade)})`;
-        studentGroup.appendChild(option);
-      });
-      select.appendChild(studentGroup);
-    }
-
-    // Only show staff if filter is 'all' or 'staff'
-    if (batchFilter !== 'student') {
-      const staffGroup = document.createElement('optgroup');
-      staffGroup.label = 'មន្ត្រី និងគ្រូ (Staff/Teachers)';
-      sortedStaff.forEach(member => {
-        const option = document.createElement('option');
-        option.value = `staff:${member.id}`;
-        option.innerText = `គ្រូ/មន្ត្រី៖ ${member.name} (${member.id}, ${member.position})`;
-        staffGroup.appendChild(option);
-      });
-      select.appendChild(staffGroup);
-    }
-    
-    if (currentValue) {
-      select.value = currentValue;
-    }
-  });
-
-  updateBatchCardsGrid();
-
-  // Refresh autofill group dropdown to match current filter
-  initBatchAutoFill();
-}
-
-
-function setupBatchCardsHandlers() {
-  document.querySelectorAll('.batch-unified-select').forEach(select => {
-    select.addEventListener('change', () => {
-      updateBatchCardsGrid();
+    // Build distribution bars HTML
+    let distHTML = "";
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G'].forEach(g => {
+        const count = grades[g];
+        const pct = ((count / total) * 100).toFixed(0);
+        const color = getGradeColorClass(g);
+        const label = getGradeLabel(g, appState.language);
+        
+        distHTML += `
+            <div class="distribution-row">
+                <div class="distribution-label">${label}</div>
+                <div class="distribution-bar-wrapper">
+                    <div class="distribution-bar ${color}" style="width: ${pct}%"></div>
+                </div>
+                <div class="distribution-value">${count} ${isKm ? 'នាក់' : 'students'} (${pct}%)</div>
+            </div>
+        `;
     });
-  });
-
-  document.getElementById('btn-print-batch-cards').addEventListener('click', () => {
-    const selects = document.querySelectorAll('.batch-unified-select');
-    const hasSelection = Array.from(selects).some(select => select.value !== '');
-    if (!hasSelection) {
-      showToast('សូមជ្រើសរើសសិស្ស ឬបុគ្គលិកយ៉ាងហោចណាស់ម្នាក់មុននឹងបោះពុម្ព!', 'error');
-      return;
-    }
-    window.print();
-  });
-
-  // --- Quick Filter Buttons ---
-  document.querySelectorAll('.batch-filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.batch-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      batchFilter = btn.dataset.filter;
-      // Re-render dropdowns with new filter, keep grid updated
-      renderBatchCardsView();
-      // Also refresh autofill group list
-      initBatchAutoFill();
-    });
-  });
-
-  // --- Auto-Fill: Group Select ---
-  document.getElementById('batch-autofill-group-select').addEventListener('change', function() {
-    const pageSelect = document.getElementById('batch-autofill-page-select');
-    if (!this.value) {
-      pageSelect.innerHTML = '<option value="">-- ជ្រើសទំព័រ --</option>';
-      pageSelect.disabled = true;
-      return;
-    }
-    buildPageOptions(this.value);
-    pageSelect.disabled = false;
-  });
-
-  // --- Auto-Fill: Page Select ---
-  document.getElementById('batch-autofill-page-select').addEventListener('change', function() {
-    const groupVal = document.getElementById('batch-autofill-group-select').value;
-    if (!this.value || !groupVal) return;
-    const pageIndex = parseInt(this.value, 10);
-    autoFillSlots(groupVal, pageIndex);
-  });
-
-  // --- Clear Button ---
-  document.getElementById('btn-autofill-clear').addEventListener('click', () => {
-    document.querySelectorAll('.batch-unified-select').forEach(select => {
-      select.value = '';
-    });
-    document.getElementById('batch-autofill-group-select').value = '';
-    const pageSelect = document.getElementById('batch-autofill-page-select');
-    pageSelect.innerHTML = '<option value="">-- ជ្រើសទំព័រ --</option>';
-    pageSelect.disabled = true;
-    updateBatchCardsGrid();
-    showToast('បានសម្អាតកាតទាំងអស់!', 'success');
-  });
-}
-
-// Build group options for the auto-fill group dropdown based on current filter
-function initBatchAutoFill() {
-  const groupSelect = document.getElementById('batch-autofill-group-select');
-  const prevGroup = groupSelect.value;
-  groupSelect.innerHTML = '<option value="">-- ជ្រើសសិស្ស/ក្រុមមន្ត្រី --</option>';
-
-  const grades = [...new Set(state.students.map(s => s.grade))].sort();
-
-  if (batchFilter !== 'staff') {
-    // Add student grade groups
-    const gradeGroup = document.createElement('optgroup');
-    gradeGroup.label = 'ថ្នាក់សិស្ស (Student Classes)';
-    grades.forEach(grade => {
-      const count = state.students.filter(s => s.grade === grade).length;
-      const opt = document.createElement('option');
-      opt.value = `student_grade:${grade}`;
-      opt.innerText = `${getGradeNameKhmer(grade)} (${count} នាក់)`;
-      gradeGroup.appendChild(opt);
-    });
-    if (gradeGroup.children.length > 0) groupSelect.appendChild(gradeGroup);
-  }
-
-  if (batchFilter !== 'student') {
-    // Add staff as a group
-    const staffCount = state.staff.length;
-    if (staffCount > 0) {
-      const staffGroup = document.createElement('optgroup');
-      staffGroup.label = 'មន្ត្រី និងគ្រូ (Staff/Teachers)';
-      const opt = document.createElement('option');
-      opt.value = 'staff_all';
-      opt.innerText = `មន្ត្រី/គ្រូទាំងអស់ (${staffCount} នាក់)`;
-      staffGroup.appendChild(opt);
-      groupSelect.appendChild(staffGroup);
-    }
-  }
-
-  // Restore previous value if still valid
-  if (prevGroup) {
-    const stillExists = Array.from(groupSelect.options).some(o => o.value === prevGroup);
-    if (stillExists) {
-      groupSelect.value = prevGroup;
-      buildPageOptions(prevGroup);
-    }
-  }
-}
-
-// Build page options (e.g. ទំព័រទី១, ទំព័រទី២...) for the selected group
-function buildPageOptions(groupVal) {
-  const pageSelect = document.getElementById('batch-autofill-page-select');
-  const members = getMembersForGroup(groupVal);
-  const totalPages = Math.ceil(members.length / 6);
-  
-  pageSelect.innerHTML = '<option value="">-- ជ្រើសទំព័រ --</option>';
-  
-  const pageNames = ['១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩', '១០', '១១', '១២', '១៣', '១៤', '១៥'];
-  
-  for (let i = 0; i < totalPages; i++) {
-    const start = i * 6 + 1;
-    const end = Math.min((i + 1) * 6, members.length);
-    const opt = document.createElement('option');
-    opt.value = i;
-    const pageName = pageNames[i] || (i + 1).toString();
-    opt.innerText = `ទំព័រទី${pageName} (លេខ ${start}–${end})`;
-    pageSelect.appendChild(opt);
-  }
-}
-
-// Get the ordered member list for a group key
-function getMembersForGroup(groupVal) {
-  if (groupVal === 'staff_all') {
-    return [...state.staff].sort((a, b) => a.name.localeCompare(b.name, 'kh'))
-      .map(m => ({ ...m, type: 'staff' }));
-  }
-  if (groupVal.startsWith('student_grade:')) {
-    const grade = groupVal.replace('student_grade:', '');
-    return [...state.students].filter(s => s.grade === grade)
-      .sort((a, b) => a.name.localeCompare(b.name, 'kh'))
-      .map(s => ({ ...s, type: 'student' }));
-  }
-  return [];
-}
-
-// Auto-fill 6 card slots with members from the given group's page
-function autoFillSlots(groupVal, pageIndex) {
-  const members = getMembersForGroup(groupVal);
-  const start = pageIndex * 6;
-  const page = members.slice(start, start + 6);
-
-  const selects = document.querySelectorAll('.batch-unified-select');
-  selects.forEach((select, i) => {
-    const person = page[i];
-    if (person) {
-      const prefix = person.type === 'student' ? 'student' : 'staff';
-      select.value = `${prefix}:${person.id}`;
+    
+    // Class trend progress HTML
+    let progressTrendHTML = "";
+    if (period !== 'yearly') {
+        const monthsList = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+        const currentIndex = monthsList.indexOf(period);
+        
+        if (currentIndex > 0) {
+            const prevPeriod = monthsList[currentIndex - 1];
+            const prevRanked = rankStudentsInClass(classId, prevPeriod);
+            if (prevRanked.length > 0) {
+                let prevSum = 0;
+                prevRanked.forEach(r => prevSum += r.average);
+                const prevClassAvg = (prevSum / prevRanked.length).toFixed(2);
+                const diff = (classAvg - prevClassAvg).toFixed(2);
+                const sign = diff >= 0 ? "+" : "";
+                const colorClass = diff >= 0 ? "text-green" : "text-red";
+                progressTrendHTML = `
+                    <div class="progress-stat-row">
+                        <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់ខែមុន' : 'Previous Month Class Avg'}</span>
+                        <span class="progress-stat-value">${prevClassAvg} / 10</span>
+                    </div>
+                    <div class="progress-stat-row">
+                        <span class="progress-stat-label">${isKm ? 'ការប្រៀបធៀបធៀបនឹងខែមុន' : 'Comparison to Prev Month'}</span>
+                        <span class="progress-stat-value ${colorClass}" style="font-weight:700;">${sign}${diff}</span>
+                    </div>
+                `;
+            }
+        }
     } else {
-      select.value = '';
+        let s1Sum = 0, s2Sum = 0;
+        rankedData.forEach(row => {
+            s1Sum += getStudentSem1Average(row.student.id);
+            s2Sum += getStudentSem2Average(row.student.id);
+        });
+        const s1Avg = (s1Sum / total).toFixed(2);
+        const s2Avg = (s2Sum / total).toFixed(2);
+        const diff = (s2Avg - s1Avg).toFixed(2);
+        const sign = diff >= 0 ? "+" : "";
+        const colorClass = diff >= 0 ? "text-green" : "text-red";
+        
+        progressTrendHTML = `
+            <div class="progress-stat-row">
+                <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់ ឆមាសទី១' : 'Semester 1 Class Avg'}</span>
+                <span class="progress-stat-value">${s1Avg} / 10</span>
+            </div>
+            <div class="progress-stat-row">
+                <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់ ឆមាសទី២' : 'Semester 2 Class Avg'}</span>
+                <span class="progress-stat-value">${s2Avg} / 10</span>
+            </div>
+            <div class="progress-stat-row">
+                <span class="progress-stat-label">${isKm ? 'ការរីកចម្រើន (ឆមាសទី២ ធៀបនឹង ឆមាសទី១)' : 'Progress (Sem 2 vs Sem 1)'}</span>
+                <span class="progress-stat-value ${colorClass}" style="font-weight:700;">${sign}${diff}</span>
+            </div>
+        `;
     }
-  });
+    
+    container.innerHTML = `
+        <div class="visual-summary-grid">
+            <!-- Grade Distribution -->
+            <div class="visual-card">
+                <div class="visual-card-title">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>${isKm ? 'សង្ខេបពិន្ទុសិស្ស' : 'Class Grade Distribution'}</span>
+                </div>
+                ${distHTML}
+            </div>
+            
+            <!-- Statistics and Progress -->
+            <div class="visual-card">
+                <div class="visual-card-title">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    <span>${isKm ? 'ស្ថិតិលទ្ធផល និងការរីកចម្រើន' : 'Class Stats & Progress'}</span>
+                </div>
+                <div class="progress-stat-row">
+                    <span class="progress-stat-label">${isKm ? 'មធ្យមភាគថ្នាក់សរុប' : 'Class Average Score'}</span>
+                    <span class="progress-stat-value" style="color:var(--primary-blue); font-size:1.15rem;">${classAvg} / 10</span>
+                </div>
+                <div class="progress-stat-row">
+                    <span class="progress-stat-label">${isKm ? 'អត្រាប្រឡងជាប់សរុប' : 'Passing Rate'}</span>
+                    <span class="progress-stat-value text-green" style="font-size:1.15rem;">${passRate}%</span>
+                </div>
+                ${progressTrendHTML}
+            </div>
+        </div>
+    `;
+}
 
-  updateBatchCardsGrid();
-  showToast(`បានបំពេញកាតទំព័រទី${pageIndex + 1} ដោយស្វ័យប្រវត្ត!`, 'success');
+function generateReport() {
+    const classId = document.getElementById("reportFilterClass").value;
+    const period = document.getElementById("reportFilterPeriod").value;
+    
+    if (!classId || !period) return;
+    
+    const targetClass = appState.classes.find(c => c.id === classId);
+    if (!targetClass) return;
+    
+    document.getElementById("reportPlaceholder").style.display = "none";
+    const reportView = document.getElementById("reportViewContainer");
+    reportView.style.display = "block";
+    
+    // Meta values
+    const classText = targetClass.name;
+    let periodLabel = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || period;
+    
+    const isDaily = period === 'daily';
+    const isWeekly = period === 'weekly';
+    
+    if (isDaily) {
+        const dateVal = document.getElementById("reportFilterDate").value;
+        periodLabel = appState.language === 'km' ? `ប្រចាំថ្ងៃ៖ ${dateVal}` : `Daily: ${dateVal}`;
+    } else if (isWeekly) {
+        const weekVal = document.getElementById("reportFilterWeek").options[document.getElementById("reportFilterWeek").selectedIndex]?.textContent || period;
+        periodLabel = appState.language === 'km' ? `ប្រចាំសប្តាហ៍៖ ${weekVal}` : `Weekly: ${weekVal}`;
+    }
+    
+    document.getElementById("reportMetaClass").textContent = classText;
+    document.getElementById("reportMetaPeriod").textContent = periodLabel;
+    
+    const teacherNameText = targetClass.teacherName || (appState.language === 'km' ? 'មិនទាន់ចាត់តាំង' : 'Not Assigned');
+    document.getElementById("reportMetaTeacher").textContent = teacherNameText;
+    document.getElementById("reportPrintTeacherName").textContent = targetClass.teacherName ? (appState.language === 'km' ? `អ្នកគ្រូ/លោកគ្រូ៖ ${targetClass.teacherName}` : `Teacher: ${targetClass.teacherName}`) : "";
+    
+    const today = new Date();
+    document.getElementById("reportMetaDate").textContent = today.toLocaleDateString(appState.language === 'km' ? 'km-KH' : 'en-US');
+    
+    // Header Label for print
+    document.getElementById("reportPrintTitle").textContent = `${appState.language === 'km' ? 'របាយការណ៍លទ្ធផលសិក្សាសិស្ស' : 'Student Grade & Performance Report'}`;
+    
+    // Removed attendance logic for Daily/Weekly. Reports will now default to score sheets.
+    
+    // Get Ranks
+    const rankedData = rankStudentsInClass(classId, period);
+    
+    const activeSubjects = targetClass.subjectIds 
+        ? appState.subjects.filter(s => targetClass.subjectIds.includes(s.id))
+        : appState.subjects;
+        
+    // Generate Table Header depending on Report type
+    const headerRow = document.getElementById("reportTableHeaderRow");
+    headerRow.innerHTML = "";
+    
+    const isMonthlyOrExam = ["oct","nov","dec","jan","feb","mar","apr","may","jun","jul","aug","sep", "sem1_exam", "sem2_exam", "daily", "weekly"].includes(period);
+    const isSemester = ["sem1", "sem2"].includes(period);
+    const isYearly = period === "yearly";
+    
+    // Base headers
+    let headersHTML = `
+        <th style="width: 50px;" data-km="ល.រ" data-en="No.">ល.រ</th>
+        <th style="width: 110px;" data-km="លេខសម្គាល់ ឬ ID" data-en="Student ID">លេខសម្គាល់ ឬ ID</th>
+        <th data-km="ឈ្មោះសិស្ស" data-en="Name">ឈ្មោះសិស្ស</th>
+        <th style="width: 60px; white-space: nowrap;" data-km="ភេទ" data-en="Gender">ភេទ</th>
+    `;
+    
+    if (isMonthlyOrExam) {
+        activeSubjects.forEach(sub => {
+            const name = sub.name;
+            headersHTML += `<th>${name}</th>`;
+        });
+    } else if (isSemester) {
+        const months = period === "sem1" ? ["oct", "nov", "dec", "jan", "feb"] : ["mar", "apr", "may", "jun", "jul"];
+        months.forEach(m => {
+            const key = `month_${m}`;
+            const label = translations[appState.language][key];
+            headersHTML += `<th>${label}</th>`;
+        });
+        headersHTML += `<th data-km="ប្រឡងឆមាស" data-en="Exam Score">ប្រឡងឆមាស</th>`;
+    } else if (isYearly) {
+        headersHTML += `
+            <th data-km="ឆមាសទី១" data-en="Semester 1">ឆមាសទី១</th>
+            <th data-km="ឆមាសទី២" data-en="Semester 2">ឆមាសទី២</th>
+        `;
+    }
+    
+    // Common endings
+    headersHTML += `
+        <th style="width: 80px;" data-km="សរុប" data-en="Total">សរុប</th>
+        <th style="width: 80px;" data-km="មធ្យមភាគ" data-en="Average">មធ្យមភាគ</th>
+        <th style="width: 80px;" data-km="ចំណាត់ថ្នាក់" data-en="Rank">ចំណាត់ថ្នាក់</th>
+        <th style="width: 85px;" data-km="លទ្ធផល" data-en="Result">លទ្ធផល</th>
+    `;
+    
+    headerRow.innerHTML = headersHTML;
+    
+    // Render rows
+    const tbody = document.getElementById("reportTableBody");
+    tbody.innerHTML = "";
+    
+    if (rankedData.length === 0) {
+        const colSpan = isMonthlyOrExam ? 8 + appState.subjects.length : (isSemester ? 14 : 10);
+        tbody.innerHTML = `<tr><td colspan="${colSpan}" class="text-center" data-km="គ្មានទិន្នន័យដើម្បីបង្ហាញ" data-en="No records available to display.">គ្មានទិន្នន័យដើម្បីបង្ហាញ</td></tr>`;
+    } else {
+        rankedData.forEach(row => {
+            const stu = row.student;
+            let genderText = stu.gender || "";
+            if (appState.language === 'en') {
+                if (stu.gender === 'ស្រី') genderText = 'Female';
+                else if (stu.gender === 'ប្រុស') genderText = 'Male';
+                else if (stu.gender === 'ព្រះសង្ឃ') genderText = 'Monk';
+            }
+            let cellsHTML = `
+                <td>${row.rank}</td>
+                <td>${stu.id}</td>
+                <td class="text-left"><strong>${stu.name}</strong></td>
+                <td style="white-space: nowrap;">${genderText}</td>
+            `;
+            
+            let total = 0;
+            
+            if (isMonthlyOrExam) {
+                const studentScores = appState.scores[stu.id]?.[period] || {};
+                activeSubjects.forEach(sub => {
+                    const val = studentScores[sub.id];
+                    const printVal = (val !== undefined && val !== null) ? val.toFixed(1) : "-";
+                    if (val !== undefined) total += parseFloat(val);
+                    cellsHTML += `<td>${printVal}</td>`;
+                });
+            } else if (isSemester) {
+                const months = period === "sem1" ? ["oct", "nov", "dec", "jan", "feb"] : ["mar", "apr", "may", "jun", "jul"];
+                let mAvgSum = 0;
+                let activeMonths = 0;
+                
+                months.forEach(m => {
+                    const mAvg = getStudentMonthlyAverage(stu.id, m);
+                    cellsHTML += `<td>${mAvg > 0 ? mAvg.toFixed(2) : "-"}</td>`;
+                    if (mAvg > 0) {
+                        mAvgSum += mAvg;
+                        activeMonths++;
+                    }
+                });
+                
+                const examKey = period === "sem1" ? "sem1_exam" : "sem2_exam";
+                const examScoreObj = appState.scores[stu.id]?.[examKey];
+                let examSum = 0;
+                let examCount = 0;
+                if (examScoreObj && activeSubjects.length > 0) {
+                    activeSubjects.forEach(sub => {
+                        const val = examScoreObj[sub.id];
+                        if (val !== undefined) {
+                            examSum += parseFloat(val);
+                            examCount++;
+                        }
+                    });
+                }
+                const examAvg = examCount > 0 ? examSum / activeSubjects.length : 0;
+                cellsHTML += `<td>${examCount > 0 ? examAvg.toFixed(2) : "-"}</td>`;
+                
+                const monthlyAvgAvg = activeMonths > 0 ? mAvgSum / activeMonths : 0;
+                total = monthlyAvgAvg + examAvg;
+            } else if (isYearly) {
+                const s1 = getStudentSem1Average(stu.id);
+                const s2 = getStudentSem2Average(stu.id);
+                cellsHTML += `<td>${s1 > 0 ? s1.toFixed(2) : "-"}</td>`;
+                cellsHTML += `<td>${s2 > 0 ? s2.toFixed(2) : "-"}</td>`;
+                total = s1 + s2;
+            }
+            
+            const displayTotal = total.toFixed(2);
+            const displayAvg = row.average.toFixed(2);
+            const statusClass = row.average >= 5.0 ? "badge-pass" : "badge-fail";
+            
+            cellsHTML += `
+                <td><strong>${displayTotal}</strong></td>
+                <td><span style="color: var(--primary-blue); font-weight:700;">${displayAvg}</span></td>
+                <td><strong>${row.rank}</strong></td>
+                <td><span class="badge ${statusClass}">${row.status}</span></td>
+            `;
+            
+            const tr = document.createElement("tr");
+            tr.innerHTML = cellsHTML;
+            tbody.appendChild(tr);
+        });
+    }
+    
+    // Render visual summary
+    renderVisualSummary(rankedData, period, classId);
+    
+    applyLanguage();
+}
+
+// Helper function to prepend rows to SheetJS worksheet without losing merges
+// Helper function to export DOM table to Excel with style using ExcelJS
+async function exportTableToExcelJS(tableId, titleText, metaObj, fileName, sheetName, isAcademic = false) {
+    if (typeof ExcelJS === 'undefined' || typeof saveAs === 'undefined') {
+        alert(appState.language === 'km' ? "សូមរង់ចាំបន្តិច កម្មវិធីកំពុងទាញយកទិន្នន័យ (កំពុងផ្ទុក Library)... សូមសាកល្បងម្ដងទៀត។" : "Please wait, library is loading... Please try again.");
+        return;
+    }
+    const table = document.getElementById(tableId);
+    if (!table) {
+        alert("រកមិនឃើញតារាងទិន្នន័យ (Table not found)");
+        return;
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet(sheetName);
+
+    // Default fonts
+    const khmerMuolFont = { name: 'Khmer OS Muol Light', size: 11, bold: true };
+    const khmerMuolFontTitle = { name: 'Khmer OS Muol Light', size: 13, bold: true };
+    const defaultFont = { name: 'Khmer OS Battambang', size: 10 };
+    const defaultFontBold = { name: 'Khmer OS Battambang', size: 10, bold: true };
+
+    // Alignments
+    const centerAlign = { vertical: 'middle', horizontal: 'center', wrapText: true };
+    const leftAlign = { vertical: 'middle', horizontal: 'left', wrapText: true };
+    const rightAlign = { vertical: 'middle', horizontal: 'right', wrapText: true };
+
+    // Borders
+    const thinBorder = {
+        top: { style: 'thin', color: { argb: 'FF000000' } },
+        left: { style: 'thin', color: { argb: 'FF000000' } },
+        bottom: { style: 'thin', color: { argb: 'FF000000' } },
+        right: { style: 'thin', color: { argb: 'FF000000' } }
+    };
+
+    // 1. Add spacer rows for headers (will populate later when maxCols is known)
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+
+    // 3. Write Meta Info
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+    const metaRow = worksheet.getRow(6);
+    metaRow.getCell(1).value = `ថ្នាក់រៀន: ${metaObj.className}`;
+    metaRow.getCell(1).font = defaultFontBold;
+    
+    const teacherCol = isAcademic ? 2 : 4;
+    metaRow.getCell(teacherCol).value = `គ្រូបន្ទុកថ្នាក់: ${metaObj.teacherName}`;
+    metaRow.getCell(teacherCol).font = defaultFontBold;
+
+    const periodCol = isAcademic ? 4 : 8;
+    metaRow.getCell(periodCol).value = `កាលបរិច្ឆេទ: ${metaObj.period}`;
+    metaRow.getCell(periodCol).font = defaultFontBold;
+    
+    worksheet.addRow([]); // Blank spacer
+
+    // 4. Parse Table and Write Rows
+    const startRowIndex = 8;
+    const rows = Array.from(table.querySelectorAll('tr'));
+    const matrix = [];
+
+    rows.forEach((tr, r) => {
+        if (!matrix[r]) matrix[r] = [];
+        let cOffset = 0;
+        Array.from(tr.cells).forEach((cell) => {
+            while (matrix[r][cOffset] && matrix[r][cOffset].isMergedCellCovered) {
+                cOffset++;
+            }
+            const rowspan = parseInt(cell.getAttribute('rowspan')) || 1;
+            const colspan = parseInt(cell.getAttribute('colspan')) || 1;
+            const text = cell.innerText.trim();
+
+            matrix[r][cOffset] = {
+                text: text,
+                rowspan: rowspan,
+                colspan: colspan,
+                isHeader: cell.tagName.toLowerCase() === 'th',
+                isNumeric: !isNaN(text) && text !== "" && !text.includes('/')
+            };
+
+            for (let i = 0; i < rowspan; i++) {
+                for (let j = 0; j < colspan; j++) {
+                    if (i === 0 && j === 0) continue;
+                    const targetR = r + i;
+                    const targetC = cOffset + j;
+                    if (!matrix[targetR]) matrix[targetR] = [];
+                    matrix[targetR][targetC] = { isMergedCellCovered: true };
+                }
+            }
+            cOffset += colspan;
+        });
+    });
+
+    const maxCols = Math.max(...matrix.map(row => row.length));
+    
+    // Set up School Name (Left) and Royal Header (Right)
+    const rightCol = Math.max(3, maxCols - 4);
+    
+    // School Name
+    if (appState.schoolName) {
+        worksheet.getCell('A1').value = appState.schoolName;
+        worksheet.getCell('A1').font = khmerMuolFont;
+        worksheet.getCell('A1').alignment = leftAlign;
+        worksheet.mergeCells(1, 1, 1, rightCol - 1);
+    }
+    
+    // Royal Header
+    worksheet.getCell(1, rightCol).value = "ព្រះរាជាណាចក្រកម្ពុជា";
+    worksheet.getCell(1, rightCol).font = khmerMuolFont;
+    worksheet.getCell(1, rightCol).alignment = centerAlign;
+    worksheet.mergeCells(1, rightCol, 1, maxCols);
+
+    worksheet.getCell(2, rightCol).value = "ជាតិ សាសនា ព្រះមហាក្សត្រ";
+    worksheet.getCell(2, rightCol).font = khmerMuolFont;
+    worksheet.getCell(2, rightCol).alignment = centerAlign;
+    worksheet.mergeCells(2, rightCol, 2, maxCols);
+
+    // Title (Row 4)
+    worksheet.getCell('A4').value = titleText;
+    worksheet.getCell('A4').font = khmerMuolFontTitle;
+    worksheet.getCell('A4').alignment = centerAlign;
+    worksheet.mergeCells(4, 1, 4, maxCols);
+
+    matrix.forEach((row, r) => {
+        const xlRowIndex = startRowIndex + r;
+        const xlRow = worksheet.getRow(xlRowIndex);
+        
+        row.forEach((cellInfo, c) => {
+            if (!cellInfo) return;
+            const xlColIndex = c + 1;
+            const xlCell = xlRow.getCell(xlColIndex);
+
+            if (cellInfo.isMergedCellCovered) return;
+
+            if (cellInfo.isNumeric) {
+                xlCell.value = Number(cellInfo.text);
+            } else {
+                xlCell.value = cellInfo.text;
+            }
+
+            if (cellInfo.isHeader) {
+                xlCell.font = defaultFontBold;
+                xlCell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFF2F2F2' }
+                };
+                xlCell.alignment = centerAlign;
+            } else {
+                xlCell.font = defaultFont;
+                if (c === 0 || (isAcademic ? c === 2 : c === 1 || c === 3)) {
+                    xlCell.alignment = centerAlign;
+                } else if ((isAcademic ? c === 1 : c === 2)) {
+                    xlCell.alignment = leftAlign;
+                } else if (cellInfo.isNumeric) {
+                    xlCell.alignment = rightAlign;
+                } else {
+                    xlCell.alignment = centerAlign;
+                }
+            }
+
+            xlCell.border = thinBorder;
+
+            if (cellInfo.colspan > 1 || cellInfo.rowspan > 1) {
+                worksheet.mergeCells(
+                    xlRowIndex, 
+                    xlColIndex, 
+                    xlRowIndex + cellInfo.rowspan - 1, 
+                    xlColIndex + cellInfo.colspan - 1
+                );
+                
+                for (let i = 0; i < cellInfo.rowspan; i++) {
+                    for (let j = 0; j < cellInfo.colspan; j++) {
+                        const cell = worksheet.getRow(xlRowIndex + i).getCell(xlColIndex + j);
+                        cell.border = thinBorder;
+                        if (cellInfo.isHeader) {
+                            cell.fill = {
+                                type: 'pattern',
+                                pattern: 'solid',
+                                fgColor: { argb: 'FFF2F2F2' }
+                            };
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    // 5. Append Footers
+    const tableEndRow = startRowIndex + matrix.length;
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+    
+    const footerStartRow = tableEndRow + 2;
+
+    const fRow1 = worksheet.getRow(footerStartRow);
+    fRow1.getCell(2).value = "បានឃើញ និងឯកភាព";
+    fRow1.getCell(2).font = defaultFontBold;
+    fRow1.getCell(2).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow, 2, footerStartRow, 3);
+
+    const dateCol = isAcademic ? 4 : 8;
+    fRow1.getCell(dateCol).value = "ធ្វើនៅ.........................ថ្ងៃទី..........ខែ............ឆ្នាំ២០២...";
+    fRow1.getCell(dateCol).font = defaultFont;
+    fRow1.getCell(dateCol).alignment = { vertical: 'middle', horizontal: 'left', wrapText: false };
+    worksheet.mergeCells(footerStartRow, dateCol, footerStartRow, maxCols);
+
+    const fRow2 = worksheet.getRow(footerStartRow + 1);
+    fRow2.getCell(2).value = "នាយកសាលា";
+    fRow2.getCell(2).font = defaultFontBold;
+    fRow2.getCell(2).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow + 1, 2, footerStartRow + 1, 3);
+
+    fRow2.getCell(dateCol).value = "គ្រូបន្ទុកថ្នាក់";
+    fRow2.getCell(dateCol).font = defaultFontBold;
+    fRow2.getCell(dateCol).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow + 1, dateCol, footerStartRow + 1, maxCols);
+
+    const fRow5 = worksheet.getRow(footerStartRow + 5);
+    fRow5.getCell(dateCol).value = metaObj.teacherName;
+    fRow5.getCell(dateCol).font = khmerMuolFont;
+    fRow5.getCell(dateCol).alignment = centerAlign;
+    worksheet.mergeCells(footerStartRow + 5, dateCol, footerStartRow + 5, maxCols);
+
+    // 6. Column Widths
+    const colWidths = [];
+    if (isAcademic) {
+        colWidths[1] = { width: 8 };   // No.
+        colWidths[2] = { width: 30 };  // Student Name
+        colWidths[3] = { width: 12 };  // Gender
+        for (let i = 4; i <= maxCols; i++) {
+            colWidths[i] = { width: 15 };
+        }
+    } else {
+        colWidths[1] = { width: 8 };   // No.
+        colWidths[2] = { width: 15 };  // Student ID
+        colWidths[3] = { width: 30 };  // Student Name
+        colWidths[4] = { width: 10 };  // Gender
+        for (let i = 5; i <= maxCols; i++) {
+            colWidths[i] = { width: 15 };
+        }
+    }
+    
+    for (let i = 1; i <= maxCols; i++) {
+        worksheet.getColumn(i).width = colWidths[i] ? colWidths[i].width : 12;
+    }
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(blob, fileName);
+}
+
+// Export Excel Function for Score Report using ExcelJS
+async function exportReportExcel() {
+    try {
+        const className = document.getElementById("reportFilterClass").options[document.getElementById("reportFilterClass").selectedIndex]?.textContent || "Class";
+        const periodName = document.getElementById("reportFilterPeriod").options[document.getElementById("reportFilterPeriod").selectedIndex]?.textContent || "Period";
+        const fileName = `Grade_Report_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
+        
+        const cName = document.getElementById("reportMetaClass").textContent;
+        const tName = document.getElementById("reportMetaTeacher").textContent;
+        const pName = document.getElementById("reportMetaPeriod").textContent;
+        
+        await exportTableToExcelJS(
+            "reportResultTable",
+            "របាយការណ៍លទ្ធផលសិក្សាសិស្ស",
+            { className: cName, teacherName: tName, period: pName },
+            fileName,
+            "Score Report",
+            false
+        );
+    } catch (error) {
+        console.error("Excel Export Error: ", error);
+        alert("មានបញ្ហាក្នុងការទាញយក Excel (Error): " + error.message);
+    }
+}
+
+// Export Excel Function for Academic Report using ExcelJS
+async function exportAcadExcel() {
+    try {
+        const className = document.getElementById("acadFilterClass").options[document.getElementById("acadFilterClass").selectedIndex]?.textContent || "Class";
+        const periodName = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || "Period";
+        const fileName = `Academic_Transcript_${className.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}_${periodName.replace(/[\/\\]/g, '-').replace(/\s+/g, '_')}.xlsx`;
+        
+        const cName = document.getElementById("acadMetaClass").textContent;
+        const tName = document.getElementById("acadMetaTeacher").textContent;
+        const pName = document.getElementById("acadMetaPeriod").textContent;
+        
+        await exportTableToExcelJS(
+            "acadResultTable",
+            "បញ្ជីរាយនាមសិស្ស និងលទ្ធផលសិក្សា",
+            { className: cName, teacherName: tName, period: pName },
+            fileName,
+            "Academic Transcript",
+            true
+        );
+    } catch (error) {
+        console.error("Excel Export Error: ", error);
+        alert("មានបញ្ហាក្នុងការទាញយក Excel (Error): " + error.message);
+    }
+}
+
+// ----------------------------------------------------
+// ACADEMIC REPORTS & GOOGLE SHEETS INTEGRATION
+// ----------------------------------------------------
+function initAcadSelectors() {
+    const acadClassSel = document.getElementById("acadFilterClass");
+    if (!acadClassSel) return;
+    
+    const currentAcadClass = acadClassSel.value;
+    const acadPeriodSel = document.getElementById("acadFilterPeriod");
+    const currentAcadPeriod = acadPeriodSel ? acadPeriodSel.value : null;
+    
+    acadClassSel.innerHTML = "";
+    if (appState.classes.length === 0) {
+        const opt = `<option value="" data-km="-- គ្មានថ្នាក់រៀន --" data-en="-- No Classes Available --">-- គ្មានថ្នាក់រៀន --</option>`;
+        acadClassSel.innerHTML = opt;
+    } else {
+        appState.classes.forEach(c => {
+            const opt = `<option value="${c.id}">${c.name}</option>`;
+            acadClassSel.innerHTML += opt;
+        });
+        
+        if (currentAcadClass && appState.classes.find(c => c.id === currentAcadClass)) {
+            acadClassSel.value = currentAcadClass;
+        }
+    }
+    
+    if (acadPeriodSel && currentAcadPeriod) {
+        acadPeriodSel.value = currentAcadPeriod;
+    }
+    
+    if (document.getElementById("acadReportContainer") && document.getElementById("acadReportContainer").style.display !== "none") {
+        if (typeof generateAcademicReport === 'function') generateAcademicReport();
+    }
+    
+    // Also load Google Sheets URL
+    const urlInput = document.getElementById("googleSheetsUrlInput");
+    if (urlInput) {
+        urlInput.value = appState.googleSheetsUrl || "";
+    }
+    
+    // Seed Google Apps Script code template
+    const templateTextarea = document.getElementById("appsScriptTemplateCode");
+    if (templateTextarea) {
+        templateTextarea.value = `/* 
+Google Apps Script to integrate primary school grading app with Google Sheets.
+Paste this script in Extensions > Apps Script of your spreadsheet and click Deploy > New Deployment (Web App).
+*/
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // Clear and build headers
+    sheet.clear();
+    sheet.appendRow(["ល.រ (No.)", "លេខសម្គាល់ (Student ID)", "ឈ្មោះសិស្ស (Name)", "ភេទ (Gender)", "ថ្នាក់ (Class)", "មធ្យមភាគ (Average)", "និទ្ទេស (Grade)", "លទ្ធផល (Result)"]);
+    
+    var rowIndex = 1;
+    data.classes.forEach(function(c) {
+      c.students.forEach(function(stu) {
+        // Calculate average
+        var scores = data.scores[stu.id] || {};
+        var sum = 0;
+        var count = 0;
+        
+        // Loop over months and subjects to write a simple average
+        Object.keys(scores).forEach(function(p) {
+          Object.keys(scores[p]).forEach(function(subId) {
+            sum += parseFloat(scores[p][subId]);
+            count++;
+          });
+        });
+        
+        var avg = count > 0 ? (sum / count) : 0;
+        var grade = "F";
+        if (avg >= 9.0) grade = "A";
+        else if (avg >= 8.0) grade = "B";
+        else if (avg >= 6.5) grade = "C";
+        else if (avg >= 5.0) grade = "D";
+        else if (avg >= 3.5) grade = "E";
+        
+        var result = avg >= 5.0 ? "ជាប់ (Pass)" : "ធ្លាក់ (Fail)";
+        
+        sheet.appendRow([rowIndex++, stu.id, stu.name, stu.gender, c.name, avg.toFixed(2), grade, result]);
+      });
+    });
+    
+    return ContentService.createTextOutput(JSON.stringify({status: "success", message: "Data synced successfully!"}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({status: "error", message: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+    }
+}
+
+function generateAcademicReport() {
+    const classId = document.getElementById("acadFilterClass").value;
+    const period = document.getElementById("acadFilterPeriod").value;
+    
+    if (!classId || !period) return;
+    
+    const targetClass = appState.classes.find(c => c.id === classId);
+    if (!targetClass) return;
+    
+    document.getElementById("acadPlaceholder").style.display = "none";
+    document.getElementById("acadReportContainer").style.display = "block";
+    
+    // Meta values
+    const classText = targetClass.name;
+    const periodLabel = document.getElementById("acadFilterPeriod").options[document.getElementById("acadFilterPeriod").selectedIndex]?.textContent || period;
+    
+    document.getElementById("acadMetaClass").textContent = classText;
+    document.getElementById("acadMetaPeriod").textContent = periodLabel;
+    
+    const teacherNameText = targetClass.teacherName || (appState.language === 'km' ? 'មិនទាន់ចាត់តាំង' : 'Not Assigned');
+    document.getElementById("acadMetaTeacher").textContent = teacherNameText;
+    document.getElementById("acadPrintTeacherName").textContent = targetClass.teacherName ? (appState.language === 'km' ? `អ្នកគ្រូ/លោកគ្រូ៖ ${targetClass.teacherName}` : `Teacher: ${targetClass.teacherName}`) : "";
+    
+    const today = new Date();
+    document.getElementById("acadMetaDate").textContent = today.toLocaleDateString(appState.language === 'km' ? 'km-KH' : 'en-US');
+    
+    // Get Ranks
+    const rankedData = rankStudentsInClass(classId, period);
+    
+    // Render rows
+    const tbody = document.getElementById("acadTableBody");
+    tbody.innerHTML = "";
+    
+    if (rankedData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center" data-km="គ្មានទិន្នន័យដើម្បីបង្ហាញ" data-en="No records available to display.">គ្មានទិន្នន័យដើម្បីបង្ហាញ</td></tr>`;
+    } else {
+        rankedData.forEach(row => {
+            const stu = row.student;
+            let genderText = stu.gender || "";
+            if (appState.language === 'en') {
+                if (stu.gender === 'ស្រី') genderText = 'Female';
+                else if (stu.gender === 'ប្រុស') genderText = 'Male';
+            }
+            
+            const displayAvg = row.average.toFixed(2);
+            const statusClass = row.average >= 5.0 ? "badge-pass" : "badge-fail";
+            const gradeLetter = getGradeLetter(row.average);
+            const gradeLabelText = getGradeLabel(gradeLetter, appState.language);
+            
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${row.rank}</td>
+                <td>${stu.id}</td>
+                <td class="text-left"><strong>${stu.name}</strong></td>
+                <td style="white-space: nowrap;">${genderText}</td>
+                <td><span style="color: var(--primary-blue); font-weight:700;">${displayAvg}</span></td>
+                <td><span class="badge ${getGradeColorClass(gradeLetter)}">${gradeLabelText}</span></td>
+                <td><span class="badge ${statusClass}">${row.status}</span></td>
+                <td><strong>${row.rank}</strong></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    
+    applyLanguage();
+}
+
+function saveSheetsUrl() {
+    const url = document.getElementById("googleSheetsUrlInput").value.trim();
+    appState.googleSheetsUrl = url;
+    saveState();
+    showToast(appState.language === 'km' ? 'រក្សាទុក URL ជោគជ័យ!' : 'URL saved successfully!', 'success');
+}
+
+// ----------------------------------------------------
+// DATABASE & FILE UTILITIES
+// ----------------------------------------------------
+function exportDatabase() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+    const dlAnchorElem = document.createElement('a');
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", `Primary_School_Grading_Backup_${new Date().toISOString().slice(0,10)}.json`);
+    dlAnchorElem.click();
+    showToast("backup_success", "success");
+}
+
+function importDatabase(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const parsed = JSON.parse(e.target.result);
+            // Basic structures check
+            if (parsed.classes && parsed.subjects && parsed.scores) {
+                appState = parsed;
+                saveState();
+                showToast("restore_success", "success");
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showToast("restore_fail", "error");
+            }
+        } catch (err) {
+            showToast("restore_fail", "error");
+        }
+    };
+    reader.readAsText(file);
+}
+
+function resetDatabase() {
+    if (confirm(translations[appState.language].confirm_reset)) {
+        appState = {
+            classes: [],
+            subjects: [],
+            scores: {},
+            messages: [],
+            currentUser: null,
+            language: 'km',
+            theme: 'light',
+            selectedLanguageCode: null,
+            selectedLanguageLabel: null,
+            fontConfig: null
+        };
+        saveState();
+        showToast("data_reset_success", "success");
+        setTimeout(() => location.reload(), 1000);
+    }
+}
+
+// ----------------------------------------------------
+// COMPONENT CRUD ACTIONS (CLASSES, STUDENTS, SUBJECTS)
+// ----------------------------------------------------
+
+// Class Actions
+function addNewClass(name, teacherName, subjectIds) {
+    const id = `class-${Date.now()}`;
+    appState.classes.push({
+        id,
+        name,
+        teacherName: teacherName || "",
+        subjectIds: subjectIds || appState.subjects.map(s => s.id),
+        students: []
+    });
+    saveState();
+    renderClassesPanel();
+    initSelectors();
+}
+
+function deleteActiveClass() {
+    if (appState.currentUser?.role === 'teacher') return;
+    if (confirm(translations[appState.language].confirm_delete_class)) {
+        appState.classes = appState.classes.filter(c => c.id !== activeClassId);
+        saveState();
+        
+        // Back to classes panel
+        document.getElementById("classDetailView").style.display = "none";
+        document.getElementById("classesContainer").style.display = "grid";
+        renderClassesPanel();
+        initSelectors();
+    }
+}
+
+// Student Actions
+function saveStudent(id, name, dob, gender, contact, generation) {
+    const targetClass = appState.classes.find(c => c.id === activeClassId);
+    if (!targetClass) return;
+    
+    const studentEditId = document.getElementById("studentEditId").value;
+    
+    if (studentEditId) {
+        // Edit mode
+        const student = targetClass.students.find(s => s.id === studentEditId);
+        if (student) {
+            student.name = name;
+            student.dob = dob || "";
+            student.gender = gender;
+            student.contact = contact;
+            student.generation = generation || "";
+        }
+    } else {
+        // Create mode
+        const studentId = id || `STU${Math.floor(1000 + Math.random() * 9000)}`;
+        targetClass.students.push({
+            id: studentId,
+            name,
+            dob: dob || "",
+            gender,
+            contact,
+            generation: generation || ""
+        });
+    }
+    
+    saveState();
+    renderStudentsList();
+}
+
+function editStudent(studentId) {
+    const targetClass = appState.classes.find(c => c.id === activeClassId);
+    const stu = targetClass.students.find(s => s.id === studentId);
+    if (!stu) return;
+    
+    document.getElementById("studentEditId").value = stu.id;
+    document.getElementById("studentIdInput").value = stu.id;
+    document.getElementById("studentIdInput").disabled = true;
+    document.getElementById("studentNameInput").value = stu.name;
+    document.getElementById("studentDobInput").value = stu.dob || "";
+    document.getElementById("studentGenderInput").value = stu.gender;
+    document.getElementById("studentContactInput").value = stu.contact || "";
+    document.getElementById("studentGenerationInput").value = stu.generation || "";
+    
+    // Open Modal
+    document.getElementById("addStudentModal").classList.add("active");
+}
+
+function deleteStudent(studentId) {
+    if (appState.currentUser?.role === 'teacher') return;
+    if (confirm(appState.language === 'km' ? "តើអ្នកចង់លុបសិស្សនេះមែនទេ?" : "Are you sure you want to delete this student?")) {
+        const targetClass = appState.classes.find(c => c.id === activeClassId);
+        if (targetClass) {
+            targetClass.students = targetClass.students.filter(s => s.id !== studentId);
+            
+            // Also delete their scores to keep state clean
+            delete appState.scores[studentId];
+            
+            saveState();
+            renderStudentsList();
+        }
+    }
+}
+
+// Import students from Google Sheets
+async function handleGoogleSheetsImport(e) {
+    e.preventDefault();
+    const url = document.getElementById("sheetsUrlInput").value.trim();
+    if (!url) return;
+
+    const btnSubmit = document.getElementById("btnSubmitImportForm");
+    const originalText = btnSubmit.innerHTML;
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = appState.language === 'km' ? "កំពុងនាំចូល..." : "Importing...";
+
+    try {
+        const matches = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        if (!matches) {
+            throw new Error(appState.language === 'km' ? "តំណភ្ជាប់ Google Sheets មិនត្រឹមត្រូវទេ" : "Invalid Google Sheets URL");
+        }
+        const sheetId = matches[1];
+        const gidMatches = url.match(/gid=([0-9]+)/);
+        const gid = gidMatches ? gidMatches[1] : '0';
+        
+        const fetchUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&gid=${gid}`;
+        
+        const response = await fetch(fetchUrl);
+        if (!response.ok) {
+            throw new Error(appState.language === 'km' ? "មិនអាចទាញយកទិន្នន័យបានទេ! សូមពិនិត្យមើលការចែករំលែក (Anyone with link can view)។" : "Failed to fetch. Please verify sharing settings.");
+        }
+        
+        const text = await response.text();
+        const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);/);
+        if (!jsonMatch) {
+            throw new Error(appState.language === 'km' ? "ទម្រង់ទិន្នន័យមិនត្រឹមត្រូវទេ" : "Invalid data format returned by Google");
+        }
+        
+        const json = JSON.parse(jsonMatch[1]);
+        const table = json.table;
+        if (!table || !table.rows) {
+            throw new Error(appState.language === 'km' ? "មិនមានទិន្នន័យសិស្សទេ" : "No student data found in sheet");
+        }
+
+        const targetClass = appState.classes.find(c => c.id === activeClassId);
+        if (!targetClass) {
+            throw new Error("Class not found");
+        }
+
+        let importedCount = 0;
+        let skippedCount = 0;
+
+        let idCol = 1;
+        let nameCol = 2;
+        let dobCol = 3;
+        let genderCol = 4;
+        let contactCol = 5;
+        let genCol = 6;
+
+        if (table.rows.length > 0 && table.rows[0].c) {
+            const getHeaderVal = (idx) => {
+                const cell = table.rows[0].c[idx];
+                return cell ? (cell.v !== null ? String(cell.v).toLowerCase().trim() : "") : "";
+            };
+            
+            for (let i = 0; i < table.rows[0].c.length; i++) {
+                const headerText = getHeaderVal(i);
+                if (headerText.includes("ឈ្មោះ") || headerText.includes("name")) {
+                    nameCol = i;
+                } else if (headerText.includes("ភេទ") || headerText.includes("gender") || headerText.includes("sex")) {
+                    genderCol = i;
+                } else if (headerText.includes("សម្គាល់") || headerText.includes("id")) {
+                    idCol = i;
+                } else if (headerText.includes("កំណើត") || headerText.includes("dob") || headerText.includes("birth") || headerText.includes("ថ្ងៃខែ")) {
+                    dobCol = i;
+                } else if (headerText.includes("ទូរស័ព្ទ") || headerText.includes("phone") || headerText.includes("contact") || headerText.includes("លេខ")) {
+                    contactCol = i;
+                } else if (headerText.includes("ជំនាន់") || headerText.includes("gen")) {
+                    genCol = i;
+                }
+            }
+        }
+
+        table.rows.forEach((row, rowIndex) => {
+            if (!row || !row.c) return;
+            
+            const getVal = (colIdx) => {
+                if (colIdx === -1) return "";
+                const cell = row.c[colIdx];
+                return cell ? (cell.v !== null ? String(cell.v).trim() : "") : "";
+            };
+
+            let idVal = getVal(idCol);
+            let nameVal = getVal(nameCol);
+            let dobVal = getVal(dobCol);
+            let genderVal = getVal(genderCol);
+            let contactVal = getVal(contactCol);
+            let genVal = getVal(genCol);
+
+            if (rowIndex === 0 && (nameVal.includes("ឈ្មោះ") || nameVal.toLowerCase().includes("name"))) {
+                return;
+            }
+
+            if (!nameVal) {
+                let fallbackName = getVal(1);
+                let fallbackGender = getVal(2);
+                if (fallbackName && (fallbackGender === "ស្រី" || fallbackGender === "ប្រុស" || fallbackGender === "ព្រះសង្ឃ" || fallbackGender.toLowerCase().startsWith("f") || fallbackGender.toLowerCase().startsWith("m"))) {
+                    nameVal = fallbackName;
+                    genderVal = fallbackGender;
+                    idVal = "";
+                    dobVal = "";
+                    contactVal = getVal(3);
+                    genVal = getVal(4);
+                } else {
+                    return;
+                }
+            }
+
+            let finalGender = "ប្រុស";
+            if (genderVal === "ស្រី" || genderVal.toLowerCase() === "female" || genderVal.toLowerCase() === "f") {
+                finalGender = "ស្រី";
+            } else if (genderVal === "ព្រះសង្ឃ" || genderVal.toLowerCase() === "monk") {
+                finalGender = "ព្រះសង្ឃ";
+            } else if (genderVal === "ប្រុស" || genderVal.toLowerCase() === "male" || genderVal.toLowerCase() === "m") {
+                finalGender = "ប្រុស";
+            }
+
+            if (!idVal) {
+                idVal = `STU${Math.floor(1000 + Math.random() * 9000)}`;
+                while (targetClass.students.some(s => s.id === idVal)) {
+                    idVal = `STU${Math.floor(1000 + Math.random() * 9000)}`;
+                }
+            }
+
+            if (targetClass.students.some(s => s.name.toLowerCase() === nameVal.toLowerCase())) {
+                skippedCount++;
+                return;
+            }
+
+            targetClass.students.push({
+                id: idVal,
+                name: nameVal,
+                dob: dobVal,
+                gender: finalGender,
+                contact: contactVal,
+                generation: genVal
+            });
+            importedCount++;
+        });
+
+        saveState();
+        renderStudentsList();
+        
+        document.getElementById("importSheetsModal").classList.remove("active");
+        document.getElementById("sheetsUrlInput").value = "";
+        
+        showToast(
+            appState.language === 'km' 
+                ? `នាំចូលជោគជ័យ! សិស្សថ្មី៖ ${importedCount} នាក់ (រំលងស្ទួន៖ ${skippedCount} នាក់)` 
+                : `Imported successfully! New students: ${importedCount} (Skipped duplicates: ${skippedCount})`,
+            "success"
+        );
+    } catch (error) {
+        console.error("Sheets Import Error: ", error);
+        alert(appState.language === 'km' ? "ការនាំចូលបានបរាជ័យ៖ " + error.message : "Import failed: " + error.message);
+    } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = originalText;
+    }
 }
 
 
-// --- INDIVIDUAL CARD MODAL OPENERS ---
-function openStudentCardModal(student) {
-  document.getElementById('card-id').innerText = student.id;
-  document.getElementById('card-name').innerText = student.name;
-  document.getElementById('card-gender').innerText = student.gender;
-  document.getElementById('card-grade').innerText = getGradeNameKhmer(student.grade);
-  document.getElementById('card-dob').innerText = student.dob;
-  document.getElementById('card-phone').innerText = student.fatherPhone;
-
-  const photoContainer = document.getElementById('card-photo-container');
-  if (student.photo) {
-    photoContainer.innerHTML = `<img src="${student.photo}" alt="${student.name}">`;
-  } else {
-    photoContainer.innerHTML = `<svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-  }
-
-  const barcodeContainer = document.getElementById('card-barcode');
-  barcodeContainer.innerHTML = '';
-  
-  const barcodeCanvas = document.createElement('canvas');
-  barcodeCanvas.width = 150;
-  barcodeCanvas.height = 30;
-  const ctx = barcodeCanvas.getContext('2d');
-  ctx.fillStyle = '#000';
-  ctx.clearRect(0,0,150,30);
-  
-  let seed = 0;
-  for(let i=0; i<student.id.length; i++) seed += student.id.charCodeAt(i);
-  
-  let x = 5;
-  while(x < 145) {
-    const width = 1 + (seed % 3);
-    const spacing = 1 + ((seed + 7) % 4);
-    ctx.fillRect(x, 0, width, 30);
-    x += width + spacing;
-    seed = (seed * 9301 + 49297) % 233280;
-  }
-  barcodeContainer.appendChild(barcodeCanvas);
-
-  const qrContainer = document.getElementById('card-qrcode');
-  qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(student.id)}" alt="QR Code" width="40" height="40">`;
-
-  openModal('student-card-modal');
+// Subject Actions
+function saveSubject(name, nameEn) {
+    const editId = document.getElementById("editSubjectId").value;
+    
+    if (editId) {
+        const sub = appState.subjects.find(s => s.id === editId);
+        if (sub) {
+            sub.name = name;
+            sub.nameEn = nameEn;
+        }
+    } else {
+        const id = `sub-${Date.now()}`;
+        appState.subjects.push({ id, name, nameEn });
+    }
+    
+    saveState();
+    renderSubjectsPanel();
+    initSelectors();
 }
 
-function openStaffCardModal(member) {
-  document.getElementById('staff-card-id').innerText = member.id;
-  document.getElementById('staff-card-name').innerText = member.name;
-  document.getElementById('staff-card-gender').innerText = member.gender;
-  document.getElementById('staff-card-role').innerText = member.position;
-  document.getElementById('staff-card-memberId').innerText = member.id;
-  document.getElementById('staff-card-phone').innerText = member.phone;
-
-  const photoContainer = document.getElementById('staff-card-photo-container');
-  if (member.photo) {
-    photoContainer.innerHTML = `<img src="${member.photo}" alt="${member.name}">`;
-  } else {
-    photoContainer.innerHTML = `<svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-  }
-
-  const barcodeContainer = document.getElementById('staff-card-barcode');
-  barcodeContainer.innerHTML = '';
-  
-  const barcodeCanvas = document.createElement('canvas');
-  barcodeCanvas.width = 150;
-  barcodeCanvas.height = 30;
-  const ctx = barcodeCanvas.getContext('2d');
-  ctx.fillStyle = '#000';
-  ctx.clearRect(0,0,150,30);
-  
-  let seed = 0;
-  for(let i=0; i<member.id.length; i++) seed += member.id.charCodeAt(i);
-  
-  let x = 5;
-  while(x < 145) {
-    const width = 1 + (seed % 3);
-    const spacing = 1 + ((seed + 7) % 4);
-    ctx.fillRect(x, 0, width, 30);
-    x += width + spacing;
-    seed = (seed * 9301 + 49297) % 233280;
-  }
-  barcodeContainer.appendChild(barcodeCanvas);
-
-  const qrContainer = document.getElementById('staff-card-qrcode');
-  qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(member.id)}" alt="QR Code" width="40" height="40">`;
-
-  openModal('staff-card-modal');
+function editSubject(subjectId) {
+    const sub = appState.subjects.find(s => s.id === subjectId);
+    if (!sub) return;
+    
+    document.getElementById("editSubjectId").value = sub.id;
+    document.getElementById("subjectName").value = sub.name;
+    document.getElementById("subjectNameEn").value = sub.nameEn;
+    
+    document.getElementById("subjectFormTitle").textContent = appState.language === 'km' ? 'កែសម្រួលមុខវិជ្ជា' : 'Edit Subject';
+    document.getElementById("btnCancelSubjectEdit").classList.remove("hidden");
+    
+    applyLanguage();
 }
 
-// Start the app!
-initApp();
+function deleteSubject(subjectId) {
+    if (appState.currentUser?.role === 'teacher') return;
+    if (confirm(appState.language === 'km' ? "តើអ្នកចង់លុបមុខវិជ្ជានេះមែនទេ? ពិន្ទុដែលពាក់ព័ន្ធទាំងអស់នឹងត្រូវលុប។" : "Are you sure you want to delete this subject? All associated scores will be lost.")) {
+        appState.subjects = appState.subjects.filter(s => s.id !== subjectId);
+        
+        // Clean scores of this subject
+        Object.keys(appState.scores).forEach(stuId => {
+            Object.keys(appState.scores[stuId]).forEach(period => {
+                delete appState.scores[stuId][period][subjectId];
+            });
+        });
+        
+        saveState();
+        renderSubjectsPanel();
+        initSelectors();
+    }
+}
+
+// ----------------------------------------------------
+// UI EVENT LISTENERS
+// ----------------------------------------------------
+function setupEventListeners() {
+    const safeBind = (id, event, callback) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(event, callback);
+        else console.warn("safeBind: Element not found ->", id);
+    };
+    
+    // Theme Toggle
+    document.getElementById("themeToggleBtn").addEventListener("click", () => {
+        appState.theme = appState.theme === "light" ? "dark" : "light";
+        saveState();
+        applyTheme();
+    });
+
+    // Language Toggle (Searchable Modal)
+    document.getElementById("langToggleBtn").addEventListener("click", () => {
+        document.getElementById("languageSearchInput").value = "";
+        initLanguageSelector();
+        document.getElementById("languageSelectModal").classList.add("active");
+    });
+
+    // Modal Control: Close buttons
+    const closeBtns = document.querySelectorAll(".close-btn, .close-btn-action");
+    closeBtns.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            document.querySelectorAll(".modal").forEach(m => m.classList.remove("active"));
+        });
+    });
+
+    // Create Class Modal Open
+    document.getElementById("btnOpenAddClassModal").addEventListener("click", () => {
+        document.getElementById("addClassForm").reset();
+        document.getElementById("editClassId").value = "";
+        renderSubjectsChecklist([]); // check all by default
+        document.getElementById("addClassModalTitle").textContent = appState.language === 'km' ? 'បង្កើតថ្នាក់ថ្មី' : 'Create New Class';
+        document.getElementById("btnSubmitClassForm").textContent = appState.language === 'km' ? 'បង្កើតថ្នាក់' : 'Create Class';
+        document.getElementById("addClassModal").classList.add("active");
+    });
+
+    // Edit Class Modal Open
+    document.getElementById("btnEditClass").addEventListener("click", () => {
+        const targetClass = appState.classes.find(c => c.id === activeClassId);
+        if (!targetClass) return;
+        
+        document.getElementById("editClassId").value = targetClass.id;
+        document.getElementById("newClassName").value = targetClass.name;
+        document.getElementById("newClassTeacherName").value = targetClass.teacherName || "";
+        renderSubjectsChecklist(targetClass.subjectIds || []);
+        
+        document.getElementById("addClassModalTitle").textContent = appState.language === 'km' ? 'កែសម្រួលថ្នាក់រៀន' : 'Edit Class';
+        document.getElementById("btnSubmitClassForm").textContent = appState.language === 'km' ? 'រក្សាទុក' : 'Save Changes';
+        
+        document.getElementById("addClassModal").classList.add("active");
+    });
+    
+    document.getElementById("addClassForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const id = document.getElementById("editClassId").value;
+        const name = document.getElementById("newClassName").value.trim();
+        const teacherName = document.getElementById("newClassTeacherName").value.trim();
+        
+        const checkedCheckboxes = document.querySelectorAll("#classSubjectsChecklist input[type='checkbox']:checked");
+        const subjectIds = Array.from(checkedCheckboxes).map(cb => cb.value);
+        
+        if (name) {
+            if (id) {
+                // Edit mode
+                const targetClass = appState.classes.find(c => c.id === id);
+                if (targetClass) {
+                    targetClass.name = name;
+                    targetClass.teacherName = teacherName;
+                    targetClass.subjectIds = subjectIds;
+                }
+            } else {
+                // Create mode
+                addNewClass(name, teacherName, subjectIds);
+            }
+            saveState();
+            renderClassesPanel();
+            initSelectors();
+            
+            if (id && activeClassId === id) {
+                showClassDetail(id);
+            }
+            
+            document.getElementById("addClassModal").classList.remove("active");
+        }
+    });
+
+    // Back to Classes List
+    document.getElementById("btnBackToClasses").addEventListener("click", () => {
+        activeClassId = null;
+        document.getElementById("classDetailView").style.display = "none";
+        document.getElementById("classesContainer").style.display = "grid";
+        renderClassesPanel();
+    });
+
+    // Delete Class
+    document.getElementById("btnDeleteClass").addEventListener("click", deleteActiveClass);
+
+    // Create Student Modal
+    const openStudentModal = () => {
+        document.getElementById("addStudentForm").reset();
+        document.getElementById("studentEditId").value = "";
+        document.getElementById("studentIdInput").disabled = false;
+        document.getElementById("addStudentModal").classList.add("active");
+    };
+    
+    document.getElementById("btnOpenAddStudentModal").addEventListener("click", openStudentModal);
+    const btnDashAddUser = document.getElementById("btnDashAddUser");
+    if (btnDashAddUser) btnDashAddUser.addEventListener("click", () => {
+        if (typeof window.openRegisterUserModal === 'function') window.openRegisterUserModal();
+    });
+
+    document.getElementById("addStudentForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const id = document.getElementById("studentIdInput").value.trim();
+        const name = document.getElementById("studentNameInput").value.trim();
+        const dob = document.getElementById("studentDobInput").value.trim();
+        const gender = document.getElementById("studentGenderInput").value;
+        const contact = document.getElementById("studentContactInput").value.trim();
+        const generation = document.getElementById("studentGenerationInput").value.trim();
+        
+        if (name) {
+            saveStudent(id, name, dob, gender, contact, generation);
+            document.getElementById("addStudentModal").classList.remove("active");
+        }
+    });
+
+    // Import from Google Sheets
+    document.getElementById("btnOpenImportSheetsModal").addEventListener("click", () => {
+        document.getElementById("sheetsUrlInput").value = "";
+        document.getElementById("importSheetsModal").classList.add("active");
+    });
+
+    document.getElementById("importSheetsForm").addEventListener("submit", handleGoogleSheetsImport);
+
+    // Save Subject Form
+    document.getElementById("subjectForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("subjectName").value.trim();
+        const nameEn = document.getElementById("subjectNameEn").value.trim();
+        
+        if (name && nameEn) {
+            saveSubject(name, nameEn);
+            document.getElementById("subjectForm").reset();
+            document.getElementById("editSubjectId").value = "";
+            document.getElementById("subjectFormTitle").textContent = appState.language === 'km' ? 'បន្ថែមមុខវិជ្ជាថ្មី' : 'Add New Subject';
+            document.getElementById("btnCancelSubjectEdit").classList.add("hidden");
+            applyLanguage();
+        }
+    });
+
+    // Cancel Subject Edit
+    document.getElementById("btnCancelSubjectEdit").addEventListener("click", () => {
+        document.getElementById("subjectForm").reset();
+        document.getElementById("editSubjectId").value = "";
+        document.getElementById("subjectFormTitle").textContent = appState.language === 'km' ? 'បន្ថែមមុខវិជ្ជាថ្មី' : 'Add New Subject';
+        document.getElementById("btnCancelSubjectEdit").classList.add("hidden");
+        applyLanguage();
+    });
+
+    // Load Score Sheet
+    document.getElementById("scoreFilterClass").addEventListener("change", () => {
+        updateScoreSubjectSelector();
+        loadScoreSheet();
+    });
+    document.getElementById("scoreFilterPeriod").addEventListener("change", loadScoreSheet);
+    document.getElementById("scoreFilterSubject").addEventListener("change", loadScoreSheet);
+    document.getElementById("btnLoadScoreSheet").addEventListener("click", loadScoreSheet);
+    
+    // Save Scores
+    document.getElementById("btnSaveScores").addEventListener("click", saveScores);
+
+    // Generate Report
+    document.getElementById("btnGenerateReport").addEventListener("click", generateReport);
+    
+    // Back to Reports Dashboard
+    const btnBack = document.getElementById("btnBackToReportDashboard");
+    if (btnBack) {
+        btnBack.addEventListener("click", window.goBackToReportDashboard);
+    }
+
+    // Print Report
+    safeBind("btnPrintReport", "click", () => {
+        window.print();
+    });
+
+    // Export Report Excel
+    safeBind("btnExportReportExcel", "click", exportReportExcel);
+
+    // Academic Reports Events
+    safeBind("acadFilterClass", "change", generateAcademicReport);
+    safeBind("acadFilterPeriod", "change", generateAcademicReport);
+    safeBind("btnSaveSheetsUrl", "click", saveSheetsUrl);
+    safeBind("btnSyncToSheets", "click", syncToGoogleSheets);
+    safeBind("btnGenerateAcadReport", "click", generateAcademicReport);
+    
+    safeBind("btnPrintAcadReport", "click", () => {
+        window.print();
+    });
+    
+    safeBind("btnExportAcadExcel", "click", exportAcadExcel);
+    
+    safeBind("btnExportAcadPDF", "click", () => {
+        window.print();
+    });
+
+    // Export / Import Settings
+    document.getElementById("btnExportData").addEventListener("click", exportDatabase);
+    
+    document.getElementById("importFile").addEventListener("change", importDatabase);
+    
+    document.getElementById("btnResetDatabase").addEventListener("click", resetDatabase);
+
+    // School Profile Settings
+    const schoolNameInput = document.getElementById("schoolNameInput");
+    if (schoolNameInput) {
+        schoolNameInput.value = appState.schoolName || "";
+    }
+    
+    const logoPreview = document.getElementById("schoolLogoPreview");
+    const logoPlaceholder = document.getElementById("schoolLogoPlaceholder");
+    const removeLogoBtn = document.getElementById("btnRemoveSchoolLogo");
+    
+    if (appState.schoolLogo) {
+        if (logoPreview) {
+            logoPreview.src = appState.schoolLogo;
+            logoPreview.style.display = "block";
+        }
+        if (logoPlaceholder) logoPlaceholder.style.display = "none";
+        if (removeLogoBtn) removeLogoBtn.style.display = "inline-block";
+    }
+    
+    const uploadLogo = document.getElementById("uploadSchoolLogo");
+    if (uploadLogo) {
+        uploadLogo.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const base64 = event.target.result;
+                    if (logoPreview) {
+                        logoPreview.src = base64;
+                        logoPreview.style.display = "block";
+                    }
+                    if (logoPlaceholder) logoPlaceholder.style.display = "none";
+                    if (removeLogoBtn) removeLogoBtn.style.display = "inline-block";
+                    window.tempSchoolLogo = base64;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    if (removeLogoBtn) {
+        removeLogoBtn.addEventListener("click", () => {
+            if (logoPreview) {
+                logoPreview.src = "";
+                logoPreview.style.display = "none";
+            }
+            if (logoPlaceholder) logoPlaceholder.style.display = "block";
+            removeLogoBtn.style.display = "none";
+            window.tempSchoolLogo = null;
+            if (uploadLogo) uploadLogo.value = "";
+        });
+    }
+    
+    safeBind("btnSaveSchoolProfile", "click", () => {
+        const name = schoolNameInput.value.trim();
+        appState.schoolName = name;
+        
+        if (window.tempSchoolLogo !== undefined) {
+            appState.schoolLogo = window.tempSchoolLogo;
+        } else if (logoPreview && logoPreview.style.display === "none") {
+            appState.schoolLogo = null;
+        }
+        
+        saveState();
+        updateReportsSchoolProfile();
+    });
+
+    // Google Sheets Database Settings UI & Bindings
+    const gsUrlInput = document.getElementById("googleSheetsUrlInput");
+    const chkGsSync = document.getElementById("chkEnableSheetsSync");
+    const pullFromSheetsBtn = document.getElementById("btnPullFromSheets");
+    const templateTextarea = document.getElementById("appsScriptTemplateCode");
+    
+    if (gsUrlInput) gsUrlInput.value = appState.googleSheetsUrl || "";
+    if (chkGsSync) chkGsSync.checked = !!appState.googleSheetsSyncEnabled;
+    if (templateTextarea) templateTextarea.value = GOOGLE_APPS_SCRIPT_TEMPLATE;
+    
+    const updatePullBtnVisibility = () => {
+        if (pullFromSheetsBtn) {
+            if (appState.googleSheetsUrl && appState.googleSheetsSyncEnabled) {
+                pullFromSheetsBtn.style.display = "inline-block";
+            } else {
+                pullFromSheetsBtn.style.display = "none";
+            }
+        }
+    };
+    updatePullBtnVisibility();
+
+    safeBind("btnSaveSheetsConfig", "click", () => {
+        const url = gsUrlInput.value.trim();
+        const enabled = chkGsSync.checked;
+        
+        appState.googleSheetsUrl = url;
+        appState.googleSheetsSyncEnabled = enabled;
+        
+        saveState();
+        updatePullBtnVisibility();
+        
+        showToast(appState.language === 'km' ? 'រក្សាទុកការកំណត់ជោគជ័យ!' : 'Configuration saved successfully!', 'success');
+        
+        if (enabled && url) {
+            syncToGoogleSheets();
+        }
+    });
+
+    safeBind("btnTestSheetsConnection", "click", () => {
+        const url = (gsUrlInput ? gsUrlInput.value.trim() : "") || appState.googleSheetsUrl;
+        if (!url) {
+            showToast(appState.language === 'km' ? 'សូមវាយបញ្ចូលតំណភ្ជាប់ URL ជាមុនសិន!' : 'Please enter a URL first!', 'warning');
+            return;
+        }
+        
+        syncToGoogleSheets(true);
+    });
+
+    safeBind("btnPullFromSheets", "click", () => {
+        pullFromGoogleSheets(false);
+    });
+
+    // Preset Font selector change
+    const fontPreset = document.getElementById("fontSelectPreset");
+    if (fontPreset) {
+        fontPreset.addEventListener("change", () => {
+            const font = fontPreset.value;
+            if (font === "system") {
+                appState.fontConfig = null;
+                const style = document.getElementById("dynamicLocalFontFace");
+                if (style) style.remove();
+                
+                const googleLink = document.getElementById("dynamicGoogleFontLink");
+                if (googleLink) googleLink.remove();
+                
+                document.documentElement.style.removeProperty("--font-main");
+                saveState();
+                showToast(appState.language === 'km' ? 'save_success' : 'Font reset successful!');
+            } else {
+                applyGoogleFont(font);
+                appState.fontConfig = { type: 'google', name: font };
+                saveState();
+                showToast(appState.language === 'km' ? 'save_success' : 'Font loaded successfully!');
+            }
+        });
+    }
+
+    // Google Font loader button
+    const btnLoadGoogleFont = document.getElementById("btnLoadGoogleFont");
+    if (btnLoadGoogleFont) {
+        btnLoadGoogleFont.addEventListener("click", () => {
+            const val = document.getElementById("googleFontInput").value.trim();
+            if (!val) {
+                alert(appState.language === 'km' ? 'សូមបញ្ចូលឈ្មោះហ្វុន Google Font មុននឹងទាញយក!' : 'Please enter a Google Font name!');
+                return;
+            }
+            applyGoogleFont(val);
+            appState.fontConfig = { type: 'google', name: val };
+            saveState();
+            showToast(appState.language === 'km' ? 'save_success' : 'Font loaded successfully!');
+        });
+    }
+
+    // Upload Font file uploader
+    const fontFile = document.getElementById("uploadFontFile");
+    if (fontFile) {
+        fontFile.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = () => {
+                const fontName = "CustomFont-" + file.name.split('.')[0].replace(/[^a-zA-Z0-9-]/g, "");
+                
+                // Write styles
+                const styleId = "dynamicLocalFontFace";
+                let style = document.getElementById(styleId);
+                if (style) style.remove();
+                
+                style = document.createElement("style");
+                style.id = styleId;
+                style.textContent = `
+                    @font-face {
+                        font-family: '${fontName}';
+                        src: url('${reader.result}');
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                applyFontStyle(fontName);
+                
+                appState.fontConfig = {
+                    type: 'file',
+                    name: fontName,
+                    fontDataUrl: reader.result,
+                    fileName: file.name
+                };
+                saveState();
+                
+                const status = document.getElementById("fontUploadStatus");
+                if (status) {
+                    status.textContent = `${appState.language === 'km' ? 'បានបញ្ចូល៖' : 'Loaded:'} ${file.name}`;
+                    status.style.display = "block";
+                }
+                
+                showToast(appState.language === 'km' ? 'save_success' : 'Custom font loaded!');
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Reset Font button
+    const btnResetFont = document.getElementById("btnResetFont");
+    if (btnResetFont) {
+        btnResetFont.addEventListener("click", () => {
+            appState.fontConfig = null;
+            const style = document.getElementById("dynamicLocalFontFace");
+            if (style) style.remove();
+            
+            const googleLink = document.getElementById("dynamicGoogleFontLink");
+            if (googleLink) googleLink.remove();
+            
+            document.documentElement.style.removeProperty("--font-main");
+            
+            const status = document.getElementById("fontUploadStatus");
+            if (status) {
+                status.style.display = "none";
+                status.textContent = "";
+            }
+            if (fontPreset) fontPreset.value = "system";
+            document.getElementById("googleFontInput").value = "";
+            document.getElementById("uploadFontFile").value = "";
+            
+            saveState();
+            showToast(appState.language === 'km' ? 'save_success' : 'Typography reset!');
+        });
+    }
+
+    // Mobile Sidebar Drawer togglers
+    const mobileMenuBtn = document.getElementById("btnToggleMobileMenu");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const sidebar = document.querySelector(".sidebar");
+
+    if (mobileMenuBtn && sidebarOverlay && sidebar) {
+        const toggleMobileMenu = () => {
+            sidebar.classList.toggle("active");
+            sidebarOverlay.classList.toggle("active");
+        };
+
+        const closeMobileMenu = () => {
+            sidebar.classList.remove("active");
+            sidebarOverlay.classList.remove("active");
+        };
+
+        mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+        sidebarOverlay.addEventListener("click", closeMobileMenu);
+        
+        // Desktop/Tablet Sidebar Toggle
+        const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
+        const mainContent = document.querySelector(".main-content");
+        if (sidebarToggleBtn && mainContent) {
+            sidebarToggleBtn.addEventListener("click", () => {
+                if (window.innerWidth > 1024) {
+                    // Desktop: Toggle collapse
+                    sidebar.classList.toggle("collapsed");
+                    mainContent.classList.toggle("sidebar-collapsed");
+                } else {
+                    // Tablet: Toggle expand
+                    sidebar.classList.toggle("expanded");
+                }
+            });
+        }
+
+        // Auto-close drawer on navigating on mobile
+        const navLinks = document.querySelectorAll(".sidebar-nav a, .sidebar-footer div, .logout-btn-action");
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                if (sidebar.classList.contains("active")) {
+                    closeMobileMenu();
+                }
+            });
+        });
+    }
+}
+
+// ----------------------------------------------------
+// STUDENT PORTAL VIEW RENDERING & CONTROLLER
+// ----------------------------------------------------
+function renderStudentPortal() {
+    const user = appState.currentUser;
+    if (!user || user.role !== 'student') return;
+    
+    const targetClass = appState.classes.find(c => c.id === user.classId);
+    if (!targetClass) return;
+    
+    const student = targetClass.students.find(s => s.id === user.id);
+    if (!student) return;
+    
+    const isKm = appState.language === 'km';
+    
+    // Header Info
+    document.getElementById("studentHeaderProfile").innerHTML = `
+        <span style="font-weight:700; color:var(--primary-blue);">${isKm ? 'សិស្ស៖' : 'Student:'} ${student.name} (${student.id})</span> | 
+        <span>${isKm ? 'ថ្នាក់៖' : 'Class:'} ${targetClass.name}</span>
+    `;
+    
+    // Overview Cards
+    document.getElementById("studentStatClass").textContent = targetClass.name;
+    document.getElementById("studentStatTeacher").textContent = targetClass.teacherName || (isKm ? 'មិនទាន់ចាត់តាំង' : 'Not Assigned');
+    
+    // Fetch Yearly stats
+    const yearlyRanked = rankStudentsInClass(user.classId, "yearly");
+    const yearlyRow = yearlyRanked.find(r => r.student.id === student.id);
+    if (yearlyRow && yearlyRow.average > 0) {
+        document.getElementById("studentStatYearlyAvg").textContent = yearlyRow.average.toFixed(2);
+        document.getElementById("studentStatYearlyRank").textContent = isKm ? toKhDigits(yearlyRow.rank) : yearlyRow.rank;
+    } else {
+        document.getElementById("studentStatYearlyAvg").textContent = "0.00";
+        document.getElementById("studentStatYearlyRank").textContent = "-";
+    }
+    
+    // Dynamic Table Columns
+    const activeSubjects = targetClass.subjectIds 
+        ? appState.subjects.filter(s => targetClass.subjectIds.includes(s.id))
+        : appState.subjects;
+        
+    const headerRow = document.getElementById("studentReportHeaderRow");
+    headerRow.innerHTML = `
+        <th style="width: 150px;">${isKm ? 'ខែ / វគ្គសិក្សា' : 'Month / Period'}</th>
+    `;
+    activeSubjects.forEach(sub => {
+        headerRow.innerHTML += `<th>${sub.name}</th>`;
+    });
+    headerRow.innerHTML += `
+        <th style="width: 80px;">${isKm ? 'មធ្យម' : 'Avg'}</th>
+        <th style="width: 80px;">${isKm ? 'ចំណាត់ថ្នាក់' : 'Rank'}</th>
+        <th style="width: 100px;">${isKm ? 'លទ្ធផល' : 'Result'}</th>
+    `;
+    
+    // Rows mapping
+    const tbody = document.getElementById("studentReportTableBody");
+    tbody.innerHTML = "";
+    
+    const periods = [
+        { key: "jan", label: isKm ? "ខែមករា" : "January", isSummary: false },
+        { key: "feb", label: isKm ? "ខែកុម្ភៈ" : "February", isSummary: false },
+        { key: "mar", label: isKm ? "ខែមីនា" : "March", isSummary: false },
+        { key: "apr", label: isKm ? "ខែមេសា" : "April", isSummary: false },
+        { key: "may", label: isKm ? "ខែឧសភា" : "May", isSummary: false },
+        { key: "jun", label: isKm ? "ខែមិថុនា" : "June", isSummary: false },
+        { key: "jul", label: isKm ? "ខែកក្កដា" : "July", isSummary: false },
+        { key: "aug", label: isKm ? "ខែសីហា" : "August", isSummary: false },
+        { key: "sep", label: isKm ? "ខែកញ្ញា" : "September", isSummary: false },
+        { key: "oct", label: isKm ? "ខែតុលា" : "October", isSummary: false },
+        { key: "nov", label: isKm ? "ខែវិច្ឆិកា" : "November", isSummary: false },
+        { key: "dec", label: isKm ? "ខែធ្នូ" : "December", isSummary: false },
+        { key: "sem1_exam", label: isKm ? "ប្រឡងឆមាសទី១" : "Semester 1 Exam", isSummary: false },
+        { key: "sem1", label: isKm ? "ឆមាសទី១" : "Semester 1", isSummary: true },
+        { key: "sem2_exam", label: isKm ? "ប្រឡងឆមាសទី២" : "Semester 2 Exam", isSummary: false },
+        { key: "sem2", label: isKm ? "ឆមាសទី២" : "Semester 2", isSummary: true },
+        { key: "yearly", label: isKm ? "ប្រចាំឆ្នាំ" : "Yearly", isSummary: true }
+    ];
+    
+    periods.forEach(p => {
+        let rowHTML = `<td><strong>${p.label}</strong></td>`;
+        
+        // Subject scores
+        activeSubjects.forEach(sub => {
+            if (p.isSummary) {
+                rowHTML += `<td style="background: rgba(0,0,0,0.02);">-</td>`;
+            } else {
+                const score = appState.scores[student.id]?.[p.key]?.[sub.id];
+                const printScore = (score !== undefined && score !== null) ? score.toFixed(1) : "-";
+                rowHTML += `<td>${printScore}</td>`;
+            }
+        });
+        
+        // Calculate average, rank, status for this specific row
+        let avgVal = 0;
+        let showRank = "-";
+        let showStatus = "";
+        
+        if (p.key === "sem1") {
+            avgVal = getStudentSem1Average(student.id);
+        } else if (p.key === "sem2") {
+            avgVal = getStudentSem2Average(student.id);
+        } else if (p.key === "yearly") {
+            avgVal = getStudentYearlyAverage(student.id);
+        } else if (p.key === "sem1_exam" || p.key === "sem2_exam") {
+            const scoreObj = appState.scores[student.id]?.[p.key];
+            let sum = 0, count = 0;
+            if (scoreObj) {
+                activeSubjects.forEach(sub => {
+                    const val = scoreObj[sub.id];
+                    if (val !== undefined) {
+                        sum += parseFloat(val);
+                        count++;
+                    }
+                });
+            }
+            avgVal = count > 0 ? sum / activeSubjects.length : 0;
+        } else {
+            avgVal = getStudentMonthlyAverage(student.id, p.key);
+        }
+        
+        // Fetch rank from ranks calculations
+        if (avgVal > 0) {
+            const periodRanks = rankStudentsInClass(user.classId, p.key);
+            const rRow = periodRanks.find(r => r.student.id === student.id);
+            if (rRow) {
+                showRank = isKm ? toKhDigits(rRow.rank) : rRow.rank;
+                if (p.isSummary) {
+                    showStatus = rRow.status;
+                }
+            }
+        }
+        
+        const printAvg = avgVal > 0 ? avgVal.toFixed(2) : "-";
+        const statusBadge = showStatus ? `<span class="badge ${avgVal >= 5.0 ? 'badge-pass' : 'badge-fail'}">${showStatus}</span>` : "-";
+        
+        rowHTML += `
+            <td><strong style="color:var(--primary-blue);">${printAvg}</strong></td>
+            <td><strong>${showRank}</strong></td>
+            <td>${statusBadge}</td>
+        `;
+        
+        const tr = document.createElement("tr");
+        if (p.isSummary) {
+            tr.style.background = "rgba(59, 130, 246, 0.05)";
+            tr.style.fontWeight = "bold";
+        }
+        tr.innerHTML = rowHTML;
+        tbody.appendChild(tr);
+    });
+    
+    // Render Message correction history
+    const historyContainer = document.getElementById("studentMessageHistory");
+    historyContainer.innerHTML = "";
+    
+    const studentMessages = (appState.messages || []).filter(m => m.studentId === student.id);
+    
+    if (studentMessages.length === 0) {
+        historyContainer.innerHTML = `<p style="font-size:0.8rem; color:var(--text-muted); text-align:center; margin-top: 1rem;">${isKm ? 'គ្មានប្រវត្តិកែតម្រូវទិន្នន័យឡើយ' : 'No correction history available.'}</p>`;
+    } else {
+        studentMessages.forEach(msg => {
+            const statusLabel = msg.status === 'resolved' ? (isKm ? 'ដោះស្រាយរួច' : 'Resolved') : (isKm ? 'កំពុងរង់ចាំ' : 'Pending');
+            historyContainer.innerHTML += `
+                <div class="student-msg-item">
+                    <div class="student-msg-meta">
+                        <span>${msg.timestamp}</span>
+                        <span class="student-msg-status ${msg.status === 'resolved' ? 'status-resolved' : 'status-pending'}">${statusLabel}</span>
+                    </div>
+                    <div class="student-msg-text">${msg.messageText}</div>
+                    ${msg.replyText ? `
+                        <div class="student-msg-reply">
+                            <strong>${isKm ? 'ចម្លើយតប៖' : 'Reply:'}</strong> ${msg.replyText}
+                            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">
+                                ${isKm ? 'ឆ្លើយដោយ៖' : 'By:'} ${msg.repliedBy}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        });
+    }
+}
+
+// ----------------------------------------------------
+// INBOX MESSAGE PANEL FOR ADMIN/TEACHER
+// ----------------------------------------------------
+function renderMessagesPanel() {
+    const tbody = document.getElementById("messagesTableBody");
+    if (!tbody) return;
+    
+    tbody.innerHTML = "";
+    const isKm = appState.language === 'km';
+    
+    const messages = appState.messages || [];
+    
+    // Update navigation badge count
+    const pendingCount = messages.filter(m => m.status === 'pending').length;
+    const badge = document.getElementById("msgCountBadge");
+    if (badge) {
+        if (pendingCount > 0) {
+            badge.textContent = pendingCount;
+            badge.style.display = "inline-block";
+        } else {
+            badge.style.display = "none";
+        }
+    }
+    
+    if (messages.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="color:var(--text-muted);">${isKm ? 'គ្មានសារស្នើសុំកែប្រែពិន្ទុឡើយ' : 'No grade correction requests.'}</td></tr>`;
+        return;
+    }
+    
+    // Sort messages: pending first, then newest timestamp first
+    const sortedMessages = [...messages].sort((a, b) => {
+        if (a.status === 'pending' && b.status !== 'pending') return -1;
+        if (a.status !== 'pending' && b.status === 'pending') return 1;
+        return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+    
+    sortedMessages.forEach(msg => {
+        const studentClass = appState.classes.find(c => c.id === msg.classId);
+        const className = studentClass ? studentClass.name : "-";
+        
+        const statusLabel = msg.status === 'resolved' ? (isKm ? 'ដោះស្រាយរួច' : 'Resolved') : (isKm ? 'កំពុងរង់ចាំ' : 'Pending');
+        const statusClass = msg.status === 'resolved' ? 'status-resolved' : 'status-pending';
+        
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><span style="font-size:0.8rem; color:var(--text-muted);">${msg.timestamp}</span></td>
+            <td><strong>${msg.studentName}</strong> <br><span style="font-size:0.75rem; color:var(--text-muted);">${msg.studentId}</span></td>
+            <td>${className}</td>
+            <td class="text-left" style="max-width:300px; word-break:break-word;">
+                <div>${msg.messageText}</div>
+                ${msg.replyText ? `
+                    <div style="margin-top: 0.5rem; padding: 0.4rem; background:rgba(0,0,0,0.02); border-left: 2px solid var(--primary-blue); font-size:0.8rem;">
+                        <strong>${isKm ? 'ចម្លើយតប៖' : 'Reply:'}</strong> ${msg.replyText}
+                    </div>
+                ` : ''}
+            </td>
+            <td><span class="student-msg-status ${statusClass}">${statusLabel}</span></td>
+            <td>
+                <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                    <button class="btn btn-primary btn-sm" onclick="openReplyModal('${msg.id}')">
+                        <i class="fa-solid fa-reply"></i> ${msg.status === 'resolved' ? (isKm ? 'កែប្រែ' : 'Edit') : (isKm ? 'ឆ្លើយតប' : 'Reply')}
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteMessage('${msg.id}')">
+                        <i class="fa-solid fa-trash"></i> ${isKm ? 'លុប' : 'Delete'}
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function openReplyModal(msgId) {
+    const msg = appState.messages.find(m => m.id === msgId);
+    if (!msg) return;
+    
+    document.getElementById("replyMessageId").value = msg.id;
+    document.getElementById("studentMessageQuote").textContent = `"${msg.messageText}"`;
+    document.getElementById("replyMessageInput").value = msg.replyText || "";
+    
+    document.getElementById("replyMessageModal").classList.add("active");
+}
+
+function deleteMessage(msgId) {
+    const isKm = appState.language === 'km';
+    if (confirm(isKm ? 'តើអ្នកពិតជាចង់លុបសារនេះមែនទេ?' : 'Are you sure you want to delete this message?')) {
+        appState.messages = appState.messages.filter(m => m.id !== msgId);
+        saveData();
+        renderMessagesPanel();
+    }
+}
+
+// Register Login events & form hooks
+function setupLoginEvents() {
+    // Toggle Password Visibility
+    const btnTogglePassword = document.getElementById("btnTogglePassword");
+    if (btnTogglePassword) {
+        btnTogglePassword.addEventListener("click", () => {
+            const input = document.getElementById("loginPassword");
+            const icon = document.getElementById("togglePasswordIcon");
+            if (input && icon) {
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                }
+            }
+        });
+    }
+    
+    // Language switcher login screen
+    document.getElementById("langToggleBtnLogin")?.addEventListener("click", () => {
+        document.getElementById("languageSearchInput").value = "";
+        initLanguageSelector();
+        document.getElementById("languageSelectModal").classList.add("active");
+    });
+    
+    // Firebase Email Login Handler
+    const emailLoginForm = document.getElementById("emailLoginForm");
+    if (emailLoginForm) {
+        emailLoginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Successful login, onAuthStateChanged will handle the rest
+                    showToast(appState.language === 'km' ? 'ចូលប្រើប្រាស់ជោគជ័យ!' : 'Logged in successfully!');
+                })
+                .catch((error) => {
+                    console.error("Login error:", error);
+                    if (email === "admin@gmail.com" && password === "Admin123") {
+                        appState.currentUser = { role: 'admin', uid: 'local-admin', name: 'Super Admin (Offline)' };
+                        saveState();
+                        showPortal();
+                        showToast(appState.language === 'km' ? 'បានចូលប្រើប្រាស់ក្នុងរបៀបក្រៅបណ្ដាញ' : 'Logged in in offline mode', 'warning');
+                    } else {
+                        alert(appState.language === 'km' ? `ការចូលបរាជ័យ៖ ${error.message}` : `Login Failed: ${error.message}`);
+                    }
+                });
+        });
+    }
+    
+    // Registration form bindings
+    const regModal = document.getElementById("registerUserModal");
+    const regRoleSelect = document.getElementById("regRole");
+    const regClassGroup = document.getElementById("regClassGroup");
+    const regClassSelect = document.getElementById("regClass");
+
+    const btnRegOpen = document.getElementById("btnRegisterUserOpen");
+    
+    window.openRegisterUserModal = () => {
+        document.getElementById("registerUserForm").reset();
+        
+        // Populate class select
+        regClassSelect.innerHTML = "";
+        appState.classes.forEach(c => {
+            const opt = document.createElement("option");
+            opt.value = c.id;
+            opt.textContent = c.name;
+            regClassSelect.appendChild(opt);
+        });
+        
+        // Show class dropdown by default since Student is selected
+        regClassGroup.style.display = "block";
+        
+        regModal.classList.add("active");
+    };
+
+    if (btnRegOpen) {
+        btnRegOpen.addEventListener("click", window.openRegisterUserModal);
+    }
+
+    if (regRoleSelect) {
+        regRoleSelect.addEventListener("change", () => {
+            if (regRoleSelect.value === 'student') {
+                regClassGroup.style.display = "block";
+            } else {
+                regClassGroup.style.display = "none";
+            }
+        });
+    }
+
+    const regForm = document.getElementById("registerUserForm");
+    if (regForm) {
+        regForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const role = regRoleSelect.value;
+            const email = document.getElementById("regEmail").value.trim();
+            const password = document.getElementById("regPassword").value;
+            
+            // Auto-generate name from email prefix
+            const name = email.split('@')[0];
+            const contact = "";
+            
+            const classId = role === 'student' ? regClassSelect.value : null;
+
+            // Use secondary Firebase App instance if currently logged in, so the admin doesn't get signed out
+            let authInstance = auth;
+            let secondaryInstance = null;
+            if (auth && auth.currentUser) {
+                try {
+                    const secAppName = "SecondaryApp_" + Date.now();
+                    secondaryInstance = firebase.initializeApp(firebaseConfig, secAppName);
+                    authInstance = secondaryInstance.auth();
+                } catch(err) {
+                    console.warn("Could not create secondary Firebase app:", err);
+                }
+            }
+
+            authInstance.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    if (secondaryInstance) {
+                        secondaryInstance.delete().catch(() => {});
+                    }
+                    // Save additional data to Firestore
+                    return db.collection("users").doc(user.uid).set({
+                        name: name,
+                        role: role,
+                        email: email,
+                        contact: contact,
+                        classId: classId,
+                        status: role === 'admin' ? 'active' : 'pending', // Admins are active automatically (for first setup)
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
+                .then(() => {
+                    regModal.classList.remove("active");
+                    alert(appState.language === 'km' ? 'ចុះឈ្មោះរួចរាល់ដោយជោគជ័យ!' : 'Registration successful!');
+                    if (typeof initUserPanel === 'function') initUserPanel();
+                })
+                .catch((error) => {
+                    if (secondaryInstance) {
+                        secondaryInstance.delete().catch(() => {});
+                    }
+                    console.error("Registration error:", error);
+                    let errKh = error.message;
+                    if (error.code === 'auth/weak-password') {
+                        errKh = 'ពាក្យសម្ងាត់ត្រូវមានយ៉ាងតិច ៦ តួអក្សរឡើងទៅ!';
+                    } else if (error.code === 'auth/email-already-in-use') {
+                        errKh = 'អ៊ីមែលនេះមានក្នុងប្រព័ន្ធរួចហើយ!';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errKh = 'ទម្រង់អ៊ីមែលមិនត្រឹមត្រូវទេ!';
+                    } else if (error.code === 'auth/operation-not-allowed') {
+                        errKh = 'Firebase មិនទាន់បានបើកដំណើរការ Email/Password Authentication ក្នុង Console ឡើយ!';
+                    }
+                    alert(appState.language === 'km' ? `ការចុះឈ្មោះបរាជ័យ៖ ${errKh}` : `Registration Failed: ${error.message}`);
+                });
+        });
+    }
+
+    // Logouts
+    document.getElementById("btnAdminTeacherLogout").addEventListener("click", handleLogout);
+    document.getElementById("btnStudentLogout").addEventListener("click", handleLogout);
+    
+    // Theme and Language bindings for student portal header
+    document.getElementById("themeToggleBtnStudent").addEventListener("click", () => {
+        appState.theme = appState.theme === "light" ? "dark" : "light";
+        saveState();
+        applyTheme();
+    });
+    
+    document.getElementById("langToggleBtnStudent").addEventListener("click", () => {
+        document.getElementById("languageSearchInput").value = "";
+        initLanguageSelector();
+        document.getElementById("languageSelectModal").classList.add("active");
+    });
+    
+    // Student send message handler
+    document.getElementById("studentMessageForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const msgText = document.getElementById("studentMessageText").value.trim();
+        const studentUser = appState.currentUser;
+        if (!studentUser || studentUser.role !== 'student') return;
+        
+        const targetClass = appState.classes.find(c => c.id === studentUser.classId);
+        const student = targetClass?.students.find(s => s.id === studentUser.id);
+        if (!student) return;
+        
+        const newMsg = {
+            id: `msg-${Date.now()}`,
+            studentId: student.id,
+            studentName: student.name,
+            classId: studentUser.classId,
+            messageText: msgText,
+            timestamp: new Date().toLocaleString(appState.language === 'km' ? 'km-KH' : 'en-US'),
+            status: 'pending'
+        };
+        
+        if (!appState.messages) appState.messages = [];
+        appState.messages.push(newMsg);
+        saveState();
+        
+        document.getElementById("studentMessageText").value = "";
+        showToast(appState.language === 'km' ? 'save_success' : 'Request sent successfully!');
+        renderStudentPortal();
+    });
+    
+    // Reply Form handler
+    document.getElementById("replyMessageForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const msgId = document.getElementById("replyMessageId").value;
+        const replyText = document.getElementById("replyMessageInput").value.trim();
+        
+        const msg = appState.messages.find(m => m.id === msgId);
+        if (msg) {
+            msg.replyText = replyText;
+            msg.repliedBy = appState.currentUser.role === 'admin' ? (appState.language === 'km' ? 'អ្នកគ្រប់គ្រង' : 'Admin') : (appState.language === 'km' ? 'គ្រូបន្ទុកថ្នាក់' : 'Teacher');
+            msg.status = 'resolved';
+            saveState();
+            
+            document.getElementById("replyMessageModal").classList.remove("active");
+            showToast(appState.language === 'km' ? 'save_success' : 'Reply sent successfully!');
+            renderMessagesPanel();
+        }
+    });
+}
+
+function handleLogout() {
+    auth.signOut().then(() => {
+        appState.currentUser = null;
+        saveState();
+        showPortal();
+    }).catch((error) => {
+        console.error("Logout error", error);
+    });
+}
+
+function updateLoginLanguage() {
+    const isKm = appState.language === "km";
+    document.getElementById("loginLangText").textContent = isKm ? "English" : "ភាសាខ្មែរ";
+}
+
+// Global scope bindings for window click events
+window.openReplyModal = openReplyModal;
+window.selectLoginRole = selectLoginRole;
+window.goBackToRoles = goBackToRoles;
+
+// ----------------------------------------------------
+// DYNAMIC FONT LOADER ROUTINES
+// ----------------------------------------------------
+function applyGoogleFont(fontName) {
+    const existingLink = document.getElementById("dynamicGoogleFontLink");
+    if (existingLink) existingLink.remove();
+    
+    const formattedName = fontName.replace(/\s+/g, "+");
+    const link = document.createElement("link");
+    link.id = "dynamicGoogleFontLink";
+    link.rel = "stylesheet";
+    link.href = `https://fonts.googleapis.com/css2?family=${formattedName}:wght@400;500;600;700&display=swap`;
+    document.head.appendChild(link);
+    
+    applyFontStyle(fontName);
+}
+
+function applyFontStyle(fontName) {
+    document.documentElement.style.setProperty("--font-main", `'${fontName}', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`);
+}
+
+function applyFontFromConfig() {
+    if (!appState || !appState.fontConfig) return;
+    const config = appState.fontConfig;
+    
+    if (config.type === 'google') {
+        applyGoogleFont(config.name);
+        
+        // Sync Preset dropdown value if it matches
+        const fontPreset = document.getElementById("fontSelectPreset");
+        if (fontPreset) {
+            const exists = Array.from(fontPreset.options).some(opt => opt.value === config.name);
+            if (exists) fontPreset.value = config.name;
+        }
+    } else if (config.type === 'file' && config.fontDataUrl) {
+        const styleId = "dynamicLocalFontFace";
+        let style = document.getElementById(styleId);
+        if (style) style.remove();
+        
+        style = document.createElement("style");
+        style.id = styleId;
+        style.textContent = `
+            @font-face {
+                font-family: '${config.name}';
+                src: url('${config.fontDataUrl}');
+            }
+        `;
+        document.head.appendChild(style);
+        
+        applyFontStyle(config.name);
+        
+        // Sync Status label
+        const status = document.getElementById("fontUploadStatus");
+        if (status && config.fileName) {
+            status.textContent = `${appState.language === 'km' ? 'បានបញ្ចូល៖' : 'Loaded:'} ${config.fileName}`;
+            status.style.display = "block";
+        }
+    }
+}
+
+// ----------------------------------------------------
+// 160+ SUPPORTED LANGUAGES LIST AND REGISTRATION
+// ----------------------------------------------------
+const SUPPORTED_LANGUAGES = [
+    { code: "km", name: "Khmer", localName: "ភាសាខ្មែរ", flag: "🇰🇭" },
+    { code: "en", name: "English", localName: "English", flag: "🇬🇧" },
+    { code: "fr", name: "French", localName: "Français", flag: "🇫🇷" },
+    { code: "th", name: "Thai", localName: "ไทย", flag: "🇹🇭" },
+    { code: "vi", name: "Vietnamese", localName: "Tiếng Việt", flag: "🇻🇳" },
+    { code: "lo", name: "Lao", localName: "ພາສາລາវ", flag: "🇱🇦" },
+    { code: "ja", name: "Japanese", localName: "日本語", flag: "🇯🇵" },
+    { code: "ko", name: "Korean", localName: "한국어", flag: "🇰🇷" },
+    { code: "zh-CN", name: "Chinese (Simplified)", localName: "简体中文", flag: "🇨🇳" },
+    { code: "zh-TW", name: "Chinese (Traditional)", localName: "繁體中文", flag: "🇹🇼" },
+    { code: "es", name: "Spanish", localName: "Español", flag: "🇪🇸" },
+    { code: "de", name: "German", localName: "Deutsch", flag: "🇩🇪" },
+    { code: "ru", name: "Russian", localName: "Русский", flag: "🇷🇺" },
+    { code: "ar", name: "Arabic", localName: "العربية", flag: "🇸🇦" },
+    { code: "hi", name: "Hindi", localName: "हिन्दी", flag: "🇮🇳" },
+    { code: "it", name: "Italian", localName: "Italiano", flag: "🇮🇹" },
+    { code: "pt", name: "Portuguese", localName: "Português", flag: "🇵🇹" },
+    { code: "my", name: "Burmese", localName: "မြန်မာ", flag: "🇲🇲" },
+    { code: "id", name: "Indonesian", localName: "Bahasa Indonesia", flag: "🇮🇩" },
+    { code: "ms", name: "Malay", localName: "Bahasa Melayu", flag: "🇲🇾" },
+    { code: "tl", name: "Tagalog", localName: "Tagalog", flag: "🇵🇭" },
+    { code: "tr", name: "Turkish", localName: "Türkçe", flag: "🇹🇷" },
+    { code: "nl", name: "Dutch", localName: "Nederlands", flag: "🇳🇱" },
+    { code: "sv", name: "Swedish", localName: "Svenska", flag: "🇸🇪" },
+    { code: "da", name: "Danish", localName: "Dansk", flag: "🇩🇰" },
+    { code: "fi", name: "Finnish", localName: "Suomi", flag: "🇫🇮" },
+    { code: "no", name: "Norwegian", localName: "Norsk", flag: "🇳🇴" },
+    { code: "pl", name: "Polish", localName: "Polski", flag: "🇵🇱" },
+    { code: "ro", name: "Romanian", localName: "Română", flag: "🇷🇴" },
+    { code: "hu", name: "Hungarian", localName: "Magyar", flag: "🇭🇺" },
+    { code: "cs", name: "Czech", localName: "Čeština", flag: "🇨🇿" },
+    { code: "sk", name: "Slovak", localName: "Slovenčina", flag: "🇸🇰" },
+    { code: "bg", name: "Bulgarian", localName: "Български", flag: "🇧🇬" },
+    { code: "hr", name: "Croatian", localName: "Hrvatski", flag: "🇭🇷" },
+    { code: "sr", name: "Serbian", localName: "Српски", flag: "🇷🇸" },
+    { code: "sl", name: "Slovenian", localName: "Slovenščina", flag: "🇸🇮" },
+    { code: "uk", name: "Ukrainian", localName: "Українська", flag: "🇺🇦" },
+    { code: "et", name: "Estonian", localName: "Eesti", flag: "🇪🇪" },
+    { code: "lv", name: "Latvian", localName: "Latviešu", flag: "🇱🇻" },
+    { code: "lt", name: "Lithuanian", localName: "Lietuvių", flag: "🇱🇹" },
+    { code: "sw", name: "Swahili", localName: "Kiswahili", flag: "🇰🇪" },
+    { code: "af", name: "Afrikaans", localName: "Afrikaans", flag: "🇿🇦" },
+    { code: "el", name: "Greek", localName: "Ελληνικά", flag: "🇬🇷" },
+    { code: "he", name: "Hebrew", localName: "עברית", flag: "🇮🇱" },
+    { code: "fa", name: "Persian", localName: "فارسی", flag: "🇮🇷" },
+    { code: "ur", name: "Urdu", localName: "اردو", flag: "🇵🇰" },
+    { code: "bn", name: "Bengali", localName: "বাংলা", flag: "🇧🇩" },
+    { code: "pa", name: "Punjabi", localName: "ਪੰਜਾਬੀ", flag: "🇮🇳" },
+    { code: "gu", name: "Gujarati", localName: "ગુજરાતી", flag: "🇮🇳" },
+    { code: "ta", name: "Tamil", localName: "தமிழ்", flag: "🇮🇳" },
+    { code: "te", name: "Telugu", localName: "తెలుగు", flag: "🇮🇳" },
+    { code: "kn", name: "Kannada", localName: "ಕನ್ನಡ", flag: "🇮🇳" },
+    { code: "ml", name: "Malayalam", localName: "മലയാളം", flag: "🇮🇳" },
+    { code: "si", name: "Sinhala", localName: "සිංහල", flag: "🇱🇰" },
+    { code: "ne", name: "Nepali", localName: "नेपाली", flag: "🇳🇵" },
+    { code: "am", name: "Amharic", localName: "አማርኛ", flag: "🇪🇹" },
+    { code: "so", name: "Somali", localName: "Soomaali", flag: "🇸🇴" },
+    { code: "yo", name: "Yoruba", localName: "Yorùbá", flag: "🇳🇬" },
+    { code: "ig", name: "Igbo", localName: "Asụsụ Igbo", flag: "🇳🇬" },
+    { code: "ha", name: "Hausa", localName: "Hausa", flag: "🇳🇬" },
+    { code: "az", name: "Azerbaijani", localName: "Azərbaycanca", flag: "🇦🇿" },
+    { code: "ka", name: "Georgian", localName: "ქართული", flag: "🇬🇪" },
+    { code: "hy", name: "Armenian", localName: "Հայերեն", flag: "🇦🇲" },
+    { code: "uz", name: "Uzbek", localName: "Oʻzbekcha", flag: "🇺🇿" },
+    { code: "kk", name: "Kazakh", localName: "Қазақша", flag: "🇰🇿" },
+    { code: "ky", name: "Kyrgyz", localName: "Кыргызча", flag: "🇰🇬" },
+    { code: "tg", name: "Tajik", localName: "Тоҷикӣ", flag: "🇹🇯" },
+    { code: "tk", name: "Turkmen", localName: "Türkmençe", flag: "🇹🇲" },
+    { code: "mn", name: "Mongolian", localName: "Монгол", flag: "🇲🇳" },
+    { code: "ug", name: "Uyghur", localName: "ئۇيغۇرچە", flag: "🇨🇳" },
+    { code: "yi", name: "Yiddish", localName: "ייִديש", flag: "🇮🇱" },
+    { code: "eo", name: "Esperanto", localName: "Esperanto", flag: "🇪🇺" },
+    { code: "la", name: "Latin", localName: "Latina", flag: "🇻🇦" },
+    { code: "cy", name: "Welsh", localName: "Cymraeg", flag: "🇬🇧" },
+    { code: "gd", name: "Scots Gaelic", localName: "Gàidhlig", flag: "🇬🇧" },
+    { code: "ga", name: "Irish", localName: "Gaeilge", flag: "🇮🇪" },
+    { code: "is", name: "Icelandic", localName: "Íslenska", flag: "🇮🇸" },
+    { code: "eu", name: "Basque", localName: "Euskara", flag: "🇪🇸" },
+    { code: "ca", name: "Catalan", localName: "Català", flag: "🇪🇸" },
+    { code: "gl", name: "Galician", localName: "Galego", flag: "🇪🇸" },
+    { code: "co", name: "Corsican", localName: "Corsu", flag: "🇫🇷" },
+    { code: "fy", name: "Frisian", localName: "Frysk", flag: "🇳🇱" },
+    { code: "haw", name: "Hawaiian", localName: "ʻŌlelo Hawaiʻi", flag: "🇺🇸" },
+    { code: "mi", name: "Maori", localName: "Māori", flag: "🇳🇿" },
+    { code: "sm", name: "Samoan", localName: "Gagana Samoa", flag: "🇼🇸" },
+    { code: "jw", name: "Javanese", localName: "Jawa", flag: "🇮🇩" },
+    { code: "su", name: "Sundanese", localName: "Sunda", flag: "🇮🇩" },
+    { code: "mg", name: "Malagasy", localName: "Malagasy", flag: "🇲🇬" },
+    { code: "hmn", name: "Hmong", localName: "Hmoob", flag: "🇨🇳" },
+    { code: "ku", name: "Kurdish (Kurmanji)", localName: "Kurdî", flag: "🇮🇶" },
+    { code: "ps", name: "Pashto", localName: "پښتو", flag: "🇦🇫" },
+    { code: "sd", name: "Sindhi", localName: "سنڌي", flag: "🇵🇰" },
+    { code: "sq", name: "Albanian", localName: "Shqip", flag: "🇦🇱" },
+    { code: "be", name: "Belarusian", localName: "Беларуская", flag: "🇧🇾" },
+    { code: "bs", name: "Bosnian", localName: "Bosanski", flag: "🇧🇦" },
+    { code: "ceb", name: "Cebuano", localName: "Cebuano", flag: "🇵🇭" },
+    { code: "ny", name: "Chichewa", localName: "Chichewa", flag: "🇲🇼" },
+    { code: "ht", name: "Haitian Creole", localName: "Kreyòl Ayisyen", flag: "🇭🇹" },
+    { code: "rw", name: "Kinyarwanda", localName: "Ikinyarwanda", flag: "🇷🇼" },
+    { code: "lb", name: "Luxembourgish", localName: "Lëtzebuergesch", flag: "🇱🇺" },
+    { code: "mk", name: "Macedonian", localName: "Македонски", flag: "🇲🇰" },
+    { code: "mt", name: "Maltese", localName: "Malti", flag: "🇲🇹" },
+    { code: "mr", name: "Marathi", localName: "मराठी", flag: "🇮🇳" },
+    { code: "om", name: "Oromo", localName: "Oromoo", flag: "🇪🇹" },
+    { code: "sa", name: "Sanskrit", localName: "संस्कृतम्", flag: "🇮🇳" },
+    { code: "st", name: "Sesotho", localName: "Sesotho", flag: "🇿🇦" },
+    { code: "sn", name: "Shona", localName: "chiShona", flag: "🇿🇼" },
+    { code: "tt", name: "Tatar", localName: "Татарча", flag: "🇷🇺" },
+    { code: "ti", name: "Tigrinya", localName: "ትግርኛ", flag: "🇪🇷" },
+    { code: "ts", name: "Tsonga", localName: "Xitsonga", flag: "🇿🇦" },
+    { code: "ak", name: "Twi (Akan)", localName: "Twi", flag: "🇬🇭" },
+    { code: "xh", name: "Xhosa", localName: "isiXhosa", flag: "🇿🇦" },
+    { code: "zu", name: "Zulu", localName: "isiZulu", flag: "🇿🇦" },
+    { code: "as", name: "Assamese", localName: "অসমীয়া", flag: "🇮🇳" },
+    { code: "ay", name: "Aymara", localName: "Aymar aru", flag: "🇧🇴" },
+    { code: "bm", name: "Bambara", localName: "Bamanankan", flag: "🇲🇱" },
+    { code: "bho", name: "Bhojpuri", localName: "भोजपुरी", flag: "🇮🇳" },
+    { code: "doi", name: "Dogri", localName: "डोगरी", flag: "🇮🇳" },
+    { code: "dv", name: "Dhivehi", localName: "ދިވެހិބަސް", flag: "🇲🇻" },
+    { code: "ee", name: "Ewe", localName: "Eʋegbe", flag: "🇬🇭" },
+    { code: "gn", name: "Guarani", localName: "Avañe'ẽ", flag: "🇵🇾" },
+    { code: "ilo", name: "Iloko", localName: "Ilokano", flag: "🇵🇭" },
+    { code: "gom", name: "Konkani", localName: "कोंकणी", flag: "🇮🇳" },
+    { code: "kri", name: "Krio", localName: "Krio", flag: "🇸🇱" },
+    { code: "ln", name: "Lingala", localName: "Lingála", flag: "🇨🇩" },
+    { code: "lg", name: "Luganda", localName: "Oluganda", flag: "🇺🇬" },
+    { code: "mai", name: "Maithili", localName: "मैथिली", flag: "🇮🇳" },
+    { code: "mni-Mtei", name: "Meitei (Manipuri)", localName: "ꯃꯩꯇꯩꯂꯣꯟ", flag: "🇮🇳" },
+    { code: "lus", name: "Mizo", localName: "Mizo ṭawng", flag: "🇮🇳" },
+    { code: "nso", name: "Sepedi", localName: "Sesotho sa Leboa", flag: "🇿🇦" },
+    { code: "qu", name: "Quechua", localName: "Runasimi", flag: "🇵🇪" },
+    { code: "ve", name: "Venda", localName: "Tshivenḓa", flag: "🇿🇦" },
+    { code: "wol", name: "Wolof", localName: "Wolof", flag: "🇸🇳" },
+    { code: "aa", name: "Afar", localName: "Afaraf", flag: "🇪🇹" },
+    { code: "ab", name: "Abkhazian", localName: "Аԥсшәа", flag: "🇬🇪" },
+    { code: "av", name: "Avaric", localName: "Авар мацӀ", flag: "🇷🇺" },
+    { code: "awa", name: "Awadhi", localName: "अवधी", flag: "🇮🇳" },
+    { code: "ba", name: "Bashkir", localName: "Башҡорт теле", flag: "🇷🇺" },
+    { code: "bal", name: "Balochi", localName: "بلوچی", flag: "🇵🇰" },
+    { code: "btb", name: "Beti", localName: "Beti", flag: "🇨🇲" },
+    { code: "bua", name: "Buryat", localName: "Буряад хэлэн", flag: "🇷🇺" },
+    { code: "yue", name: "Cantonese", localName: "粵語", flag: "🇭🇰" },
+    { code: "ch", name: "Chamorro", localName: "Fino' Chamoru", flag: "🇬🇺" },
+    { code: "ce", name: "Chechen", localName: "Нохчийн мотт", flag: "🇷🇺" },
+    { code: "cv", name: "Chuvash", localName: "Чăваш чĕлхи", flag: "🇷🇺" },
+    { code: "crh", name: "Crimean Tatar", localName: "Qırımtatarca", flag: "🇺🇦" },
+    { code: "prs", name: "Dari", localName: "دری", flag: "🇦🇫" },
+    { code: "din", name: "Dinka", localName: "Thuɔŋjäŋ", flag: "🇸🇩" },
+    { code: "dyu", name: "Dyula", localName: "Julakan", flag: "🇨🇮" },
+    { code: "dz", name: "Dzongkha", localName: "རྫོང་ཁ", flag: "🇧🇹" },
+    { code: "fo", name: "Faroese", localName: "Føroyskt", flag: "🇫🇴" },
+    { code: "fj", name: "Fijian", localName: "Na Vosa Vakaviti", flag: "🇫🇯" },
+    { code: "fon", name: "Fon", localName: "Fongbe", flag: "🇧🇯" },
+    { code: "fur", name: "Friulian", localName: "Furlan", flag: "🇮🇹" },
+    { code: "ff", name: "Fulah", localName: "Pulaar", flag: "🇸🇳" },
+    { code: "gag", name: "Gagauz", localName: "Gagauz dili", flag: "🇲🇩" },
+    { code: "hil", name: "Hiligaynon", localName: "Ilonggo", flag: "🇵🇭" },
+    { code: "iu", name: "Inuktitut", localName: "ᐃᓄᒃᑎᑐᑦ", flag: "🇨🇦" },
+    { code: "kab", name: "Kabyle", localName: "Taqbaylit", flag: "🇩🇿" },
+    { code: "kl", name: "Kalaallisut", localName: "Kalaallisut", flag: "🇬🇱" },
+    { code: "ks", name: "Kashmiri", localName: "کٲشُر", flag: "🇮🇳" },
+    { code: "lij", name: "Ligurian", localName: "Ligure", flag: "🇮🇹" },
+    { code: "lmo", name: "Lombard", localName: "Lombard", flag: "🇮🇹" },
+    { code: "mad", name: "Madurese", localName: "Basa Madura", flag: "🇮🇩" },
+    { code: "mak", name: "Makassar", localName: "Mangkasara'", flag: "🇮🇩" },
+    { code: "gv", name: "Manx", localName: "Gaelg", flag: "🇮🇲" },
+    { code: "mh", name: "Marshallese", localName: "Kajin M̧ajeļ", flag: "🇲🇭" },
+    { code: "mwr", name: "Marwari", localName: "মারওয়ারী", flag: "🇮🇳" },
+    { code: "min", name: "Minangkabau", localName: "Baso Minang", flag: "🇮🇩" },
+    { code: "nah", name: "Nahuatl", localName: "Nāhuatl", flag: "🇲🇽" },
+    { code: "new", name: "Newari", localName: "नेपाल भाषा", flag: "🇳🇵" },
+    { code: "nqo", name: "N'Ko", localName: "ߗߐߺߗߐߺ", flag: "🇬🇳" },
+    { code: "nus", name: "Nuer", localName: "Thok Naath", flag: "🇸🇩" },
+    { code: "oc", name: "Occitan", localName: "Occitan", flag: "🇫🇷" },
+    { code: "os", name: "Ossetian", localName: "Ирон", flag: "🇷🇺" },
+    { code: "pag", name: "Pangasinan", localName: "Salitan Pangasinan", flag: "🇵🇭" },
+    { code: "pap", name: "Papiamento", localName: "Papiamentu", flag: "🇦🇼" },
+    { code: "rom", name: "Romani", localName: "Romanes", flag: "🇷🇴" },
+    { code: "se", name: "Northern Sami", localName: "Davvisámegiella", flag: "🇳🇴" },
+    { code: "sg", name: "Sango", localName: "Yângâ tî Sängö", flag: "🇨🇫" },
+    { code: "sc", name: "Sardinian", localName: "Sardu", flag: "🇮🇹" },
+    { code: "szl", name: "Silesian", localName: "Ślōnskŏ gŏdka", flag: "🇵🇱" },
+    { code: "srn", name: "Sranan Tongo", localName: "Sranantongo", flag: "🇸🇷" },
+    { code: "ss", name: "Swati", localName: "SiSwati", flag: "🇸🇿" },
+    { code: "ty", name: "Tahitian", localName: "Reo Tahiti", flag: "🇵🇫" },
+    { code: "bo", name: "Tibetan", localName: "བོད་སྐད", flag: "🇨🇳" },
+    { code: "war", name: "Waray", localName: "Winaray", flag: "🇵🇭" },
+    { code: "sah", name: "Yakut", localName: "Саха тыла", flag: "🇷🇺" }
+];
+
+// Google Translate Element Init callback
+window.googleTranslateElementInit = function() {
+    if (typeof google === 'undefined' || !google.translate) return;
+    new google.translate.TranslateElement({
+        pageLanguage: 'km',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+    }, 'google_translate_element');
+};
+
+function selectLanguage(code, labelText) {
+    appState.selectedLanguageCode = code;
+    appState.selectedLanguageLabel = labelText;
+    saveState();
+    
+    updateLanguageButtonsUI(labelText);
+    
+    // Set googtrans cookie for Google Translate
+    document.cookie = "googtrans=/km/" + code;
+    document.cookie = "googtrans=/km/" + code + "; path=/";
+    
+    triggerGoogleTranslate(code);
+    
+    // Also toggle appState.language between 'km' and 'en' for English compatibility
+    appState.language = (code === 'en') ? 'en' : 'km';
+    saveState();
+    applyLanguage();
+}
+
+function updateLanguageButtonsUI(labelText) {
+    const ids = ["langToggleBtn", "langToggleBtnStudent", "langToggleBtnLogin"];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            const textEl = el.querySelector(".lang-text") || el.querySelector(".lang-toggle-login span") || el.querySelector("span:not(.fa-globe)");
+            if (textEl) {
+                textEl.textContent = labelText;
+            }
+        }
+    });
+}
+
+function triggerGoogleTranslate(code) {
+    // Guard: Google Translate is not available on file:// URLs
+    if (window.location.protocol === 'file:') return;
+    
+    document.cookie = "googtrans=/km/" + code;
+    document.cookie = "googtrans=/km/" + code + "; path=/";
+    
+    const select = document.querySelector(".goog-te-combo");
+    if (select) {
+        select.value = code;
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+    } else {
+        let attempts = 0;
+        const interval = setInterval(() => {
+            const selectPoll = document.querySelector(".goog-te-combo");
+            if (selectPoll) {
+                selectPoll.value = code;
+                selectPoll.dispatchEvent(new Event("change", { bubbles: true }));
+                clearInterval(interval);
+            }
+            attempts++;
+            if (attempts > 40) clearInterval(interval);
+        }, 100);
+    }
+}
+
+function initLanguageSelector() {
+    const grid = document.getElementById("languageGrid");
+    if (!grid) return;
+    
+    const sorted = [...SUPPORTED_LANGUAGES].sort((a, b) => a.name.localeCompare(b.name));
+    renderLanguageItems(sorted);
+    
+    const searchInput = document.getElementById("languageSearchInput");
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.toLowerCase().trim();
+            const filtered = sorted.filter(l => 
+                l.name.toLowerCase().includes(query) || 
+                l.localName.toLowerCase().includes(query) || 
+                l.code.toLowerCase().includes(query)
+            );
+            renderLanguageItems(filtered);
+        });
+    }
+}
+
+function renderLanguageItems(langs) {
+    const grid = document.getElementById("languageGrid");
+    if (!grid) return;
+    grid.innerHTML = "";
+    
+    langs.forEach(lang => {
+        const activeLangCode = appState.selectedLanguageCode || 'km';
+        const isActive = activeLangCode === lang.code;
+        
+        const item = document.createElement("div");
+        item.className = `lang-item ${isActive ? 'active' : ''}`;
+        item.innerHTML = `
+            <span class="lang-flag">${lang.flag}</span>
+            <span class="lang-name" style="flex-grow:1; text-align:left;">${lang.name} <span style="font-size:0.75rem; opacity:0.7; font-weight:400;">(${lang.localName})</span></span>
+        `;
+        
+        item.addEventListener("click", () => {
+            selectLanguage(lang.code, `${lang.flag} ${lang.name}`);
+            document.getElementById("languageSelectModal").classList.remove("active");
+        });
+        
+        grid.appendChild(item);
+    });
+}
+
+// ----------------------------------------------------
+// USER ACCOUNTS & PENDING REGISTRATION APPROVALS
+// ----------------------------------------------------
+async function updatePendingUsersBadge() {
+    const badge = document.getElementById("userBadge");
+    if (badge) {
+        try {
+            const snapshot = await db.collection('users').where('status', '==', 'pending').get();
+            const count = snapshot.size;
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = "inline-block";
+            } else {
+                badge.style.display = "none";
+            }
+        } catch(e) {
+            console.error(e);
+        }
+    }
+}
+
+async function initUserPanel() {
+    updatePendingUsersBadge();
+    
+    // 1. Generate QR Code for easy local network registration/login
+    const portalUrl = window.location.href;
+    const imgQr = document.getElementById("imgLoginQrCode");
+    const lblUrl = document.getElementById("lblPortalUrlText");
+    if (imgQr && lblUrl) {
+        imgQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(portalUrl)}`;
+        lblUrl.textContent = portalUrl;
+    }
+    
+    // Copy URL handler
+    const btnCopy = document.getElementById("btnCopyPortalUrl");
+    if (btnCopy) {
+        // Remove old listeners to avoid multiple binding
+        const newBtn = btnCopy.cloneNode(true);
+        btnCopy.parentNode.replaceChild(newBtn, btnCopy);
+        newBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(portalUrl).then(() => {
+                alert(appState.language === 'km' ? 'បានចម្លងតំណភ្ជាប់ជោគជ័យ!' : 'Link copied to clipboard!');
+            });
+        });
+    }
+
+    // 2. Populate Pending Approvals Table
+    const pendingTbody = document.getElementById("pendingUsersTableBody");
+    if (pendingTbody) {
+        pendingTbody.innerHTML = `<tr><td colspan="4" class="text-center">Loading...</td></tr>`;
+        try {
+            const snapshot = await db.collection('users').where('status', '==', 'pending').get();
+            pendingTbody.innerHTML = "";
+            if (snapshot.empty) {
+                pendingTbody.innerHTML = `<tr><td colspan="4" class="text-center" style="color: var(--text-muted);" data-km="មិនទាន់មានគណនីរង់ចាំការអនុម័តទេ" data-en="No pending approvals.">មិនទាន់មានគណនីរង់ចាំការអនុម័តទេ</td></tr>`;
+            } else {
+                snapshot.forEach(doc => {
+                    const req = { id: doc.id, ...doc.data() };
+                    const tr = document.createElement("tr");
+                    const roleLabel = req.role === 'student' ? (appState.language === 'km' ? 'សិស្ស' : 'Student') : (appState.language === 'km' ? 'គ្រូ' : 'Teacher');
+                    
+                    let detailsText = "";
+                    if (req.role === 'student') {
+                        const cls = appState.classes.find(c => c.id === req.classId);
+                        detailsText = `${appState.language === 'km' ? 'ថ្នាក់៖' : 'Class:'} ${cls ? cls.name : req.classId} (${appState.language === 'km' ? 'Email៖' : 'Email:'} ${req.email})`;
+                    } else {
+                        detailsText = `${appState.language === 'km' ? 'Email៖' : 'Email:'} ${req.email}`;
+                    }
+                    
+                    tr.innerHTML = `
+                        <td><strong>${req.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">${req.contact}</span></td>
+                        <td><span class="badge" style="background:var(--primary-blue); color:white; font-size:0.75rem;">${roleLabel}</span></td>
+                        <td>${detailsText}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="approveUser('${req.id}')" style="padding:0.25rem 0.5rem; font-size:0.75rem; border-radius:6px;">
+                                <i class="fa-solid fa-check"></i> <span data-km="អនុម័ត" data-en="Approve">អនុម័ត</span>
+                            </button>
+                            <button class="btn btn-sm btn-danger-action" onclick="rejectUser('${req.id}')" style="padding:0.25rem 0.5rem; font-size:0.75rem; border-radius:6px; background:rgba(244,63,94,0.1); color:var(--crimson-red);">
+                                <i class="fa-solid fa-xmark"></i> <span data-km="លុប" data-en="Reject">លុប</span>
+                            </button>
+                        </td>
+                    `;
+                    pendingTbody.appendChild(tr);
+                });
+            }
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+    // 3. Populate Active Users Table
+    const activeTbody = document.getElementById("activeUsersTableBody");
+    if (activeTbody) {
+        activeTbody.innerHTML = "";
+        
+        // A. Admin accounts
+        const adminTr = document.createElement("tr");
+        adminTr.innerHTML = `
+            <td><strong>Administrator (លោកនាយក)</strong></td>
+            <td><span class="badge" style="background:#4f46e5; color:white; font-size:0.75rem;">Admin</span></td>
+            <td><code>admin123</code></td>
+            <td>-</td>
+            <td><span style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">Default</span></td>
+        `;
+        activeTbody.appendChild(adminTr);
+        
+        // B. Teacher accounts
+        // Default teacher
+        const defaultTeacherTr = document.createElement("tr");
+        defaultTeacherTr.innerHTML = `
+            <td><strong>គ្រូបន្ទុកថ្នាក់ (លំនាំដើម)</strong></td>
+            <td><span class="badge" style="background:var(--primary-blue); color:white; font-size:0.75rem;">Teacher</span></td>
+            <td><code>teacher123</code></td>
+            <td>-</td>
+            <td><span style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">Default</span></td>
+        `;
+        activeTbody.appendChild(defaultTeacherTr);
+        
+        // Custom approved teachers
+        (appState.teachers || []).forEach((t, index) => {
+            if (t.passcode === 'teacher123') return; // skip default duplicate
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><strong>${t.name}</strong></td>
+                <td><span class="badge" style="background:var(--primary-blue); color:white; font-size:0.75rem;">Teacher</span></td>
+                <td><code>${t.passcode}</code></td>
+                <td>-</td>
+                <td>
+                    <div style="display:flex; gap:0.5rem; justify-content:center;">
+                        <button class="btn btn-icon btn-sm" onclick="openEditUserModal('teacher', '${t.passcode}')" title="Edit" style="background:rgba(59,130,246,0.1); color:var(--primary-blue);">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button class="btn btn-icon btn-sm btn-danger-action" onclick="deleteActiveUser('teacher', '${t.passcode}')" title="Delete" style="background:rgba(244,63,94,0.1); color:var(--crimson-red);">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            activeTbody.appendChild(tr);
+        });
+
+        // C. Student accounts
+        appState.classes.forEach(c => {
+            c.students.forEach(s => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td><strong>${s.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">${c.name}</span></td>
+                    <td><span class="badge" style="background:var(--amber-orange); color:white; font-size:0.75rem;">Student</span></td>
+                    <td><code>${s.id}</code></td>
+                    <td>${s.contact || "-"}</td>
+                    <td>
+                        <div style="display:flex; gap:0.5rem; justify-content:center;">
+                            <button class="btn btn-icon btn-sm" onclick="openEditUserModal('student', '${s.id}')" title="Edit" style="background:rgba(59,130,246,0.1); color:var(--primary-blue);">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="btn btn-icon btn-sm btn-danger-action" onclick="deleteActiveUser('student', '${s.id}')" title="Delete" style="background:rgba(244,63,94,0.1); color:var(--crimson-red);">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                activeTbody.appendChild(tr);
+            });
+        });
+    }
+    
+    applyLanguage();
+}
+
+async function approveUser(requestId) {
+    try {
+        const docRef = db.collection('users').doc(requestId);
+        const doc = await docRef.get();
+        if (!doc.exists) return;
+        
+        const req = doc.data();
+        
+        if (req.role === 'student') {
+            const cls = appState.classes.find(c => c.id === req.classId);
+            if (cls) {
+                // Add student record to class database
+                cls.students.push({
+                    id: requestId, // Use UID as ID
+                    name: req.name,
+                    gender: "ប្រុស", // default placeholder, editable in classes panel
+                    contact: req.contact,
+                    generation: ""
+                });
+            }
+        } else {
+            // Add teacher record to custom teachers list
+            if (!appState.teachers) appState.teachers = [];
+            appState.teachers.push({
+                name: req.name,
+                passcode: req.email // use email as ID reference
+            });
+        }
+        
+        // Update user status in Firestore
+        await docRef.update({ status: 'active' });
+        
+        saveState(); // Sync local appData changes
+        showToast(appState.language === 'km' ? 'បានអនុម័តគណនី!' : 'Account approved successfully!');
+        initUserPanel(); // Refresh UI
+    } catch (e) {
+        console.error("Approval error:", e);
+        alert("Failed to approve user.");
+    }
+}
+
+async function rejectUser(requestId) {
+    if (!confirm(appState.language === 'km' ? 'តើអ្នកប្រាកដជាចង់លុបសំណើនេះទេ?' : 'Are you sure you want to reject this request?')) return;
+    
+    try {
+        await db.collection('users').doc(requestId).delete();
+        showToast(appState.language === 'km' ? 'បានលុបសំណើ' : 'Registration request deleted.', 'warning');
+        initUserPanel();
+    } catch (e) {
+        console.error("Rejection error:", e);
+    }
+}
+
+function deleteActiveUser(role, id) {
+    const isKm = appState.language === 'km';
+    if (!confirm(isKm ? 'តើអ្នកពិតជាចង់លុបគណនីនេះមែនទេ?' : 'Are you sure you want to delete this user?')) return;
+    
+    if (role === 'teacher') {
+        appState.teachers = (appState.teachers || []).filter(t => t.passcode !== id);
+    } else if (role === 'student') {
+        appState.classes.forEach(c => {
+            c.students = c.students.filter(s => s.id !== id);
+        });
+    }
+    
+    saveState();
+    showToast(isKm ? 'save_success' : 'User deleted successfully!');
+    initUserPanel();
+}
+
+// Window bindings for user actions callbacks
+window.updatePendingUsersBadge = updatePendingUsersBadge;
+window.initUserPanel = initUserPanel;
+window.approveUser = approveUser;
+window.rejectUser = rejectUser;
+window.deleteActiveUser = deleteActiveUser;
+
+window.openEditUserModal = function(role, id) {
+    const roleInput = document.getElementById("editUserRole");
+    const oldIdInput = document.getElementById("editUserOldId");
+    const nameInput = document.getElementById("editUserName");
+    const idPasscodeInput = document.getElementById("editUserIdPasscode");
+    const contactInput = document.getElementById("editUserContact");
+    const contactGroup = document.getElementById("editUserContactGroup");
+    const lblIdPasscode = document.getElementById("lblEditUserIdPasscode");
+    const isKm = appState.language === 'km';
+    
+    roleInput.value = role;
+    oldIdInput.value = id;
+    
+    if (role === 'teacher') {
+        const t = appState.teachers.find(x => x.passcode === id);
+        if(!t) return;
+        nameInput.value = t.name;
+        idPasscodeInput.value = t.passcode;
+        lblIdPasscode.textContent = isKm ? "លេខកូដ (Passcode)" : "Passcode";
+        contactGroup.style.display = "none";
+    } else {
+        let s = null;
+        for (let c of appState.classes) {
+            s = c.students.find(x => x.id === id);
+            if (s) break;
+        }
+        if(!s) return;
+        nameInput.value = s.name;
+        idPasscodeInput.value = s.id;
+        lblIdPasscode.textContent = isKm ? "លេខសម្គាល់ (ID)" : "ID";
+        contactGroup.style.display = "block";
+        contactInput.value = s.contact || "";
+    }
+    
+    document.getElementById("editUserModal").classList.add("active");
+};
+
+document.getElementById("editUserForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const role = document.getElementById("editUserRole").value;
+    const oldId = document.getElementById("editUserOldId").value;
+    const newName = document.getElementById("editUserName").value.trim();
+    const newIdPasscode = document.getElementById("editUserIdPasscode").value.trim();
+    const newContact = document.getElementById("editUserContact").value.trim();
+    
+    if (!newName || !newIdPasscode) return;
+    
+    if (role === 'teacher') {
+        if (newIdPasscode !== oldId && (newIdPasscode === 'admin123' || newIdPasscode === 'teacher123' || appState.teachers.find(x => x.passcode === newIdPasscode))) {
+            alert(appState.language === 'km' ? "លេខកូដនេះមានរួចហើយ!" : "Passcode already exists!");
+            return;
+        }
+        const t = appState.teachers.find(x => x.passcode === oldId);
+        if (t) {
+            t.name = newName;
+            t.passcode = newIdPasscode;
+        }
+    } else {
+        if (newIdPasscode !== oldId) {
+            let exists = false;
+            for (let c of appState.classes) {
+                if (c.students.find(x => x.id === newIdPasscode)) {
+                    exists = true; break;
+                }
+            }
+            if (exists) {
+                alert(appState.language === 'km' ? "លេខសម្គាល់នេះមានរួចហើយ!" : "Student ID already exists!");
+                return;
+            }
+        }
+        let s = null;
+        for (let c of appState.classes) {
+            s = c.students.find(x => x.id === oldId);
+            if (s) {
+                s.name = newName;
+                s.id = newIdPasscode;
+                s.contact = newContact;
+                break;
+            }
+        }
+    }
+    
+    saveState();
+    document.getElementById("editUserModal").classList.remove("active");
+    initUserPanel();
+});
+
+// Update the school profile displayed in printed/previewed reports
+function updateReportsSchoolProfile() {
+    const name = appState.schoolName || "";
+    const logo = appState.schoolLogo || "";
+    
+    // 1. Update Score Report Print Header
+    const rName = document.getElementById("reportSchoolName");
+    const rLogo = document.getElementById("reportSchoolLogo");
+    if (rName) {
+        if (name) {
+            rName.textContent = name;
+            rName.style.display = "block";
+        } else {
+            rName.style.display = "none";
+        }
+    }
+    if (rLogo) {
+        if (logo) {
+            rLogo.src = logo;
+            rLogo.style.display = "block";
+        } else {
+            rLogo.style.display = "none";
+        }
+    }
+    
+    // 2. Update Academic Report Print Header
+    const aName = document.getElementById("acadSchoolName");
+    const aLogo = document.getElementById("acadSchoolLogo");
+    if (aName) {
+        if (name) {
+            aName.textContent = name;
+            aName.style.display = "block";
+        } else {
+            aName.style.display = "none";
+        }
+    }
+    if (aLogo) {
+        if (logo) {
+            aLogo.src = logo;
+            aLogo.style.display = "block";
+        } else {
+            aLogo.style.display = "none";
+        }
+    }
+
+    // 3. Update Sidebar Branding
+    const sidebarLogoContainer = document.getElementById("sidebarLogoContainer");
+    const sidebarDefaultLogo = document.getElementById("sidebarDefaultLogo");
+    const sidebarSchoolLogo = document.getElementById("sidebarSchoolLogo");
+    const sidebarSchoolName = document.getElementById("sidebarSchoolName");
+
+    if (sidebarSchoolName) {
+        const displayName = name || (appState.language === 'km' ? 'ពិន្ទុបឋមសិក្សា' : 'Grading System');
+        sidebarSchoolName.textContent = displayName;
+        
+        // Dynamically shrink font size if text is too long to prevent clipping
+        if (displayName.length > 25) {
+            sidebarSchoolName.style.fontSize = "0.75rem";
+        } else if (displayName.length > 18) {
+            sidebarSchoolName.style.fontSize = "0.85rem";
+        } else if (displayName.length > 12) {
+            sidebarSchoolName.style.fontSize = "0.95rem";
+        } else {
+            sidebarSchoolName.style.fontSize = "1.15rem";
+        }
+    }
+
+    if (sidebarLogoContainer && sidebarDefaultLogo && sidebarSchoolLogo) {
+        if (logo) {
+            sidebarSchoolLogo.src = logo;
+            sidebarSchoolLogo.style.display = "block";
+            sidebarDefaultLogo.style.display = "none";
+            sidebarLogoContainer.style.background = "white"; // clear background gradient for clean logo look
+            sidebarLogoContainer.style.padding = "4px"; // small padding
+        } else {
+            sidebarSchoolLogo.src = "";
+            sidebarSchoolLogo.style.display = "none";
+            sidebarDefaultLogo.style.display = "block";
+            sidebarLogoContainer.style.background = ""; // restore gradient
+            sidebarLogoContainer.style.padding = ""; // restore padding
+        }
+    }
+}
+
+// ----------------------------------------------------
+// Google Sheets Database Sync
+// ----------------------------------------------------
+let isSheetsSyncing = false;
+function syncToGoogleSheets(showToastMessage = false) {
+    const url = appState.googleSheetsUrl || (document.getElementById("googleSheetsUrlInput") ? document.getElementById("googleSheetsUrlInput").value.trim() : "");
+    if (!url) {
+        if (showToastMessage) showToast(appState.language === 'km' ? 'សូមវាយបញ្ចូលតំណភ្ជាប់ URL ជាមុនសិន!' : 'Please enter a URL first!', 'warning');
+        return;
+    }
+    if (isSheetsSyncing) return;
+    
+    isSheetsSyncing = true;
+    if (showToastMessage) {
+        showToast(appState.language === 'km' ? 'កំពុងបញ្ជូនទិន្នន័យទៅ Google Sheets...' : 'Sending data to Google Sheets...', 'info');
+    }
+    
+    const payload = {
+        classes: appState.classes,
+        subjects: appState.subjects,
+        scores: appState.scores,
+        schoolName: appState.schoolName || "",
+        schoolLogo: appState.schoolLogo || "",
+        language: appState.language || "km",
+        theme: appState.theme || "light"
+    };
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain" // Prevents CORS OPTIONS preflight
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(() => {
+        console.log("[Google Sheets] Sync successful");
+        if (showToastMessage) {
+            showToast(appState.language === 'km' ? 'បានបញ្ជូនទិន្នន័យទៅ Google Sheets ជោគជ័យ!' : 'Sent data to Google Sheets successfully!', 'success');
+        }
+    })
+    .catch(err => {
+        console.error("[Google Sheets] Sync failed:", err);
+        if (showToastMessage) {
+            showToast(appState.language === 'km' ? 'ការបញ្ជូនបរាជ័យ៖ ' + err.message : 'Sync failed: ' + err.message, 'error');
+        }
+    })
+    .finally(() => {
+        isSheetsSyncing = false;
+    });
+}
+
+function pullFromGoogleSheets(silent = false) {
+    if (!appState.googleSheetsUrl) return Promise.reject("No URL configured");
+    
+    if (!silent) showToast(appState.language === 'km' ? 'កំពុងទាញទិន្នន័យពី Google Sheets...' : 'Pulling data from Google Sheets...', 'info');
+    
+    return fetch(appState.googleSheetsUrl)
+        .then(res => {
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            return res.json();
+        })
+        .then(data => {
+            if (data && data.classes) {
+                appState.classes = data.classes;
+                appState.subjects = data.subjects || appState.subjects;
+                appState.scores = data.scores || appState.scores;
+                appState.schoolName = data.schoolName || appState.schoolName;
+                appState.schoolLogo = data.schoolLogo || appState.schoolLogo;
+                if (data.language) appState.language = data.language;
+                if (data.theme) appState.theme = data.theme;
+                
+                localStorage.setItem("primary_school_grading_state", JSON.stringify(appState));
+                
+                // Re-render
+                if (appState.currentUser) {
+                    if (appState.currentUser.role === 'student') {
+                        renderStudentPortal();
+                    } else {
+                        renderDashboard();
+                        renderClassesPanel();
+                        renderSubjectsPanel();
+                    }
+                }
+                
+                if (typeof updateReportsSchoolProfile === 'function') updateReportsSchoolProfile();
+                
+                // Update settings inputs if visible
+                const gsUrlInput = document.getElementById("googleSheetsUrlInput");
+                const chkGsSync = document.getElementById("chkEnableSheetsSync");
+                if (gsUrlInput) gsUrlInput.value = appState.googleSheetsUrl || "";
+                if (chkGsSync) chkGsSync.checked = !!appState.googleSheetsSyncEnabled;
+                
+                if (!silent) showToast(appState.language === 'km' ? 'ទាញទិន្នន័យជោគជ័យ!' : 'Data pulled successfully!', 'success');
+                return data;
+            } else {
+                throw new Error("Invalid data format received");
+            }
+        })
+        .catch(err => {
+            console.error("[Google Sheets] Pull failed:", err);
+            if (!silent) showToast(appState.language === 'km' ? 'ទាញទិន្នន័យបរាជ័យ៖ ' + err.message : 'Pull failed: ' + err.message, 'danger');
+            throw err;
+        });
+}
+
+const GOOGLE_APPS_SCRIPT_TEMPLATE = `function doGet(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var state = {
+    classes: [],
+    subjects: [],
+    scores: {},
+    schoolName: "",
+    schoolLogo: ""
+  };
+  
+  // 1. Read Profile
+  var profileSheet = ss.getSheetByName("Profile");
+  if (profileSheet) {
+    var data = profileSheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      var key = data[i][0];
+      var val = data[i][1];
+      if (key === "schoolName") state.schoolName = val;
+      if (key === "schoolLogo") state.schoolLogo = val;
+      if (key === "language") state.language = val;
+      if (key === "theme") state.theme = val;
+    }
+  }
+  
+  // 2. Read Subjects
+  var subjectsSheet = ss.getSheetByName("Subjects");
+  if (subjectsSheet) {
+    var data = subjectsSheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      state.subjects.push({
+        id: String(data[i][0]),
+        name: String(data[i][1]),
+        nameEn: String(data[i][2])
+      });
+    }
+  }
+  
+  // 3. Read Classes & Students
+  var classesSheet = ss.getSheetByName("Classes");
+  var studentsSheet = ss.getSheetByName("Students");
+  var classMap = {};
+  
+  if (classesSheet) {
+    var data = classesSheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      var cid = String(data[i][0]);
+      var cObj = {
+        id: cid,
+        name: String(data[i][1]),
+        teacherName: String(data[i][2]),
+        subjectIds: String(data[i][3]).split(",").map(function(s){ return s.trim(); }).filter(Boolean),
+        students: []
+      };
+      state.classes.push(cObj);
+      classMap[cid] = cObj;
+    }
+  }
+  
+  if (studentsSheet) {
+    var data = studentsSheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      var cid = String(data[i][6]);
+      var sObj = {
+        id: String(data[i][0]),
+        name: String(data[i][1]),
+        dob: String(data[i][2]),
+        gender: String(data[i][3]),
+        contact: String(data[i][4]),
+        generation: String(data[i][5])
+      };
+      if (classMap[cid]) {
+        classMap[cid].students.push(sObj);
+      }
+    }
+  }
+  
+  // 4. Read Scores
+  var scoresSheet = ss.getSheetByName("Scores");
+  if (scoresSheet) {
+    var data = scoresSheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      var sid = String(data[i][0]);
+      var period = String(data[i][1]);
+      var subId = String(data[i][2]);
+      var val = parseFloat(data[i][3]);
+      
+      if (!state.scores[sid]) state.scores[sid] = {};
+      if (!state.scores[sid][period]) state.scores[sid][period] = {};
+      state.scores[sid][period][subId] = isNaN(val) ? 0 : val;
+    }
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify(state))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var payload = JSON.parse(e.postData.contents);
+  
+  function getCleanSheet(name, headers) {
+    var sheet = ss.getSheetByName(name);
+    if (!sheet) {
+      sheet = ss.insertSheet(name);
+    }
+    sheet.clear();
+    sheet.appendRow(headers);
+    return sheet;
+  }
+  
+  // 1. Write Profile
+  var profileSheet = getCleanSheet("Profile", ["Setting Key", "Setting Value"]);
+  profileSheet.appendRow(["schoolName", payload.schoolName || ""]);
+  profileSheet.appendRow(["schoolLogo", payload.schoolLogo || ""]);
+  profileSheet.appendRow(["language", payload.language || "km"]);
+  profileSheet.appendRow(["theme", payload.theme || "light"]);
+  
+  // 2. Write Subjects
+  var subjectsSheet = getCleanSheet("Subjects", ["Subject ID", "Subject Name", "English Name"]);
+  if (payload.subjects && payload.subjects.length > 0) {
+    var rows = payload.subjects.map(function(s) {
+      return [s.id, s.name, s.nameEn || ""];
+    });
+    subjectsSheet.getRange(2, 1, rows.length, 3).setValues(rows);
+  }
+  
+  // 3. Write Classes & Students
+  var classesSheet = getCleanSheet("Classes", ["Class ID", "Class Name", "Teacher Name", "Subject IDs"]);
+  var studentsSheet = getCleanSheet("Students", ["Student ID", "Name", "DOB", "Gender", "Contact", "Generation", "Class ID"]);
+  
+  var classRows = [];
+  var studentRows = [];
+  
+  if (payload.classes && payload.classes.length > 0) {
+    payload.classes.forEach(function(c) {
+      classRows.push([c.id, c.name, c.teacherName || "", (c.subjectIds || []).join(",")]);
+      if (c.students && c.students.length > 0) {
+        c.students.forEach(function(s) {
+          studentRows.push([s.id, s.name, s.dob || "", s.gender || "", s.contact || "", s.generation || "", c.id]);
+        });
+      }
+    });
+  }
+  
+  if (classRows.length > 0) {
+    classesSheet.getRange(2, 1, classRows.length, 4).setValues(classRows);
+  }
+  if (studentRows.length > 0) {
+    studentsSheet.getRange(2, 1, studentRows.length, 7).setValues(studentRows);
+  }
+  
+  // 4. Write Scores
+  var scoresSheet = getCleanSheet("Scores", ["Student ID", "Period", "Subject ID", "Score"]);
+  var scoreRows = [];
+  if (payload.scores) {
+    Object.keys(payload.scores).forEach(function(sid) {
+      var periods = payload.scores[sid];
+      Object.keys(periods).forEach(function(period) {
+        var subs = periods[period];
+        Object.keys(subs).forEach(function(subId) {
+          scoreRows.push([sid, period, subId, subs[subId]]);
+        });
+      });
+    });
+  }
+  
+  if (scoreRows.length > 0) {
+    scoresSheet.getRange(2, 1, scoreRows.length, 4).setValues(scoreRows);
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+`;
+
+// ====================================================
+// 10-SUBJECT SCORECARD & CERTIFICATES GENERATOR ENGINE
+// ====================================================
+let extractStudentsData = JSON.parse(localStorage.getItem('studentData_v2')) || [];
+
+function switchScoreMode(mode) {
+    const btnSubject = document.getElementById("btnModeSubjectScore");
+    const btnExtract = document.getElementById("btnModeExtractCert");
+    const secSubject = document.getElementById("scoreSubjectModeSection");
+    const secExtract = document.getElementById("scoreExtractModeSection");
+
+    if (!btnSubject || !btnExtract || !secSubject || !secExtract) return;
+
+    if (mode === 'extract') {
+        btnSubject.classList.remove("active");
+        btnExtract.classList.add("active");
+        secSubject.style.display = "none";
+        secExtract.style.display = "block";
+        initExtractScoreManager();
+    } else {
+        btnSubject.classList.add("active");
+        btnExtract.classList.remove("active");
+        secSubject.style.display = "block";
+        secExtract.style.display = "none";
+    }
+}
+
+function initExtractScoreManager() {
+    updateExtractRanks();
+    renderExtractStats();
+    renderExtractTable();
+    setupExtractFormHandler();
+}
+
+function getGradeLetterInfo(avg) {
+    if (avg >= 9.5) return { letter: 'A', khmer: 'ល្អប្រសើរ', badgeClass: 'grade-A' };
+    if (avg >= 8.5) return { letter: 'B', khmer: 'ល្អណាស់', badgeClass: 'grade-B' };
+    if (avg >= 7.5) return { letter: 'C', khmer: 'ល្អ', badgeClass: 'grade-C' };
+    if (avg >= 6.5) return { letter: 'D', khmer: 'ល្អបង្គួរ', badgeClass: 'grade-D' };
+    if (avg >= 5.5) return { letter: 'E', khmer: 'មធ្យម (ជាប់)', badgeClass: 'grade-E' };
+    return { letter: 'F', khmer: 'ខ្សោយ (ធ្លាក់)', badgeClass: 'grade-F' };
+}
+
+function getClassSubjectCount(gradeName) {
+    if (!gradeName) return 9;
+    const name = String(gradeName).toLowerCase();
+    if (name.includes('មត្តេយ្យ') || name.includes('preschool') || name.includes('kindergarten')) return 6;
+    if (name.includes('១') || name.includes('1') || name.includes('ទី១') || name.includes('grade 1')) return 7;
+    if (name.includes('២') || name.includes('2') || name.includes('ទី២') || name.includes('grade 2')) return 9;
+    if (name.includes('៣') || name.includes('3') || name.includes('ទី៣') || name.includes('grade 3')) return 9;
+    const found = appState.classes.find(c => c.name === gradeName);
+    if (found && found.subjectIds && found.subjectIds.length > 0) return found.subjectIds.length;
+    return 9;
+}
+
+function getKhmerRankName(rank) {
+    if (rank === 1) return 'ជ័យលាភីលេខមួយ';
+    if (rank === 2) return 'ជ័យលាភីលេខពីរ';
+    if (rank === 3) return 'ជ័យលាភីលេខបី';
+    if (rank === 4) return 'ចំណាត់ថ្នាក់លេខបួន';
+    if (rank === 5) return 'ចំណាត់ថ្នាក់លេខប្រាំ';
+    return `ចំណាត់ថ្នាក់ទី ${rank}`;
+}
+
+function updateExtractRanks() {
+    extractStudentsData.sort((a, b) => b.avg - a.avg || b.total - a.total);
+    let currentRank = 1;
+    for (let i = 0; i < extractStudentsData.length; i++) {
+        if (i > 0 && Math.abs(extractStudentsData[i].avg - extractStudentsData[i - 1].avg) < 0.001) {
+            extractStudentsData[i].rank = extractStudentsData[i - 1].rank;
+        } else {
+            extractStudentsData[i].rank = currentRank;
+        }
+        currentRank++;
+    }
+}
+
+function saveAndRenderExtract() {
+    localStorage.setItem('studentData_v2', JSON.stringify(extractStudentsData));
+    renderExtractStats();
+    renderExtractTable();
+}
+
+function renderExtractStats() {
+    const total = extractStudentsData.length;
+    const female = extractStudentsData.filter(s => s.gender === 'ស្រី').length;
+    const monk = extractStudentsData.filter(s => s.gender === 'បព្វជិត').length;
+    const passed = extractStudentsData.filter(s => s.avg >= 5.5).length;
+    const failed = extractStudentsData.filter(s => s.avg < 5.5).length;
+    const top = extractStudentsData.filter(s => s.avg >= 8.5).length;
+
+    const setTxt = (id, v) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = v;
+    };
+
+    setTxt('extractStatTotal', total);
+    setTxt('extractStatFemale', female);
+    setTxt('extractStatMonk', monk);
+    setTxt('extractStatPassed', passed);
+    setTxt('extractStatFailed', failed);
+    setTxt('extractStatTop', top);
+}
+
+function renderExtractTable() {
+    const tbody = document.getElementById('extractScoresTableBody');
+    if (!tbody) return;
+
+    const searchInput = document.getElementById('extractSearchInput');
+    const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+    const filtered = extractStudentsData.map((s, originalIndex) => ({ s, originalIndex })).filter(item => {
+        return item.s.name.toLowerCase().includes(query) || item.s.id.toLowerCase().includes(query);
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="20" class="text-center" style="padding: 2rem; color: var(--text-muted);">
+                    <i class="fa-regular fa-folder-open" style="font-size: 2rem; margin-bottom: 0.5rem; display:block;"></i>
+                    <span data-km="មិនទាន់មានទិន្នន័យសិស្សនៅឡើយទេ" data-en="No student records found">មិនទាន់មានទិន្នន័យសិស្សនៅឡើយទេ</span>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = '';
+    filtered.forEach((item, index) => {
+        const s = item.s;
+        const origIndex = item.originalIndex;
+
+        let genderBadge = 'badge-male';
+        if (s.gender === 'ស្រី') genderBadge = 'badge-female';
+        if (s.gender === 'បព្វជិត') genderBadge = 'badge-monk';
+
+        let rankClass = '';
+        if (s.rank === 1) rankClass = 'rank-top1';
+        else if (s.rank === 2) rankClass = 'rank-top2';
+        else if (s.rank === 3) rankClass = 'rank-top3';
+
+        const gradeInfo = getGradeLetterInfo(s.avg);
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td><b>${s.id}</b></td>
+            <td><strong>${s.name}</strong></td>
+            <td><span class="badge ${genderBadge}">${s.gender}</span></td>
+            <td>${s.grade}</td>
+            <td>${s.month || 'មករា'}</td>
+            <td>${(s.pali ?? 0).toFixed(1)}</td>
+            <td>${(s.kh ?? 0).toFixed(1)}</td>
+            <td>${(s.math ?? 0).toFixed(1)}</td>
+            <td>${(s.vinaya ?? 0).toFixed(1)}</td>
+            <td>${(s.buddhism ?? 0).toFixed(1)}</td>
+            <td>${(s.history ?? 0).toFixed(1)}</td>
+            <td>${(s.eng ?? 0).toFixed(1)}</td>
+            <td>${(s.soc ?? 0).toFixed(1)}</td>
+            <td>${(s.sci ?? 0).toFixed(1)}</td>
+            <td><b style="color: var(--primary-blue);">${s.total.toFixed(1)}</b></td>
+            <td><b style="color: ${s.avg >= 5.5 ? '#10b981' : '#ef4444'}">${s.avg.toFixed(2)}</b></td>
+            <td class="${rankClass}"><b>លេខ ${s.rank}</b></td>
+            <td><span class="badge ${gradeInfo.badgeClass}">${gradeInfo.letter} (${gradeInfo.khmer})</span></td>
+            <td>
+                <div style="display: flex; gap: 4px; justify-content: center;">
+                    <button type="button" class="btn btn-icon btn-sm" title="ប័ណ្ណសរសើរ" onclick="showIntegratedCertificates('all', ${origIndex})" style="color:#d97706; background:rgba(217,119,6,0.1);">
+                        <i class="fa-solid fa-award"></i>
+                    </button>
+                    <button type="button" class="btn btn-icon btn-sm" title="កែប្រែ" onclick="editExtractStudent(${origIndex})">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button type="button" class="btn btn-icon btn-sm" title="លុប" onclick="deleteExtractStudent(${origIndex})" style="color:var(--crimson-red); background:rgba(244,63,94,0.1);">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function setupExtractFormHandler() {
+    const form = document.getElementById('extractScoreForm');
+    if (!form || form.dataset.bound === 'true') return;
+    form.dataset.bound = 'true';
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const id = document.getElementById('extStudentId').value.trim();
+        const name = document.getElementById('extStudentName').value.trim();
+        const gender = document.getElementById('extGender').value;
+        const grade = document.getElementById('extGrade').value.trim();
+        const month = document.getElementById('extMonth').value.trim() || 'មករា';
+
+        const parseCleanScore = (elemId) => {
+            const raw = document.getElementById(elemId)?.value?.trim()?.replace(',', '.') || '0';
+            let num = parseFloat(raw);
+            if (isNaN(num) || num < 0) num = 0;
+            if (num > 10) num = 10;
+            return Math.round(num * 100) / 100;
+        };
+
+        const pali = parseCleanScore('extPali');
+        const kh = parseCleanScore('extKhmer');
+        const math = parseCleanScore('extMath');
+        const vinaya = parseCleanScore('extVin');
+        const buddhism = parseCleanScore('extBud');
+        const history = parseCleanScore('extHistory');
+        const eng = parseCleanScore('extEng');
+        const soc = parseCleanScore('extSoc');
+        const sci = parseCleanScore('extSci');
+
+        const subjectCount = getClassSubjectCount(grade);
+        let total = 0;
+        if (subjectCount === 6) {
+            total = pali + kh + math + vinaya + buddhism + history;
+        } else if (subjectCount === 7) {
+            total = pali + kh + math + vinaya + buddhism + history + eng;
+        } else {
+            total = pali + kh + math + vinaya + buddhism + history + eng + soc + sci;
+        }
+
+        total = Math.round(total * 100) / 100;
+        const avg = Math.round((total / subjectCount) * 100) / 100;
+
+        const editIndex = parseInt(document.getElementById('extractEditIndex').value);
+
+        const studentObj = {
+            id, name, gender, grade, month,
+            pali, kh, math, vinaya, buddhism, history, eng, soc, sci,
+            total, avg,
+            rank: 0
+        };
+
+        if (editIndex >= 0) {
+            extractStudentsData[editIndex] = studentObj;
+            if (typeof showToast === 'function') showToast(appState.language === 'km' ? 'បានកែប្រែទិន្នន័យសិស្សជោគជ័យ!' : 'Student updated successfully!', 'success');
+        } else {
+            extractStudentsData.push(studentObj);
+            if (typeof showToast === 'function') showToast(appState.language === 'km' ? 'បានរក្សាទុកពិន្ទុសិស្សថ្មី!' : 'Student score saved!', 'success');
+        }
+
+        updateExtractRanks();
+        saveAndRenderExtract();
+        resetExtractForm();
+    });
+}
+
+function loadStudentsFromSelectedClass() {
+    const classSelect = document.getElementById('scoreFilterClass');
+    if (!classSelect || !classSelect.value) {
+        if (typeof showToast === 'function') showToast(appState.language === 'km' ? 'សូមជ្រើសរើសថ្នាក់រៀនជាមុនសិន!' : 'Please select a class first!', 'warning');
+        return;
+    }
+
+    const currentClass = appState.classes.find(c => c.id === classSelect.value);
+    if (!currentClass || !currentClass.students || currentClass.students.length === 0) {
+        if (typeof showToast === 'function') showToast(appState.language === 'km' ? 'មិនមានសិស្សក្នុងថ្នាក់នេះទេ!' : 'No students found in this class!', 'warning');
+        return;
+    }
+
+    const monthVal = document.getElementById('scoreFilterPeriod')?.value || 'jan';
+    const monthMap = {
+        'jan': 'មករា', 'feb': 'កុម្ភៈ', 'mar': 'មីនា', 'apr': 'មេសា',
+        'may': 'ឧសភា', 'jun': 'មិថុនា', 'jul': 'កក្កដា', 'aug': 'សីហា',
+        'sep': 'កញ្ញា', 'oct': 'តុលា', 'nov': 'វិច្ឆិកា', 'dec': 'ធ្នូ'
+    };
+    const currentMonthKh = monthMap[monthVal] || 'មករា';
+
+    const getSubjectScore = (studentId, keywords) => {
+        const studentScores = appState.scores?.[studentId]?.[monthVal];
+        if (!studentScores) return 0;
+        for (const sub of appState.subjects) {
+            const nameLower = (sub.name + " " + (sub.nameEn || "")).toLowerCase();
+            if (keywords.some(kw => nameLower.includes(kw.toLowerCase()))) {
+                if (studentScores[sub.id] !== undefined) {
+                    return parseFloat(studentScores[sub.id]) || 0;
+                }
+            }
+        }
+        return 0;
+    };
+
+    const subjectCount = getClassSubjectCount(currentClass.name);
+    let addedCount = 0;
+
+    currentClass.students.forEach(st => {
+        const pali = getSubjectScore(st.id, ['បាលី', 'pali']);
+        const kh = getSubjectScore(st.id, ['ខ្មែរ', 'khmer']);
+        const math = getSubjectScore(st.id, ['គណិត', 'math']);
+        const vinaya = getSubjectScore(st.id, ['វិន័យ', 'សីលធម៌', 'vinaya']);
+        const buddhism = getSubjectScore(st.id, ['ពុទ្ធសាសនា', 'buddhism']);
+        const history = getSubjectScore(st.id, ['ពុទ្ធប្បវត្តិ', 'history']);
+        const eng = getSubjectScore(st.id, ['អង់គ្លេស', 'english', 'eng']);
+        const soc = getSubjectScore(st.id, ['សង្គម', 'social']);
+        const sci = getSubjectScore(st.id, ['វិទ្យា', 'science']);
+
+        let total = 0;
+        if (subjectCount === 6) {
+            total = pali + kh + math + vinaya + buddhism + history;
+        } else if (subjectCount === 7) {
+            total = pali + kh + math + vinaya + buddhism + history + eng;
+        } else {
+            total = pali + kh + math + vinaya + buddhism + history + eng + soc + sci;
+        }
+
+        total = Math.round(total * 100) / 100;
+        const avg = Math.round((total / subjectCount) * 100) / 100;
+
+        const existingIdx = extractStudentsData.findIndex(s => s.id === st.id && s.month === currentMonthKh);
+        const studentRecord = {
+            id: st.id,
+            name: st.name,
+            gender: st.gender || 'ប្រុស',
+            grade: currentClass.name,
+            month: currentMonthKh,
+            pali, kh, math, vinaya, buddhism, history, eng, soc, sci,
+            total, avg,
+            rank: 0
+        };
+
+        if (existingIdx >= 0) {
+            extractStudentsData[existingIdx] = studentRecord;
+        } else {
+            extractStudentsData.push(studentRecord);
+        }
+        addedCount++;
+    });
+
+    updateExtractRanks();
+    saveAndRenderExtract();
+    if (typeof showToast === 'function') {
+        showToast(appState.language === 'km' ? `បានទាញយក និងធ្វើសមកាលកម្មសិស្សចំនួន ${addedCount} នាក់ពី ${currentClass.name}!` : `Loaded and synchronized ${addedCount} students from ${currentClass.name}!`, 'success');
+    }
+}
+
+function editExtractStudent(index) {
+    const s = extractStudentsData[index];
+    if (!s) return;
+
+    document.getElementById('extractEditIndex').value = index;
+    document.getElementById('extStudentId').value = s.id;
+    document.getElementById('extStudentName').value = s.name;
+    document.getElementById('extGender').value = s.gender;
+    document.getElementById('extGrade').value = s.grade;
+    document.getElementById('extMonth').value = s.month || 'មករា';
+
+    document.getElementById('extPali').value = s.pali ?? 0;
+    document.getElementById('extKhmer').value = s.kh ?? 0;
+    document.getElementById('extMath').value = s.math ?? 0;
+    document.getElementById('extVin').value = s.vinaya ?? 0;
+    document.getElementById('extBud').value = s.buddhism ?? 0;
+    document.getElementById('extHistory').value = s.history ?? 0;
+    document.getElementById('extEng').value = s.eng ?? 0;
+    document.getElementById('extSoc').value = s.soc ?? 0;
+    document.getElementById('extSci').value = s.sci ?? 0;
+
+    const titleEl = document.getElementById('extractFormTitle');
+    if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> <span>កែប្រែទិន្នន័យសិស្ស "${s.name}"</span>`;
+
+    const btnSave = document.getElementById('btnSaveExtract');
+    if (btnSave) btnSave.innerHTML = `<i class="fa-solid fa-check"></i> <span>កែប្រែទិន្នន័យ</span>`;
+
+    document.getElementById('extractScoreForm').scrollIntoView({ behavior: 'smooth' });
+}
+
+function deleteExtractStudent(index) {
+    const s = extractStudentsData[index];
+    if (!s) return;
+    if (confirm(appState.language === 'km' ? `តើអ្នកពិតជាចង់លុបទិន្នន័យសិស្ស "${s.name}" មែនទេ?` : `Are you sure you want to delete student "${s.name}"?`)) {
+        extractStudentsData.splice(index, 1);
+        updateExtractRanks();
+        saveAndRenderExtract();
+        if (typeof showToast === 'function') showToast(appState.language === 'km' ? 'បានលុបទិន្នន័យសិស្សរួចរាល់!' : 'Student deleted!', 'info');
+    }
+}
+
+function resetExtractForm() {
+    const form = document.getElementById('extractScoreForm');
+    if (form) form.reset();
+    document.getElementById('extractEditIndex').value = -1;
+    const titleEl = document.getElementById('extractFormTitle');
+    if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-user-pen"></i> <span data-km="បញ្ចូលពិន្ទុសិស្ស (តាមកម្រិតថ្នាក់)" data-en="Enter Student Scores">បញ្ចូលពិន្ទុសិស្ស (តាមកម្រិតថ្នាក់)</span>`;
+    const btnSave = document.getElementById('btnSaveExtract');
+    if (btnSave) btnSave.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> <span data-km="រក្សាទុកលទ្ធផល" data-en="Save Record">រក្សាទុកលទ្ធផល</span>`;
+}
+
+function clearAllExtractData() {
+    if (extractStudentsData.length === 0) return;
+    if (confirm(appState.language === 'km' ? "តើអ្នកពិតជាចង់លុបទិន្នន័យសិស្សទាំងអស់មែនទេ?" : "Are you sure you want to clear all scorecard records?")) {
+        extractStudentsData = [];
+        localStorage.removeItem('studentData_v2');
+        renderExtractStats();
+        renderExtractTable();
+        resetExtractForm();
+        hideIntegratedCertificates();
+    }
+}
+
+function generateIntegratedCertHTML(s) {
+    const gradeInfo = getGradeLetterInfo(s.avg);
+    const prefixTitle = (s.gender === 'ស្រី') ? 'កញ្ញា / កុមារី' : (s.gender === 'បព្វជិត' ? 'ព្រះតេជព្រះគុណ' : 'លោក / កុមារា');
+    const khmerRankText = getKhmerRankName(s.rank);
+
+    return `
+    <div class="certificate">
+        <div class="cert-corner cert-corner-tl"></div>
+        <div class="cert-corner cert-corner-tr"></div>
+        <div class="cert-corner cert-corner-bl"></div>
+        <div class="cert-corner cert-corner-br"></div>
+
+        <div class="cert-header">
+            <div class="cert-motto-title">ព្រះរាជាណាចក្រកម្ពុជា</div>
+            <div class="cert-motto-sub">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
+            <div class="cert-symbol">❖ ❖ ❖</div>
+        </div>
+
+        <div class="cert-title-box">
+            <div class="cert-main-title">ប័ណ្ណសរសើរ</div>
+        </div>
+
+        <div class="cert-body">
+            <p>គណៈគ្រប់គ្រងសាលា និងលោកគ្រូ-អ្នកគ្រូបន្ទុកថ្នាក់ សូមសម្តែងនូវការកោតសរសើរជូនចំពោះ៖</p>
+            <div style="margin: 10px 0;">
+                ${prefixTitle}៖ <span class="cert-name">${s.name}</span> &nbsp;&nbsp;&nbsp;&nbsp; 
+                អត្តលេខ៖ <span class="cert-highlight">${s.id}</span> &nbsp;&nbsp;&nbsp;&nbsp; 
+                ថ្នាក់រៀន៖ <span class="cert-highlight">${s.grade}</span>
+            </div>
+            <p>
+                ដែលបានខិតខំប្រឹងប្រែងរៀនសូត្រទទួលបានលទ្ធផលឆ្នើម ជាប់ចំណាត់ថ្នាក់ 
+                <span class="cert-rank-badge">លេខ ${s.rank} (${khmerRankText})</span>
+            </p>
+            <p style="margin-top: 4px;">
+                ក្នុងលទ្ធផលស្រង់ពិន្ទុប្រចាំខែ <span class="cert-highlight">${s.month || 'មករា'}</span> ដោយទទួលបាន 
+                ពិន្ទុសរុប៖ <span class="cert-highlight">${s.total.toFixed(1)}</span>, 
+                មធ្យមភាគ៖ <span class="cert-highlight">${s.avg.toFixed(2)}</span>, 
+                និទ្ទេស៖ <span class="cert-highlight">${gradeInfo.letter} (${gradeInfo.khmer})</span>
+            </p>
+            <p style="margin-top: 6px; font-size: 13.5px; color: #475569;">
+                សូមជូនពរឱ្យទទួលបាននូវពុទ្ធពរទាំង ៤ ប្រការ គឺ អាយុ វណ្ណៈ សុខៈ ពលៈ កុំបីឃ្លៀងឃ្លាតឡើយ។
+            </p>
+        </div>
+
+        <div class="cert-footer">
+            <div class="cert-sign-block">
+                <div class="cert-sign-title">គ្រូបន្ទុកថ្នាក់</div>
+                <div class="cert-sign-name">ហត្ថលេខា និងឈ្មោះ</div>
+            </div>
+            <div class="cert-sign-block">
+                <div style="font-size: 12px; margin-bottom: 4px;">ថ្ងៃទី.........ខែ.........ឆ្នាំ២០២...</div>
+                <div class="cert-sign-title">នាយកសាលា</div>
+                <div class="cert-sign-name">ហត្ថលេខា និងត្រា</div>
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+function showIntegratedCertificates(filterMode, studentIndex = null) {
+    const certSec = document.getElementById('integratedCertSection');
+    if (!certSec) return;
+    certSec.classList.add('active');
+
+    const filterSelect = document.getElementById('intCertFilter');
+    const container = document.getElementById('intCertContainer');
+
+    if (studentIndex !== null) {
+        if (filterSelect) filterSelect.value = 'all';
+        const s = extractStudentsData[studentIndex];
+        if (s && container) container.innerHTML = generateIntegratedCertHTML(s);
+    } else {
+        if (filterSelect) filterSelect.value = filterMode;
+        renderIntegratedCertificates();
+    }
+
+    certSec.scrollIntoView({ behavior: 'smooth' });
+}
+
+function hideIntegratedCertificates() {
+    const certSec = document.getElementById('integratedCertSection');
+    if (certSec) certSec.classList.remove('active');
+}
+
+function renderIntegratedCertificates() {
+    const container = document.getElementById('intCertContainer');
+    const filterSelect = document.getElementById('intCertFilter');
+    if (!container || !filterSelect) return;
+
+    const filter = filterSelect.value;
+    let filteredList = [...extractStudentsData];
+
+    if (filter === 'top1') filteredList = filteredList.filter(s => s.rank === 1);
+    else if (filter === 'top3') filteredList = filteredList.filter(s => s.rank <= 3);
+    else if (filter === 'top5') filteredList = filteredList.filter(s => s.rank <= 5);
+    else if (filter === 'passed') filteredList = filteredList.filter(s => s.avg >= 5.5);
+
+    if (filteredList.length === 0) {
+        container.innerHTML = `
+            <div class="card-style" style="text-align: center; padding: 2rem; max-width: 500px; width: 100%;">
+                <i class="fa-solid fa-award" style="font-size: 2.5rem; color: #d97706; margin-bottom: 0.75rem;"></i>
+                <div style="font-weight: 700; color: var(--text-muted);">មិនមានទិន្នន័យសិស្សត្រូវនឹងលក្ខខណ្ឌប័ណ្ណសរសើរនេះឡើយ</div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = filteredList.map(s => generateIntegratedCertHTML(s)).join('');
+}
+
+function exportExtractCSV() {
+    if (extractStudentsData.length === 0) {
+        if (typeof showToast === 'function') showToast(appState.language === 'km' ? 'មិនមានទិន្នន័យសម្រាប់ទាញយកទេ!' : 'No data to export!', 'warning');
+        return;
+    }
+
+    let csvContent = "\uFEFF";
+    csvContent += "ល.រ,អត្តលេខ,ឈ្មោះសិស្ស,ភេទ,ថ្នាក់,ប្រចាំខែ,បាលី,ខ្មែរ,គណិត,ព្រះវិន័យ,ព្រះពុទ្ធសាសនា,ពុទ្ធប្បវត្តិ,ភាសាអង់គ្លេស,សិក្សាសង្គម,វិទ្យាសាស្ត្រ,សរុប,មធ្យមភាគ,ចំណាត់ថ្នាក់,និទ្ទេស\n";
+
+    extractStudentsData.forEach((s, i) => {
+        const gradeInfo = getGradeLetterInfo(s.avg);
+        const row = [
+            i + 1,
+            `"${s.id}"`,
+            `"${s.name}"`,
+            `"${s.gender}"`,
+            `"${s.grade}"`,
+            `"${s.month || 'មករា'}"`,
+            (s.pali ?? 0),
+            (s.kh ?? 0),
+            (s.math ?? 0),
+            (s.vinaya ?? 0),
+            (s.buddhism ?? 0),
+            (s.history ?? 0),
+            (s.eng ?? 0),
+            (s.soc ?? 0),
+            (s.sci ?? 0),
+            s.total, s.avg.toFixed(2), s.rank,
+            `"${gradeInfo.letter} (${gradeInfo.khmer})"`
+        ].join(",");
+        csvContent += row + "\n";
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `លទ្ធផលស្រង់ពិន្ទុសិស្ស_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// ----------------------------------------------------
+// NEEDS ATTENTION MODAL CONTROLLER
+// ----------------------------------------------------
+let cachedNeedsAttentionList = [];
+
+window.openNeedsAttentionModal = function() {
+    const modal = document.getElementById("needsAttentionModal");
+    if (!modal) return;
+    
+    renderNeedsAttentionModalContent();
+    modal.classList.add("active");
+};
+
+function renderNeedsAttentionModalContent() {
+    const tbody = document.getElementById("needsAttentionTableBody");
+    const countBadge = document.getElementById("needsAttentionCountBadge");
+    if (!tbody) return;
+
+    cachedNeedsAttentionList = [];
+    const periods = ["oct","nov","dec","jan","feb","mar","apr","may","jun","jul","sem1_exam","sem2_exam"];
+    
+    // 1. Scan across all classes and students in appState
+    appState.classes.forEach(c => {
+        c.students.forEach(st => {
+            const activeSubjectIds = c.subjectIds && c.subjectIds.length > 0 ? c.subjectIds : appState.subjects.map(s => s.id);
+            const studentScoresObj = appState.scores[st.id] || {};
+            
+            // Find latest active period with scores
+            let latestPeriod = null;
+            for (let i = periods.length - 1; i >= 0; i--) {
+                if (studentScoresObj[periods[i]]) {
+                    latestPeriod = periods[i];
+                    break;
+                }
+            }
+
+            const weakSubjects = [];
+            let currentAvg = 0;
+
+            if (latestPeriod && studentScoresObj[latestPeriod]) {
+                const pScores = studentScoresObj[latestPeriod];
+                let sum = 0;
+                let count = 0;
+                activeSubjectIds.forEach(subId => {
+                    const sub = appState.subjects.find(s => s.id === subId);
+                    const subName = sub ? sub.name : subId;
+                    const val = pScores[subId];
+                    if (val !== undefined && val !== null) {
+                        const num = parseFloat(val);
+                        sum += num;
+                        count++;
+                        if (num < 5.5) {
+                            weakSubjects.push({ name: subName, score: num });
+                        }
+                    }
+                });
+                currentAvg = count > 0 ? Math.round((sum / activeSubjectIds.length) * 100) / 100 : 0;
+            }
+
+            // Also check latest from extractStudentsData if any
+            if (typeof extractStudentsData !== 'undefined' && Array.isArray(extractStudentsData)) {
+                const extMatch = extractStudentsData.find(e => e.id === st.id);
+                if (extMatch) {
+                    if (extMatch.avg < 5.5 || (extMatch.pali ?? 10) < 5.5 || (extMatch.kh ?? 10) < 5.5 || (extMatch.math ?? 10) < 5.5 || (extMatch.vinaya ?? 10) < 5.5 || (extMatch.buddhism ?? 10) < 5.5 || (extMatch.history ?? 10) < 5.5 || (extMatch.eng ?? 10) < 5.5 || (extMatch.soc ?? 10) < 5.5 || (extMatch.sci ?? 10) < 5.5) {
+                        currentAvg = extMatch.avg;
+                        if ((extMatch.pali ?? 10) < 5.5) weakSubjects.push({ name: "ភាសាបាលី", score: extMatch.pali });
+                        if ((extMatch.kh ?? 10) < 5.5) weakSubjects.push({ name: "ភាសាខ្មែរ", score: extMatch.kh });
+                        if ((extMatch.math ?? 10) < 5.5) weakSubjects.push({ name: "គណិតវិទ្យា", score: extMatch.math });
+                        if ((extMatch.vinaya ?? 10) < 5.5) weakSubjects.push({ name: "ព្រះវិន័យ", score: extMatch.vinaya });
+                        if ((extMatch.buddhism ?? 10) < 5.5) weakSubjects.push({ name: "ព្រះពុទ្ធសាសនា", score: extMatch.buddhism });
+                        if ((extMatch.history ?? 10) < 5.5) weakSubjects.push({ name: "ពុទ្ធប្បវត្តិ", score: extMatch.history });
+                        if ((extMatch.eng ?? 10) < 5.5) weakSubjects.push({ name: "ភាសាអង់គ្លេស", score: extMatch.eng });
+                        if ((extMatch.soc ?? 10) < 5.5) weakSubjects.push({ name: "សិក្សាសង្គម", score: extMatch.soc });
+                        if ((extMatch.sci ?? 10) < 5.5) weakSubjects.push({ name: "វិទ្យាសាស្ត្រ", score: extMatch.sci });
+                    }
+                }
+            }
+
+            if (currentAvg < 5.5 || weakSubjects.length > 0) {
+                // Deduplicate weak subjects
+                const uniqueWeak = [];
+                const seen = new Set();
+                weakSubjects.forEach(w => {
+                    if (!seen.has(w.name)) {
+                        seen.add(w.name);
+                        uniqueWeak.push(w);
+                    }
+                });
+
+                cachedNeedsAttentionList.push({
+                    id: st.id,
+                    name: st.name,
+                    gender: st.gender || 'ប្រុស',
+                    className: c.name,
+                    avg: currentAvg,
+                    weakSubjects: uniqueWeak
+                });
+            }
+        });
+    });
+
+    if (countBadge) countBadge.textContent = cachedNeedsAttentionList.length;
+    filterNeedsAttentionList();
+}
+
+function filterNeedsAttentionList() {
+    const tbody = document.getElementById("needsAttentionTableBody");
+    const searchInput = document.getElementById("needsAttentionSearchInput");
+    if (!tbody) return;
+
+    const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const filtered = cachedNeedsAttentionList.filter(st => {
+        return st.name.toLowerCase().includes(query) || st.id.toLowerCase().includes(query) || st.className.toLowerCase().includes(query);
+    });
+
+    if (filtered.length === 0) {
+        if (cachedNeedsAttentionList.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center" style="padding: 2.5rem; color: #16a34a;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 2.5rem; margin-bottom: 0.75rem; display:block; color:#10b981;"></i>
+                        <h4 style="margin:0 0 4px 0; font-size:1.05rem;">អបអរសាទរ! ពុំមានសិស្សធ្លាក់ឡើយ</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">សិស្សទាំងអស់ទទួលបានលទ្ធផលប្រឡងចាប់ពីកម្រិតមធ្យម (&ge; ៥.៥) ឡើងទៅ។</p>
+                    </td>
+                </tr>
+            `;
+        } else {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center" style="padding: 2rem; color: var(--text-muted);">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 1.8rem; margin-bottom: 0.5rem; display:block;"></i>
+                        <span>រកមិនឃើញទិន្នន័យសិស្សដែលត្រូវនឹងការស្វែងរកនេះទេ</span>
+                    </td>
+                </tr>
+            `;
+        }
+        return;
+    }
+
+    tbody.innerHTML = filtered.map((st, idx) => {
+        let genderBadge = 'badge-male';
+        if (st.gender === 'ស្រី') genderBadge = 'badge-female';
+        if (st.gender === 'បព្វជិត') genderBadge = 'badge-monk';
+
+        const weakTags = st.weakSubjects.map(w => `
+            <span style="display:inline-flex; align-items:center; gap:4px; background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:2px 8px; border-radius:6px; font-size:0.78rem; font-weight:600; margin:2px;">
+                ${w.name}: <b style="color:#dc2626;">${w.score.toFixed(1)}</b>
+            </span>
+        `).join('') || '<span style="color:#10b981; font-size:0.82rem;">ពុំមានមុខវិជ្ជាធ្លាក់</span>';
+
+        return `
+            <tr>
+                <td>${idx + 1}</td>
+                <td><b>${st.id}</b></td>
+                <td>
+                    <strong>${st.name}</strong> 
+                    <span class="badge ${genderBadge}" style="font-size:0.7rem; margin-left:4px;">${st.gender}</span>
+                </td>
+                <td><span style="font-weight:600; color:var(--primary-blue);">${st.className}</span></td>
+                <td>
+                    <b style="color:${st.avg >= 5.5 ? '#10b981' : '#ef4444'}; font-size:0.95rem;">${st.avg > 0 ? st.avg.toFixed(2) : '-'}</b>
+                    <div style="font-size:0.72rem; color:${st.avg >= 5.5 ? '#10b981' : '#ef4444'}; font-weight:bold;">
+                        ${st.avg >= 5.5 ? 'ជាប់' : 'ធ្លាក់ (< ៥.៥)'}
+                    </div>
+                </td>
+                <td style="text-align:left;">
+                    <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                        ${weakTags}
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+

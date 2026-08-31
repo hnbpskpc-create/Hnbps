@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ប្រព័ន្ធគ្រប់គ្រងពិន្ទុសិស្ស និងប័ណ្ណសរសើរ</title>
+    <!-- Google Fonts Khmer -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=Moul&family=Siemreap&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e3a8a;
+            --secondary: #0d9488;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --gold: #d97706;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Kantumruy Pro', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px 16px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .app-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb, #0284c7);
+            color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .app-header h1 {
+            font-family: 'Moul', cursive;
+            font-size: 22px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .app-header p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 14px 16px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-card.stat-female { border-left-color: #ec4899; }
+        .stat-card.stat-monk { border-left-color: #f97316; }
+        .stat-card.stat-pass { border-left-color: var(--success); }
+        .stat-card.stat-fail { border-left-color: var(--danger); }
+        .stat-card.stat-top { border-left-color: #eab308; }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: #eff6ff;
+            color: var(--primary);
+        }
+
+        .stat-female .stat-icon { background: #fdf2f8; color: #ec4899; }
+        .stat-monk .stat-icon { background: #fff7ed; color: #f97316; }
+        .stat-pass .stat-icon { background: #ecfdf5; color: var(--success); }
+        .stat-fail .stat-icon { background: #fef2f2; color: var(--danger); }
+        .stat-top .stat-icon { background: #fefce8; color: #ca8a04; }
+
+        .stat-info h4 {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .stat-info .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Tabs Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            background: #e2e8f0;
+            color: #475569;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #cbd5e1;
+        }
+
+        /* Card Container */
+        .card {
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .section-label {
+            font-weight: 600;
+            font-size: 14.5px;
+            color: #334155;
+            margin: 14px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .form-grid-subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        label .required {
+            color: var(--danger);
+        }
+
+        input, select {
+            padding: 8px 12px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 13.5px;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 9px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+
+        .btn-secondary { background-color: #e2e8f0; color: #334155; }
+        .btn-secondary:hover { background-color: #cbd5e1; }
+
+        .btn-success { background-color: var(--secondary); color: white; }
+        .btn-success:hover { background-color: #0f766e; }
+
+        .btn-warning { background-color: #f59e0b; color: white; }
+        .btn-warning:hover { background-color: #d97706; }
+
+        .btn-print { background-color: #475569; color: white; }
+        .btn-print:hover { background-color: #334155; }
+
+        /* Table Controls */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            max-width: 360px;
+        }
+
+        .search-box input {
+            width: 100%;
+        }
+
+        /* Table */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tbody tr:hover { background-color: #f8fafc; }
+        tbody tr:nth-child(even) { background-color: #fafbfc; }
+
+        .td-name {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-size: 11.5px;
+            font-weight: 600;
+        }
+
+        .badge-male { background: #dbeafe; color: #1e40af; }
+        .badge-female { background: #fce7f3; color: #be185d; }
+        .badge-monk { background: #ffedd5; color: #c2410c; }
+
+        .grade-A { background: #dcfce7; color: #15803d; }
+        .grade-B { background: #e0f2fe; color: #0369a1; }
+        .grade-C { background: #fef9c3; color: #a16207; }
+        .grade-D { background: #ffedd5; color: #c2410c; }
+        .grade-E { background: #fee2e2; color: #b91c1c; }
+        .grade-F { background: #ffe4e6; color: #be123c; }
+
+        .rank-top1 { color: #d97706; font-weight: 800; }
+        .rank-top2 { color: #475569; font-weight: 800; }
+        .rank-top3 { color: #b45309; font-weight: 800; }
+
+        .action-btns {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .btn-action {
+            padding: 4px 7px;
+            font-size: 11px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-cert { background-color: #f59e0b; }
+        .btn-cert:hover { background-color: #d97706; }
+        .btn-edit { background-color: #3b82f6; }
+        .btn-edit:hover { background-color: #2563eb; }
+        .btn-delete { background-color: #ef4444; }
+        .btn-delete:hover { background-color: #dc2626; }
+
+        .empty-state {
+            padding: 36px 20px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 36px;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+        }
+
+        /* ----------------------------------------------------
+           CERTIFICATE OF APPRECIATION (ប័ណ្ណសរសើរ) STYLING
+        ---------------------------------------------------- */
+        .cert-section {
+            display: none;
+        }
+
+        .cert-section.active {
+            display: block;
+        }
+
+        .cert-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 14px 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .cert-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .certificate {
+            width: 900px;
+            height: 636px; /* Standard A4 Landscape ratio */
+            background: #fffdf7;
+            border: 14px solid #b45309;
+            outline: 3px solid #d97706;
+            outline-offset: -8px;
+            padding: 24px 36px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(254, 243, 199, 0.4) 0%, rgba(255, 255, 255, 0.9) 100%),
+                repeating-linear-gradient(45deg, rgba(217, 119, 6, 0.02) 0, rgba(217, 119, 6, 0.02) 2px, transparent 0, transparent 8px);
+            page-break-after: always;
+        }
+
+        /* Certificate Corner Ornaments */
+        .cert-corner {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            border: 3px solid #b45309;
+        }
+        .cert-corner-tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+        .cert-corner-tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+        .cert-corner-bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+        .cert-corner-br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+        .cert-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .cert-motto-title {
+            font-family: 'Moul', cursive;
+            color: #b45309;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .cert-motto-sub {
+            font-family: 'Moul', cursive;
+            color: #1e3a8a;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .cert-symbol {
+            color: #d97706;
+            font-size: 14px;
+            letter-spacing: 4px;
+        }
+
+        .cert-title-box {
+            text-align: center;
+            margin: 10px 0 14px 0;
+        }
+
+        .cert-main-title {
+            font-family: 'Moul', cursive;
+            color: #dc2626;
+            font-size: 32px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+            display: inline-block;
+            border-bottom: 2px dashed #b45309;
+            padding-bottom: 4px;
+        }
+
+        .cert-body {
+            text-align: center;
+            font-size: 15px;
+            color: #1e293b;
+            line-height: 1.9;
+            margin: 10px 20px;
+        }
+
+        .cert-name {
+            font-family: 'Moul', cursive;
+            font-size: 22px;
+            color: #1e3a8a;
+            display: inline-block;
+            padding: 0 10px;
+            border-bottom: 1.5px dotted #3b82f6;
+        }
+
+        .cert-highlight {
+            font-weight: 700;
+            color: #b45309;
+            font-size: 16px;
+        }
+
+        .cert-rank-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            font-family: 'Moul', cursive;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .cert-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            padding: 0 30px;
+            font-size: 13px;
+        }
+
+        .cert-sign-block {
+            text-align: center;
+            width: 220px;
+        }
+
+        .cert-sign-title {
+            font-weight: 700;
+            margin-bottom: 48px;
+            color: #334155;
+        }
+
+        .cert-sign-name {
+            font-weight: 600;
+            border-top: 1px dotted #94a3b8;
+            padding-top: 4px;
+        }
+
+        /* Print styling for certificates */
+        @media print {
+            body {
+                background: white !important;
+                padding: 0 !important;
+            }
+            .app-header, .stats-grid, .nav-tabs, .card, .cert-toolbar, .no-print {
+                display: none !important;
+            }
+            .cert-section {
+                display: block !important;
+            }
+            .cert-container {
+                gap: 0 !important;
+            }
+            .certificate {
+                width: 100% !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                border: 12px solid #b45309 !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="app-header">
+        <h1><i class="fa-solid fa-graduation-cap"></i> ប្រព័ន្ធគ្រប់គ្រងពិន្ទុសិស្ស និងប័ណ្ណសរសើរ</h1>
+        <p>ប្រព័ន្ធស្រង់ពិន្ទុ គណនាមធ្យមភាគ ចំណាត់ថ្នាក់ និទ្ទេស និងបង្កើតប័ណ្ណសរសើរស្វ័យប្រវត្តិ</p>
+    </header>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info">
+                <h4>សិស្សសរុប</h4>
+                <div class="stat-value" id="statTotalStudents">0</div>
+            </div>
+        </div>
+        <div class="stat-card stat-female">
+            <div class="stat-icon"><i class="fa-solid fa-person-dress"></i></div>
+            <div class="stat-info">
+                <h4>សិស្សស្រី</h4>
+                <div class="stat-value" id="statFemaleStudents">0</div>
+            </div>
+        </div>
+        <div class="stat-card stat-monk">
+            <div class="stat-icon"><i class="fa-solid fa-hands-praying"></i></div>
+            <div class="stat-info">
+                <h4>បព្វជិត/លោកសង្ឃ</h4>
+                <div class="stat-value" id="statMonks">0</div>
+            </div>
+        </div>
+        <div class="stat-card stat-pass">
+            <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="stat-info">
+                <h4>សិស្សជាប់ (>=5)</h4>
+                <div class="stat-value" id="statPassed">0</div>
+            </div>
+        </div>
+        <div class="stat-card stat-fail">
+            <div class="stat-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+            <div class="stat-info">
+                <h4>សិស្សធ្លាក់ (&lt;5)</h4>
+                <div class="stat-value" id="statFailed">0</div>
+            </div>
+        </div>
+        <div class="stat-card stat-top">
+            <div class="stat-icon"><i class="fa-solid fa-trophy"></i></div>
+            <div class="stat-info">
+                <h4>សិស្សឆ្នើម (A/B)</h4>
+                <div class="stat-value" id="statTopStudents">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs no-print">
+        <button class="tab-btn active" id="tabScoreBtn" onclick="switchTab('score')">
+            <i class="fa-solid fa-table-list"></i> តារាងស្រង់ពិន្ទុ & បញ្ចូលទិន្នន័យ
+        </button>
+        <button class="tab-btn" id="tabCertBtn" onclick="switchTab('cert')">
+            <i class="fa-solid fa-award"></i> របាយការណ៍ប័ណ្ណសរសើរ (Certificates)
+        </button>
+    </div>
+
+    <!-- ==================== TAB 1: SCORE MANAGEMENT ==================== -->
+    <div id="scoreSection">
+        <!-- Student Form Card -->
+        <div class="card">
+            <div class="card-title">
+                <div><i class="fa-solid fa-user-pen"></i> <span id="formTitle">បញ្ចូលពិន្ទុសិស្សថ្មី</span></div>
+                <div style="font-size: 13px; font-weight: normal; color: var(--text-muted);">
+                    <i class="fa-solid fa-circle-info"></i> បូកសរុប ១០ មុខវិជ្ជា (មាត្រដ្ឋានពិន្ទុ ០ - ១០ ក្នុងមួយមុខវិជ្ជា)
+                </div>
+            </div>
+            
+            <form id="scoreForm">
+                <input type="hidden" id="editIndex" value="-1">
+
+                <!-- General Info -->
+                <div class="section-label"><i class="fa-solid fa-id-card"></i> ព័ត៌មានទូទៅរបស់សិស្ស</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="studentId">អត្តលេខ <span class="required">*</span></label>
+                        <input type="text" id="studentId" placeholder="ឧ. ST-001" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentName">ឈ្មោះសិស្ស <span class="required">*</span></label>
+                        <input type="text" id="studentName" placeholder="ឧ. សុខ សុភា" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">ភេទ <span class="required">*</span></label>
+                        <select id="gender" required>
+                            <option value="ប្រុស">ប្រុស</option>
+                            <option value="ស្រី">ស្រី</option>
+                            <option value="បព្វជិត">បព្វជិត</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade">ថ្នាក់រៀន <span class="required">*</span></label>
+                        <input type="text" id="grade" placeholder="ឧ. ថ្នាក់ទី ៦A" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="monthName">ប្រចាំខែ <span class="required">*</span></label>
+                        <input type="text" id="monthName" value="មករា" placeholder="ឧ. មករា" required>
+                    </div>
+                </div>
+
+                <!-- Subject Scores -->
+                <div class="section-label"><i class="fa-solid fa-book-open"></i> ពិន្ទុតាមមុខវិជ្ជា (១០ មុខវិជ្ជា)</div>
+                <div class="form-grid-subjects">
+                    <!-- General Subjects -->
+                    <div class="form-group">
+                        <label for="scoreKhmer">ភាសាខ្មែរ</label>
+                        <input type="number" id="scoreKhmer" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreMath">គណិតវិទ្យា</label>
+                        <input type="number" id="scoreMath" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreScience">វិទ្យាសាស្ត្រ</label>
+                        <input type="number" id="scoreScience" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreSocial">សិក្សាសង្គម</label>
+                        <input type="number" id="scoreSocial" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreEnglish">ភាសាអង់គ្លេស</label>
+                        <input type="number" id="scoreEnglish" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreICT">ព័ត៌មានវិទ្យា/ICT</label>
+                        <input type="number" id="scoreICT" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scorePE">អប់រំកាយ/សុខភាព</label>
+                        <input type="number" id="scorePE" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <!-- Religious / Monastic Subjects -->
+                    <div class="form-group">
+                        <label for="scorePali">ភាសាបាលី</label>
+                        <input type="number" id="scorePali" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreBuddhism">ព្រះពុទ្ធសាសនា</label>
+                        <input type="number" id="scoreBuddhism" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoreVinaya">ព្រះវិន័យ/សីលធម៌</label>
+                        <input type="number" id="scoreVinaya" min="0" max="10" step="0.1" placeholder="0 - 10" required>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-primary" id="btnSubmit">
+                        <i class="fa-solid fa-floppy-disk"></i> រក្សាទុកលទ្ធផល
+                    </button>
+                    <button type="button" class="btn-secondary" id="btnCancel" onclick="resetForm()">
+                        <i class="fa-solid fa-rotate-left"></i> សម្អាត Form
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Student Table Card -->
+        <div class="card">
+            <div class="table-controls">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                    <input type="text" id="searchInput" placeholder="ស្វែងរកតាមឈ្មោះ ឬអត្តលេខ..." oninput="renderTable()">
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn-warning" onclick="goToCertificates('top3')">
+                        <i class="fa-solid fa-award"></i> ប័ណ្ណសរសើរសិស្សឆ្នើម (Top 3)
+                    </button>
+                    <button class="btn-success" onclick="exportToCSV()">
+                        <i class="fa-solid fa-file-excel"></i> ទាញយក Excel/CSV
+                    </button>
+                    <button class="btn-print" onclick="window.print()">
+                        <i class="fa-solid fa-print"></i> បោះពុម្ពតារាង
+                    </button>
+                    <button class="btn-secondary" onclick="clearAllData()" style="color: #ef4444;">
+                        <i class="fa-solid fa-trash-can"></i> លុបទាំងអស់
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ល.រ</th>
+                            <th>អត្តលេខ</th>
+                            <th>ឈ្មោះសិស្ស</th>
+                            <th>ភេទ</th>
+                            <th>ថ្នាក់</th>
+                            <th>ខែ</th>
+                            <th>ខ្មែរ</th>
+                            <th>គណិត</th>
+                            <th>វិទ្យា.</th>
+                            <th>សង្គម</th>
+                            <th>អង់គ្លេស</th>
+                            <th>ICT</th>
+                            <th>កីឡា</th>
+                            <th>បាលី</th>
+                            <th>ពុទ្ធ</th>
+                            <th>វិន័យ</th>
+                            <th>សរុប (១០០)</th>
+                            <th>មធ្យមភាគ</th>
+                            <th>ចំណាត់ថ្នាក់</th>
+                            <th>និទ្ទេស</th>
+                            <th>ជម្រើស</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TAB 2: CERTIFICATES (ប័ណ្ណសរសើរ) ==================== -->
+    <div id="certSection" class="cert-section">
+        <div class="cert-toolbar no-print">
+            <div>
+                <label style="margin-right: 8px; font-weight: 600;">ជ្រើសរើសប្រភេទប័ណ្ណសរសើរ៖</label>
+                <select id="certFilter" onchange="renderCertificates()" style="padding: 7px 12px; font-size: 14px;">
+                    <option value="all">សិស្សទាំងអស់ (All Students)</option>
+                    <option value="top1">សិស្សជ័យលាភីលេខ ១ (Rank 1)</option>
+                    <option value="top3" selected>សិស្សឆ្នើមទាំង ៣ (Top 3: Rank 1 - 3)</option>
+                    <option value="top5">សិស្សឆ្នើមទាំង ៥ (Top 5: Rank 1 - 5)</option>
+                    <option value="passed">សិស្សជាប់ទាំងអស់ (Passed >= 5.0)</option>
+                </select>
+            </div>
+            <div class="btn-group">
+                <button class="btn-primary" onclick="window.print()">
+                    <i class="fa-solid fa-print"></i> បោះពុម្ពប័ណ្ណសរសើរ (Print A4)
+                </button>
+                <button class="btn-secondary" onclick="switchTab('score')">
+                    <i class="fa-solid fa-arrow-left"></i> ត្រឡប់ទៅតារាងពិន្ទុ
+                </button>
+            </div>
+        </div>
+
+        <!-- Certificates Container -->
+        <div class="cert-container" id="certContainer">
+            <!-- Dynamic Certificates will be injected here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // State management: 10 subjects
+    const TOTAL_SUBJECTS = 10;
+    let students = JSON.parse(localStorage.getItem('studentData_v2')) || [];
+
+    // Fallback: If older data from v1 exists, migrate it
+    if (students.length === 0) {
+        let oldData = JSON.parse(localStorage.getItem('studentData')) || [];
+        if (oldData.length > 0) {
+            students = oldData.map(s => ({
+                id: s.id,
+                name: s.name,
+                gender: s.gender,
+                grade: s.grade,
+                month: 'មករា',
+                kh: s.kh || 0,
+                math: s.math || 0,
+                sci: s.sci || 0,
+                soc: s.soc || 0,
+                eng: 8,
+                ict: 8,
+                pe: 8,
+                pali: s.pali || 0,
+                buddhism: s.buddhism || 0,
+                vinaya: s.vinaya || 0,
+                total: (s.kh || 0) + (s.math || 0) + (s.sci || 0) + (s.soc || 0) + 24 + (s.pali || 0) + (s.buddhism || 0) + (s.vinaya || 0),
+                avg: ((s.kh || 0) + (s.math || 0) + (s.sci || 0) + (s.soc || 0) + 24 + (s.pali || 0) + (s.buddhism || 0) + (s.vinaya || 0)) / 10,
+                rank: 0
+            }));
+            updateRanks();
+        }
+    }
+
+    // Switch between Score & Certificate tabs
+    function switchTab(tab) {
+        if (tab === 'score') {
+            document.getElementById('scoreSection').style.display = 'block';
+            document.getElementById('certSection').classList.remove('active');
+            document.getElementById('tabScoreBtn').classList.add('active');
+            document.getElementById('tabCertBtn').classList.remove('active');
+        } else {
+            document.getElementById('scoreSection').style.display = 'none';
+            document.getElementById('certSection').classList.add('active');
+            document.getElementById('tabScoreBtn').classList.remove('active');
+            document.getElementById('tabCertBtn').classList.add('active');
+            renderCertificates();
+        }
+    }
+
+    function goToCertificates(filterMode, studentIndex = null) {
+        switchTab('cert');
+        if (studentIndex !== null) {
+            document.getElementById('certFilter').value = 'all';
+            renderSingleCertificate(studentIndex);
+        } else {
+            document.getElementById('certFilter').value = filterMode;
+            renderCertificates();
+        }
+    }
+
+    // Form Submit Handler
+    document.getElementById('scoreForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let id = document.getElementById('studentId').value.trim();
+        let name = document.getElementById('studentName').value.trim();
+        let gender = document.getElementById('gender').value;
+        let grade = document.getElementById('grade').value.trim();
+        let month = document.getElementById('monthName').value.trim() || 'ប្រចាំខែ';
+
+        // 10 Subjects
+        let kh = parseFloat(document.getElementById('scoreKhmer').value) || 0;
+        let math = parseFloat(document.getElementById('scoreMath').value) || 0;
+        let sci = parseFloat(document.getElementById('scoreScience').value) || 0;
+        let soc = parseFloat(document.getElementById('scoreSocial').value) || 0;
+        let eng = parseFloat(document.getElementById('scoreEnglish').value) || 0;
+        let ict = parseFloat(document.getElementById('scoreICT').value) || 0;
+        let pe = parseFloat(document.getElementById('scorePE').value) || 0;
+        let pali = parseFloat(document.getElementById('scorePali').value) || 0;
+        let buddhism = parseFloat(document.getElementById('scoreBuddhism').value) || 0;
+        let vinaya = parseFloat(document.getElementById('scoreVinaya').value) || 0;
+
+        let total = kh + math + sci + soc + eng + ict + pe + pali + buddhism + vinaya;
+        let avg = total / TOTAL_SUBJECTS;
+
+        let editIndex = parseInt(document.getElementById('editIndex').value);
+
+        let studentData = {
+            id, name, gender, grade, month,
+            kh, math, sci, soc, eng, ict, pe, pali, buddhism, vinaya,
+            total, avg,
+            rank: 0
+        };
+
+        if (editIndex >= 0) {
+            students[editIndex] = studentData;
+        } else {
+            students.push(studentData);
+        }
+
+        updateRanks();
+        saveAndRender();
+        resetForm();
+    });
+
+    // Determine Grade / និទ្ទេស
+    function getGradeLetter(avg) {
+        if (avg >= 9.5) return { letter: 'A', khmer: 'ល្អប្រសើរ', badgeClass: 'grade-A' };
+        if (avg >= 8.5) return { letter: 'B', khmer: 'ល្អណាស់', badgeClass: 'grade-B' };
+        if (avg >= 7.5) return { letter: 'C', khmer: 'ល្អ', badgeClass: 'grade-C' };
+        if (avg >= 6.5) return { letter: 'D', khmer: 'ល្អបង្គួរ', badgeClass: 'grade-D' };
+        if (avg >= 5.5) return { letter: 'E', khmer: 'មធ្យម (ជាប់)', badgeClass: 'grade-E' };
+        return { letter: 'F', khmer: 'ខ្សោយ (ធ្លាក់)', badgeClass: 'grade-F' };
+    }
+
+    // Compute ranks based on total score descending
+    function updateRanks() {
+        students.sort((a, b) => b.total - a.total);
+        
+        let currentRank = 1;
+        for (let i = 0; i < students.length; i++) {
+            if (i > 0 && Math.abs(students[i].total - students[i-1].total) < 0.001) {
+                students[i].rank = students[i-1].rank;
+            } else {
+                students[i].rank = currentRank;
+            }
+            currentRank++;
+        }
+    }
+
+    // Save to LocalStorage and update UI
+    function saveAndRender() {
+        localStorage.setItem('studentData_v2', JSON.stringify(students));
+        updateStats();
+        renderTable();
+    }
+
+    // Update Statistics Cards
+    function updateStats() {
+        let total = students.length;
+        let female = students.filter(s => s.gender === 'ស្រី').length;
+        let monks = students.filter(s => s.gender === 'បព្វជិត').length;
+        let passed = students.filter(s => s.avg >= 5.0).length;
+        let failed = students.filter(s => s.avg < 5.0).length;
+        let topStudents = students.filter(s => s.avg >= 8.0).length;
+
+        document.getElementById('statTotalStudents').textContent = total;
+        document.getElementById('statFemaleStudents').textContent = female;
+        document.getElementById('statMonks').textContent = monks;
+        document.getElementById('statPassed').textContent = passed;
+        document.getElementById('statFailed').textContent = failed;
+        document.getElementById('statTopStudents').textContent = topStudents;
+    }
+
+    // Render Table Rows
+    function renderTable() {
+        let tbody = document.getElementById('studentTableBody');
+        let query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+
+        let filtered = students.map((s, originalIndex) => ({ s, originalIndex })).filter(item => {
+            return item.s.name.toLowerCase().includes(query) || item.s.id.toLowerCase().includes(query);
+        });
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="21" class="empty-state">
+                        <i class="fa-regular fa-folder-open"></i>
+                        <div>មិនទាន់មានទិន្នន័យសិស្សនៅឡើយទេ</div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = '';
+
+        filtered.forEach((item, index) => {
+            let s = item.s;
+            let origIndex = item.originalIndex;
+
+            let genderBadge = 'badge-male';
+            if (s.gender === 'ស្រី') genderBadge = 'badge-female';
+            if (s.gender === 'បព្វជិត') genderBadge = 'badge-monk';
+
+            let rankClass = '';
+            if (s.rank === 1) rankClass = 'rank-top1';
+            else if (s.rank === 2) rankClass = 'rank-top2';
+            else if (s.rank === 3) rankClass = 'rank-top3';
+
+            let gradeInfo = getGradeLetter(s.avg);
+
+            let row = `<tr>
+                <td>${index + 1}</td>
+                <td><b>${s.id}</b></td>
+                <td class="td-name">${s.name}</td>
+                <td><span class="badge ${genderBadge}">${s.gender}</span></td>
+                <td>${s.grade}</td>
+                <td>${s.month || 'មករា'}</td>
+                <td>${s.kh.toFixed(1)}</td>
+                <td>${s.math.toFixed(1)}</td>
+                <td>${s.sci.toFixed(1)}</td>
+                <td>${s.soc.toFixed(1)}</td>
+                <td>${(s.eng || 0).toFixed(1)}</td>
+                <td>${(s.ict || 0).toFixed(1)}</td>
+                <td>${(s.pe || 0).toFixed(1)}</td>
+                <td>${s.pali.toFixed(1)}</td>
+                <td>${s.buddhism.toFixed(1)}</td>
+                <td>${s.vinaya.toFixed(1)}</td>
+                <td><b style="color: var(--primary);">${s.total.toFixed(1)}</b></td>
+                <td><b style="color: ${s.avg >= 5 ? '#0d9488' : '#ef4444'}">${s.avg.toFixed(2)}</b></td>
+                <td class="${rankClass}"><b>លេខ ${s.rank}</b></td>
+                <td><span class="badge ${gradeInfo.badgeClass}">${gradeInfo.letter} (${gradeInfo.khmer})</span></td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-action btn-cert" title="ប័ណ្ណសរសើរ" onclick="goToCertificates('all', ${origIndex})">
+                            <i class="fa-solid fa-award"></i>
+                        </button>
+                        <button class="btn-action btn-edit" title="កែប្រែ" onclick="editStudent(${origIndex})">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn-action btn-delete" title="លុប" onclick="deleteStudent(${origIndex})">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // ==================== CERTIFICATES GENERATOR ====================
+    function generateCertHTML(s) {
+        let gradeInfo = getGradeLetter(s.avg);
+        let prefixTitle = (s.gender === 'ស្រី') ? 'កញ្ញា / កុមារី' : (s.gender === 'បព្វជិត' ? 'ព្រះតេជព្រះគុណ' : 'លោក / កុមារា');
+        let khmerRankText = getKhmerRank(s.rank);
+
+        return `
+        <div class="certificate">
+            <div class="cert-corner cert-corner-tl"></div>
+            <div class="cert-corner cert-corner-tr"></div>
+            <div class="cert-corner cert-corner-bl"></div>
+            <div class="cert-corner cert-corner-br"></div>
+
+            <div class="cert-header">
+                <div class="cert-motto-title">ព្រះរាជាណាចក្រកម្ពុជា</div>
+                <div class="cert-motto-sub">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
+                <div class="cert-symbol">❖ ❖ ❖</div>
+            </div>
+
+            <div class="cert-title-box">
+                <div class="cert-main-title">ប័ណ្ណសរសើរ</div>
+            </div>
+
+            <div class="cert-body">
+                <p>គណៈគ្រប់គ្រងសាលា និងលោកគ្រូ-អ្នកគ្រូបន្ទុកថ្នាក់ សូមសម្តែងនូវការកោតសរសើរជូនចំពោះ៖</p>
+                <div style="margin: 10px 0;">
+                    ${prefixTitle}៖ <span class="cert-name">${s.name}</span> &nbsp;&nbsp;&nbsp;&nbsp; 
+                    អត្តលេខ៖ <span class="cert-highlight">${s.id}</span> &nbsp;&nbsp;&nbsp;&nbsp; 
+                    ថ្នាក់រៀន៖ <span class="cert-highlight">${s.grade}</span>
+                </div>
+                <p>
+                    ដែលបានខិតខំប្រឹងប្រែងរៀនសូត្រទទួលបានលទ្ធផលឆ្នើម ជាប់ចំណាត់ថ្នាក់ 
+                    <span class="cert-rank-badge">លេខ ${s.rank} (${khmerRankText})</span>
+                </p>
+                <p style="margin-top: 4px;">
+                    ក្នុងលទ្ធផលស្រង់ពិន្ទុប្រចាំខែ <span class="cert-highlight">${s.month || 'មករា'}</span> ដោយទទួលបាន 
+                    ពិន្ទុសរុប៖ <span class="cert-highlight">${s.total.toFixed(1)}</span>, 
+                    មធ្យមភាគ៖ <span class="cert-highlight">${s.avg.toFixed(2)}</span>, 
+                    និទ្ទេស៖ <span class="cert-highlight">${gradeInfo.letter} (${gradeInfo.khmer})</span>
+                </p>
+                <p style="margin-top: 6px; font-size: 13.5px; color: #475569;">
+                    សូមជូនពរឱ្យទទួលបាននូវពុទ្ធពរទាំង ៤ ប្រការ គឺ អាយុ វណ្ណៈ សុខៈ ពលៈ កុំបីឃ្លៀងឃ្លាតឡើយ។
+                </p>
+            </div>
+
+            <div class="cert-footer">
+                <div class="cert-sign-block">
+                    <div class="cert-sign-title">គ្រូបន្ទុកថ្នាក់</div>
+                    <div class="cert-sign-name">ហត្ថលេខា និងឈ្មោះ</div>
+                </div>
+                <div class="cert-sign-block">
+                    <div style="font-size: 12px; margin-bottom: 4px;">ថ្ងៃទី.........ខែ.........ឆ្នាំ២០២...</div>
+                    <div class="cert-sign-title">នាយកសាលា</div>
+                    <div class="cert-sign-name">ហត្ថលេខា និងត្រា</div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function getKhmerRank(rank) {
+        if (rank === 1) return 'ជ័យលាភីលេខមួយ';
+        if (rank === 2) return 'ជ័យលាភីលេខពីរ';
+        if (rank === 3) return 'ជ័យលាភីលេខបី';
+        if (rank === 4) return 'ចំណាត់ថ្នាក់លេខបួន';
+        if (rank === 5) return 'ចំណាត់ថ្នាក់លេខប្រាំ';
+        return `ចំណាត់ថ្នាក់ទី ${rank}`;
+    }
+
+    function renderCertificates() {
+        let container = document.getElementById('certContainer');
+        let filter = document.getElementById('certFilter').value;
+
+        let filteredList = [...students];
+        if (filter === 'top1') filteredList = filteredList.filter(s => s.rank === 1);
+        else if (filter === 'top3') filteredList = filteredList.filter(s => s.rank <= 3);
+        else if (filter === 'top5') filteredList = filteredList.filter(s => s.rank <= 5);
+        else if (filter === 'passed') filteredList = filteredList.filter(s => s.avg >= 5.0);
+
+        if (filteredList.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state" style="background: white; border-radius: 8px; width: 100%; max-width: 600px;">
+                    <i class="fa-solid fa-award"></i>
+                    <div>មិនមានទិន្នន័យសិស្សត្រូវនឹងលក្ខខណ្ឌប័ណ្ណសរសើរនេះឡើយ</div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = filteredList.map(s => generateCertHTML(s)).join('');
+    }
+
+    function renderSingleCertificate(index) {
+        let container = document.getElementById('certContainer');
+        let s = students[index];
+        if (s) {
+            container.innerHTML = generateCertHTML(s);
+        }
+    }
+
+    // Edit Student Data
+    function editStudent(index) {
+        let s = students[index];
+        document.getElementById('editIndex').value = index;
+        document.getElementById('studentId').value = s.id;
+        document.getElementById('studentName').value = s.name;
+        document.getElementById('gender').value = s.gender;
+        document.getElementById('grade').value = s.grade;
+        document.getElementById('monthName').value = s.month || 'មករា';
+        
+        document.getElementById('scoreKhmer').value = s.kh;
+        document.getElementById('scoreMath').value = s.math;
+        document.getElementById('scoreScience').value = s.sci;
+        document.getElementById('scoreSocial').value = s.soc;
+        document.getElementById('scoreEnglish').value = s.eng || 0;
+        document.getElementById('scoreICT').value = s.ict || 0;
+        document.getElementById('scorePE').value = s.pe || 0;
+        document.getElementById('scorePali').value = s.pali;
+        document.getElementById('scoreBuddhism').value = s.buddhism;
+        document.getElementById('scoreVinaya').value = s.vinaya;
+
+        document.getElementById('formTitle').textContent = 'កែប្រែទិន្នន័យសិស្ស';
+        document.getElementById('btnSubmit').innerHTML = '<i class="fa-solid fa-check"></i> កែប្រែទិន្នន័យ';
+        
+        switchTab('score');
+        window.scrollTo({ top: 150, behavior: 'smooth' });
+    }
+
+    // Delete Student
+    function deleteStudent(index) {
+        if (confirm(`តើអ្នកពិតជាចង់លុបទិន្នន័យសិស្ស "${students[index].name}" មែនទេ?`)) {
+            students.splice(index, 1);
+            updateRanks();
+            saveAndRender();
+        }
+    }
+
+    // Reset Form
+    function resetForm() {
+        document.getElementById('scoreForm').reset();
+        document.getElementById('editIndex').value = -1;
+        document.getElementById('formTitle').textContent = 'បញ្ចូលពិន្ទុសិស្សថ្មី';
+        document.getElementById('btnSubmit').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> រក្សាទុកលទ្ធផល';
+    }
+
+    // Clear All Data
+    function clearAllData() {
+        if (students.length === 0) return;
+        if (confirm("តើអ្នកពិតជាចង់លុបទិន្នន័យសិស្សទាំងអស់មែនទេ?")) {
+            students = [];
+            localStorage.removeItem('studentData_v2');
+            updateStats();
+            renderTable();
+            resetForm();
+        }
+    }
+
+    // Export CSV
+    function exportToCSV() {
+        if (students.length === 0) {
+            alert("មិនមានទិន្នន័យសម្រាប់ទាញយកទេ!");
+            return;
+        }
+
+        let csvContent = "\uFEFF";
+        csvContent += "ល.រ,អត្តលេខ,ឈ្មោះសិស្ស,ភេទ,ថ្នាក់,ប្រចាំខែ,ខ្មែរ,គណិត,វិទ្យាសាស្ត្រ,សិក្សាសង្គម,អង់គ្លេស,ព័ត៌មានវិទ្យា,អប់រំកាយ,បាលី,ព្រះពុទ្ធសាសនា,ព្រះវិន័យ,សរុប,មធ្យមភាគ,ចំណាត់ថ្នាក់,និទ្ទេស\n";
+
+        students.forEach((s, i) => {
+            let gradeInfo = getGradeLetter(s.avg);
+            let row = [
+                i + 1,
+                `"${s.id}"`,
+                `"${s.name}"`,
+                `"${s.gender}"`,
+                `"${s.grade}"`,
+                `"${s.month || 'មករា'}"`,
+                s.kh, s.math, s.sci, s.soc, (s.eng || 0), (s.ict || 0), (s.pe || 0), s.pali, s.buddhism, s.vinaya,
+                s.total, s.avg.toFixed(2), s.rank,
+                `"${gradeInfo.letter} (${gradeInfo.khmer})"`
+            ].join(",");
+            csvContent += row + "\n";
+        });
+
+        let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        let link = document.createElement("a");
+        let url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", `លទ្ធផលពិន្ទុសិស្ស_${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Initialize
+    window.onload = () => {
+        updateStats();
+        updateRanks();
+        renderTable();
+    };
+</script>
+
+</body>
+</html>

@@ -2353,3 +2353,267 @@ body {
     padding-top: 0.75rem;
     border-top: 1px solid var(--border-color);
 }
+
+/* ====================================================
+   Integrated 10-Subject Scorecard & Certificate Styling
+==================================================== */
+.score-mode-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.score-mode-btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-main);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-fast);
+}
+
+.score-mode-btn.active {
+    background: var(--primary-blue);
+    color: #ffffff;
+    border-color: var(--primary-blue);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Stats Mini Grid */
+.extract-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 1.25rem;
+}
+
+.extract-stat-card {
+    background: var(--bg-card);
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-card);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-card);
+    border-left: 4px solid var(--primary-blue);
+}
+
+.extract-stat-card.stat-female { border-left-color: #ec4899; }
+.extract-stat-card.stat-monk { border-left-color: #f97316; }
+.extract-stat-card.stat-pass { border-left-color: #10b981; }
+.extract-stat-card.stat-fail { border-left-color: #ef4444; }
+.extract-stat-card.stat-top { border-left-color: #eab308; }
+
+.extract-stat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-blue);
+}
+
+.extract-stat-card.stat-female .extract-stat-icon { background: rgba(236, 72, 153, 0.1); color: #ec4899; }
+.extract-stat-card.stat-monk .extract-stat-icon { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+.extract-stat-card.stat-pass .extract-stat-icon { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.extract-stat-card.stat-fail .extract-stat-icon { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+.extract-stat-card.stat-top .extract-stat-icon { background: rgba(234, 179, 8, 0.1); color: #ca8a04; }
+
+.extract-stat-info h4 {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.extract-stat-info .stat-val {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+/* Badges */
+.badge-male { background: rgba(59, 130, 246, 0.12); color: #2563eb; }
+.badge-female { background: rgba(236, 72, 153, 0.12); color: #db2777; }
+.badge-monk { background: rgba(249, 115, 22, 0.12); color: #ea580c; }
+
+.grade-A { background: rgba(16, 185, 129, 0.15); color: #059669; font-weight: 800; }
+.grade-B { background: rgba(59, 130, 246, 0.15); color: #2563eb; font-weight: 800; }
+.grade-C { background: rgba(245, 158, 11, 0.15); color: #d97706; font-weight: 700; }
+.grade-D { background: rgba(234, 88, 12, 0.15); color: #c2410c; font-weight: 700; }
+.grade-E { background: rgba(100, 116, 139, 0.15); color: #475569; font-weight: 700; }
+.grade-F { background: rgba(239, 68, 68, 0.15); color: #dc2626; font-weight: 800; }
+
+.rank-top1 { color: #d97706; font-weight: 800; }
+.rank-top2 { color: #64748b; font-weight: 800; }
+.rank-top3 { color: #b45309; font-weight: 800; }
+
+/* Certificate of Honor */
+.cert-section {
+    display: none;
+}
+
+.cert-section.active {
+    display: block;
+}
+
+.cert-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.certificate {
+    width: 900px;
+    max-width: 100%;
+    height: 636px;
+    background: #fffdf7;
+    border: 14px solid #b45309;
+    outline: 3px solid #d97706;
+    outline-offset: -8px;
+    padding: 24px 36px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    position: relative;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(254, 243, 199, 0.4) 0%, rgba(255, 255, 255, 0.9) 100%),
+        repeating-linear-gradient(45deg, rgba(217, 119, 6, 0.02) 0, rgba(217, 119, 6, 0.02) 2px, transparent 0, transparent 8px);
+    page-break-after: always;
+    margin: 0 auto;
+}
+
+.cert-corner {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 3px solid #b45309;
+}
+.cert-corner-tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+.cert-corner-tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+.cert-corner-bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+.cert-corner-br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+.cert-header {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.cert-motto-title {
+    font-family: 'Moul', 'Kantumruy Pro', cursive;
+    color: #b45309;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.cert-motto-sub {
+    font-family: 'Moul', 'Kantumruy Pro', cursive;
+    color: #1e3a8a;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.cert-symbol {
+    color: #d97706;
+    font-size: 14px;
+    letter-spacing: 4px;
+}
+
+.cert-title-box {
+    text-align: center;
+    margin: 10px 0 14px 0;
+}
+
+.cert-main-title {
+    font-family: 'Moul', 'Kantumruy Pro', cursive;
+    color: #dc2626;
+    font-size: 30px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+    display: inline-block;
+    border-bottom: 2px dashed #b45309;
+    padding-bottom: 4px;
+}
+
+.cert-body {
+    text-align: center;
+    font-size: 15px;
+    color: #1e293b;
+    line-height: 1.9;
+    margin: 10px 20px;
+}
+
+.cert-name {
+    font-family: 'Moul', 'Kantumruy Pro', cursive;
+    font-size: 21px;
+    color: #1e3a8a;
+    display: inline-block;
+    padding: 0 10px;
+    border-bottom: 1.5px dotted #3b82f6;
+}
+
+.cert-highlight {
+    font-weight: 700;
+    color: #b45309;
+    font-size: 16px;
+}
+
+.cert-rank-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    font-family: 'Moul', 'Kantumruy Pro', cursive;
+    padding: 2px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cert-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding: 0 30px;
+    font-size: 13px;
+}
+
+.cert-sign-block {
+    text-align: center;
+    width: 220px;
+}
+
+.cert-sign-title {
+    font-weight: 700;
+    margin-bottom: 44px;
+    color: #334155;
+}
+
+.cert-sign-name {
+    font-weight: 600;
+    border-top: 1px dotted #94a3b8;
+    padding-top: 4px;
+}
+
+/* Print Styling for Certificates */
+@media print {
+    .certificate {
+        width: 100% !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        border: 12px solid #b45309 !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        page-break-after: always !important;
+    }
+}
